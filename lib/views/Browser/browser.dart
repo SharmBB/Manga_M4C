@@ -99,11 +99,13 @@ class _MyHomePageState extends State<Browser> {
             ),
             SizedBox(height: 15),
             Expanded(
+            
               //list
               child: ListView.builder(
                 itemCount: 5,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
+                  
                 
                     color: Colors.black,
                     child: CustomProductCard(

@@ -28,7 +28,7 @@ class CustomProductCard extends StatelessWidget {
             "assets/banner-image.png",
             fit: BoxFit.cover,
             width: 100,
-            height: 500,
+      
             alignment: Alignment.center,
           ),
           shape: const RoundedRectangleBorder(

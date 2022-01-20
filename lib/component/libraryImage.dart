@@ -4,10 +4,12 @@ class LibraryImage extends StatelessWidget {
   const LibraryImage({
     Key? key,
   }) : super(key: key);
+
+
+  
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      
       scrollDirection: Axis.horizontal,
       child: Row(
           children: List.generate(5, (index) {
@@ -29,39 +31,42 @@ class LibraryImage extends StatelessWidget {
                 height: 10,
               ),
               Padding(
-                padding: const EdgeInsets.only(left:8.0),
+                padding: const EdgeInsets.only(left: 8.0),
                 child: Container(
-            
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Solo Leveling",
-                              style: TextStyle(fontSize: 13, color: Colors.white),
-                            ),
-                            SizedBox(width: 5,),
-                                Icon(
-                              Icons.star,
-                              size: 15.0,
-                              color: Colors.yellow,
-                            ),
-                               SizedBox(width: 5,),
-                              Text(
-                              "9/10",
-                              style: TextStyle(fontSize: 13, color: Colors.white),
-                            ),
-                          ],
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Solo Leveling",
+                            style: TextStyle(fontSize: 13, color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Icon(
+                            Icons.star,
+                            size: 15.0,
+                            color: Colors.yellow,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "9/10",
+                            style: TextStyle(fontSize: 13, color: Colors.white),
+                          ),
+                        ],
+                      ),
                       SizedBox(
                         height: 10,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left:5.0),
+                        padding: const EdgeInsets.only(left: 5.0),
                         child: Container(
-                         width: 190,
+                          width: 190,
                           height: 30,
                           decoration: BoxDecoration(
                               color: Colors.grey[800],
@@ -72,7 +77,8 @@ class LibraryImage extends StatelessWidget {
                             children: [
                               Text(
                                 "Reading",
-                                style: TextStyle(fontSize: 13, color: Colors.white),
+                                style: TextStyle(
+                                    fontSize: 13, color: Colors.white),
                               ),
                               Icon(
                                 Icons.keyboard_arrow_down,

@@ -17,7 +17,7 @@ class MangakikuCard extends StatelessWidget {
           height: 300.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: 3,
+            itemCount: _allUsers.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 margin: EdgeInsets.all(10.0),
@@ -45,7 +45,6 @@ class MangakikuCard extends StatelessWidget {
                                 style: TextStyle(
                                   color: kPrimaryWhiteColor,
                                   fontSize: 16.0,
-                             
                                 ),
                               ),
                               SizedBox(height: 20.0),
@@ -61,14 +60,13 @@ class MangakikuCard extends StatelessWidget {
                                         Text(
                                           "ch3",
                                           style: TextStyle(
-                                              fontSize: 12,
-                                              color: kPrimaryWhiteColor,
-                                              ),
+                                            fontSize: 12,
+                                            color: kPrimaryWhiteColor,
+                                          ),
                                         ),
                                       ],
                                     ),
                                     SizedBox(width: 60),
-
                                     Text(
                                       ".",
                                       style: TextStyle(
@@ -84,8 +82,6 @@ class MangakikuCard extends StatelessWidget {
                                         color: kPrimaryWhiteColor,
                                       ),
                                     ),
-
-            
                                   ],
                                 ),
                               ),
@@ -101,7 +97,6 @@ class MangakikuCard extends StatelessWidget {
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black26,
-                        
                             blurRadius: 6.0,
                           ),
                         ],
@@ -111,7 +106,7 @@ class MangakikuCard extends StatelessWidget {
                         child: Image(
                           height: 180.0,
                           width: 200.0,
-                          image: AssetImage("assets/image-1.png"),
+                          image: AssetImage(_allUsers[index]["image"]),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -126,3 +121,11 @@ class MangakikuCard extends StatelessWidget {
     );
   }
 }
+
+final List<Map<String, dynamic>> _allUsers = [
+  {"image": "assets/image-1.png", "title": "Dragonball"},
+  {"image": "assets/image-2.png", "title": "Dragonball"},
+  {"image": "assets/image-6.png", "title": "Dragonball"},
+  {"image": "assets/image-4.png", "title": "Dragonball"},
+  {"image": "assets/image-5.png", "title": "Dragonball"},
+];

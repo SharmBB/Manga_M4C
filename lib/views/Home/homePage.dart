@@ -1,8 +1,11 @@
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:floating_navbar/floating_navbar.dart';
+import 'package:floating_navbar/floating_navbar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/component/accountCard.dart';
+import 'package:mangakiku_app/component/bottomNavigationBar.dart';
 import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Browser/browser.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
@@ -39,7 +42,7 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.description_outlined , color: kPrimaryWhiteColor),
+            icon: Icon(Icons.description_outlined, color: kPrimaryWhiteColor),
             onPressed: () {
               Navigator.push(
                 context,
@@ -239,7 +242,95 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            MangakikuCard()
+            MangakikuCard(),
+              SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 15, right: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Recently Added",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: kPrimaryWhiteColor),
+                  ),
+                  Column(
+                    children: [
+                      InkWell(
+                        highlightColor: Colors.transparent,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailsScreen(),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            " More >",
+                            style: TextStyle(
+                              color: kPrimaryGreyColor,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            MangakikuCard(),
+               SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 15, right: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Top MANGAS",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: kPrimaryWhiteColor),
+                  ),
+                  Column(
+                    children: [
+                      InkWell(
+                        highlightColor: Colors.transparent,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailsScreen(),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            " More >",
+                            style: TextStyle(
+                              color: kPrimaryGreyColor,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            MangakikuCard(),
           ],
         ),
       ),

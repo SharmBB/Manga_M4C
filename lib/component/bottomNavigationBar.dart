@@ -1,57 +1,32 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:floating_navbar/floating_navbar.dart';
+import 'package:floating_navbar/floating_navbar_item.dart';
 import 'package:flutter/material.dart';
 
-class BottomNavigationScreen extends StatefulWidget {
-  const BottomNavigationScreen({Key? key}) : super(key: key);
 
-  @override
-  _BottomNavigationScreenState createState() => _BottomNavigationScreenState();
-}
+import 'package:mangakiku_app/views/Home/homePage.dart';
 
-class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
-  int index = 2;
-  int _page = 0;
-  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+class MainPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final items = <Widget>[
-      Icon(Icons.home, size: 30),
-      Icon(Icons.search, size: 30),
-      Icon(Icons.favorite, size: 30),
-      Icon(Icons.settings, size: 30),
-      Icon(Icons.person, size: 30),
-    ];
-
     return Scaffold(
-      body: Container(
-        color: Colors.blueAccent,
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Text(_page.toString(), textScaleFactor: 10.0),
-              ElevatedButton(
-                child: Text('Go To Page of index 1'),
-                onPressed: () {
-                  //Page change using state does the same as clicking index 1 navigation button
-                  final CurvedNavigationBarState? navBarState =
-                      _bottomNavigationKey.currentState;
-                  navBarState?.setPage(1);
-                },
-              )
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: CurvedNavigationBar(
-        height: 60,
-        index: index,
-        items: items,
-        onTap: (index) {
-          setState(() {
-            _page = index;
-          });
-        },
-        //
+      backgroundColor: Color(0xFFF8F8F8),
+      body: FloatingNavBar(
+        color: Color(0xFF111111),
+        borderRadius: 50,
+        horizontalPadding: 20,
+        selectedIconColor: Color(0xFFFD647B),
+        unselectedIconColor: Colors.grey,
+        hapticFeedback: false,
+        items: [
+          FloatingNavBarItem(
+              iconData: Icons.home, page: HomePage(), title: 'Home'),
+          FloatingNavBarItem(
+              iconData: Icons.calendar_today, page: HomePage(), title: 'Home'),
+          FloatingNavBarItem(
+              iconData: Icons.add, page: HomePage(), title: 'Home'),
+          FloatingNavBarItem(
+              iconData: Icons.apps_outlined, page: HomePage(), title: 'Home')
+        ],
       ),
     );
   }
