@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
+import 'package:mangakiku_app/component/browserdata.dart';
+import 'package:mangakiku_app/component/browserlist.dart';
 import 'dart:convert';
 import 'package:mangakiku_app/component/mangaCard.dart';
 
@@ -98,27 +100,34 @@ class _MyHomePageState extends State<Browser> {
               ),
             ),
             SizedBox(height: 15),
+          
             Expanded(
+              child:   ListView.builder(
+                    itemCount: details.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return userList(context, index);
+                    }),
+          
             
-              //list
-              child: ListView.builder(
-                itemCount: 5,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
+            //   //list
+            //   child: ListView.builder(
+            //     itemCount: 5,
+            //     itemBuilder: (BuildContext context, int index) {
+            //       return Card(
                   
                 
-                    color: Colors.black,
-                    child: CustomProductCard(
-                      title: "Dragon Ball",
-                      subtitle:
-                          "Dragon Ball is a Japanese media franchise created by Akira Toriyama in 1984. ",
-                      valueKey: 2,
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
+            //         color: Colors.black,
+            //         child: CustomProductCard(
+            //           title: "Dragon Ball",
+            //           subtitle:
+            //               "Dragon Ball is a Japanese media franchise created by Akira Toriyama in 1984. ",
+            //           valueKey: 2,
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
+            )],
         ),
       ),
     );
