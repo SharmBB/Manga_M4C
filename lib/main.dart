@@ -8,7 +8,11 @@ import 'package:mangakiku_app/views/Comments/comments2.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
 import 'package:mangakiku_app/views/Library/library.dart';
+import 'package:mangakiku_app/views/SignIn/signin.dart';
+import 'package:mangakiku_app/views/Signup/signup.dart';
 import 'package:mangakiku_app/views/type/type.dart';
+
+import 'views/ResetPassword/resetPassword.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: Signin()
     );
   }
 }

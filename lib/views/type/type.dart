@@ -126,12 +126,12 @@ class DetailsScreen extends StatelessWidget {
                       child: Row(
                         children: <Widget>[
                           FlatButton(
-                            height: 30,
+                            height: 28,
                             child: Text(
                               'Read Now',
                               style: TextStyle(fontSize: 20.0),
                             ),
-                            color: Colors.purple,
+                            color: kPrimaryPurpleColor,
                             textColor: Colors.white,
                             onPressed: () {
                                Navigator.push(

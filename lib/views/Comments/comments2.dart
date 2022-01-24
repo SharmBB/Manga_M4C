@@ -86,6 +86,7 @@ class _MangaComment2State extends State<MangaComment2> {
               ),
                
                  Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                      IconButton(
                         icon: Icon(Icons.arrow_back_ios_new),
@@ -94,28 +95,28 @@ class _MangaComment2State extends State<MangaComment2> {
                        
                         }),
 
-                    SizedBox(width: screenWidth * (1 / 10)),
+                   // SizedBox(width: screenWidth * (1 / 10)),
                     IconButton(
                         icon: Icon(Icons.thumb_up_off_alt ),
                         color: Colors.white,
                         onPressed: () {
                        
                         }),
-                   SizedBox(width: screenWidth * (1 / 10)),
+                 //  SizedBox(width: screenWidth * (1 / 10)),
                      IconButton(
                         icon: Icon(Icons.comment_outlined),
                         color: Colors.white,
                         onPressed: () {
                        
                         }),
-                    SizedBox(width: screenWidth * (1 / 10)),
+                  //  SizedBox(width: screenWidth * (1 / 10)),
                      IconButton(
                         icon: Icon(Icons.favorite),
                         color: Colors.white,
                         onPressed: () {
                        
                         }),
-                     SizedBox(width: screenWidth * (1 / 10)),
+                  //   SizedBox(width: screenWidth * (1 / 10)),
                       IconButton(
                         icon: Icon(Icons.arrow_forward_ios),
                         color: Colors.white,

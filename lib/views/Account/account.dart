@@ -95,116 +95,201 @@ class _AccountState extends State<Account> {
               ),
             ]),
             SizedBox(height: 20),
-            Card(
-              margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-              clipBehavior: Clip.antiAlias,
-              color: Colors.purple[900],
-              elevation: 5.0,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 22.0),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
+            // Card(
+            //   margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+            //   clipBehavior: Clip.antiAlias,
+            //   color: Colors.purple[900],
+            //   elevation: 5.0,
+            //   child: Padding(
+            //     padding:
+            //         const EdgeInsets.symmetric(horizontal: 8.0, vertical: 22.0),
+            //     child: Row(
+            //       children: <Widget>[
+            //         Expanded(
+            //           child: Column(
+            //             children: <Widget>[
+            //               Text(
+            //                 "12",
+            //                 style: TextStyle(
+            //                   color: kPrimaryWhiteColor,
+            //                   fontSize: 22.0,
+            //                   fontWeight: FontWeight.bold,
+            //                 ),
+            //               ),
+            //               SizedBox(
+            //                 height: 5.0,
+            //               ),
+            //               Text(
+            //                 "Manga Reads",
+            //                 style: TextStyle(
+            //                   fontSize: 12.0,
+            //                   color: kPrimaryWhiteColor,
+            //                 ),
+            //               )
+            //             ],
+            //           ),
+            //         ),
+            //         Expanded(
+            //           child: Column(
+            //             children: <Widget>[
+            //               Text(
+            //                 "23",
+            //                 style: TextStyle(
+            //                   color: kPrimaryWhiteColor,
+            //                   fontSize: 22.0,
+            //                   fontWeight: FontWeight.bold,
+            //                 ),
+            //               ),
+            //               SizedBox(
+            //                 height: 5.0,
+            //               ),
+            //               Text(
+            //                 "Chapter Reads",
+            //                 style: TextStyle(
+            //                   fontSize: 12.0,
+            //                   color: kPrimaryWhiteColor,
+            //                 ),
+            //               )
+            //             ],
+            //           ),
+            //         ),
+            //         Expanded(
+            //           child: Column(
+            //             children: <Widget>[
+            //               Text(
+            //                 "33",
+            //                 style: TextStyle(
+            //                   color: kPrimaryWhiteColor,
+            //                   fontSize: 22.0,
+            //                   fontWeight: FontWeight.bold,
+            //                 ),
+            //               ),
+            //               SizedBox(
+            //                 height: 5.0,
+            //               ),
+            //               Text(
+            //                 "Hours read",
+            //                 style: TextStyle(
+            //                   fontSize: 12.0,
+            //                   color: kPrimaryWhiteColor,
+            //                 ),
+            //               )
+            //             ],
+            //           ),
+            //         ),
+            //         Expanded(
+            //           child: Column(
+            //             children: <Widget>[
+            //               Text(
+            //                 "13",
+            //                 style: TextStyle(
+            //                   color: kPrimaryWhiteColor,
+            //                   fontSize: 22.0,
+            //                   fontWeight: FontWeight.bold,
+            //                 ),
+            //               ),
+            //               SizedBox(
+            //                 height: 5.0,
+            //               ),
+            //               Text(
+            //                 "Reputution",
+            //                 style: TextStyle(
+            //                   fontSize: 12.0,
+            //                   color: kPrimaryWhiteColor,
+            //                 ),
+            //               )
+            //             ],
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            Padding(
+              padding: const EdgeInsets.only(left:25.0,right:10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                          color: kPrimaryPurpleColor,
+                          borderRadius: BorderRadius.circular(1)),
                       child: Column(
-                        children: <Widget>[
-                          Text(
-                            "12",
-                            style: TextStyle(
-                              color: kPrimaryWhiteColor,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text(
+                              "12",
+                              style: TextStyle(fontSize: 18, color: Colors.white70),
                             ),
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            "Manga Reads",
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              color: kPrimaryWhiteColor,
+                            
+                            Text(
+                              "Hours Read",
+                              style: TextStyle(fontSize: 12, color: Colors.white70),
                             ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            "23",
-                            style: TextStyle(
-                              color: kPrimaryWhiteColor,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            "Chapter Reads",
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              color: kPrimaryWhiteColor,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            "33",
-                            style: TextStyle(
-                              color: kPrimaryWhiteColor,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            "Hours read",
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              color: kPrimaryWhiteColor,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            "13",
-                            style: TextStyle(
-                              color: kPrimaryWhiteColor,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            "Reputution",
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              color: kPrimaryWhiteColor,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                          ])),
+                          SizedBox(width: 5),
+                          Container(
+           width: 80,
+                      height: 80,
+                  decoration: BoxDecoration(
+                      color: kPrimaryPurpleColor,
+                      borderRadius: BorderRadius.circular(1)),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "12",
+                          style: TextStyle(fontSize: 18, color: Colors.white70),
+                        ),
+                        Text(
+                          "Mangas Read",
+                          style: TextStyle(fontSize: 12, color: Colors.white70),
+                        ),
+                      ])),
+                          SizedBox(width: 5),
+                         Container(
+                    width: 80,
+                      height: 80,
+                  decoration: BoxDecoration(
+                      color: kPrimaryPurpleColor,
+                      borderRadius: BorderRadius.circular(1)),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "12",
+                          style: TextStyle(fontSize: 18, color: Colors.white70),
+                        ),
+                        Text(
+                          "Reputation",
+                          style: TextStyle(fontSize: 12, color: Colors.white70),
+                        ),
+                      ])),
+                          SizedBox(width: 5),
+                         Container(
+                     width: 80,
+                      height: 80,
+                  decoration: BoxDecoration(
+                      color: kPrimaryPurpleColor,
+                      borderRadius: BorderRadius.circular(1)),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "12",
+                          style: TextStyle(fontSize: 18, color: Colors.white70),
+                        ),
+                        Text(
+                          "Chapter Read",
+                          style: TextStyle(fontSize: 12, color: Colors.white70),
+                        ),
+                      ])),
+                ],
               ),
             ),
+                    
             //Tab bar
             DefaultTabController(
               length: 2, // length of tabs

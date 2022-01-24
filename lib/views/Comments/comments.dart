@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/component/dialogbox.dart';
 
 class MangaComments extends StatefulWidget {
@@ -109,11 +110,10 @@ class _MangaCommentsState extends State<MangaComments> {
                             "Top",
                             style: TextStyle(fontSize: 13, color: Colors.grey),
                           ),
-                         VerticalDivider(
-                      
-                        thickness: 1,
-                        color: Colors.grey,
-                      ),
+                          VerticalDivider(
+                            thickness: 1,
+                            color: Colors.grey,
+                          ),
                           Text(
                             "New",
                             style: TextStyle(
@@ -125,63 +125,64 @@ class _MangaCommentsState extends State<MangaComments> {
                   ],
                 ),
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.start, children: <
-                  Widget>[
-                const Padding(
-                  padding: EdgeInsets.only(left: 20.0, top: 30),
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundImage: AssetImage(
-                      "assets/profile-img.png",
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20.0, top: 30),
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundImage: AssetImage(
+                          "assets/profile-img.png",
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 40.0, top: 40),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const Text(
-                          "Jake",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  width: 130,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.batch_prediction,
-                                        color: Colors.purple,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 40.0, top: 40),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            const Text(
+                              "Jake",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5),
+                              child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Container(
+                                      width: 130,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.batch_prediction,
+                                            color: Colors.purple,
+                                          ),
+                                          Text(
+                                            "Top 100 Readers",
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.purple[900]),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        "Top 100 Readers",
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.purple[900]),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ]),
-                        ),
-                        
-                      ]),
-                )
-              ]),
+                                    )
+                                  ]),
+                            ),
+                          ]),
+                    )
+                  ]),
               SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, left: 100, right: 5),
@@ -198,6 +199,7 @@ class _MangaCommentsState extends State<MangaComments> {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, left: 100, right: 5),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text("21.12.2021",
                         style: TextStyle(
@@ -205,50 +207,53 @@ class _MangaCommentsState extends State<MangaComments> {
                           fontSize: 12,
                         )),
 
-                    SizedBox(width: 10.0),
+                    //  SizedBox(width: 10.0),
                     Text("09.23 am",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                         )),
-                    SizedBox(width: 10.0),
+                    //  SizedBox(width: 10.0),
                     Icon(
                       Icons.arrow_upward,
                       size: 25.0,
                       color: Colors.purple[900],
                     ),
-                    SizedBox(width: 5.0),
+//SizedBox(width: 5.0),
                     Text("233",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                         )),
-                    SizedBox(width: 10.0),
+                    //     SizedBox(width: 10.0),
                     Icon(
                       Icons.arrow_downward,
                       size: 25.0,
                       color: Colors.grey,
                     ),
-                    SizedBox(width: 5.0),
+                    //     SizedBox(width: 5.0),
                     Text("43",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                         )),
-                    SizedBox(width: 10.0),
+                    //  SizedBox(width: 10.0),
                     Icon(
                       Icons.comment,
                       size: 25.0,
                       color: Colors.grey,
                     ),
-                    SizedBox(width: 5.0),
+                    // SizedBox(width: 5.0),
                     Text("22",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                         )),
-                    SizedBox(width: 5.0),
-               
+                    Icon(
+                      Icons.report,
+                      size: 20.0,
+                      color: kPrimaryPurpleColor,
+                    ),
                   ],
                 ),
               ),
@@ -258,14 +263,15 @@ class _MangaCommentsState extends State<MangaComments> {
                   height: 150,
                   child: IntrinsicHeight(
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         VerticalDivider(
                           color: Colors.grey,
                           thickness: 2,
                         ),
                         Container(
-                          width: screenWidth,
-                          alignment: Alignment.center,
+                          //  width: screenWidth*3/4,
+                          alignment: Alignment.topLeft,
                           decoration: BoxDecoration(
                               color: Colors.grey,
                               border:
@@ -273,45 +279,45 @@ class _MangaCommentsState extends State<MangaComments> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8.0))),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
+                             
                                   Text("Peter:",
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
                                       )),
-                                ],
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                  'The definition of a character is a unique symbol, letter or mark used in writing. Character is defined as a trait, quality or high moral code.',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                  )),
+                              
+                           
+                               
+                              
+
+                              // Text(
+                              //     'The definition of a character is a unique symbol, letter or mark used in writing. Character is defined as a trait, quality or high moral code.',
+                              //     style: TextStyle(
+                              //       color: Colors.white,
+                              //       fontSize: 12,
+                              //     )),
                               SizedBox(height: 15),
                               Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: <Widget>[
                                   Text("21.12.2021",
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
                                       )),
-
-                                  SizedBox(width: 5.0),
                                   Text("09.23 am",
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
                                       )),
-                                  SizedBox(width: 5.0),
                                   Icon(
                                     Icons.arrow_upward,
                                     size: 25.0,
                                     color: Colors.purple[900],
                                   ),
-                                  SizedBox(width: 5.0),
                                   Text("233",
                                       style: TextStyle(
                                         color: Colors.white,
@@ -323,26 +329,21 @@ class _MangaCommentsState extends State<MangaComments> {
                                     size: 25.0,
                                     color: Colors.black,
                                   ),
-                                  SizedBox(width: 5.0),
                                   Text("43",
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
                                       )),
-                                  SizedBox(width: 10.0),
                                   Icon(
                                     Icons.comment,
                                     size: 25.0,
                                     color: Colors.black,
                                   ),
-                                  SizedBox(width: 5.0),
                                   Text("22",
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
                                       )),
-                                  SizedBox(width: 5.0),
-                                 
                                 ],
                               ),
                               SizedBox(height: 15),
@@ -364,13 +365,12 @@ class _MangaCommentsState extends State<MangaComments> {
                 ),
               ),
               SizedBox(height: 15),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     height: 50,
-                    width: screenWidth*(4/5),
+                    width: screenWidth * (4 / 5),
                     child: TextFormField(
                       textAlign: TextAlign.right,
                       decoration: InputDecoration(
@@ -394,11 +394,9 @@ class _MangaCommentsState extends State<MangaComments> {
                   )
                 ],
               ),
-          
             ])));
   }
 }
-
 
 //dailog box
 showAlert(BuildContext context) {
@@ -406,34 +404,32 @@ showAlert(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        backgroundColor: Colors.black,
-        title: Center(
-          child: Text("Report Comments ?",
-              style: TextStyle(color: Colors.white, fontSize: 18)),
-        ),
-      
-      actions:
-      <Widget>[
-        FlatButton(
-          child: Padding(
-            padding: const EdgeInsets.only(right:68.0),
-            child: Text("Cancle",
-                style: TextStyle(color: Colors.grey, fontSize: 16)),
+          backgroundColor: Colors.black,
+          title: Center(
+            child: Text("Report Comments ?",
+                style: TextStyle(color: Colors.white, fontSize: 18)),
           ),
-          onPressed: () {
-            //Put your code here which you want to execute on Yes button click.
-            Navigator.of(context).pop();
-          },
-        ),
-        FlatButton(
-          child: Text("Report",
-              style: TextStyle(color: Colors.purple[900], fontSize: 16)),
-          onPressed: () {
-            //Put your code here which you want to execute on Cancel button click.
-            Navigator.of(context).pop();
-          },
-        ),
-      ]);
+          actions: <Widget>[
+            FlatButton(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 68.0),
+                child: Text("Cancle",
+                    style: TextStyle(color: Colors.grey, fontSize: 16)),
+              ),
+              onPressed: () {
+                //Put your code here which you want to execute on Yes button click.
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text("Report",
+                  style: TextStyle(color: Colors.purple[900], fontSize: 16)),
+              onPressed: () {
+                //Put your code here which you want to execute on Cancel button click.
+                Navigator.of(context).pop();
+              },
+            ),
+          ]);
     },
   );
 }
