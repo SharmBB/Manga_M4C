@@ -103,7 +103,7 @@ class _SignupState extends State<Signup> {
         child: TextFormField(
           style: const TextStyle(fontSize: 14, color: Colors.white),
           cursorColor: kPurple,
-          keyboardType: TextInputType.text,
+          keyboardType: TextInputType.emailAddress,
           // obscureText: showPassword,
           validator: (value) {
             RegExp regex = RegExp(
@@ -122,12 +122,12 @@ class _SignupState extends State<Signup> {
           textInputAction: TextInputAction.done,
           decoration: const InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-            hintText: "Email /UserName",
+            hintText: "Email / UserName",
             hintStyle: TextStyle(
-              fontSize: 16.0,
-              color: kWhite,
+              fontSize: 14.0,
+              color: kPrimaryWhiteColor,
             ),
-            fillColor: kGrey,
+            fillColor: kPrimaryPurpleColor,
             filled: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(0.0)),
@@ -142,8 +142,8 @@ class _SignupState extends State<Signup> {
     return Padding(
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
         child: TextFormField(
-          style: const TextStyle(fontSize: 14, color: Colors.white),
-          cursorColor: kPurple,
+          style: const TextStyle(fontSize: 14, color: kPrimaryWhiteColor),
+          cursorColor: kPrimaryPurpleColor,
           keyboardType: TextInputType.text,
           obscureText: showPassword,
           validator: (value) {
@@ -165,7 +165,7 @@ class _SignupState extends State<Signup> {
             contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
             hintText: "Password",
             hintStyle: TextStyle(
-              fontSize: 16.0,
+              fontSize: 14.0,
               color: kWhite,
             ),
             fillColor: kGrey,
@@ -184,7 +184,7 @@ class _SignupState extends State<Signup> {
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
         child: TextFormField(
           style: const TextStyle(fontSize: 14, color: Colors.white),
-          cursorColor: kPurple,
+          cursorColor: kPrimaryPurpleColor,
           keyboardType: TextInputType.text,
           obscureText: showconfirmPassword,
           validator: (value) {
@@ -208,7 +208,7 @@ class _SignupState extends State<Signup> {
             contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
             hintText: "Re-Enter Password",
             hintStyle: TextStyle(
-                fontSize: 16.0, color: Colors.grey, fontWeight: FontWeight.bold),
+                fontSize: 14.0, color:kPrimaryGreyColor),
             fillColor: kGrey,
             filled: true,
             border: OutlineInputBorder(

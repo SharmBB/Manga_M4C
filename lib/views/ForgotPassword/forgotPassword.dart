@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:mangakiku_app/_helpers/constants.dart';
+import 'package:mangakiku_app/views/ResetPassword/resetPassword.dart';
 
 class ForgetPassword extends StatefulWidget {
-  const ForgetPassword({Key? key, required this.title}) : super(key: key);
+  const ForgetPassword({Key? key, }) : super(key: key);
 
-  final String title;
+  
 
   @override
   State<ForgetPassword> createState() => _ResetPasswordState();
@@ -27,7 +28,7 @@ class _ResetPasswordState extends State<ForgetPassword> {
             backgroundColor: primaryColor,
         body: Center(
           child: Form(
-            autovalidateMode: AutovalidateMode.disabled,
+            autovalidateMode: AutovalidateMode.always,
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -62,8 +63,8 @@ class _ResetPasswordState extends State<ForgetPassword> {
         padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
         child: TextFormField(
           style: const TextStyle(
-              fontSize: 18.0, color: Colors.white),
-          cursorColor: kPurple,
+              fontSize: 14.0, color: kPrimaryWhiteColor),
+          cursorColor: kPrimaryPurpleColor,
           keyboardType: TextInputType.emailAddress,
           validator: (value) {
             RegExp regex = RegExp(
@@ -85,7 +86,7 @@ class _ResetPasswordState extends State<ForgetPassword> {
             contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
             hintText: "Email",
             hintStyle: TextStyle(
-                fontSize: 16.0, color: kWhite, fontWeight: FontWeight.bold),
+                fontSize: 14.0, color: kPrimaryWhiteColor),
             fillColor: kGrey,
             filled: true,
             border: OutlineInputBorder(
@@ -116,7 +117,7 @@ class _ResetPasswordState extends State<ForgetPassword> {
                       Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const ForgetPassword(title: '')),
+                          builder: (context) => const ResetPassword(title: '')),
                     );
                 }
               },

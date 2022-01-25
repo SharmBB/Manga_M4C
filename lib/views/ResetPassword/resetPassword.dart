@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/views/ForgotPassword/forgotPassword.dart';
+import 'package:mangakiku_app/views/SignIn/signin.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({Key? key, required this.title}) : super(key: key);
@@ -62,8 +63,8 @@ class _ResetPasswordState extends State<ResetPassword> {
          padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
         child: TextFormField(
           style: const TextStyle(
-              fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
-          cursorColor: kPurple,
+              fontSize: 14.0, color: kPrimaryWhiteColor),
+          cursorColor: kPrimaryPurpleColor,
           keyboardType: TextInputType.text,
           obscureText: showPassword,
           validator: (value) {
@@ -86,7 +87,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
             hintText: "Password",
             hintStyle: TextStyle(
-                fontSize: 16.0, color: kWhite, fontWeight: FontWeight.bold),
+                fontSize: 16.0, color: kPrimaryWhiteColor),
             fillColor: kGrey,
             filled: true,
             border: OutlineInputBorder(
@@ -103,7 +104,7 @@ class _ResetPasswordState extends State<ResetPassword> {
          padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
         child: TextFormField(
           style: const TextStyle(
-              fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 14.0,color: kPrimaryWhiteColor),
           cursorColor: kPurple,
           keyboardType: TextInputType.text,
           obscureText: showconfirmPassword,
@@ -128,7 +129,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
             hintText: "Confirm Password",
             hintStyle: TextStyle(
-                fontSize: 16.0, color: kWhite, fontWeight: FontWeight.bold),
+                fontSize: 16.0, color: kPrimaryWhiteColor),
             fillColor: kGrey,
             filled: true,
             border: OutlineInputBorder(
@@ -159,7 +160,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                        Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const ForgetPassword(title: '')),
+                          builder: (context) =>Signin()),
                     );
                 }
               },

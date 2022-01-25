@@ -59,7 +59,7 @@ class _SigninState extends State<Signin> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
+                          MaterialPageRoute(builder: (context) => ForgetPassword()),
                         );
                       },
                       child: Padding(
