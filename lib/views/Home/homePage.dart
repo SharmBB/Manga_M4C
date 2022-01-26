@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:floating_navbar/floating_navbar.dart';
 import 'package:floating_navbar/floating_navbar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
+import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/component/accountCard.dart';
 import 'package:mangakiku_app/component/bottomNavigationBar.dart';
 import 'package:mangakiku_app/views/Account/account.dart';
@@ -21,8 +24,20 @@ class HomePage extends StatefulWidget {
 var currentIndex = 0;
 
 class _HomePageState extends State<HomePage> {
+  List manga = [];
+
+// loader
+  bool _isLoading = true;
+
+  @override
+  initState() {
+    _apiMangaDetails();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var image = "https://cdn.statically.io/img/meo.comick.pictures/";
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
 
@@ -198,7 +213,125 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            MangakikuCard(),
+            Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[],
+                  ),
+                ),
+                Container(
+                  height: 300.0,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: manga.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        margin: EdgeInsets.all(10.0),
+                        width: 200.0,
+                        child: Stack(
+                          alignment: Alignment.topCenter,
+                          children: <Widget>[
+                            Positioned(
+                              bottom: 15.0,
+                              child: Container(
+                                height: 120.0,
+                                width: 200.0,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[850],
+                                  borderRadius: BorderRadius.circular(0.0),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "Dragon Ball",
+                                        style: TextStyle(
+                                          color: kPrimaryWhiteColor,
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                      SizedBox(height: 20.0),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 10.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "ch3",
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: kPrimaryWhiteColor,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(width: 60),
+                                            Text(
+                                              ".",
+                                              style: TextStyle(
+                                                fontSize: 13,
+                                                color: kPrimaryWhiteColor,
+                                              ),
+                                            ),
+                                            SizedBox(width: 30),
+                                            Text(
+                                              "line 23",
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: kPrimaryWhiteColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(0.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 6.0,
+                                  ),
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(00.0),
+                                child: Image(
+                                  height: 180.0,
+                                  width: 200.0,
+                                  image: AssetImage(_allMangas[index]["image"]),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+            // MangakikuCard(),
             SizedBox(
               height: 20,
             ),
@@ -243,7 +376,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             MangakikuCard(),
-              SizedBox(
+            SizedBox(
               height: 20,
             ),
             Container(
@@ -287,7 +420,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             MangakikuCard(),
-               SizedBox(
+            SizedBox(
               height: 20,
             ),
             Container(
@@ -336,4 +469,34 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+//get hot manga details from api
+  void _apiMangaDetails() async {
+    try {
+      manga.clear();
+      var bodyRoutes;
+      var res = await CallApi().getMangas('');
+      bodyRoutes = json.decode(res.body);
+      print(bodyRoutes);
+
+      manga.add(bodyRoutes);
+      print(manga);
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      _isLoading = false;
+    });
+  }
 }
+
+
+
+
+final List<Map<String, dynamic>> _allMangas = [
+  {"image": "assets/image-1.png", "title": "Dragonball"},
+  {"image": "assets/image-2.png", "title": "Dragonball"},
+  {"image": "assets/image-6.png", "title": "Dragonball"},
+  {"image": "assets/image-4.png", "title": "Dragonball"},
+  {"image": "assets/image-5.png", "title": "Dragonball"},
+];
