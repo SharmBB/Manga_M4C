@@ -226,7 +226,7 @@ class _HomePageState extends State<HomePage> {
                   height: 300.0,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: manga.length,
+                    itemCount: _allUsers.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
                         margin: EdgeInsets.all(10.0),
@@ -318,7 +318,7 @@ class _HomePageState extends State<HomePage> {
                                 child: Image(
                                   height: 180.0,
                                   width: 200.0,
-                                  image: AssetImage(_allMangas[index]["image"]),
+                                  image: AssetImage(_allUsers[index]["image"]),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -470,7 +470,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-//get hot manga details from api
+//get manga details from api
   void _apiMangaDetails() async {
     try {
       manga.clear();
@@ -478,9 +478,14 @@ class _HomePageState extends State<HomePage> {
       var res = await CallApi().getMangas('');
       bodyRoutes = json.decode(res.body);
       print(bodyRoutes);
+            print(bodyRoutes.length);
+      // print(manga);
+      // print(manga[1].length);
 
       manga.add(bodyRoutes);
-      print(manga);
+    //   print(manga);
+    //   print(manga.length);
+    //  print(manga[0].length);
     } catch (e) {
       print(e);
     }
@@ -490,10 +495,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-
-
-
-final List<Map<String, dynamic>> _allMangas = [
+final List<Map<String, dynamic>> _allUsers = [
   {"image": "assets/image-1.png", "title": "Dragonball"},
   {"image": "assets/image-2.png", "title": "Dragonball"},
   {"image": "assets/image-6.png", "title": "Dragonball"},

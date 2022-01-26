@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 
 class CallApi {
-  var baseurl = 'https://api.comick.fun/chapter?order=hot';
+  var baseurl = 'https://api.comick.fun/chapter?page=1&order=hot';
   var token;
 
   getMangas(apiUrl) async {
