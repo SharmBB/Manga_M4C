@@ -221,7 +221,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-
+                  //Seasonals mangas lists
                   Column(
                     children: <Widget>[
                       Padding(
@@ -235,7 +235,7 @@ class _HomePageState extends State<HomePage> {
                         height: 300.0,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: _allUsers.length,
+                          itemCount: manga[0].length,
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
                               margin: EdgeInsets.all(10.0),
@@ -498,6 +498,8 @@ class _HomePageState extends State<HomePage> {
 
       manga.add(bodyRoutes);
       print(manga.length);
+      print(manga[0].length);
+      print(manga[0][1]);
 
       setState(() {
         _isLoading = false;
