@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:floating_navbar/floating_navbar.dart';
 import 'package:floating_navbar/floating_navbar_item.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
@@ -262,7 +263,17 @@ class _HomePageState extends State<HomePage> {
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text(
-                                              "Dragon Ball",
+                                              manga[0][index]['md_comics']
+                                                              ['title']
+                                                          .length <=
+                                                      40
+                                                  ? manga[0][index]['md_comics']
+                                                          ['title']
+                                                      .toString()
+                                                  : manga[0][index]['md_comics']
+                                                          ['title']
+                                                      .toString()
+                                                      .substring(0, 40),
                                               style: TextStyle(
                                                 color: kPrimaryWhiteColor,
                                                 fontSize: 16.0,
@@ -281,7 +292,9 @@ class _HomePageState extends State<HomePage> {
                                                         MainAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        "ch3",
+                                                        'ch' +
+                                                            manga[0][index]
+                                                                ['chap'],
                                                         style: TextStyle(
                                                           fontSize: 12,
                                                           color:
@@ -300,7 +313,8 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                   SizedBox(width: 30),
                                                   Text(
-                                                    "line 23",
+                                                    manga[0][index]
+                                                        ['distanceTime'],
                                                     style: TextStyle(
                                                       fontSize: 12,
                                                       color: kPrimaryWhiteColor,
@@ -327,14 +341,36 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(00.0),
-                                      child: Image(
-                                        height: 180.0,
-                                        width: 200.0,
-                                        image: AssetImage(
-                                            _allUsers[index]["image"]),
-                                        fit: BoxFit.cover,
-                                      ),
+                                      child: CachedNetworkImage(
+                                          height: 160,
+                                          width: 200,
+                                          imageUrl: manga[0][index]['md_comics']
+                                              ['md_covers'][0]['gpurl'],
+                                          imageBuilder: (context,
+                                                  imageProvider) =>
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  image: DecorationImage(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.cover),
+                                                ),
+                                              ),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error)),
                                     ),
+                                    //   Image(
+                                    //     height: 180.0,
+                                    //     width: 200.0,
+                                    //     image: AssetImage(manga[0][index]
+                                    //                 ['md_comics']['md_covers']
+                                    //             [0]['gpurl']
+                                    //         //_allUsers[index]["image"]
+                                    //         ),
+                                    //     fit: BoxFit.fill,
+                                    //   ),
+                                    // ),
                                   )
                                 ],
                               ),
@@ -493,13 +529,13 @@ class _HomePageState extends State<HomePage> {
       var bodyRoutes;
       var res = await CallApi().getMangas('');
       bodyRoutes = json.decode(res.body);
-      print(bodyRoutes);
-      print(bodyRoutes.length);
+      // print(bodyRoutes);
+      // print(bodyRoutes.length);
 
       manga.add(bodyRoutes);
-      print(manga.length);
-      print(manga[0].length);
-      print(manga[0][1]);
+      print("----------------------");
+      print(bodyRoutes[0]['md_comics']['md_covers'][0]['gpurl']);
+      print(manga[0][0]['md_comics']['title']);
 
       setState(() {
         _isLoading = false;
