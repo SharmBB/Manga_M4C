@@ -14,6 +14,7 @@ import 'package:mangakiku_app/component/bottomNavigationBar.dart';
 import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Browser/browser.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
+import 'package:mangakiku_app/views/chapter/chapter.dart';
 import 'package:mangakiku_app/views/type/type.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,7 +27,11 @@ class HomePage extends StatefulWidget {
 var currentIndex = 0;
 
 class _HomePageState extends State<HomePage> {
+//list for api
   List manga = [];
+  List Newmanga = [];
+  List ViewManga = [];
+  List RatingManga = [];
 
 // loader
   bool _isLoading = true;
@@ -34,6 +39,9 @@ class _HomePageState extends State<HomePage> {
   @override
   initState() {
     _apiMangaDetails();
+    _apiNewMangaDetails();
+    _apiViewwMangaDetails();
+    _apiRatingMangaDetails();
     super.initState();
   }
 
@@ -187,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Seasonals Mangas",
+                          "Hot",
                           style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -236,7 +244,7 @@ class _HomePageState extends State<HomePage> {
                         height: 300.0,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: manga[0].length,
+                          itemCount: 5,
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
                               margin: EdgeInsets.all(10.0),
@@ -303,7 +311,7 @@ class _HomePageState extends State<HomePage> {
                                                       ),
                                                     ],
                                                   ),
-                                                  SizedBox(width: 60),
+                                                  SizedBox(width: 55),
                                                   Text(
                                                     ".",
                                                     style: TextStyle(
@@ -311,7 +319,7 @@ class _HomePageState extends State<HomePage> {
                                                       color: kPrimaryWhiteColor,
                                                     ),
                                                   ),
-                                                  SizedBox(width: 30),
+                                                  SizedBox(width: 25),
                                                   Text(
                                                     manga[0][index]
                                                         ['distanceTime'],
@@ -390,7 +398,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Recently Updated",
+                          "New",
                           style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -425,7 +433,166 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  MangakikuCard(),
+                  // MangakikuCard(),
+                  //Seasonals mangas lists
+                  Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[],
+                        ),
+                      ),
+                      Container(
+                        height: 300.0,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: Newmanga[0].length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              margin: EdgeInsets.all(10.0),
+                              width: 200.0,
+                              child: Stack(
+                                alignment: Alignment.topCenter,
+                                children: <Widget>[
+                                  Positioned(
+                                    bottom: 15.0,
+                                    child: Container(
+                                      height: 120.0,
+                                      width: 200.0,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[850],
+                                        borderRadius:
+                                            BorderRadius.circular(0.0),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              Newmanga[0][index]['md_comics']
+                                                              ['title']
+                                                          .length <=
+                                                      40
+                                                  ? Newmanga[0][index]
+                                                          ['md_comics']['title']
+                                                      .toString()
+                                                  : Newmanga[0][index]
+                                                          ['md_comics']['title']
+                                                      .toString()
+                                                      .substring(0, 40),
+                                              style: TextStyle(
+                                                color: kPrimaryWhiteColor,
+                                                fontSize: 16.0,
+                                              ),
+                                            ),
+                                            SizedBox(height: 20.0),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        'ch' +
+                                                            Newmanga[0][index]
+                                                                ['chap'],
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                          color:
+                                                              kPrimaryWhiteColor,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(width: 55),
+                                                  Text(
+                                                    ".",
+                                                    style: TextStyle(
+                                                      fontSize: 13,
+                                                      color: kPrimaryWhiteColor,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 25),
+                                                  Text(
+                                                    Newmanga[0][index]
+                                                        ['distanceTime'],
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: kPrimaryWhiteColor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(0.0),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black26,
+                                          blurRadius: 6.0,
+                                        ),
+                                      ],
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(00.0),
+                                      child: CachedNetworkImage(
+                                          height: 160,
+                                          width: 200,
+                                          imageUrl: Newmanga[0][index]
+                                                  ['md_comics']['md_covers'][0]
+                                              ['gpurl'],
+                                          imageBuilder: (context,
+                                                  imageProvider) =>
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  image: DecorationImage(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.cover),
+                                                ),
+                                              ),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error)),
+                                    ),
+                                    //   Image(
+                                    //     height: 180.0,
+                                    //     width: 200.0,
+                                    //     image: AssetImage(manga[0][index]
+                                    //                 ['md_comics']['md_covers']
+                                    //             [0]['gpurl']
+                                    //         //_allUsers[index]["image"]
+                                    //         ),
+                                    //     fit: BoxFit.fill,
+                                    //   ),
+                                    // ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -470,7 +637,172 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  MangakikuCard(),
+                  Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[],
+                        ),
+                      ),
+                      Container(
+                        height: 300.0,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: Newmanga[0].length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              margin: EdgeInsets.all(10.0),
+                              width: 200.0,
+                              child: Stack(
+                                alignment: Alignment.topCenter,
+                                children: <Widget>[
+                                  Positioned(
+                                    bottom: 15.0,
+                                    child: Container(
+                                      height: 120.0,
+                                      width: 200.0,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[850],
+                                        borderRadius:
+                                            BorderRadius.circular(0.0),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              ViewManga[0][index]['title']
+                                                          .length <=
+                                                      40
+                                                  ? ViewManga[0][index]['title']
+                                                      .toString()
+                                                  : ViewManga[0][index]['title']
+                                                      .toString()
+                                                      .substring(0, 40),
+                                              style: TextStyle(
+                                                color: kPrimaryWhiteColor,
+                                                fontSize: 16.0,
+                                              ),
+                                            ),
+                                            SizedBox(height: 20.0),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        'ch' +
+                                                            ViewManga[0][index][
+                                                                'last_chapter'],
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                          color:
+                                                              kPrimaryWhiteColor,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(width: 45),
+                                                  Text(
+                                                    ".",
+                                                    style: TextStyle(
+                                                      fontSize: 13,
+                                                      color: kPrimaryWhiteColor,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 25),
+                                                  Text(
+                                                    Newmanga[0][index]
+                                                        ['distanceTime'],
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: kPrimaryWhiteColor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(0.0),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black26,
+                                            blurRadius: 6.0,
+                                          ),
+                                        ],
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(00.0),
+                                        child: InkWell(
+                                          onTap: () {
+                                            print(ViewManga[0][index]);
+                                            _navigator(context,
+                                                Chapter([ViewManga[0][index]]));
+                                          },
+                                          borderRadius:
+                                              BorderRadius.circular(00.0),
+                                          child: CachedNetworkImage(
+                                              height: 160,
+                                              width: 200,
+                                              imageUrl: ViewManga[0][index]
+                                                  ['md_covers'][0]['gpurl'],
+                                              imageBuilder: (context,
+                                                      imageProvider) =>
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      image: DecorationImage(
+                                                          image: imageProvider,
+                                                          fit: BoxFit.cover),
+                                                    ),
+                                                  ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error)),
+                                        ),
+                                        //   Image(
+                                        //     height: 180.0,
+                                        //     width: 200.0,
+                                        //     image: AssetImage(manga[0][index]
+                                        //                 ['md_comics']['md_covers']
+                                        //             [0]['gpurl']
+                                        //         //_allUsers[index]["image"]
+                                        //         ),
+                                        //     fit: BoxFit.fill,
+                                        //   ),
+                                        // ),
+                                      )),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -515,7 +847,165 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  MangakikuCard(),
+                  // MangakikuCard(),
+                  Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[],
+                        ),
+                      ),
+                      Container(
+                        height: 300.0,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              margin: EdgeInsets.all(10.0),
+                              width: 200.0,
+                              child: Stack(
+                                alignment: Alignment.topCenter,
+                                children: <Widget>[
+                                  Positioned(
+                                    bottom: 15.0,
+                                    child: Container(
+                                      height: 120.0,
+                                      width: 200.0,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[850],
+                                        borderRadius:
+                                            BorderRadius.circular(0.0),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              RatingManga[0][index]['title']
+                                                          .length <=
+                                                      40
+                                                  ? RatingManga[0][index]
+                                                          ['title']
+                                                      .toString()
+                                                  : RatingManga[0][index]
+                                                          ['title']
+                                                      .toString()
+                                                      .substring(0, 40),
+                                              style: TextStyle(
+                                                color: kPrimaryWhiteColor,
+                                                fontSize: 16.0,
+                                              ),
+                                            ),
+                                            SizedBox(height: 20.0),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        'ch' +
+                                                            RatingManga[0]
+                                                                    [index][
+                                                                'last_chapter'],
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                          color:
+                                                              kPrimaryWhiteColor,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(width: 45),
+                                                  Text(
+                                                    ".",
+                                                    style: TextStyle(
+                                                      fontSize: 13,
+                                                      color: kPrimaryWhiteColor,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 25),
+                                                  Text(
+                                                    Newmanga[0][index]
+                                                        ['distanceTime'],
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: kPrimaryWhiteColor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(0.0),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black26,
+                                            blurRadius: 6.0,
+                                          ),
+                                        ],
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(00.0),
+                                        child: InkWell(
+                                          onTap: () {
+                                            // print(RatingManga[0][index]);
+                                            _navigator(context,
+                                                Chapter([RatingManga[0][index]]));
+                                          },
+                                          
+                                          child: CachedNetworkImage(
+                                              height: 160,
+                                              width: 200,
+                                              imageUrl: RatingManga[0][index]
+                                                  ['md_covers'][0]['gpurl'],
+                                              imageBuilder: (context,
+                                                      imageProvider) =>
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      image: DecorationImage(
+                                                          image: imageProvider,
+                                                          fit: BoxFit.cover),
+                                                    ),
+                                                  ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error)),
+                                        ),
+                                       
+                                      ))
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
       ),
@@ -534,8 +1024,79 @@ class _HomePageState extends State<HomePage> {
 
       manga.add(bodyRoutes);
       print("----------------------");
-      print(bodyRoutes[0]['md_comics']['md_covers'][0]['gpurl']);
-      print(manga[0][0]['md_comics']['title']);
+      // print(bodyRoutes[0]['md_comics']['md_covers'][0]['gpurl']);
+      // print(manga[0][0]['md_comics']['title']);
+
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+//get Newmangas details from api
+  void _apiNewMangaDetails() async {
+    try {
+      Newmanga.clear();
+      var bodyRoutes;
+      var res = await CallApi().getNewMangas('');
+      bodyRoutes = json.decode(res.body);
+      // print(bodyRoutes);
+      // print(bodyRoutes.length);
+
+      Newmanga.add(bodyRoutes);
+      // print("----------------------");
+      // print(bodyRoutes[0]['md_comics']['md_covers'][0]['gpurl']);
+      // print(Newmanga[0][0]['md_comics']['title']);
+
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+//get Viewmangas details from api
+  void _apiViewwMangaDetails() async {
+    try {
+      ViewManga.clear();
+      var bodyRoutes;
+      var res = await CallApi().getViewMangas('');
+      bodyRoutes = json.decode(res.body);
+      // print(bodyRoutes);
+      // print(bodyRoutes.length);
+
+      ViewManga.add(bodyRoutes);
+      print("----------------------");
+      print(bodyRoutes);
+      print(bodyRoutes[0]['md_covers'][0]['gpurl']);
+      // print(Newmanga[0][0]['md_comics']['title']);
+
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //get Viewmangas details from api
+  void _apiRatingMangaDetails() async {
+    try {
+      RatingManga.clear();
+      var bodyRoutes;
+      var res = await CallApi().getRatingMangas('');
+      bodyRoutes = json.decode(res.body);
+      // print(bodyRoutes);
+      // print(bodyRoutes.length);
+
+      RatingManga.add(bodyRoutes);
+      print("----------------------");
+      print(bodyRoutes);
+      print(bodyRoutes[0]['md_covers'][0]['gpurl']);
+      // print(Newmanga[0][0]['md_comics']['title']);
 
       setState(() {
         _isLoading = false;
@@ -545,6 +1106,15 @@ class _HomePageState extends State<HomePage> {
     }
   }
 }
+
+void _navigator(BuildContext context, add) async {
+  final result = await Navigator.push(
+      context, MaterialPageRoute(builder: (context) => add));
+  print("result");
+  print(result);
+  // print(result["addToCardList"]['totalAmount']);
+}
+
 
 final List<Map<String, dynamic>> _allUsers = [
   {"image": "assets/image-1.png", "title": "Dragonball"},
