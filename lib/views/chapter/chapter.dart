@@ -34,7 +34,6 @@ class _CartState extends State<Chapter> {
   @override
   void initState() {
     _ChapterDetailsUsingName();
-    _apiChapterUsingID();
     super.initState();
   }
 
@@ -405,6 +404,7 @@ class _CartState extends State<Chapter> {
   }
 
   //get chapter details using name from api
+  // ignore: non_constant_identifier_names
   void _ChapterDetailsUsingName() async {
     try {
       chapterUsingName.clear();
@@ -412,27 +412,19 @@ class _CartState extends State<Chapter> {
       var res = await CallApi().getChapterUsingName(_manga[0]['slug']);
       bodyRoutes = json.decode(res.body);
       chapterUsingName.add(bodyRoutes);
-      print("----------------------");
-      print(bodyRoutes);
-      print(chapterUsingName[0]['comic']['id']);
-      setState(() {
-        _isLoading = false;
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
+      print(_manga[0]['slug']);
 
-  //get chapter details using ID from api
-  void _apiChapterUsingID() async {
-    try {
-      chapterUsingID.clear();
-      var bodyRoutes;
-      var res = await CallApi()
-          .getChapterUsingID(chapterUsingName[0]['comic']['id'] + '/chapter');
-      bodyRoutes = json.decode(res.body);
-      chapterUsingID.add(bodyRoutes);
       print(bodyRoutes);
+
+      int id = chapterUsingName[0]['comic']['id'];
+
+      chapterUsingID.clear();
+      var bodyRoutesChap;
+      var resCHap = await CallApi().getChapterUsingID('$id/chapter');
+      bodyRoutesChap = json.decode(resCHap.body);
+      chapterUsingID.add(bodyRoutesChap);
+      print("---------chapters-------------");
+      print(bodyRoutesChap);
       setState(() {
         _isLoading = false;
       });

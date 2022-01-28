@@ -971,10 +971,11 @@ class _HomePageState extends State<HomePage> {
                                         child: InkWell(
                                           onTap: () {
                                             // print(RatingManga[0][index]);
-                                            _navigator(context,
-                                                Chapter([RatingManga[0][index]]));
+                                            _navigator(
+                                                context,
+                                                Chapter(
+                                                    [RatingManga[0][index]]));
                                           },
-                                          
                                           child: CachedNetworkImage(
                                               height: 160,
                                               width: 200,
@@ -996,7 +997,6 @@ class _HomePageState extends State<HomePage> {
                                                   (context, url, error) =>
                                                       Icon(Icons.error)),
                                         ),
-                                       
                                       ))
                                 ],
                               ),
@@ -1114,7 +1114,6 @@ void _navigator(BuildContext context, add) async {
   print(result);
   // print(result["addToCardList"]['totalAmount']);
 }
-
 
 final List<Map<String, dynamic>> _allUsers = [
   {"image": "assets/image-1.png", "title": "Dragonball"},
