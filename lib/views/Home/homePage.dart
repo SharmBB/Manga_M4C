@@ -7,6 +7,7 @@ import 'package:floating_navbar/floating_navbar_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/component/accountCard.dart';
@@ -14,6 +15,7 @@ import 'package:mangakiku_app/component/bottomNavigationBar.dart';
 import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Browser/browser.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
+import 'package:mangakiku_app/views/Library/library.dart';
 import 'package:mangakiku_app/views/chapter/chapter.dart';
 import 'package:mangakiku_app/views/type/type.dart';
 
@@ -25,6 +27,15 @@ class HomePage extends StatefulWidget {
 }
 
 var currentIndex = 0;
+int selectedIndex = 0;
+
+List<IconData> listOfIcons = [
+  Icons.home_rounded,
+  Icons.description_outlined,
+  Icons.settings_rounded,
+  Icons.notification_important_outlined,
+  Icons.collections_bookmark_outlined,
+];
 
 class _HomePageState extends State<HomePage> {
 //list for api
@@ -573,17 +584,6 @@ class _HomePageState extends State<HomePage> {
                                           errorWidget: (context, url, error) =>
                                               Icon(Icons.error)),
                                     ),
-                                    //   Image(
-                                    //     height: 180.0,
-                                    //     width: 200.0,
-                                    //     image: AssetImage(manga[0][index]
-                                    //                 ['md_comics']['md_covers']
-                                    //             [0]['gpurl']
-                                    //         //_allUsers[index]["image"]
-                                    //         ),
-                                    //     fit: BoxFit.fill,
-                                    //   ),
-                                    // ),
                                   )
                                 ],
                               ),
@@ -783,17 +783,6 @@ class _HomePageState extends State<HomePage> {
                                                   (context, url, error) =>
                                                       Icon(Icons.error)),
                                         ),
-                                        //   Image(
-                                        //     height: 180.0,
-                                        //     width: 200.0,
-                                        //     image: AssetImage(manga[0][index]
-                                        //                 ['md_comics']['md_covers']
-                                        //             [0]['gpurl']
-                                        //         //_allUsers[index]["image"]
-                                        //         ),
-                                        //     fit: BoxFit.fill,
-                                        //   ),
-                                        // ),
                                       )),
                                 ],
                               ),
@@ -1009,6 +998,68 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
       ),
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.all(20),
+        height: screenWidth * .155,
+        decoration: BoxDecoration(
+          color: Colors.grey[900],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0),
+              blurRadius: 30,
+              offset: Offset(0, 10),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(50),
+        ),
+        child: ListView.builder(
+          itemCount: 5,
+          scrollDirection: Axis.horizontal,
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * .034),
+          itemBuilder: (context, index) => InkWell(
+            onTap: () {
+              setState(() {
+                currentIndex = index;
+                print(currentIndex);
+                if (currentIndex == 1) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Browser()),
+                  );
+                } else if (currentIndex == 2) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Account()),
+                  );
+                } else if (currentIndex == 3) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Library()),
+                  );
+                }
+              });
+            },
+           
+            child: Stack(
+              children: [
+               
+              
+                Container(
+                  width: screenWidth * .1700,
+                  alignment: Alignment.center,
+                  child: Icon(
+                    listOfIcons[index],
+                    size: screenWidth * .076,
+                    color: index == currentIndex
+                        ? kPrimaryPurpleColor
+                        : Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -1019,13 +1070,11 @@ class _HomePageState extends State<HomePage> {
       var bodyRoutes;
       var res = await CallApi().getMangas('');
       bodyRoutes = json.decode(res.body);
-      // print(bodyRoutes);
-      // print(bodyRoutes.length);
+     
 
       manga.add(bodyRoutes);
       print("----------------------");
-      // print(bodyRoutes[0]['md_comics']['md_covers'][0]['gpurl']);
-      // print(manga[0][0]['md_comics']['title']);
+      
 
       setState(() {
         _isLoading = false;
@@ -1042,14 +1091,10 @@ class _HomePageState extends State<HomePage> {
       var bodyRoutes;
       var res = await CallApi().getNewMangas('');
       bodyRoutes = json.decode(res.body);
-      // print(bodyRoutes);
-      // print(bodyRoutes.length);
+     
 
       Newmanga.add(bodyRoutes);
-      // print("----------------------");
-      // print(bodyRoutes[0]['md_comics']['md_covers'][0]['gpurl']);
-      // print(Newmanga[0][0]['md_comics']['title']);
-
+     
       setState(() {
         _isLoading = false;
       });
@@ -1072,7 +1117,7 @@ class _HomePageState extends State<HomePage> {
       print("----------------------");
       print(bodyRoutes);
       print(bodyRoutes[0]['md_covers'][0]['gpurl']);
-      // print(Newmanga[0][0]['md_comics']['title']);
+      
 
       setState(() {
         _isLoading = false;
@@ -1114,5 +1159,3 @@ void _navigator(BuildContext context, add) async {
   print(result);
   // print(result["addToCardList"]['totalAmount']);
 }
-
-

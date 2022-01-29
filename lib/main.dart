@@ -7,6 +7,7 @@ import 'package:mangakiku_app/views/Comments/comments2.dart';
 
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
+import 'package:mangakiku_app/views/Library/demo.dart';
 import 'package:mangakiku_app/views/Library/library.dart';
 import 'package:mangakiku_app/views/SignIn/signin.dart';
 import 'package:mangakiku_app/views/Signup/signup.dart';
