@@ -1115,10 +1115,4 @@ void _navigator(BuildContext context, add) async {
   // print(result["addToCardList"]['totalAmount']);
 }
 
-final List<Map<String, dynamic>> _allUsers = [
-  {"image": "assets/image-1.png", "title": "Dragonball"},
-  {"image": "assets/image-2.png", "title": "Dragonball"},
-  {"image": "assets/image-6.png", "title": "Dragonball"},
-  {"image": "assets/image-4.png", "title": "Dragonball"},
-  {"image": "assets/image-5.png", "title": "Dragonball"},
-];
+

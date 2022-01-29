@@ -25,8 +25,7 @@ class _CartState extends State<Chapter> {
   //list for api
   List chapterUsingName = [];
   List chapterUsingID = [];
-
-  List chapter = [];
+  List chaptersFromDB = [];
 
 // loader
   bool _isLoading = true;
@@ -394,10 +393,139 @@ class _CartState extends State<Chapter> {
                             ),
                           ),
                         ),
-                        CharacterPage(),
+                        Column(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, right: 20, left: 10),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width: 115,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                            color: kPrimaryGreyColor,
+                                            // gradient: LinearGradient(colors: [secondary, primary]),
+                                            borderRadius:
+                                                BorderRadius.circular(1)),
+                                        child: Row(
+                                          // mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Select Language",
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.white),
+                                            ),
+                                            Icon(
+                                              Icons.keyboard_arrow_down,
+                                              color: Colors.white,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 10, right: 15),
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 110,
+                                    height: 22,
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        // gradient: LinearGradient(colors: [secondary, primary]),
+                                        borderRadius: BorderRadius.circular(1)),
+                                    child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 10.0, left: 5),
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                            hintText: "Select Chapter",
+                                            hintStyle: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.white),
+                                            border: InputBorder.none,
+                                            fillColor: Colors.grey[900],
+                                          ),
+                                        )),
+                                  ),
+                                  Text('Date',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold)),
+                                  Text(
+                                    'Language',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ]),
+                          ),
+                          Expanded(
+                            child: Container(
+                              child: ListView.builder(
+                                itemCount: chaptersFromDB.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return InkWell(
+                                    child: ListTile(
+                                        //return new ListTile(
+                                        onTap: null,
+                                        subtitle: Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 15.0, left: 10),
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: <Widget>[
+                                                Text(
+                                                  chaptersFromDB[index]["chap"]
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 13,
+                                                      color: Colors.white),
+                                                ),
+                                                Text(
+                                                  chaptersFromDB[index]
+                                                              ["up_count"]
+                                                          .toString() +
+                                                      "days",
+                                                  style: TextStyle(
+                                                      fontSize: 13,
+                                                      color: Colors.white),
+                                                ),
+                                                Text(
+                                                  chaptersFromDB[index]["lang"]
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 13,
+                                                      color: Colors.white),
+                                                ),
+                                              ]),
+                                        )),
+                                  );
+                                }, //itemBuilder
+                              ),
+                            ),
+                          ),
+                        ])
                       ]),
-
-                      // Center( child: Text("Three",style: TextStyle(fontSize: 50),))
                     )
                   ]))
         ])));
@@ -412,233 +540,25 @@ class _CartState extends State<Chapter> {
       var res = await CallApi().getChapterUsingName(_manga[0]['slug']);
       bodyRoutes = json.decode(res.body);
       chapterUsingName.add(bodyRoutes);
-      print(_manga[0]['slug']);
-
-      print(bodyRoutes);
-
       int id = chapterUsingName[0]['comic']['id'];
+      print(id);
 
       chapterUsingID.clear();
       var bodyRoutesChap;
       var resCHap = await CallApi().getChapterUsingID('$id/chapter');
       bodyRoutesChap = json.decode(resCHap.body);
-      chapterUsingID.add(bodyRoutesChap);
+
+      chaptersFromDB = bodyRoutesChap['chapters'];
+
       print("---------chapters-------------");
-      print(bodyRoutesChap);
+
+      print(chaptersFromDB.length);
+
       setState(() {
         _isLoading = false;
       });
     } catch (e) {
       print(e);
     }
-  }
-}
-
-//get all the chapter details using loop
-//   addItems() {
-//     for (var i = 0; i < chapterUsingName.length; i++) {
-//       chapter.add({
-//         "Chapter Details": chapterUsingName[i]["chap"],
-//       });
-//     }
-//     print(chapter);
-//   }
-// }
-
-class CharacterPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    //final TextStyle textStyle = Theme.of(context).textTheme.display1;
-    return SingleChildScrollView(
-        child: Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(top: 10, right: 20, left: 20),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 140,
-                    height: 30,
-                    decoration: BoxDecoration(
-                        color: Colors.grey,
-                        // gradient: LinearGradient(colors: [secondary, primary]),
-                        borderRadius: BorderRadius.circular(1)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Select Language",
-                          style: TextStyle(fontSize: 13, color: Colors.white),
-                        ),
-                        Icon(
-                          Icons.keyboard_arrow_down,
-                          color: Colors.white,
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      DataTable(
-        border: TableBorder(
-          horizontalInside: BorderSide(color: Colors.white),
-        ),
-        columns: [
-          DataColumn(
-            label: Container(
-              width: 120,
-              height: 25,
-              decoration: BoxDecoration(
-                  color: Colors.grey,
-                  // gradient: LinearGradient(colors: [secondary, primary]),
-                  borderRadius: BorderRadius.circular(1)),
-              child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0, left: 5),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        hintText: "Select Chapter",
-                        hintStyle:
-                            TextStyle(fontSize: 12.0, color: Colors.white),
-                        border: InputBorder.none,
-                        fillColor: Colors.grey,
-                        focusColor: Colors.grey),
-                  )),
-            ),
-          ),
-          DataColumn(
-              label: Text(
-            'Date',
-            style: TextStyle(fontSize: 14, color: Colors.white),
-          )),
-          DataColumn(
-              label: Text(
-            'Language',
-            style: TextStyle(fontSize: 14, color: Colors.white),
-          )),
-        ],
-        rows: [
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-        ],
-      ),
-    ]));
   }
 }
