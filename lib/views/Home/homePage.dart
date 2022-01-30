@@ -50,9 +50,7 @@ class _HomePageState extends State<HomePage> {
   @override
   initState() {
     _apiMangaDetails();
-    _apiNewMangaDetails();
-    _apiViewwMangaDetails();
-    _apiRatingMangaDetails();
+
     super.initState();
   }
 
@@ -1036,14 +1034,17 @@ class _HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(builder: (context) => Library()),
                   );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LeaderBoardScreen()),
+                  );
                 }
               });
             },
-           
             child: Stack(
               children: [
-               
-              
                 Container(
                   width: screenWidth * .1700,
                   alignment: Alignment.center,
@@ -1066,82 +1067,29 @@ class _HomePageState extends State<HomePage> {
 //get manga details from api
   void _apiMangaDetails() async {
     try {
+      //Hot Manga API
       manga.clear();
-      var bodyRoutes;
       var res = await CallApi().getMangas('');
-      bodyRoutes = json.decode(res.body);
-     
-
+      var bodyRoutes = json.decode(res.body);
       manga.add(bodyRoutes);
-      print("----------------------");
-      
 
-      setState(() {
-        _isLoading = false;
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
-//get Newmangas details from api
-  void _apiNewMangaDetails() async {
-    try {
+      //new Manga API
       Newmanga.clear();
-      var bodyRoutes;
-      var res = await CallApi().getNewMangas('');
-      bodyRoutes = json.decode(res.body);
-     
+      var resNew = await CallApi().getNewMangas('');
+      var bodyRoutesNew = json.decode(resNew.body);
+      Newmanga.add(bodyRoutesNew);
 
-      Newmanga.add(bodyRoutes);
-     
-      setState(() {
-        _isLoading = false;
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
-//get Viewmangas details from api
-  void _apiViewwMangaDetails() async {
-    try {
+      //View Manga API
       ViewManga.clear();
-      var bodyRoutes;
-      var res = await CallApi().getViewMangas('');
-      bodyRoutes = json.decode(res.body);
-      // print(bodyRoutes);
-      // print(bodyRoutes.length);
+      var resView = await CallApi().getViewMangas('');
+      var bodyRoutesView = json.decode(resView.body);
+      ViewManga.add(bodyRoutesView);
 
-      ViewManga.add(bodyRoutes);
-      print("----------------------");
-      print(bodyRoutes);
-      print(bodyRoutes[0]['md_covers'][0]['gpurl']);
-      
-
-      setState(() {
-        _isLoading = false;
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  //get Viewmangas details from api
-  void _apiRatingMangaDetails() async {
-    try {
+      //Rating Manga API
       RatingManga.clear();
-      var bodyRoutes;
-      var res = await CallApi().getRatingMangas('');
-      bodyRoutes = json.decode(res.body);
-      // print(bodyRoutes);
-      // print(bodyRoutes.length);
-
-      RatingManga.add(bodyRoutes);
-      print("----------------------");
-      print(bodyRoutes);
-      print(bodyRoutes[0]['md_covers'][0]['gpurl']);
-      // print(Newmanga[0][0]['md_comics']['title']);
+      var resRating = await CallApi().getRatingMangas('');
+      var bodyRoutesRating = json.decode(resRating.body);
+      RatingManga.add(bodyRoutesRating);
 
       setState(() {
         _isLoading = false;

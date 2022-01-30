@@ -2,7 +2,6 @@ import 'package:floating_navbar/floating_navbar.dart';
 import 'package:floating_navbar/floating_navbar_item.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:mangakiku_app/views/Home/homePage.dart';
 
 class MainPageView extends StatelessWidget {
