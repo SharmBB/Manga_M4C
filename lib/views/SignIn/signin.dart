@@ -38,7 +38,7 @@ class _SigninState extends State<Signin> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text(
-                  'SIGN IN',
+                  'SIGNHH IN',
                   style: TextStyle(
                       fontSize: 20,
                       color: kPrimaryPurpleColor,
@@ -59,7 +59,8 @@ class _SigninState extends State<Signin> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ForgetPassword()),
+                          MaterialPageRoute(
+                              builder: (context) => ForgetPassword()),
                         );
                       },
                       child: Padding(
@@ -79,7 +80,7 @@ class _SigninState extends State<Signin> {
 
                 _reset(),
                 SizedBox(height: screenHeight * (1 / 20)),
-                 Padding(
+                Padding(
                   padding: const EdgeInsets.only(left: 80.0, right: 50.0),
                   child: Row(
                     children: [
@@ -124,11 +125,9 @@ class _SigninState extends State<Signin> {
     return Padding(
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
         child: TextFormField(
-          style: const TextStyle(
-              fontSize: 16, color: Colors.white),
+          style: const TextStyle(fontSize: 16, color: Colors.white),
           cursorColor: kPurple,
           keyboardType: TextInputType.text,
-
           validator: (value) {
             RegExp regex = RegExp(
                 r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
@@ -166,8 +165,7 @@ class _SigninState extends State<Signin> {
     return Padding(
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
         child: TextFormField(
-          style: const TextStyle(
-              fontSize: 16.0,  color: Colors.white),
+          style: const TextStyle(fontSize: 16.0, color: Colors.white),
           cursorColor: kPurple,
           keyboardType: TextInputType.text,
           obscureText: showPassword,
@@ -222,8 +220,7 @@ class _SigninState extends State<Signin> {
                   // use the email provided here
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const HomePage()),
+                    MaterialPageRoute(builder: (context) => const HomePage()),
                   );
                 }
               },
