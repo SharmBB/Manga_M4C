@@ -88,7 +88,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             hintText: "Password",
             hintStyle: TextStyle(
                 fontSize: 16.0, color: kPrimaryWhiteColor),
-            fillColor: kGrey,
+            fillColor: kPrimaryGreyColor,
             filled: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(0.0)),
@@ -105,7 +105,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         child: TextFormField(
           style: const TextStyle(
               fontSize: 14.0,color: kPrimaryWhiteColor),
-          cursorColor: kPurple,
+          cursorColor: kPrimaryPurpleColor,
           keyboardType: TextInputType.text,
           obscureText: showconfirmPassword,
           validator: (value) {
@@ -130,7 +130,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             hintText: "Confirm Password",
             hintStyle: TextStyle(
                 fontSize: 16.0, color: kPrimaryWhiteColor),
-            fillColor: kGrey,
+            fillColor: kPrimarylightGreyColor,
             filled: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(0.0)),

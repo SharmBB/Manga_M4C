@@ -19,7 +19,8 @@ class CallApi {
   var _urlAuth = 'http://mangakiku-api.moodfor.codes/api/';
 
   var token;
-
+  //Genres api url
+  var genres_baseurl = 'https://api.comick.fun/genre';
   //browser
   var hoturl = 'https://api.comick.fun/search?page=1&limit=50&sort=uploaded';
   var newurl = 'https://api.comick.fun/search?page=1&limit=50&sort=follow';
@@ -31,6 +32,14 @@ class CallApi {
       fullUrl,
       body: jsonEncode(data),
       headers: _setHeaders(),
+    );
+  }
+
+//Genres api
+  getGenres(apiUrl) async {
+    var fullUrl = Uri.parse(genres_baseurl + apiUrl);
+    return await http.get(
+      fullUrl,
     );
   }
 

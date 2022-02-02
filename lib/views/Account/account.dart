@@ -19,7 +19,7 @@ class _AccountState extends State<Account> {
 
   @override
   initState() {
-    _getUserById();
+    _getUserDetails();
     super.initState();
   }
 
@@ -242,7 +242,7 @@ class _AccountState extends State<Account> {
     );
   }
 
-  void _getUserById() async {
+  void _getUserDetails() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     print("data from sample screen");
     usernameId = localStorage.getInt('userId');
@@ -254,9 +254,6 @@ class _AccountState extends State<Account> {
     print(usernameId);
     print(name);
     print(bio);
-    // var data = {
-    //   "id": image,
-    // };
-    // print(data);
+   
   }
 }

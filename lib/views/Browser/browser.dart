@@ -29,10 +29,49 @@ class _MyHomePageState extends State<Browser> {
   @override
   initState() {
     _apiMangaDetails();
+    _apiGenresDetails();
 
     SelectedManga = manga;
     super.initState();
   }
+
+  List genres = [];
+
+  // loader
+  bool _isLoading1 = true;
+
+ 
+
+  //get manga details from api
+  void _apiGenresDetails() async {
+    try {
+      // genres.clear();
+      var bodyRoutes;
+      var res = await CallApi().getGenres('');
+      bodyRoutes = json.decode(res.body);
+      //print(bodyRoutes);
+      // print(bodyRoutes.length);
+
+      for (var i = 0; i < bodyRoutes.length; i++) {
+        genres.add({
+          "id": bodyRoutes[i]["id"],
+          "name": bodyRoutes[i]["name"],
+          "slug": bodyRoutes[i]["slug"],
+          "isChecked": false
+        });
+      }
+      print(genres[0]['name']);
+
+      print("----------------------");
+
+      setState(() {
+        _isLoading1 = false;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,28 +115,39 @@ class _MyHomePageState extends State<Browser> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          width: 130,
+                          width: 140,
                           height: 20,
                           decoration: BoxDecoration(
                               color: Colors.grey[900],
                               borderRadius: BorderRadius.circular(1)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children:  [
                               Icon(
                                 Icons.tune_rounded,
-                                color: Colors.white,
+                                color:kPrimaryGreyColor,
                                 size: 16,
                               ),
-                              SizedBox(width: 10),
-                              Text(
-                                "Advance Search",
-                                style: TextStyle(
+                              SizedBox(width: 12),
+                           
+                               TextButton(
+                                style: TextButton.styleFrom(
+                                   padding: const EdgeInsets.all(0),
+                                  primary: Colors.white,
+                                   textStyle: TextStyle(
                                     fontSize: 12, color: kPrimaryGreyColor),
+                                ),
+                                onPressed: () {
+                                  _displayDialog(context);
+                                },
+                                child:  Text( "Advance Search", style:TextStyle(
+                                    fontSize: 12, color: kPrimaryGreyColor)),
                               ),
                             ],
                           ),
-                        ),
+                        )),
                         Container(
                           width: 140,
                           height: 20,
@@ -329,5 +379,161 @@ class _MyHomePageState extends State<Browser> {
     } catch (e) {
       print(e);
     }
+  }
+
+   _displayDialog(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: false,
+        transitionDuration: Duration(milliseconds: 100),
+        transitionBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: ScaleTransition(
+              scale: animation,
+              child: child,
+            ),
+          );
+        },
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return SafeArea(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  padding: EdgeInsets.all(20),
+                  color: Colors.transparent,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
+                      child: Container(
+                          width: screenWidth - 10,
+                          height: screenHeight,
+                          color: Colors.grey.shade900,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                    child: const Icon(
+                                      Icons.close,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      
+                                    }),
+                                const Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                    child: Text(
+                                      'Genres',
+                                      style: TextStyle(
+                                        color: kPrimaryWhiteColor,
+                                        fontSize: 20,
+                                        decoration: TextDecoration.none,
+                                      ),
+                                    )),
+                                Expanded(
+                                    child: NotificationListener<
+                                            OverscrollIndicatorNotification>(
+                                        onNotification:
+                                            (OverscrollIndicatorNotification
+                                                overscroll) {
+                                          // ignore: deprecated_member_use
+                                          overscroll.disallowGlow();
+                                          return false;
+                                        },
+                                        child: _isLoading1
+                                            ? Center(
+                                                child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(18.0),
+                                                child:
+                                                    CupertinoActivityIndicator(),
+                                              ))
+                                            : GridView.builder(
+                                                gridDelegate:
+                                                    const SliverGridDelegateWithMaxCrossAxisExtent(
+                                                  maxCrossAxisExtent: 200.0,
+                                                  mainAxisSpacing: 2.0,
+                                                  crossAxisSpacing: 2.0,
+                                                  childAspectRatio: 4.0,
+                                                ),
+                                                itemCount: genres.length,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        int index) {
+                                                  return Card(
+                                                    elevation: 0,
+                                                    color: Colors.grey.shade900,
+                                                    child: Center(
+                                                      child: Row(
+                                                        children: [
+                                                          Checkbox(
+                                                            value: genres[index]
+                                                                ['isChecked'],
+                                                            onChanged:
+                                                                (bool? val) {
+                                                              setState(() {
+                                                                genres[index][
+                                                                        'isChecked'] =
+                                                                    val;
+                                                                if (genres[index]
+                                                                        [
+                                                                        'isChecked'] ==
+                                                                    true) {
+                                                                  print(genres[
+                                                                          index]
+                                                                      ['id']);
+                                                                }
+                                                              });
+                                                            },
+                                                            activeColor:
+                                                                kPrimaryPurpleColor,
+                                                            checkColor:
+                                                                kPrimaryWhiteColor,
+                                                          ),
+                                                          Text(
+                                                            genres[index]['name']
+                                                                        .length <=
+                                                                    10
+                                                                ? genres[index]
+                                                                        ['name']
+                                                                    .toString()
+                                                                : genres[index]
+                                                                        ['name']
+                                                                    .toString()
+                                                                    .substring(
+                                                                        0, 4),
+                                                            style:
+                                                                const TextStyle(
+                                                              color:
+                                                                  kPrimaryWhiteColor,
+                                                              decoration:
+                                                                  TextDecoration
+                                                                      .none,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                }))),
+                              ],
+                            ),
+                          )),
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        });
   }
 }

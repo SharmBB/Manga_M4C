@@ -24,7 +24,6 @@ class _CartState extends State<Chapter> {
   _CartState(this._manga);
 
   List _manga;
-
   //list for api
   List chapterUsingName = [];
   List chapterUsingID = [];
@@ -32,6 +31,8 @@ class _CartState extends State<Chapter> {
 
 // loader
   bool _isLoading = true;
+
+    String dropdownValue = 'English';
 
   @override
   void initState() {
@@ -429,48 +430,52 @@ class _CartState extends State<Chapter> {
                                   radius: 15,
                                 ),
                               ))
-                            : Column(children: [
+                            :  Column(
+                             mainAxisAlignment: MainAxisAlignment.start,
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10, right: 20, left: 10),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 10.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              width: 115,
-                                              height: 20,
-                                              decoration: BoxDecoration(
-                                                  color: kPrimaryGreyColor,
-                                                  // gradient: LinearGradient(colors: [secondary, primary]),
-                                                  borderRadius:
-                                                      BorderRadius.circular(1)),
-                                              child: Row(
-                                                // mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "Select Language",
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        color: Colors.white),
-                                                  ),
-                                                  Icon(
-                                                    Icons.keyboard_arrow_down,
-                                                    color: Colors.white,
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                padding: const EdgeInsets.only(top: 10.0, left: 10),
+                                child:
+                                      
+                                         Container(
+                            width: 100,
+                            height: 25,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[900],
+                                borderRadius: BorderRadius.circular(1)),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                              child: DropdownButton<String>(
+                                underline: DropdownButtonHideUnderline(
+                                    child: Container()),
+                                value: dropdownValue,
+                                dropdownColor: kPrimaryPurpleColor,
+                                icon: Icon(Icons.keyboard_arrow_down),
+                                elevation: 16,
+                                style: TextStyle(color: kPrimaryWhiteColor),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownValue = newValue!;
+
+                                   
+                                  });
+                                },
+                                items: <String>[
+                                  'English',
+                                  'French  ',
+                                  
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value,
+                                        style: TextStyle(
+                                            color: kPrimaryGreyColor)),
+                                  );
+                                }).toList(),
+                              ),
+                            ))
+                                   
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
@@ -480,8 +485,8 @@ class _CartState extends State<Chapter> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 110,
-                                          height: 22,
+                                          width: 100,
+                                          height: 25,
                                           decoration: BoxDecoration(
                                               color: Colors.grey,
                                               // gradient: LinearGradient(colors: [secondary, primary]),

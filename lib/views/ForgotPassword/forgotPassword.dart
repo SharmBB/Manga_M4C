@@ -87,7 +87,7 @@ class _ResetPasswordState extends State<ForgetPassword> {
             hintText: "Email",
             hintStyle: TextStyle(
                 fontSize: 14.0, color: kPrimaryWhiteColor),
-            fillColor: kGrey,
+            fillColor: kPrimarylightGreyColor,
             filled: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(0.0)),

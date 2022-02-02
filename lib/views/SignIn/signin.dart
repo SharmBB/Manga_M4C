@@ -151,7 +151,7 @@ class _SigninState extends State<Signin> {
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
         child: TextFormField(
           style: const TextStyle(fontSize: 16, color: Colors.white),
-          cursorColor: kPurple,
+          cursorColor: kPrimaryPurpleColor,
           keyboardType: TextInputType.text,
           validator: (value) {
             RegExp regex = RegExp(
@@ -173,9 +173,9 @@ class _SigninState extends State<Signin> {
             hintText: "Email /UserName",
             hintStyle: TextStyle(
               fontSize: 16.0,
-              color: kWhite,
+              color: kPrimaryWhiteColor,
             ),
-            fillColor: kGrey,
+            fillColor: kPrimarylightGreyColor,
             filled: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(0.0)),
@@ -192,7 +192,7 @@ class _SigninState extends State<Signin> {
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
         child: TextFormField(
           style: const TextStyle(fontSize: 16.0, color: Colors.white),
-          cursorColor: kPurple,
+          cursorColor: kPrimaryPurpleColor,
           keyboardType: TextInputType.text,
           obscureText: showPassword,
           validator: (value) {
@@ -215,9 +215,9 @@ class _SigninState extends State<Signin> {
             hintText: "Password",
             hintStyle: TextStyle(
               fontSize: 16.0,
-              color: kWhite,
+              color: kPrimaryWhiteColor,
             ),
-            fillColor: kGrey,
+            fillColor: kPrimarylightGreyColor,
             filled: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(0.0)),

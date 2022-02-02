@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
   @override
   initState() {
     _apiMangaDetails();
-    _getUserById();
+    _getUserDetails();
     super.initState();
   }
 
@@ -192,7 +192,8 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(8.0),
                           image: DecorationImage(
                             image: NetworkImage(
-                              manga[0][10]['md_comics']['md_covers'][0]['gpurl'],
+                              manga[0][10]['md_comics']['md_covers'][0]
+                                  ['gpurl'],
                             ),
                             fit: BoxFit.fill,
                           ),
@@ -283,7 +284,7 @@ class _HomePageState extends State<HomePage> {
                                 itemBuilder: (BuildContext context, int index) {
                                   return Container(
                                     margin: EdgeInsets.all(10.0),
-                                    width: 200.0,
+                                    width: 180.0,
                                     child: Stack(
                                       alignment: Alignment.topCenter,
                                       children: <Widget>[
@@ -309,7 +310,7 @@ class _HomePageState extends State<HomePage> {
                                                     manga[0][index]['md_comics']
                                                                     ['title']
                                                                 .length <=
-                                                            40
+                                                            20
                                                         ? manga[0][index][
                                                                     'md_comics']
                                                                 ['title']
@@ -318,7 +319,7 @@ class _HomePageState extends State<HomePage> {
                                                                     'md_comics']
                                                                 ['title']
                                                             .toString()
-                                                            .substring(0, 40),
+                                                            .substring(0, 20),
                                                     style: TextStyle(
                                                       color: kPrimaryWhiteColor,
                                                       fontSize: 16.0,
@@ -332,12 +333,12 @@ class _HomePageState extends State<HomePage> {
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
-                                                              .start,
+                                                              .spaceBetween,
                                                       children: [
                                                         Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
-                                                                  .start,
+                                                                  .spaceBetween,
                                                           children: [
                                                             Text(
                                                               'ch' +
@@ -405,8 +406,8 @@ class _HomePageState extends State<HomePage> {
                                                 borderRadius:
                                                     BorderRadius.circular(00.0),
                                                 child: CachedNetworkImage(
-                                                    height: 160,
-                                                    width: 200,
+                                                    height: 170,
+                                                    width: 180,
                                                     imageUrl: manga[0][index]
                                                                 ['md_comics']
                                                             ['md_covers'][0]
@@ -503,7 +504,7 @@ class _HomePageState extends State<HomePage> {
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
                               margin: EdgeInsets.all(10.0),
-                              width: 200.0,
+                              width: 180.0,
                               child: Stack(
                                 alignment: Alignment.topCenter,
                                 children: <Widget>[
@@ -529,14 +530,14 @@ class _HomePageState extends State<HomePage> {
                                               Newmanga[0][index]['md_comics']
                                                               ['title']
                                                           .length <=
-                                                      40
+                                                      20
                                                   ? Newmanga[0][index]
                                                           ['md_comics']['title']
                                                       .toString()
                                                   : Newmanga[0][index]
                                                           ['md_comics']['title']
                                                       .toString()
-                                                      .substring(0, 40),
+                                                      .substring(0, 20),
                                               style: TextStyle(
                                                 color: kPrimaryWhiteColor,
                                                 fontSize: 16.0,
@@ -548,11 +549,13 @@ class _HomePageState extends State<HomePage> {
                                                   top: 10.0),
                                               child: Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
                                                   Row(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.start,
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       Text(
                                                         'ch' +
@@ -566,7 +569,7 @@ class _HomePageState extends State<HomePage> {
                                                       ),
                                                     ],
                                                   ),
-                                                  SizedBox(width: 55),
+                                                  SizedBox(width: 50),
                                                   Text(
                                                     ".",
                                                     style: TextStyle(
@@ -617,8 +620,8 @@ class _HomePageState extends State<HomePage> {
                                           borderRadius:
                                               BorderRadius.circular(00.0),
                                           child: CachedNetworkImage(
-                                              height: 160,
-                                              width: 200,
+                                              height: 170,
+                                              width: 180,
                                               imageUrl: Newmanga[0][index]
                                                       ['md_comics']['md_covers']
                                                   [0]['gpurl'],
@@ -708,7 +711,7 @@ class _HomePageState extends State<HomePage> {
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
                               margin: EdgeInsets.all(10.0),
-                              width: 200.0,
+                              width: 180.0,
                               child: Stack(
                                 alignment: Alignment.topCenter,
                                 children: <Widget>[
@@ -733,12 +736,12 @@ class _HomePageState extends State<HomePage> {
                                             Text(
                                               ViewManga[0][index]['title']
                                                           .length <=
-                                                      40
+                                                      20
                                                   ? ViewManga[0][index]['title']
                                                       .toString()
                                                   : ViewManga[0][index]['title']
                                                       .toString()
-                                                      .substring(0, 40),
+                                                      .substring(0, 20),
                                               style: TextStyle(
                                                 color: kPrimaryWhiteColor,
                                                 fontSize: 16.0,
@@ -750,11 +753,13 @@ class _HomePageState extends State<HomePage> {
                                                   top: 10.0),
                                               child: Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
                                                   Row(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.start,
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       Text(
                                                         'ch' +
@@ -817,8 +822,8 @@ class _HomePageState extends State<HomePage> {
                                           borderRadius:
                                               BorderRadius.circular(00.0),
                                           child: CachedNetworkImage(
-                                              height: 160,
-                                              width: 200,
+                                              height: 170,
+                                              width: 180,
                                               imageUrl: ViewManga[0][index]
                                                   ['md_covers'][0]['gpurl'],
                                               imageBuilder: (context,
@@ -917,7 +922,7 @@ class _HomePageState extends State<HomePage> {
                                 itemBuilder: (BuildContext context, int index) {
                                   return Container(
                                     margin: EdgeInsets.all(10.0),
-                                    width: 200.0,
+                                    width: 180.0,
                                     child: Stack(
                                       alignment: Alignment.topCenter,
                                       children: <Widget>[
@@ -943,14 +948,14 @@ class _HomePageState extends State<HomePage> {
                                                     RatingManga[0][index]
                                                                     ['title']
                                                                 .length <=
-                                                            40
+                                                            20
                                                         ? RatingManga[0][index]
                                                                 ['title']
                                                             .toString()
                                                         : RatingManga[0][index]
                                                                 ['title']
                                                             .toString()
-                                                            .substring(0, 40),
+                                                            .substring(0, 20),
                                                     style: TextStyle(
                                                       color: kPrimaryWhiteColor,
                                                       fontSize: 16.0,
@@ -964,12 +969,12 @@ class _HomePageState extends State<HomePage> {
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
-                                                              .start,
+                                                              .spaceBetween,
                                                       children: [
                                                         Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
-                                                                  .start,
+                                                                  .spaceBetween,
                                                           children: [
                                                             Text(
                                                               'ch' +
@@ -1014,55 +1019,54 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ),
                                         Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(0.0),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.black26,
-                                                  blurRadius: 6.0,
-                                                ),
-                                              ],
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(00.0),
-                                              child: InkWell(
-                                                onTap: () {
-                                                  _navigator(
-                                                      context,
-                                                      Chapter([
-                                                        RatingManga[0][index]
-                                                      ]));
-                                                },
-                                                child: CachedNetworkImage(
-                                                    height: 160,
-                                                    width: 200,
-                                                    imageUrl: RatingManga[0]
-                                                            [index]['md_covers']
-                                                        [0]['gpurl'],
-                                                    imageBuilder: (context,
-                                                            imageProvider) =>
-                                                        Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5),
-                                                            image: DecorationImage(
-                                                                image:
-                                                                    imageProvider,
-                                                                fit: BoxFit
-                                                                    .fill),
-                                                          ),
-                                                        ),
-                                                    errorWidget:
-                                                        (context, url, error) =>
-                                                            Icon(Icons.error)),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(0.0),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black26,
+                                                blurRadius: 6.0,
                                               ),
-                                            ))
+                                            ],
+                                          ),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(00.0),
+                                            child: InkWell(
+                                              onTap: () {
+                                                _navigator(
+                                                    context,
+                                                    Chapter([
+                                                      RatingManga[0][index]
+                                                    ]));
+                                              },
+                                              child: CachedNetworkImage(
+                                                  height: 170,
+                                                  width: 180,
+                                                  imageUrl: RatingManga[0]
+                                                          [index]['md_covers']
+                                                      [0]['gpurl'],
+                                                  imageBuilder: (context,
+                                                          imageProvider) =>
+                                                      Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
+                                                          image: DecorationImage(
+                                                              image:
+                                                                  imageProvider,
+                                                              fit: BoxFit.fill),
+                                                        ),
+                                                      ),
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Icon(Icons.error)),
+                                            ),
+                                          ),
+                                        )
                                       ],
                                     ),
                                   );
@@ -1094,32 +1098,34 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.symmetric(horizontal: screenWidth * .034),
           itemBuilder: (context, index) => InkWell(
             onTap: () {
-              setState(() {
-                currentIndex = index;
-                print(currentIndex);
-                if (currentIndex == 1) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Browser()),
-                  );
-                } else if (currentIndex == 2) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Account()),
-                  );
-                } else if (currentIndex == 3) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Library()),
-                  );
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const LeaderBoardScreen()),
-                  );
-                }
-              });
+              setState(
+                () {
+                  currentIndex = index;
+                  print(currentIndex);
+                  if (currentIndex == 1) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Browser()),
+                    );
+                  } else if (currentIndex == 2) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Account()),
+                    );
+                  } else if (currentIndex == 3) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Library()),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LeaderBoardScreen()),
+                    );
+                  }
+                },
+              );
             },
             child: Stack(
               children: [
@@ -1142,22 +1148,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _getUserById() async {
+//store the userImage in local
+  void _getUserDetails() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    print("data from sample screen");
-    usernameId = localStorage.getInt('userId');
     image = localStorage.getString("image")!;
-    name = localStorage.getString("name")!;
-    bio = localStorage.getString("bio")!;
-    var data = {"id": usernameId, "pic": image, "bio": bio, "name": name};
-    print(image);
-    print(usernameId);
-    print(name);
-    print(bio);
-    // var data = {
-    //   "id": image,
-    // };
-    // print(data);
+    var data = {"pic": image};
   }
 
 //get manga details from api

@@ -8,10 +8,6 @@ const primaryColor = Colors.black;
 const kPrimaryWhiteColor = Colors.white;
 const kPrimaryGreyColor = Colors.grey;
 const kPrimaryPurpleColor = Color(0xFF4A148C);
+const kPrimarylightGreyColor=Color(0xFF212121);
 
-
-const kBlack= Color(0xFF000000);
-const kPurple=Color(0xFF311B92);
-const kGrey=Color(0xFF212121);
-const kWhite=Colors.white54;
 
