@@ -487,7 +487,7 @@ class _SignupState extends State<Signup> {
 
     if (body["errorMessage"] == false) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+        MaterialPageRoute(builder: (BuildContext context) => Signin()),
       );
     } else {
       setState(() {
