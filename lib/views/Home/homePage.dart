@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:floating_navbar/floating_navbar.dart';
@@ -50,7 +49,6 @@ class _HomePageState extends State<HomePage> {
   @override
   initState() {
     _apiMangaDetails();
-
     super.initState();
   }
 
@@ -124,8 +122,10 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
                           image: DecorationImage(
-                            image: AssetImage("assets/image-1.png"),
-                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              manga[0][1]['md_comics']['md_covers'][0]['gpurl'],
+                            ),
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
@@ -137,8 +137,10 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
                           image: DecorationImage(
-                            image: AssetImage("assets/image-2.png"),
-                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              manga[0][4]['md_comics']['md_covers'][0]['gpurl'],
+                            ),
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
@@ -150,8 +152,11 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
                           image: DecorationImage(
-                            image: AssetImage("assets/image-6.png"),
-                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              Newmanga[0][2]['md_comics']['md_covers'][0]
+                                  ['gpurl'],
+                            ),
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
@@ -163,8 +168,10 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
                           image: DecorationImage(
-                            image: AssetImage("assets/image-4.png"),
-                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              ViewManga[0][4]['md_covers'][0]['gpurl'],
+                            ),
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
@@ -176,8 +183,10 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
                           image: DecorationImage(
-                            image: AssetImage("assets/image-4.png"),
-                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              manga[0][5]['md_comics']['md_covers'][0]['gpurl'],
+                            ),
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
@@ -191,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                       aspectRatio: 16 / 9,
                       autoPlayCurve: Curves.fastOutSlowIn,
                       enableInfiniteScroll: true,
-                      autoPlayAnimationDuration: Duration(milliseconds: 800),
+                      autoPlayAnimationDuration: Duration(milliseconds: 1000),
                       viewportFraction: 0.8,
                     ),
                   ),
@@ -346,49 +355,53 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(0.0),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black26,
-                                          blurRadius: 6.0,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(0.0),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black26,
+                                            blurRadius: 6.0,
+                                          ),
+                                        ],
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(00.0),
+                                        child: InkWell(
+                                          onTap: () {
+                                            print(manga[0][index]);
+                                            _navigator(
+                                                context,
+                                                DetailsScreen(
+                                                    [manga[0][index]]));
+                                          },
+                                          borderRadius:
+                                              BorderRadius.circular(00.0),
+                                          child: CachedNetworkImage(
+                                              height: 160,
+                                              width: 200,
+                                              imageUrl: manga[0][index]
+                                                      ['md_comics']['md_covers']
+                                                  [0]['gpurl'],
+                                              imageBuilder: (context,
+                                                      imageProvider) =>
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      image: DecorationImage(
+                                                          image: imageProvider,
+                                                          fit: BoxFit.fill),
+                                                    ),
+                                                  ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error)),
                                         ),
-                                      ],
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(00.0),
-                                      child: CachedNetworkImage(
-                                          height: 160,
-                                          width: 200,
-                                          imageUrl: manga[0][index]['md_comics']
-                                              ['md_covers'][0]['gpurl'],
-                                          imageBuilder: (context,
-                                                  imageProvider) =>
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  image: DecorationImage(
-                                                      image: imageProvider,
-                                                      fit: BoxFit.cover),
-                                                ),
-                                              ),
-                                          errorWidget: (context, url, error) =>
-                                              Icon(Icons.error)),
-                                    ),
-                                    //   Image(
-                                    //     height: 180.0,
-                                    //     width: 200.0,
-                                    //     image: AssetImage(manga[0][index]
-                                    //                 ['md_comics']['md_covers']
-                                    //             [0]['gpurl']
-                                    //         //_allUsers[index]["image"]
-                                    //         ),
-                                    //     fit: BoxFit.fill,
-                                    //   ),
-                                    // ),
-                                  )
+                                      ))
                                 ],
                               ),
                             );
@@ -397,7 +410,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  // MangakikuCard(),
+
                   SizedBox(
                     height: 20,
                   ),
@@ -421,7 +434,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => DetailsScreen(),
+                                    builder: (context) => HomePage(),
                                   ),
                                 );
                               },
@@ -442,8 +455,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  // MangakikuCard(),
-                  //Seasonals mangas lists
+
                   Column(
                     children: <Widget>[
                       Padding(
@@ -550,39 +562,53 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(0.0),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black26,
-                                          blurRadius: 6.0,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(0.0),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black26,
+                                            blurRadius: 6.0,
+                                          ),
+                                        ],
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(00.0),
+                                        child: InkWell(
+                                          onTap: () {
+                                            print(Newmanga[0][index]);
+                                            _navigator(
+                                                context,
+                                                DetailsScreen(
+                                                    [Newmanga[0][index]]));
+                                          },
+                                          borderRadius:
+                                              BorderRadius.circular(00.0),
+                                          child: CachedNetworkImage(
+                                              height: 160,
+                                              width: 200,
+                                              imageUrl: Newmanga[0][index]
+                                                      ['md_comics']['md_covers']
+                                                  [0]['gpurl'],
+                                              imageBuilder: (context,
+                                                      imageProvider) =>
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      image: DecorationImage(
+                                                          image: imageProvider,
+                                                          fit: BoxFit.fill),
+                                                    ),
+                                                  ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error)),
                                         ),
-                                      ],
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(00.0),
-                                      child: CachedNetworkImage(
-                                          height: 160,
-                                          width: 200,
-                                          imageUrl: Newmanga[0][index]
-                                                  ['md_comics']['md_covers'][0]
-                                              ['gpurl'],
-                                          imageBuilder: (context,
-                                                  imageProvider) =>
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  image: DecorationImage(
-                                                      image: imageProvider,
-                                                      fit: BoxFit.cover),
-                                                ),
-                                              ),
-                                          errorWidget: (context, url, error) =>
-                                              Icon(Icons.error)),
-                                    ),
-                                  )
+                                      ))
                                 ],
                               ),
                             );
@@ -614,7 +640,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => DetailsScreen(),
+                                    builder: (context) => HomePage(),
                                   ),
                                 );
                               },
@@ -774,7 +800,7 @@ class _HomePageState extends State<HomePage> {
                                                               5),
                                                       image: DecorationImage(
                                                           image: imageProvider,
-                                                          fit: BoxFit.cover),
+                                                          fit: BoxFit.fill),
                                                     ),
                                                   ),
                                               errorWidget:
@@ -813,7 +839,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => DetailsScreen(),
+                                    builder: (context) => HomePage(),
                                   ),
                                 );
                               },
@@ -957,7 +983,6 @@ class _HomePageState extends State<HomePage> {
                                             BorderRadius.circular(00.0),
                                         child: InkWell(
                                           onTap: () {
-                                            // print(RatingManga[0][index]);
                                             _navigator(
                                                 context,
                                                 Chapter(
@@ -977,7 +1002,7 @@ class _HomePageState extends State<HomePage> {
                                                               5),
                                                       image: DecorationImage(
                                                           image: imageProvider,
-                                                          fit: BoxFit.cover),
+                                                          fit: BoxFit.fill),
                                                     ),
                                                   ),
                                               errorWidget:
@@ -1103,7 +1128,4 @@ class _HomePageState extends State<HomePage> {
 void _navigator(BuildContext context, add) async {
   final result = await Navigator.push(
       context, MaterialPageRoute(builder: (context) => add));
-  print("result");
-  print(result);
-  // print(result["addToCardList"]['totalAmount']);
 }

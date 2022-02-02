@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 
 class CallApi {
   //home page api url
+  var url = 'https://api.comick.fun/chapter/';
   var baseurl = 'https://api.comick.fun/chapter?page=1&order=hot';
   var baseurlforNew = 'https://api.comick.fun/chapter?page=1&order=new';
   var baseurlforView =
@@ -14,7 +15,20 @@ class CallApi {
   var ChapterDetaislByName = 'https://api.comick.fun/comic/';
   var ChapterDetaislByID = 'https://api.comick.fun/comic/';
 
+  // Auth Api
+  var _urlAuth = 'http://mangakiku-api.moodfor.codes/api/';
+
   var token;
+
+  //Login api
+  authData(data, apiUrl) async {
+    var fullUrl = Uri.parse(_urlAuth + apiUrl);
+    return await http.post(
+      fullUrl,
+      body: jsonEncode(data),
+      headers: _setHeaders(),
+    );
+  }
 
 //home page api
   getMangas(apiUrl) async {
@@ -55,6 +69,13 @@ class CallApi {
 
   getChapterUsingID(apiUrl) async {
     var fullUrl = Uri.parse(ChapterDetaislByID + apiUrl);
+    return await http.get(
+      fullUrl,
+    );
+  }
+
+    getChapterImages(apiUrl) async {
+    var fullUrl = Uri.parse(url + apiUrl);
     return await http.get(
       fullUrl,
     );

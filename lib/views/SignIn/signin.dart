@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
+import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/views/ForgotPassword/forgotPassword.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/Signup/signup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Signin extends StatefulWidget {
   const Signin({Key? key}) : super(key: key);
@@ -19,6 +23,8 @@ class _SigninState extends State<Signin> {
   final TextEditingController _emailController = TextEditingController();
 
   String? password;
+  String? bodyError;
+  bool _isLoading = false;
 
   bool showPassword = true;
   bool showconfirmPassword = true;
@@ -38,7 +44,7 @@ class _SigninState extends State<Signin> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text(
-                  'SIGNHH IN',
+                  'SIGN IN',
                   style: TextStyle(
                       fontSize: 20,
                       color: kPrimaryPurpleColor,
@@ -78,7 +84,7 @@ class _SigninState extends State<Signin> {
                 ),
                 SizedBox(height: screenHeight * (0.5 / 20)),
 
-                _reset(),
+                _signIn(),
                 SizedBox(height: screenHeight * (1 / 20)),
                 Padding(
                   padding: const EdgeInsets.only(left: 80.0, right: 50.0),
@@ -121,6 +127,7 @@ class _SigninState extends State<Signin> {
         ));
   }
 
+//Email Feils
   _email() {
     return Padding(
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
@@ -161,6 +168,7 @@ class _SigninState extends State<Signin> {
         ));
   }
 
+//Password Feild
   _password() {
     return Padding(
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
@@ -202,7 +210,8 @@ class _SigninState extends State<Signin> {
         ));
   }
 
-  _reset() {
+//Sign In Button
+  _signIn() {
     return Container(
       alignment: Alignment.bottomCenter,
       child: GestureDetector(
@@ -217,11 +226,7 @@ class _SigninState extends State<Signin> {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState?.save();
-                  // use the email provided here
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomePage()),
-                  );
+                  _login();
                 }
               },
               child: const Text(
@@ -231,5 +236,51 @@ class _SigninState extends State<Signin> {
             )),
       ),
     );
+  }
+
+//Login CAll API
+  void _login() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      var data = {
+        "email": _emailController.text,
+        "password": _passwordController.text,
+      };
+
+      var res = await CallApi().authData(data, 'login?');
+      var body = json.decode(res.body);
+      if (body['message']['token'] != null) {
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        var token = body['message']['token'];
+        print(token);
+        print('-----------------------');
+        print(",,,,,,,,,,,,,,,,,,,");
+        var userId = body['message']["user"]["id"];
+        print(userId);
+        print('-----------------------');
+        print('/////////////////////////');
+        localStorage.setString('token', token);
+        localStorage.setInt('userId', userId);
+        print(body);
+        //   print(body['user']['id']);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+        );
+      } else {
+        // _showMsg(body['error']);
+        setState(() {
+          // bodyError = body['message'];
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 }

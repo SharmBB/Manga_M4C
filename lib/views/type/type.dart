@@ -1,12 +1,42 @@
+import 'dart:convert';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mangakiku_app/_helpers/constants.dart';
+import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/component/bottomNavigationBar.dart';
 import 'package:mangakiku_app/views/Comments/comments.dart';
 import 'package:mangakiku_app/views/Comments/comments2.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 
-class DetailsScreen extends StatelessWidget {
+class DetailsScreen extends StatefulWidget {
+  late final List _manga;
+
+  DetailsScreen(this._manga);
+
+  @override
+  _CartState createState() => _CartState(this._manga);
+}
+
+class _CartState extends State<DetailsScreen> {
+  _CartState(this._manga);
+
+  List _manga;
+
+  //list for api
+  List chapterUsingName = [];
+  List chapterUsingID = [];
+  List chaptersFromDB = [];
+
+  @override
+  void initState() {
+    _ChapterDetailsUsingName();
+    super.initState();
+  }
+
+// loader
+  bool _isLoading = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,8 +57,8 @@ class DetailsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Image(
-                  image: AssetImage("assets/image-4.png"),
+                child: CachedNetworkImage(
+                  imageUrl: (_manga[0]['md_comics']['md_covers'][0]['gpurl']),
                   width: 800,
                   fit: BoxFit.cover,
                 ),
@@ -57,7 +87,11 @@ class DetailsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      " Dragon Ball",
+                      _manga[0]['md_comics']['title'].length <= 40
+                          ? _manga[0]['md_comics']['title'].toString()
+                          : _manga[0]['md_comics']['title']
+                              .toString()
+                              .substring(0, 40),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 35.0,
@@ -134,12 +168,12 @@ class DetailsScreen extends StatelessWidget {
                             color: kPrimaryPurpleColor,
                             textColor: Colors.white,
                             onPressed: () {
-                               Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => MangaComment2(),
-                                        ),
-                                      );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => MangaComment2(),
+                              //   ),
+                              // );
                               print("dsvdsv");
                             },
                           ),
@@ -363,13 +397,205 @@ class DetailsScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        CharacterPage(),
+                        Column(children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, right: 20, left: 10),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width: 115,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                            color: kPrimaryGreyColor,
+                                            // gradient: LinearGradient(colors: [secondary, primary]),
+                                            borderRadius:
+                                                BorderRadius.circular(1)),
+                                        child: Row(
+                                          // mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Select Language",
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.white),
+                                            ),
+                                            Icon(
+                                              Icons.keyboard_arrow_down,
+                                              color: Colors.white,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 10, right: 15),
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 110,
+                                    height: 22,
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        // gradient: LinearGradient(colors: [secondary, primary]),
+                                        borderRadius: BorderRadius.circular(1)),
+                                    child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 10.0, left: 5),
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                            hintText: "Select Chapter",
+                                            hintStyle: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.white),
+                                            border: InputBorder.none,
+                                            fillColor: Colors.grey[900],
+                                          ),
+                                        )),
+                                  ),
+                                  Text('Date',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold)),
+                                  Text(
+                                    'Language',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ]),
+                          ),
+                          Expanded(
+                            child: Container(
+                              child: ListView.builder(
+                                itemCount: chaptersFromDB.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return InkWell(
+                                    child: ListTile(
+                                        //return new ListTile(
+                                        onTap: null,
+                                        subtitle: Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 15.0, left: 10),
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: <Widget>[
+                                                InkWell(
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            MangaComment2(
+                                                                hid: chaptersFromDB[
+                                                                            index]
+                                                                        ['hid']
+                                                                    .toString()),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(vertical: 8),
+                                                    child: Text(
+                                                      chaptersFromDB[index]
+                                                              ["chap"]
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                                // Text(
+                                                //   chaptersFromDB[index]["chap"]
+                                                //       .toString(),
+                                                //   style: TextStyle(
+                                                //       fontSize: 13,
+                                                //       color: Colors.white),
+                                                // ),
+                                                Text(
+                                                  chaptersFromDB[index]
+                                                              ["up_count"]
+                                                          .toString() +
+                                                      "days",
+                                                  style: TextStyle(
+                                                      fontSize: 13,
+                                                      color: Colors.white),
+                                                ),
+                                                Text(
+                                                  chaptersFromDB[index]["lang"]
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 13,
+                                                      color: Colors.white),
+                                                ),
+                                              ]),
+                                        )),
+                                  );
+                                }, //itemBuilder
+                              ),
+                            ),
+                          ),
+                        ])
                       ]),
 
                       // Center( child: Text("Three",style: TextStyle(fontSize: 50),))
                     )
                   ]))
         ])));
+  }
+
+  //get chapter details using name from api
+  // ignore: non_constant_identifier_names
+  void _ChapterDetailsUsingName() async {
+    try {
+      chapterUsingName.clear();
+      var bodyRoutes;
+      var res = await CallApi().getChapterUsingName(_manga[0]['md_comics']['slug']);
+      bodyRoutes = json.decode(res.body);
+      chapterUsingName.add(bodyRoutes);
+      print(chapterUsingName);
+      int id = chapterUsingName[0]['comic']['id'];
+      print(id);
+
+      chapterUsingID.clear();
+      var bodyRoutesChap;
+      var resCHap = await CallApi().getChapterUsingID('$id/chapter');
+      bodyRoutesChap = json.decode(resCHap.body);
+
+      chaptersFromDB = bodyRoutesChap['chapters'];
+
+      print("---------chapters-------------");
+
+      print(chaptersFromDB.length);
+
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 }
 

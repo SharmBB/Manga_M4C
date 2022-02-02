@@ -7,6 +7,7 @@ import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/views/Comments/comments.dart';
 import 'package:mangakiku_app/views/Comments/comments2.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
+import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
 
 class Chapter extends StatefulWidget {
   late final List _manga;
@@ -163,12 +164,12 @@ class _CartState extends State<Chapter> {
                             color: kPrimaryPurpleColor,
                             textColor: Colors.white,
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => MangaComment2(),
-                                ),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => MangaComment2(),
+                              //   ),
+                              // );
                               print("dsvdsv");
                             },
                           ),
@@ -494,13 +495,43 @@ class _CartState extends State<Chapter> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: <Widget>[
-                                                Text(
-                                                  chaptersFromDB[index]["chap"]
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 13,
-                                                      color: Colors.white),
+                                                InkWell(
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            MangaComment2(
+                                                                hid:
+                                                                    chaptersFromDB[
+                                                                            index]
+                                                                        [
+                                                                        'hid'].toString()),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(vertical: 8),
+                                                    child: Text(
+                                                      chaptersFromDB[index]
+                                                              ["chap"]
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
                                                 ),
+                                                // Text(
+                                                //   chaptersFromDB[index]["chap"]
+                                                //       .toString(),
+                                                //   style: TextStyle(
+                                                //       fontSize: 13,
+                                                //       color: Colors.white),
+                                                // ),
                                                 Text(
                                                   chaptersFromDB[index]
                                                               ["up_count"]
@@ -562,3 +593,6 @@ class _CartState extends State<Chapter> {
     }
   }
 }
+
+
+
