@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
@@ -18,14 +18,12 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
-
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
   String? password;
   String? bodyError;
   bool _isLoading = false;
-
   bool showPassword = true;
   bool showconfirmPassword = true;
 
@@ -38,7 +36,6 @@ class _SigninState extends State<Signin> {
         backgroundColor: primaryColor,
         body: Center(
           child: Form(
-            autovalidateMode: AutovalidateMode.always,
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -54,8 +51,22 @@ class _SigninState extends State<Signin> {
                 _email(),
                 SizedBox(height: screenHeight * (0.5 / 20)),
                 _password(),
+                !_isLoading
+                    ? bodyError != null
+                        ? Padding(
+                            padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+                            child: Container(
+                              padding: EdgeInsets.only(top: 10),
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                bodyError.toString(),
+                                textAlign: TextAlign.left,
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ))
+                        : SizedBox()
+                    : SizedBox(),
                 SizedBox(height: screenHeight * (0.25 / 20)),
-                // SizedBox(height: 5.0),
                 Padding(
                   padding: const EdgeInsets.only(right: 25.0),
                   child: Container(
@@ -83,8 +94,11 @@ class _SigninState extends State<Signin> {
                   ),
                 ),
                 SizedBox(height: screenHeight * (0.5 / 20)),
-
-                _signIn(),
+                !_isLoading
+                    ? _signIn()
+                    : CupertinoActivityIndicator(
+                        radius: 20,
+                      ),
                 SizedBox(height: screenHeight * (1 / 20)),
                 Padding(
                   padding: const EdgeInsets.only(left: 80.0, right: 50.0),
@@ -127,7 +141,7 @@ class _SigninState extends State<Signin> {
         ));
   }
 
-//Email Feils
+//Email
   _email() {
     return Padding(
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
@@ -139,9 +153,9 @@ class _SigninState extends State<Signin> {
             RegExp regex = RegExp(
                 r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
             if (value!.isEmpty) {
-              return 'Email required';
+              return 'Email Required !!';
             } else if (!regex.hasMatch(value)) {
-              return 'abc@gmail.com';
+              return 'Email Required !!';
             }
             return null;
           },
@@ -168,7 +182,7 @@ class _SigninState extends State<Signin> {
         ));
   }
 
-//Password Feild
+//Password
   _password() {
     return Padding(
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
@@ -220,7 +234,7 @@ class _SigninState extends State<Signin> {
             height: 40.0,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: kPrimaryPurpleColor, // background
+                primary: kPrimaryPurpleColor,
                 onPrimary: Colors.transparent,
               ),
               onPressed: () {
@@ -243,42 +257,37 @@ class _SigninState extends State<Signin> {
     setState(() {
       _isLoading = true;
     });
-
     try {
       var data = {
         "email": _emailController.text,
         "password": _passwordController.text,
       };
-
-      var res = await CallApi().authData(data, 'login?');
+      var res = await CallApi().authData(data, 'login');
       var body = json.decode(res.body);
-      if (body['message']['token'] != null) {
-        SharedPreferences localStorage = await SharedPreferences.getInstance();
-        var token = body['message']['token'];
-        print(token);
-        print('-----------------------');
-        print(",,,,,,,,,,,,,,,,,,,");
-        var userId = body['message']["user"]["id"];
-        print(userId);
-        print('-----------------------');
-        print('/////////////////////////');
-        localStorage.setString('token', token);
-        localStorage.setInt('userId', userId);
-        print(body);
-        //   print(body['user']['id']);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (BuildContext context) => HomePage()),
-        );
+      if (body["errorMessage"] == false) {
+        if (body['message']['token'] != null) {
+          SharedPreferences localStorage =
+              await SharedPreferences.getInstance();
+          var token = body['message']['token'];
+          print(token);
+          var userId = body['message']["user"]["id"];
+          print(userId);
+          localStorage.setString('token', token);
+          localStorage.setInt('userId', userId);
+          print(body['message']);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+          );
+        }
       } else {
-        // _showMsg(body['error']);
         setState(() {
-          // bodyError = body['message'];
+          bodyError = body['message'];
         });
+        print(bodyError);
       }
     } catch (e) {
       print(e);
     }
-
     setState(() {
       _isLoading = false;
     });

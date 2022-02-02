@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/component/bottomNavigationBar.dart';
+import 'package:mangakiku_app/views/Comments/chapterImage.dart';
 import 'package:mangakiku_app/views/Comments/comments.dart';
-import 'package:mangakiku_app/views/Comments/comments2.dart';
+
 import 'package:mangakiku_app/views/Home/homePage.dart';
 
 class DetailsScreen extends StatefulWidget {

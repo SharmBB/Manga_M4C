@@ -227,7 +227,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => LeaderBoardScreen(),
+                                    builder: (context) => Browser(),
                                   ),
                                 );
                               },
@@ -434,7 +434,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HomePage(),
+                                    builder: (context) => Browser(),
                                   ),
                                 );
                               },
@@ -640,7 +640,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HomePage(),
+                                    builder: (context) => Browser(),
                                   ),
                                 );
                               },
@@ -674,7 +674,7 @@ class _HomePageState extends State<HomePage> {
                         height: 300.0,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: Newmanga[0].length,
+                          itemCount: ViewManga[0].length,
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
                               margin: EdgeInsets.all(10.0),
@@ -839,7 +839,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HomePage(),
+                                    builder: (context) => Browser(),
                                   ),
                                 );
                               },

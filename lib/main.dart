@@ -3,7 +3,7 @@ import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Browser/browser.dart';
 
-import 'package:mangakiku_app/views/Comments/comments2.dart';
+
 
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';

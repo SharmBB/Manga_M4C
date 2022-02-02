@@ -4,8 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
+import 'package:mangakiku_app/views/Comments/chapterImage.dart';
 import 'package:mangakiku_app/views/Comments/comments.dart';
-import 'package:mangakiku_app/views/Comments/comments2.dart';
+
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
 
@@ -233,7 +234,7 @@ class _CartState extends State<Chapter> {
                           Tab(
                             text: 'Description',
                           ),
-                          Tab(text: 'Characters'),
+                          Tab(text: 'Chapter'),
                         ],
                       ),
                     ),
