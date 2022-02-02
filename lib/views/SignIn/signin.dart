@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
@@ -18,11 +19,13 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
+
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
   String? password;
   String? bodyError;
+
   bool _isLoading = false;
   bool showPassword = true;
   bool showconfirmPassword = true;
@@ -97,12 +100,13 @@ class _SigninState extends State<Signin> {
                 !_isLoading
                     ? _signIn()
                     : CupertinoActivityIndicator(
-                        radius: 20,
+                        radius: 15,
                       ),
                 SizedBox(height: screenHeight * (1 / 20)),
                 Padding(
                   padding: const EdgeInsets.only(left: 80.0, right: 50.0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Don't have an Account ?",
@@ -141,7 +145,7 @@ class _SigninState extends State<Signin> {
         ));
   }
 
-//Email
+//Email Feils
   _email() {
     return Padding(
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
@@ -153,9 +157,9 @@ class _SigninState extends State<Signin> {
             RegExp regex = RegExp(
                 r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
             if (value!.isEmpty) {
-              return 'Email Required !!';
+              return 'Email required';
             } else if (!regex.hasMatch(value)) {
-              return 'Email Required !!';
+              return 'abc@gmail.com';
             }
             return null;
           },
@@ -182,7 +186,7 @@ class _SigninState extends State<Signin> {
         ));
   }
 
-//Password
+//Password Feild
   _password() {
     return Padding(
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
@@ -234,7 +238,7 @@ class _SigninState extends State<Signin> {
             height: 40.0,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: kPrimaryPurpleColor,
+                primary: kPrimaryPurpleColor, // background
                 onPrimary: Colors.transparent,
               ),
               onPressed: () {
@@ -257,11 +261,13 @@ class _SigninState extends State<Signin> {
     setState(() {
       _isLoading = true;
     });
+
     try {
       var data = {
         "email": _emailController.text,
         "password": _passwordController.text,
       };
+
       var res = await CallApi().authData(data, 'login');
       var body = json.decode(res.body);
       if (body["errorMessage"] == false) {
@@ -270,24 +276,33 @@ class _SigninState extends State<Signin> {
               await SharedPreferences.getInstance();
           var token = body['message']['token'];
           print(token);
+          print('-----------------------');
+          print(",,,,,,,,,,,,,,,,,,,");
           var userId = body['message']["user"]["id"];
           print(userId);
+          print('-----------------------');
+          print('/////////////////////////');
           localStorage.setString('token', token);
           localStorage.setInt('userId', userId);
+          print('MESSAGE');
           print(body['message']);
+          //   print(body['user']['id']);
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (BuildContext context) => HomePage()),
           );
         }
       } else {
+        // _showMsg(body['error']);
         setState(() {
           bodyError = body['message'];
+          //_isLoading = false;
         });
         print(bodyError);
       }
     } catch (e) {
       print(e);
     }
+
     setState(() {
       _isLoading = false;
     });

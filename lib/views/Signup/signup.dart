@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
+import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/SignIn/signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +23,6 @@ class _SignupState extends State<Signup> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
-//controllers for pass data
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _profileController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
@@ -32,8 +33,8 @@ class _SignupState extends State<Signup> {
 
   String? password;
   String? confirm;
-  String? bodyError;
   String? _uploadedFileURL;
+  String? bodyError;
 
   bool _isLoading = false;
   bool showPassword = true;
@@ -60,9 +61,12 @@ class _SignupState extends State<Signup> {
         } else {
           _profileController.text = "Unscessful Upload";
         }
+
         print(_image);
         print('------');
         print(pickedFile.path);
+        // uploadFile();
+
         print(_ImageS);
         image = true;
       });
@@ -72,14 +76,15 @@ class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      key: _scaffoldKey,
-      backgroundColor: primaryColor,
-      body: Center(
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
+        key: _scaffoldKey,
+        backgroundColor: primaryColor,
+        body: Center(
+            child: SingleChildScrollView(
+                child: Form(
+          key: _formKey,
+          child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text(
@@ -116,16 +121,21 @@ class _SignupState extends State<Signup> {
                             ))
                         : SizedBox()
                     : SizedBox(),
+
+                // SizedBox(height: 5.0),
                 SizedBox(height: screenHeight * (0.5 / 20)),
+
                 !_isLoading
                     ? _signUp()
                     : CupertinoActivityIndicator(
                         radius: 15,
                       ),
                 SizedBox(height: screenHeight * (1 / 20)),
+
                 Padding(
                   padding: const EdgeInsets.only(left: 80.0, right: 50.0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Already have an account ?",
@@ -158,57 +168,51 @@ class _SignupState extends State<Signup> {
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+              ]),
+        ))));
   }
 
-//email
   _email() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-      child: TextFormField(
-        style: const TextStyle(fontSize: 14, color: Colors.white),
-        cursorColor: kPurple,
-        keyboardType: TextInputType.emailAddress,
-        validator: (value) {
-          RegExp regex = RegExp(
-              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
-          if (value!.isEmpty) {
-            return 'Email Required !!';
-          } else if (!regex.hasMatch(value)) {
-            return 'Email Required !!';
-          }
-          return null;
-        },
-        onSaved: (String? val) {
-          password = val;
-        },
-        controller: _emailController,
-        textInputAction: TextInputAction.done,
-        decoration: const InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-          hintText: "Email / UserName",
-          hintStyle: TextStyle(
-            fontSize: 14.0,
-            color: kWhite,
+        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+        child: TextFormField(
+          style: const TextStyle(fontSize: 14, color: Colors.white),
+          cursorColor: kPurple,
+          keyboardType: TextInputType.emailAddress,
+          // obscureText: showPassword,
+          validator: (value) {
+            RegExp regex = RegExp(
+                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+            if (value!.isEmpty) {
+              return 'Email required';
+            } else if (!regex.hasMatch(value)) {
+              return 'abc@gmail.com';
+            }
+            return null;
+          },
+          onSaved: (String? val) {
+            password = val;
+          },
+          controller: _emailController,
+          textInputAction: TextInputAction.done,
+          decoration: const InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+            hintText: "Email / UserName",
+            hintStyle: TextStyle(
+              fontSize: 14.0,
+              color: kWhite,
+            ),
+            fillColor: kGrey,
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(0.0)),
+              borderSide: BorderSide.none,
+              gapPadding: 0,
+            ),
           ),
-          fillColor: kGrey,
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(0.0)),
-            borderSide: BorderSide.none,
-            gapPadding: 0,
-          ),
-        ),
-      ),
-    );
+        ));
   }
 
-//password
   _password() {
     return Padding(
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
@@ -221,7 +225,7 @@ class _SignupState extends State<Signup> {
             RegExp regex = RegExp(
                 r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
             if (value!.isEmpty) {
-              return 'Password Required !!';
+              return 'Password required';
             } else if (!regex.hasMatch(value)) {
               return 'Password Must contains \n - Minimum 1 Upper case \n - Minimum 1 lowercase \n - Minimum 1 Number \n - Minimum 1 Special Character \n - Minimum 8 letters';
             }
@@ -250,70 +254,68 @@ class _SignupState extends State<Signup> {
         ));
   }
 
-//confirm password
   _confirmpassword() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-      child: TextFormField(
-        style: const TextStyle(fontSize: 14, color: Colors.white),
-        cursorColor: kPrimaryPurpleColor,
-        keyboardType: TextInputType.text,
-        obscureText: showconfirmPassword,
-        validator: (value) {
-          RegExp regex = RegExp(
-              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-          if (value!.isEmpty) {
-            return 'Password required';
-          } else if (!regex.hasMatch(value)) {
-            return 'Password Must contains \n - Minimum 1 Upper case \n - Minimum 1 lowercase \n - Minimum 1 Number \n - Minimum 1 Special Character \n - Minimum 8 letters';
-          } else if (value != _passwordController.text) {
-            return 'Not Matched';
-          }
-          return null;
-        },
-        onSaved: (String? val) {
-          confirm = val;
-        },
-        controller: _confirmpasswordController,
-        textInputAction: TextInputAction.done,
-        decoration: const InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-          hintText: "Re-Enter Password",
-          hintStyle: TextStyle(fontSize: 14.0, color: kPrimaryGreyColor),
-          fillColor: kGrey,
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(0.0)),
-            borderSide: BorderSide.none,
-            gapPadding: 0,
+        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+        child: TextFormField(
+          style: const TextStyle(fontSize: 14, color: Colors.white),
+          cursorColor: kPrimaryPurpleColor,
+          keyboardType: TextInputType.text,
+          obscureText: showconfirmPassword,
+          validator: (value) {
+            RegExp regex = RegExp(
+                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+            if (value!.isEmpty) {
+              return 'Password required';
+            } else if (!regex.hasMatch(value)) {
+              return 'Password Must contains \n - Minimum 1 Upper case \n - Minimum 1 lowercase \n - Minimum 1 Number \n - Minimum 1 Special Character \n - Minimum 8 letters';
+            } else if (value != _passwordController.text) {
+              return 'Not Matched';
+            }
+            return null;
+          },
+          onSaved: (String? val) {
+            confirm = val;
+          },
+          controller: _confirmpasswordController,
+          textInputAction: TextInputAction.done,
+          decoration: const InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+            hintText: "Re-Enter Password",
+            hintStyle: TextStyle(fontSize: 14.0, color: kPrimaryGreyColor),
+            fillColor: kGrey,
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(0.0)),
+              borderSide: BorderSide.none,
+              gapPadding: 0,
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   _signUp() {
     return ButtonTheme(
-      minWidth: 300.0,
-      height: 40.0,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: kPrimaryPurpleColor, // background
-          onPrimary: Colors.transparent,
-        ),
-        onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            _formKey.currentState?.save();
+        minWidth: 300.0,
+        height: 40.0,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: kPrimaryPurpleColor, // background
+            onPrimary: Colors.transparent,
+          ),
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              _formKey.currentState?.save();
 
-            submitSubscription(file: _image, filename: _ImageS, token: "token");
-          }
-        },
-        child: Text(
-          'Sign Up',
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
-      ),
-    );
+              submitSubscription(
+                  file: _image, filename: _ImageS, token: "token");
+            }
+          },
+          child: Text(
+            'Sign Up',
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        ));
   }
 
   _bio() {
@@ -326,7 +328,7 @@ class _SignupState extends State<Signup> {
           keyboardType: TextInputType.multiline,
           validator: (value) {
             if (value!.isEmpty) {
-              return 'Bio Required !!';
+              return 'Bio required';
             }
             return null;
           },
@@ -352,101 +354,97 @@ class _SignupState extends State<Signup> {
 
   _name() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-      child: TextFormField(
-        style: const TextStyle(fontSize: 14, color: kPrimaryWhiteColor),
-        cursorColor: kPrimaryPurpleColor,
-        keyboardType: TextInputType.text,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Name Required !!';
-          }
-          return null;
-        },
-        controller: _nameController,
-        textInputAction: TextInputAction.done,
-        decoration: const InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-          hintText: "Name",
-          hintStyle: TextStyle(
-            fontSize: 14.0,
-            color: kWhite,
+        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+        child: TextFormField(
+          style: const TextStyle(fontSize: 14, color: kPrimaryWhiteColor),
+          cursorColor: kPrimaryPurpleColor,
+          keyboardType: TextInputType.text,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Name required';
+            }
+            return null;
+          },
+          controller: _nameController,
+          textInputAction: TextInputAction.done,
+          decoration: const InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+            hintText: "Name",
+            hintStyle: TextStyle(
+              fontSize: 14.0,
+              color: kWhite,
+            ),
+            fillColor: kGrey,
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(0.0)),
+              borderSide: BorderSide.none,
+              gapPadding: 0,
+            ),
           ),
-          fillColor: kGrey,
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(0.0)),
-            borderSide: BorderSide.none,
-            gapPadding: 0,
-          ),
-        ),
-      ),
-    );
+        ));
   }
 
   _profile() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-      child: TextFormField(
-        style: const TextStyle(fontSize: 14, color: kPrimaryWhiteColor),
-        minLines: 1,
-        cursorColor: kPrimaryPurpleColor,
-        keyboardType: TextInputType.none,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Profile Required !!';
-          }
-          return null;
-        },
-        controller: _profileController,
-        textInputAction: TextInputAction.none,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-          hintText: "Profile",
-          hintStyle: TextStyle(
-            fontSize: 14.0,
-            color: kWhite,
-          ),
-          fillColor: kGrey,
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(0.0)),
-            borderSide: BorderSide.none,
-            gapPadding: 0,
-          ),
-          suffixIcon: Container(
-            width: 100,
-            child: Row(
-              children: [
-                Text("Upload",
-                    style: TextStyle(
-                      fontSize: 14.0,
+        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+        child: TextFormField(
+          style: const TextStyle(fontSize: 14, color: kPrimaryWhiteColor),
+          minLines: 1,
+          cursorColor: kPrimaryPurpleColor,
+          keyboardType: TextInputType.none,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Profile required';
+            }
+            return null;
+          },
+          controller: _profileController,
+          textInputAction: TextInputAction.none,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+            hintText: "Profile",
+            hintStyle: TextStyle(
+              fontSize: 14.0,
+              color: kWhite,
+            ),
+            fillColor: kGrey,
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(0.0)),
+              borderSide: BorderSide.none,
+              gapPadding: 0,
+            ),
+            suffixIcon: Container(
+              width: 100,
+              child: Row(
+                children: [
+                  Text("Upload",
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: kWhite,
+                      )),
+                  IconButton(
+                    icon: Icon(
+                      Icons.insert_photo_rounded,
                       color: kWhite,
-                    )),
-                IconButton(
-                  icon: Icon(
-                    Icons.insert_photo_rounded,
-                    color: kWhite,
-                    size: 30.0,
+                      size: 30.0,
+                    ),
+                    onPressed: () {
+                      _getFromGallery();
+                    },
                   ),
-                  onPressed: () {
-                    _getFromGallery();
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
-
-  //sign up using api
 
   Future<int> submitSubscription(
       {File? file, String? filename, String? token}) async {
     setState(() {
-      _isLoading = false;
+      _isLoading = true;
     });
 
     ///MultiPart request
@@ -489,8 +487,12 @@ class _SignupState extends State<Signup> {
 
     if (body["errorMessage"] == false) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => Signin()),
+        MaterialPageRoute(builder: (BuildContext context) => HomePage()),
       );
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
     }
 
     return res.statusCode;
