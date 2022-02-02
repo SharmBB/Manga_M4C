@@ -20,6 +20,10 @@ class CallApi {
 
   var token;
 
+  //browser
+  var hoturl = 'https://api.comick.fun/search?page=1&limit=50&sort=uploaded';
+  var newurl = 'https://api.comick.fun/search?page=1&limit=50&sort=follow';
+
   //Login api
   authData(data, apiUrl) async {
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
@@ -74,8 +78,24 @@ class CallApi {
     );
   }
 
-    getChapterImages(apiUrl) async {
+  getChapterImages(apiUrl) async {
     var fullUrl = Uri.parse(url + apiUrl);
+    return await http.get(
+      fullUrl,
+    );
+  }
+
+  //browser page
+  getBrowserhot(apiUrl) async {
+    var fullUrl = Uri.parse(hoturl + apiUrl);
+    return await http.get(
+      fullUrl,
+    );
+  }
+
+  //browser page
+  getBrowserNew(apiUrl) async {
+    var fullUrl = Uri.parse(newurl + apiUrl);
     return await http.get(
       fullUrl,
     );

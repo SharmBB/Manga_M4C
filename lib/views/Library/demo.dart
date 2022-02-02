@@ -1,90 +1,134 @@
-// main.dart
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:mangakiku_app/views/Comments/comments.dart';
+import 'package:mangakiku_app/views/Home/homePage.dart';
 
+class MangaComment2 extends StatefulWidget {
+  const MangaComment2({ Key? key }) : super(key: key);
 
-
-
-class aq extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _MangaComment2State createState() => _MangaComment2State();
 }
 
-class _HomePageState extends State<aq> {
-  final List data = [
-    {
-      "title": "Image 1",
-      "url":
-          "https://cdn.pixabay.com/photo/2020/11/08/09/41/deer-5723225_960_720.jpg"
-    },
-    {
-      "title": "Image 2",
-      "url":
-          "https://cdn.pixabay.com/photo/2020/11/01/19/41/autumn-5704791_960_720.jpg"
-    },
-    {
-      "title": "Image 3",
-      "url":
-          "https://cdn.pixabay.com/photo/2020/04/11/14/55/houses-5030731_960_720.jpg"
-    },
-    {
-      "title": "Image 4",
-      "url":
-          "https://cdn.pixabay.com/photo/2020/11/16/16/05/hoverfly-5749361_960_720.jpg"
-    },
-    {
-      "title": "Image 5",
-      "url":
-          "https://cdn.pixabay.com/photo/2020/04/19/12/26/thread-5063401_960_720.jpg"
-    },
-    {
-      "title": "Image 6",
-      "url":
-          "https://cdn.pixabay.com/photo/2020/11/16/22/58/mountains-5750804_960_720.jpg"
-    },
-  ];
+class _MangaComment2State extends State<MangaComment2> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Kindacode.com'),
-      ),
-      body: Column(
-        children: [
-          CarouselSlider(
-            options: CarouselOptions(
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 2),
-              autoPlayAnimationDuration: Duration(milliseconds: 400),
-              height: 300,
-            ),
-            items: data.map((item) {
-              return GridTile(
-                child: Image.network(item["url"], fit: BoxFit.fitWidth),
-                footer: Container(
-                    padding: EdgeInsets.all(15),
-                    color: Colors.black54,
-                child:    Positioned(
-                  bottom: 40,
-                    child: Text(
-                      item["title"],
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                      textAlign: TextAlign.right,
-                    )),
-             
-               ) );
-            }).toList(),
-          ),
-          SizedBox(height: 30),
-          Text(
-            'Other Content',
-            style: TextStyle(
-              fontSize: 24,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
+        backgroundColor: Colors.black,
+        body: Padding(
+            padding: EdgeInsets.only(top: 0.0),
+            child: ListView(children: [
+              Stack(
+                children: <Widget>[
+                  Container(
+                    height: screenHeight * (18 / 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(0.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(0.0, 2.0),
+                          blurRadius: 6.0,
+                        ),
+                      ],
+                    ),
+                    child: Image(
+                      image: AssetImage("assets/image-4.png"),
+                      width: screenWidth,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 145.0, vertical: 50.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text('Chapter 2 ',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                                textAlign: TextAlign.center),
+                          ])),
+                  Container(
+                    margin: EdgeInsets.only(top: 40),
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                              Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => HomePage(),
+                                        ),
+                                      );
+                              }),
+                          IconButton(
+                              icon: Icon(
+                                Icons.keyboard_control_rounded,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {})
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+               
+                 Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                     IconButton(
+                        icon: Icon(Icons.arrow_back_ios_new),
+                        color: Colors.white,
+                        onPressed: () {
+                       
+                        }),
+
+                   // SizedBox(width: screenWidth * (1 / 10)),
+                    IconButton(
+                        icon: Icon(Icons.thumb_up_off_alt ),
+                        color: Colors.white,
+                        onPressed: () {
+                       
+                        }),
+                 //  SizedBox(width: screenWidth * (1 / 10)),
+                     IconButton(
+                        icon: Icon(Icons.comment_outlined),
+                        color: Colors.white,
+                        onPressed: () {
+                       
+                        }),
+                  //  SizedBox(width: screenWidth * (1 / 10)),
+                     IconButton(
+                        icon: Icon(Icons.favorite),
+                        color: Colors.white,
+                        onPressed: () {
+                       
+                        }),
+                  //   SizedBox(width: screenWidth * (1 / 10)),
+                      IconButton(
+                        icon: Icon(Icons.arrow_forward_ios),
+                        color: Colors.white,
+                        onPressed: () {
+                       
+                        }),
+                  
+               
+                  ],
+                ),
+              
+      
+            ])));
   }
 }

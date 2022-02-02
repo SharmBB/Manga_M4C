@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
@@ -245,318 +246,360 @@ class _CartState extends State<Chapter> {
                               top: BorderSide(
                                   color: Colors.purple, width: 0.5))),
                       child: TabBarView(children: <Widget>[
-                        SingleChildScrollView(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  child: Text(
-                                    _manga[0]['desc'],
-                                    style: TextStyle(
-                                        fontSize: 14, color: Colors.white),
-                                  ),
+                        _isLoading
+                            ? Center(
+                                child: Padding(
+                                padding: const EdgeInsets.only(top: 30.0),
+                                child: CupertinoActivityIndicator(
+                                  radius: 15,
                                 ),
-                                SizedBox(height: 10.0),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Organization :",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                    SizedBox(width: 3.0),
-                                    Text(
-                                      "Manhwa",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5.0),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Published :",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                    SizedBox(width: 3.0),
-                                    Text(
-                                      _manga[0]["mu_comics"]['year'].toString(),
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5.0),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Demographic :",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                    SizedBox(width: 3.0),
-                                    Text(
-                                      "Shounen",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5.0),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Status :",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                    SizedBox(width: 3.0),
-                                    Text(
-                                      "Ongoing",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 15.0),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "More Info ",
-                                      style: TextStyle(
-                                          fontSize: 22,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10.0),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Artists :",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                    SizedBox(width: 3.0),
-                                    Text(
-                                      "Akira Toriyama(Redic Studio)",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.blue),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5.0),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Author",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                    SizedBox(width: 3.0),
-                                    Text(
-                                      " Bird Studio/Shueisha",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.blue),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5.0),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Geners :",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                    SizedBox(width: 3.0),
-                                    Text(
-                                      " television series, Adventure , Fantasy",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.blue),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 20),
-                                Container(
-                                  height: 80,
-
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.circular(1)),
-
-                                  // ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Column(children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 10, right: 20, left: 10),
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                              ))
+                            : SingleChildScrollView(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
                                     children: [
                                       Container(
-                                        width: 115,
-                                        height: 20,
+                                        child: Text(
+                                          _manga[0]['desc'],
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                      SizedBox(height: 10.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Organization :",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(width: 3.0),
+                                          Text(
+                                            "Manhwa",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 5.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Published :",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(width: 3.0),
+                                          Text(
+                                            _manga[0]["mu_comics"]['year']
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 5.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Demographic :",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(width: 3.0),
+                                          Text(
+                                            "Shounen",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 5.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Status :",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(width: 3.0),
+                                          Text(
+                                            "Ongoing",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 15.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "More Info ",
+                                            style: TextStyle(
+                                                fontSize: 22,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 10.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Artists :",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(width: 3.0),
+                                          Text(
+                                            "Akira Toriyama(Redic Studio)",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.blue),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 5.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Author",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(width: 3.0),
+                                          Text(
+                                            " Bird Studio/Shueisha",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.blue),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 5.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Geners :",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(width: 3.0),
+                                          Text(
+                                            " television series, Adventure , Fantasy",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.blue),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 20),
+                                      Container(
+                                        height: 80,
+
                                         decoration: BoxDecoration(
-                                            color: kPrimaryGreyColor,
-                                            // gradient: LinearGradient(colors: [secondary, primary]),
+                                            color: Colors.grey,
                                             borderRadius:
                                                 BorderRadius.circular(1)),
+
+                                        // ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                        _isLoading
+                            ? Center(
+                                child: Padding(
+                                padding: const EdgeInsets.only(top: 30.0),
+                                child: CupertinoActivityIndicator(
+                                  radius: 15,
+                                ),
+                              ))
+                            : Column(children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10, right: 20, left: 10),
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 10.0),
                                         child: Row(
-                                          // mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              "Select Language",
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.white),
+                                            Container(
+                                              width: 115,
+                                              height: 20,
+                                              decoration: BoxDecoration(
+                                                  color: kPrimaryGreyColor,
+                                                  // gradient: LinearGradient(colors: [secondary, primary]),
+                                                  borderRadius:
+                                                      BorderRadius.circular(1)),
+                                              child: Row(
+                                                // mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    "Select Language",
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.white),
+                                                  ),
+                                                  Icon(
+                                                    Icons.keyboard_arrow_down,
+                                                    color: Colors.white,
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                            Icon(
-                                              Icons.keyboard_arrow_down,
-                                              color: Colors.white,
-                                            )
                                           ],
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 10, left: 10, right: 15),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    width: 110,
-                                    height: 22,
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey,
-                                        // gradient: LinearGradient(colors: [secondary, primary]),
-                                        borderRadius: BorderRadius.circular(1)),
-                                    child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 10.0, left: 5),
-                                        child: TextField(
-                                          decoration: InputDecoration(
-                                            hintText: "Select Chapter",
-                                            hintStyle: TextStyle(
-                                                fontSize: 12.0,
-                                                color: Colors.white),
-                                            border: InputBorder.none,
-                                            fillColor: Colors.grey[900],
-                                          ),
-                                        )),
-                                  ),
-                                  Text('Date',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold)),
-                                  Text(
-                                    'Language',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ]),
-                          ),
-                          Expanded(
-                            child: Container(
-                              child: ListView.builder(
-                                itemCount: chaptersFromDB.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return InkWell(
-                                    child: ListTile(
-                                        //return new ListTile(
-                                        onTap: null,
-                                        subtitle: Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 15.0, left: 10),
-                                          child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: <Widget>[
-                                                InkWell(
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            MangaComment2(
-                                                                hid:
-                                                                    chaptersFromDB[
-                                                                            index]
-                                                                        [
-                                                                        'hid'].toString()),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10, left: 10, right: 15),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          width: 110,
+                                          height: 22,
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey,
+                                              // gradient: LinearGradient(colors: [secondary, primary]),
+                                              borderRadius:
+                                                  BorderRadius.circular(1)),
+                                          child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10.0, left: 5),
+                                              child: TextField(
+                                                decoration: InputDecoration(
+                                                  hintText: "Select Chapter",
+                                                  hintStyle: TextStyle(
+                                                      fontSize: 12.0,
+                                                      color: Colors.white),
+                                                  border: InputBorder.none,
+                                                  fillColor: Colors.grey[900],
+                                                ),
+                                              )),
+                                        ),
+                                        Text('Date',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                        Text(
+                                          'Language',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      ]),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    child: ListView.builder(
+                                      itemCount: chaptersFromDB.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return InkWell(
+                                          child: ListTile(
+                                              //return new ListTile(
+                                              onTap: null,
+                                              subtitle: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 15.0, left: 10),
+                                                child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: <Widget>[
+                                                      InkWell(
+                                                        highlightColor:
+                                                            Colors.transparent,
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  MangaComment2(
+                                                                      hid: chaptersFromDB[index]
+                                                                              [
+                                                                              'hid']
+                                                                          .toString()),
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  vertical: 8),
+                                                          child: Text(
+                                                            chaptersFromDB[
+                                                                        index]
+                                                                    ["chap"]
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                                fontSize: 13,
+                                                                color: Colors
+                                                                    .white),
+                                                          ),
+                                                        ),
                                                       ),
-                                                    );
-                                                  },
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(vertical: 8),
-                                                    child: Text(
-                                                      chaptersFromDB[index]
-                                                              ["chap"]
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          fontSize: 13,
-                                                          color: Colors.white),
-                                                    ),
-                                                  ),
-                                                ),
-                                                // Text(
-                                                //   chaptersFromDB[index]["chap"]
-                                                //       .toString(),
-                                                //   style: TextStyle(
-                                                //       fontSize: 13,
-                                                //       color: Colors.white),
-                                                // ),
-                                                Text(
-                                                  chaptersFromDB[index]
-                                                              ["up_count"]
-                                                          .toString() +
-                                                      "days",
-                                                  style: TextStyle(
-                                                      fontSize: 13,
-                                                      color: Colors.white),
-                                                ),
-                                                Text(
-                                                  chaptersFromDB[index]["lang"]
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 13,
-                                                      color: Colors.white),
-                                                ),
-                                              ]),
-                                        )),
-                                  );
-                                }, //itemBuilder
-                              ),
-                            ),
-                          ),
-                        ])
+                                                      // Text(
+                                                      //   chaptersFromDB[index]["chap"]
+                                                      //       .toString(),
+                                                      //   style: TextStyle(
+                                                      //       fontSize: 13,
+                                                      //       color: Colors.white),
+                                                      // ),
+                                                      Text(
+                                                        chaptersFromDB[index]
+                                                                    ["up_count"]
+                                                                .toString() +
+                                                            "days",
+                                                        style: TextStyle(
+                                                            fontSize: 13,
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                      Text(
+                                                        chaptersFromDB[index]
+                                                                ["lang"]
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            fontSize: 13,
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    ]),
+                                              )),
+                                        );
+                                      }, //itemBuilder
+                                    ),
+                                  ),
+                                ),
+                              ])
                       ]),
                     )
                   ]))
@@ -594,6 +637,3 @@ class _CartState extends State<Chapter> {
     }
   }
 }
-
-
-

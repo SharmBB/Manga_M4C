@@ -276,17 +276,24 @@ class _SigninState extends State<Signin> {
               await SharedPreferences.getInstance();
           var token = body['message']['token'];
           print(token);
-          print('-----------------------');
-          print(",,,,,,,,,,,,,,,,,,,");
+
           var userId = body['message']["user"]["id"];
           print(userId);
-          print('-----------------------');
-          print('/////////////////////////');
+          var name = body['message']["user"]["name"];
+          print(name);
+          var bio = body['message']["user"]["bio"];
+          print(bio);
+          var image = body['message']["user"]["image"];
+          print(image);
+          print("------------------------------------");
           localStorage.setString('token', token);
+          localStorage.setString('name', name);
+          localStorage.setString('bio', bio);
           localStorage.setInt('userId', userId);
-          print('MESSAGE');
+          localStorage.setString('image', image);
+
           print(body['message']);
-          //   print(body['user']['id']);
+
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (BuildContext context) => HomePage()),
           );

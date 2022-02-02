@@ -20,12 +20,17 @@ class _MyHomePageState extends State<Browser> {
   List ViewManga = [];
   List RatingManga = [];
 
+ List SelectedManga = [];
+
 // loader
   bool _isLoading = true;
 
+  String dropdownValue = 'Hot';
   @override
   initState() {
     _apiMangaDetails();
+
+    SelectedManga = manga;
     super.initState();
   }
 
@@ -62,7 +67,7 @@ class _MyHomePageState extends State<Browser> {
             Padding(
               padding: const EdgeInsets.only(top: 10, right: 20, left: 20),
               child: Column(
-                children: [
+                children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(
                       top: 10.0,
@@ -71,7 +76,7 @@ class _MyHomePageState extends State<Browser> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          width: 140,
+                          width: 130,
                           height: 20,
                           decoration: BoxDecoration(
                               color: Colors.grey[900],
@@ -94,27 +99,61 @@ class _MyHomePageState extends State<Browser> {
                           ),
                         ),
                         Container(
-                          width: 120,
+                          width: 140,
                           height: 20,
                           decoration: BoxDecoration(
                               color: Colors.grey[900],
                               borderRadius: BorderRadius.circular(1)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text(
-                                "High Rating",
-                                style: TextStyle(
-                                    fontSize: 13, color: Colors.white70),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+
+                            child:  DropdownButton<String>(
+                                underline: DropdownButtonHideUnderline(child: Container()),
+                                value: dropdownValue,
+                                dropdownColor: kPrimaryPurpleColor,
+                                icon: Icon(Icons.keyboard_arrow_down),
+                                elevation: 16,
+                                style: TextStyle(color: kPrimaryWhiteColor),
+                               
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownValue = newValue!;
+
+                                    if(dropdownValue == 'New'){
+                                      SelectedManga  = Newmanga ;
+                               
+                                    }else if(dropdownValue == 'Recently Added'){
+                                      SelectedManga  = ViewManga ;
+                                    } else if(dropdownValue == 'Top Mangas'){
+                                           SelectedManga  =  RatingManga ;
+                                    }else if(dropdownValue == 'Hot'){
+                                      SelectedManga  = manga ;
+                                    }else{
+                                       SelectedManga  = manga ;
+                                    }
+                                    
+                                    
+                                    
+                                  });
+                                },
+                                
+                                items: <String>[
+                                  'Hot',
+                                  'New',
+                                  'Recently Added',
+                                  'Top Mangas',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value,
+                                    style: TextStyle(color: kPrimaryGreyColor)),
+                                    
+                                  );
+                                }).toList(),
                               ),
-                              SizedBox(width: 20),
-                              Icon(
-                                Icons.keyboard_arrow_down,
-                                color: Colors.white,
-                              )
-                            ],
-                          ),
-                        )
+                           
+                            
+                        ))
                       ],
                     ),
                   ),
@@ -122,144 +161,153 @@ class _MyHomePageState extends State<Browser> {
               ),
             ),
             SizedBox(height: 15),
-             _isLoading
-                  ? Center(
-                      child: Padding(
-                      padding: const EdgeInsets.only(top: 30.0),
-                      child: CupertinoActivityIndicator(
-                        radius: 20,
-                      ),
-                    )):Expanded(
-              child: ListView.builder(
-                  itemCount: RatingManga[0].length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)),
-                        color: Colors.black12,
-                      ),
-                      height: 140,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Center(
-                            child: Container(
-                              width: 130,
-                              height: 140,
-                              margin: EdgeInsets.only(right: 15),
-                              child: CachedNetworkImage(
-                                  imageUrl: RatingManga[0][index]['md_covers'][0]
-                                      ['gpurl'],
-                                  imageBuilder: (context, imageProvider) =>
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.fill),
-                                        ),
-                                      ),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error)),
+            _isLoading
+                ? Center(
+                    child: Padding(
+                    padding: const EdgeInsets.only(top: 30.0),
+                    child: CupertinoActivityIndicator(
+                      radius: 20,
+                    ),
+                  ))
+                : Expanded(
+                    child: ListView.builder(
+                        itemCount: SelectedManga[0].length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10)),
+                              color: Colors.black12,
                             ),
-                          ),
-                          Expanded(
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    RatingManga[0][index]['title'].length <= 20
-                                        ? RatingManga[0][index]['title']
-                                            .toString()
-                                        : RatingManga[0][index]['title']
-                                            .toString()
-                                            .substring(0, 20),
-                                    style: TextStyle(
-                                        color: kPrimaryWhiteColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
+                            height: 140,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Center(
+                                  child: Container(
+                                    width: 130,
+                                    height: 140,
+                                    margin: EdgeInsets.only(right: 15),
+                                    child: CachedNetworkImage(
+                                        imageUrl: SelectedManga[0][index]
+                                            ['md_covers'][0]['gpurl'],
+                                        imageBuilder: (context,
+                                                imageProvider) =>
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.fill),
+                                              ),
+                                            ),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error)),
                                   ),
-                                  SizedBox(
-                                    height: 6,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        RatingManga[0][index]['desc'],
-                                        style: TextStyle(
-                                            color: kPrimaryWhiteColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12),
-                                      ),
-                                      SizedBox(
-                                        height: 6,
-                                      ),
-                                      Row(
-                                        children: <Widget>[
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.yellow,
-                                            size: 12,
-                                          ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(
-                                              details[index]['sub-description'],
+                                ),
+                                Expanded(
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          SelectedManga[0][index]['title']
+                                                      .length <=
+                                                  20
+                                              ? SelectedManga[0][index]['title']
+                                                  .toString()
+                                              : SelectedManga[0][index]['title']
+                                                  .toString()
+                                                  .substring(0, 20),
+                                          style: TextStyle(
+                                              color: kPrimaryWhiteColor,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                        SizedBox(
+                                          height: 6,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                            SelectedManga[0][index]['desc'],
                                               style: TextStyle(
-                                                  color: kPrimaryGreyColor,
-                                                  fontSize: 13,
-                                                  letterSpacing: .3)),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(". Action",
-                                              style: TextStyle(
-                                                  color: kPrimaryGreyColor,
-                                                  fontSize: 13,
-                                                  letterSpacing: .3)),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(". ch",
-                                              style: TextStyle(
-                                                  color: kPrimaryGreyColor,
-                                                  fontSize: 13,
-                                                  letterSpacing: .3)),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ]),
-                          )
-                        ],
-                      ),
-                    );
-                  }),
-            )
+                                                  color: kPrimaryWhiteColor,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12),
+                                            ),
+                                            SizedBox(
+                                              height: 6,
+                                            ),
+                                            Row(
+                                              children: <Widget>[
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Colors.yellow,
+                                                  size: 12,
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                    SelectedManga[0][index]
+                                                        ['bayesian_rating'],
+                                                    style: TextStyle(
+                                                        color:
+                                                            kPrimaryGreyColor,
+                                                        fontSize: 13,
+                                                        letterSpacing: .3)),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(". Action",
+                                                    style: TextStyle(
+                                                        color:
+                                                            kPrimaryGreyColor,
+                                                        fontSize: 13,
+                                                        letterSpacing: .3)),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(". ch",
+                                                    style: TextStyle(
+                                                        color:
+                                                            kPrimaryGreyColor,
+                                                        fontSize: 13,
+                                                        letterSpacing: .3)),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ]),
+                                )
+                              ],
+                            ),
+                          );
+                        }),
+                  )
           ],
         ),
       ),
     );
   }
 
-  //get manga details from api
+ //get manga details from api
   void _apiMangaDetails() async {
     try {
       //Hot Manga API
       manga.clear();
-      var res = await CallApi().getMangas('');
+      var res = await CallApi().getBrowserhot('');
       var bodyRoutes = json.decode(res.body);
       manga.add(bodyRoutes);
 
       //new Manga API
       Newmanga.clear();
-      var resNew = await CallApi().getNewMangas('');
+      var resNew = await CallApi().getBrowserNew('');
       var bodyRoutesNew = json.decode(resNew.body);
       Newmanga.add(bodyRoutesNew);
 
