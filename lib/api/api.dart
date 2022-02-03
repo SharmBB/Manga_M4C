@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CallApi {
   //home page api url
@@ -110,14 +111,24 @@ class CallApi {
     );
   }
 
+  //get User by ID
+  getUserById(apiUrl) async {
+    var fullUrl = Uri.parse(_urlAuth + apiUrl);
+    return await http.get(
+      fullUrl,
+      headers: _setHeaders(),
+    );
+  }
+
   _setHeaders() => {
         'Content-type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
       };
 
-  // _getToken() async {
-  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
-  //   var token = localStorage.getString('token');
-  //   return '?token=$token';
+  _getToken() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('token');
+    return '?token=$token';
+  }
 }

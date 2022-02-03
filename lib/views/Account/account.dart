@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
+import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/component/accountCard.dart';
 import 'package:mangakiku_app/component/bottomNavigationBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,10 +19,13 @@ class _AccountState extends State<Account> {
   String bio = "";
   String name = "";
   int? usernameId;
+  String? usernameDB;
+  String? token;
 
   @override
   initState() {
-    _getUserDetails();
+    _getUserById();
+    
     super.initState();
   }
 
@@ -79,9 +85,9 @@ class _AccountState extends State<Account> {
                         padding: const EdgeInsets.only(top: 30),
                         child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            children:  <Widget>[
+                            children: <Widget>[
                               Text(
-                                "User name - "+name,
+                                "User name - " + name,
                                 style: TextStyle(
                                     color: kPrimaryWhiteColor,
                                     fontSize: 12.0,
@@ -93,9 +99,9 @@ class _AccountState extends State<Account> {
                         padding: const EdgeInsets.only(top: 20),
                         child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            children:  <Widget>[
+                            children: <Widget>[
                               Text(
-                                "Bio - "+bio,
+                                "Bio - " + bio,
                                 style: TextStyle(
                                     color: kPrimaryWhiteColor,
                                     fontSize: 12.0,
@@ -242,18 +248,34 @@ class _AccountState extends State<Account> {
     );
   }
 
-  void _getUserDetails() async {
+  void _getUserById() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     print("data from sample screen");
-    usernameId = localStorage.getInt('userId');
-    image = localStorage.getString("image")!;
-    name = localStorage.getString("name")!;
-    bio = localStorage.getString("bio")!;
-    var data = {"id": usernameId, "pic": image, "bio": bio, "name": name};
-    print(image);
-    print(usernameId);
-    print(name);
-    print(bio);
-   
+    token = localStorage.getString('token');
+
+    var res = await CallApi().getUserById('getUserById');
+
+    var body = json.decode(res.body);
+    print(body);
+
+    setState(() {
+      // isAuth = true;
+    });
   }
 }
+
+  // void _getUserDetails() async {
+  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
+  //   print("data from sample screen");
+  //   usernameId = localStorage.getInt('userId');
+  //   image = localStorage.getString("image")!;
+  //   name = localStorage.getString("name")!;
+  //   bio = localStorage.getString("bio")!;
+  //   var data = {"id": usernameId, "pic": image, "bio": bio, "name": name};
+  //   print(image);
+  //   print(usernameId);
+  //   print(name);
+  //   print(bio);
+   
+  // }
+

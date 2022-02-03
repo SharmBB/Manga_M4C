@@ -28,11 +28,12 @@ class _CartState extends State<Chapter> {
   List chapterUsingName = [];
   List chapterUsingID = [];
   List chaptersFromDB = [];
+  List chapterLanguage = [];
 
 // loader
   bool _isLoading = true;
 
-    String dropdownValue = 'English';
+  String dropdownValue = 'English';
 
   @override
   void initState() {
@@ -159,7 +160,7 @@ class _CartState extends State<Chapter> {
                       child: Row(
                         children: <Widget>[
                           FlatButton(
-                            height: 28,
+                            height: 23,
                             child: Text(
                               'Read Now',
                               style: TextStyle(fontSize: 20.0),
@@ -316,7 +317,7 @@ class _CartState extends State<Chapter> {
                                           ),
                                           SizedBox(width: 3.0),
                                           Text(
-                                            "Shounen",
+                                            _manga[0]["demographic"].toString(),
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.white),
@@ -367,7 +368,7 @@ class _CartState extends State<Chapter> {
                                             "Akira Toriyama(Redic Studio)",
                                             style: TextStyle(
                                                 fontSize: 14,
-                                                color: Colors.blue),
+                                                color: kPrimaryPurpleColor),
                                           ),
                                         ],
                                       ),
@@ -385,7 +386,7 @@ class _CartState extends State<Chapter> {
                                             " Bird Studio/Shueisha",
                                             style: TextStyle(
                                                 fontSize: 14,
-                                                color: Colors.blue),
+                                                color: kPrimaryPurpleColor),
                                           ),
                                         ],
                                       ),
@@ -393,17 +394,17 @@ class _CartState extends State<Chapter> {
                                       Row(
                                         children: [
                                           Text(
-                                            "Geners :",
+                                            "Genres :",
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.white),
                                           ),
                                           SizedBox(width: 3.0),
                                           Text(
-                                            " television series, Adventure , Fantasy",
+                                            _manga[0]["genres"].toString(),
                                             style: TextStyle(
                                                 fontSize: 14,
-                                                color: Colors.blue),
+                                                color: kPrimaryPurpleColor),
                                           ),
                                         ],
                                       ),
@@ -430,181 +431,187 @@ class _CartState extends State<Chapter> {
                                   radius: 15,
                                 ),
                               ))
-                            :  Column(
-                             mainAxisAlignment: MainAxisAlignment.start,
-                             crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                padding: const EdgeInsets.only(top: 10.0, left: 10),
-                                child:
-                                      
-                                         Container(
-                            width: 100,
-                            height: 25,
-                            decoration: BoxDecoration(
-                                color: Colors.grey[900],
-                                borderRadius: BorderRadius.circular(1)),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: DropdownButton<String>(
-                                underline: DropdownButtonHideUnderline(
-                                    child: Container()),
-                                value: dropdownValue,
-                                dropdownColor: kPrimaryPurpleColor,
-                                icon: Icon(Icons.keyboard_arrow_down),
-                                elevation: 16,
-                                style: TextStyle(color: kPrimaryWhiteColor),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    dropdownValue = newValue!;
-
-                                   
-                                  });
-                                },
-                                items: <String>[
-                                  'English',
-                                  'French  ',
-                                  
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value,
-                                        style: TextStyle(
-                                            color: kPrimaryGreyColor)),
-                                  );
-                                }).toList(),
-                              ),
-                            ))
-                                   
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10, left: 10, right: 15),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                          width: 100,
-                                          height: 25,
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey,
-                                              // gradient: LinearGradient(colors: [secondary, primary]),
-                                              borderRadius:
-                                                  BorderRadius.circular(1)),
-                                          child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 10.0, left: 5),
-                                              child: TextField(
-                                                decoration: InputDecoration(
-                                                  hintText: "Select Chapter",
-                                                  hintStyle: TextStyle(
-                                                      fontSize: 12.0,
-                                                      color: Colors.white),
-                                                  border: InputBorder.none,
-                                                  fillColor: Colors.grey[900],
-                                                ),
-                                              )),
-                                        ),
-                                        Text('Date',
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold)),
-                                        Text(
-                                          'Language',
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      ]),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    child: ListView.builder(
-                                      itemCount: chaptersFromDB.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return InkWell(
-                                          child: ListTile(
-                                              //return new ListTile(
-                                              onTap: null,
-                                              subtitle: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 15.0, left: 10),
-                                                child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: <Widget>[
-                                                      InkWell(
-                                                        highlightColor:
-                                                            Colors.transparent,
-                                                        onTap: () {
-                                                          Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  MangaComment2(
-                                                                      hid: chaptersFromDB[index]
-                                                                              [
-                                                                              'hid']
-                                                                          .toString()),
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                    Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 10.0, left: 10),
+                                        child: Container(
+                                            width: 100,
+                                            height: 25,
+                                            decoration: BoxDecoration(
+                                                color: Colors.grey[900],
+                                                borderRadius:
+                                                    BorderRadius.circular(1)),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      10, 0, 0, 0),
+                                              child: DropdownButton<String>(
+                                                underline:
+                                                    DropdownButtonHideUnderline(
+                                                        child: Container()),
+                                                value: dropdownValue,
+                                                dropdownColor:
+                                                    kPrimaryPurpleColor,
+                                                icon: Icon(
+                                                    Icons.keyboard_arrow_down),
+                                                elevation: 16,
+                                                style: TextStyle(
+                                                    color: kPrimaryWhiteColor),
+                                                onChanged: (String? newValue) {
+                                                  setState(() {
+                                                    dropdownValue = newValue!;
+                                                  });
+                                                },
+                                                items: <String>[
+                                                  'English',
+                                                  'French  ',
+                                                ].map<DropdownMenuItem<String>>(
+                                                    (String value) {
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value: value,
+                                                    child: Text(value,
+                                                        style: TextStyle(
+                                                            color:
+                                                                kPrimaryGreyColor)),
+                                                  );
+                                                }).toList(),
+                                              ),
+                                            ))),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10, left: 10, right: 15),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              width: 100,
+                                              height: 25,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.grey,
+                                                  // gradient: LinearGradient(colors: [secondary, primary]),
+                                                  borderRadius:
+                                                      BorderRadius.circular(1)),
+                                              child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 10.0, left: 5),
+                                                  child: TextField(
+                                                    decoration: InputDecoration(
+                                                      hintText:
+                                                          "Select Chapter",
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 12.0,
+                                                          color: Colors.white),
+                                                      border: InputBorder.none,
+                                                      fillColor:
+                                                          Colors.grey[900],
+                                                    ),
+                                                  )),
+                                            ),
+                                            Text('Date',
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            Text(
+                                              'Language',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          ]),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        child: ListView.builder(
+                                          itemCount: chaptersFromDB.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return InkWell(
+                                              child: ListTile(
+                                                  //return new ListTile(
+                                                  onTap: null,
+                                                  subtitle: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 15.0,
+                                                            left: 10),
+                                                    child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: <Widget>[
+                                                          InkWell(
+                                                            highlightColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            onTap: () {
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      MangaComment2(
+                                                                          hid: chaptersFromDB[index]['hid']
+                                                                              .toString()),
+                                                                ),
+                                                              );
+                                                            },
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .symmetric(
+                                                                      vertical:
+                                                                          8),
+                                                              child: Text(
+                                                                chaptersFromDB[
+                                                                            index]
+                                                                        ["chap"]
+                                                                    .toString(),
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        13,
+                                                                    color: Colors
+                                                                        .white),
+                                                              ),
                                                             ),
-                                                          );
-                                                        },
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  vertical: 8),
-                                                          child: Text(
+                                                          ),
+                                                          Text(
+                                                            chaptersFromDB[index]
+                                                                        [
+                                                                        "up_count"]
+                                                                    .toString() +
+                                                                "days",
+                                                            style: TextStyle(
+                                                                fontSize: 13,
+                                                                color: Colors
+                                                                    .white),
+                                                          ),
+                                                          Text(
                                                             chaptersFromDB[
                                                                         index]
-                                                                    ["chap"]
+                                                                    ["lang"]
                                                                 .toString(),
                                                             style: TextStyle(
                                                                 fontSize: 13,
                                                                 color: Colors
                                                                     .white),
                                                           ),
-                                                        ),
-                                                      ),
-                                                      // Text(
-                                                      //   chaptersFromDB[index]["chap"]
-                                                      //       .toString(),
-                                                      //   style: TextStyle(
-                                                      //       fontSize: 13,
-                                                      //       color: Colors.white),
-                                                      // ),
-                                                      Text(
-                                                        chaptersFromDB[index]
-                                                                    ["up_count"]
-                                                                .toString() +
-                                                            "days",
-                                                        style: TextStyle(
-                                                            fontSize: 13,
-                                                            color:
-                                                                Colors.white),
-                                                      ),
-                                                      Text(
-                                                        chaptersFromDB[index]
-                                                                ["lang"]
-                                                            .toString(),
-                                                        style: TextStyle(
-                                                            fontSize: 13,
-                                                            color:
-                                                                Colors.white),
-                                                      ),
-                                                    ]),
-                                              )),
-                                        );
-                                      }, //itemBuilder
+                                                        ]),
+                                                  )),
+                                            );
+                                          }, //itemBuilder
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ])
+                                  ])
                       ]),
                     )
                   ]))
@@ -632,7 +639,18 @@ class _CartState extends State<Chapter> {
 
       print("---------chapters-------------");
 
-      print(chaptersFromDB.length);
+      print(chaptersFromDB);
+
+      //add language
+      for (var i = 0; i < chaptersFromDB.length; i++) {
+        chapterLanguage.add({
+          chaptersFromDB[i]["lang"].toString(),
+        });
+      }
+      chapterLanguage = Set.of(chapterLanguage).toList();
+      print("------------++++----------");
+      print(chapterLanguage);
+      // print(chaptersFromDB[0]['lang']);
 
       setState(() {
         _isLoading = false;

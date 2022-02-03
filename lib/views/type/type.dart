@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mangakiku_app/_helpers/constants.dart';
@@ -251,18 +252,27 @@ class _CartState extends State<DetailsScreen> {
                               top: BorderSide(
                                   color: Colors.purple, width: 0.5))),
                       child: TabBarView(children: <Widget>[
-                        SingleChildScrollView(
+                          _isLoading
+                            ? Center(
+                                child: Padding(
+                                padding: const EdgeInsets.only(top: 30.0),
+                                child: CupertinoActivityIndicator(
+                                  radius: 15,
+                                ),
+                              ))
+                            : SingleChildScrollView(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               children: [
                                 Container(
                                   child: Text(
-                                    "Dragon Ball is a Japanese media franchise created by Akira Toriyama in 1984. The initial manga, written and illustrated by Toriyama.",
+                                    chapterUsingName[0]['comic']['desc'],
                                     style: TextStyle(
                                         fontSize: 14, color: Colors.white),
                                   ),
                                 ),
+                                SizedBox(height:10),
                                 Row(
                                   children: [
                                     Text(
@@ -590,7 +600,7 @@ class _CartState extends State<DetailsScreen> {
           await CallApi().getChapterUsingName(_manga[0]['md_comics']['slug']);
       bodyRoutes = json.decode(res.body);
       chapterUsingName.add(bodyRoutes);
-      print(chapterUsingName);
+      print(chapterUsingName[0]['comic']['desc']);
       int id = chapterUsingName[0]['comic']['id'];
       print(id);
 
