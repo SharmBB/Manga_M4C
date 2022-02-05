@@ -9,12 +9,15 @@ import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/views/Comments/comments.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MangaComment2 extends StatefulWidget {
   final String hid;
+  final String chapterid;
   const MangaComment2({
     key,
     required this.hid,
+    required this.chapterid,
   }) : super(key: key);
 
   @override
@@ -23,19 +26,26 @@ class MangaComment2 extends StatefulWidget {
 
 class _MangaComment2State extends State<MangaComment2> {
   late String hid;
+  late String chapterid;
+  TextEditingController _commentController = new TextEditingController();
 
   @override
   void initState() {
     //initialize  id for chapterimage
     hid = widget.hid;
     print(hid);
+    chapterid = widget.chapterid;
+    print(chapterid);
     _apiChapterImages();
+    addComments();
+    getCommends();
 
     super.initState();
   }
 
   //initialize list for add chapter image from API
   List _chapterImage = [];
+  List _getComments = [];
 
   // loader
   bool _isLoading = true;
@@ -51,18 +61,18 @@ class _MangaComment2State extends State<MangaComment2> {
 
     return Scaffold(
       backgroundColor: primaryColor,
-      body: Stack(children: [
-        SafeArea(
-            child: ListView(children: [
-          _isLoading
-              ? Center(
-                  child: Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
-                  child: CupertinoActivityIndicator(
-                    radius: 15,
-                  ),
-                ))
-              : Column(
+      body: _isLoading
+          ? Center(
+              child: Padding(
+              padding: const EdgeInsets.only(top: 30.0),
+              child: CupertinoActivityIndicator(
+                radius: 15,
+              ),
+            ))
+          : Stack(children: [
+              SafeArea(
+                  child: ListView(children: [
+                Column(
                   children: [
                     Container(
                       height: screenHeight * (18 / 20),
@@ -127,32 +137,32 @@ class _MangaComment2State extends State<MangaComment2> {
                     ),
                   ],
                 ),
-        ])),
-        SafeArea(
-            child: Container(
-                height: 50,
-                child: AppBar(
-                  backgroundColor: Colors.transparent,
-                  leading: IconButton(
-                    icon: Icon(Icons.arrow_back_ios_new_rounded),
-                    onPressed: () {
-                      Navigator.pop(
-                        context,
-                      );
-                    },
-                  ),
-                  title: new Center(
-                      child:
-                          new Text("Chapter 2", textAlign: TextAlign.center)),
-                  actions: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.keyboard_control_rounded),
-                      //tooltip: 'Increase volume by 10',
-                      onPressed: () {},
-                    )
-                  ],
-                ))),
-      ]),
+              ])),
+              SafeArea(
+                  child: Container(
+                      height: 50,
+                      child: AppBar(
+                        backgroundColor: Colors.transparent,
+                        leading: IconButton(
+                          icon: Icon(Icons.arrow_back_ios_new_rounded),
+                          onPressed: () {
+                            Navigator.pop(
+                              context,
+                            );
+                          },
+                        ),
+                        title: new Center(
+                            child: new Text("Chapter " + chapterid,
+                                textAlign: TextAlign.center)),
+                        actions: <Widget>[
+                          IconButton(
+                            icon: Icon(Icons.keyboard_control_rounded),
+                            //tooltip: 'Increase volume by 10',
+                            onPressed: () {},
+                          )
+                        ],
+                      ))),
+            ]),
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -196,6 +206,35 @@ class _MangaComment2State extends State<MangaComment2> {
     );
   }
 
+  void addComments() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      var data = {
+        "chapterId": int.parse(chapterid),
+        "comments": _commentController.text,
+      };
+      var res = await CallApi().postData(data, 'addComment');
+      var body = json.decode(res.body);
+      print(body);
+
+      if (body['token'] != null) {
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        var token = body['token'];
+        localStorage.setString('token', token);
+
+        print(body);
+      } else {}
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      _isLoading = false;
+      _commentController.clear();
+    });
+  }
+
 //get chappterImages details from api
   void _apiChapterImages() async {
     try {
@@ -208,6 +247,28 @@ class _MangaComment2State extends State<MangaComment2> {
 
       _chapterImage.add(bodyRoutes);
       print(_chapterImage[0]['chapter']['md_images'][0]['b2key'].length);
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  //get comments details from api
+  void getCommends() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      _getComments.clear();
+
+      var bodyRoutes;
+      var res = await CallApi().getComments('viewComment');
+      bodyRoutes = json.decode(res.body);
+
+      _getComments.add(bodyRoutes);
+      print(bodyRoutes);
     } catch (e) {
       print(e);
     }
@@ -261,7 +322,7 @@ class _MangaComment2State extends State<MangaComment2> {
                                             width: 300,
                                             child: Center(
                                                 child: Text(
-                                              'Chapter 2',
+                                              "Chapter " + chapterid,
                                               style: TextStyle(
                                                 color: kPrimaryWhiteColor,
                                                 fontSize: 20,
@@ -465,43 +526,50 @@ class _MangaComment2State extends State<MangaComment2> {
                                                             Colors.purple[900],
                                                       ),
 //SizedBox(width: 5.0),
-                                                      Text("233",
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 12,
-                                                          )),
-                                                      //     SizedBox(width: 10.0),
+                                                      Text(
+                                                        "233",
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 12,
+                                                        ),
+                                                      ),
+
                                                       Icon(
                                                         Icons.arrow_downward,
                                                         size: 25.0,
                                                         color: Colors.grey,
                                                       ),
-                                                      //     SizedBox(width: 5.0),
-                                                      Text("43",
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 12,
-                                                          )),
-                                                      //  SizedBox(width: 10.0),
+
+                                                      Text(
+                                                        "43",
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 12,
+                                                        ),
+                                                      ),
+
                                                       Icon(
                                                         Icons.comment,
                                                         size: 25.0,
                                                         color: Colors.grey,
                                                       ),
-                                                      // SizedBox(width: 5.0),
-                                                      Text("22",
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 12,
-                                                          )),
+
+                                                      Text(
+                                                        "22",
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 12,
+                                                        ),
+                                                      ),
                                                       IconButton(
-                                                          icon: Icon(
-                                                              Icons.report),
-                                                          color:
-                                                              kPrimaryPurpleColor,
-                                                          onPressed: () {
-                                                            showAlert(context);
-                                                          }),
+                                                        icon:
+                                                            Icon(Icons.report),
+                                                        color:
+                                                            kPrimaryPurpleColor,
+                                                        onPressed: () {
+                                                          showAlert(context);
+                                                        },
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -527,37 +595,36 @@ class _MangaComment2State extends State<MangaComment2> {
                                                             //  width: screenWidth*3/4,
                                                             alignment: Alignment
                                                                 .topLeft,
-                                                            decoration: BoxDecoration(
-                                                                color:
-                                                                    Colors.grey,
-                                                                border: Border.all(
-                                                                    color: Colors
-                                                                        .grey,
-                                                                    width: 4.0),
-                                                                borderRadius: BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            8.0))),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color:
+                                                                  Colors.grey,
+                                                              border: Border.all(
+                                                                  color: Colors
+                                                                      .grey,
+                                                                  width: 4.0),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .all(
+                                                                Radius.circular(
+                                                                    8.0),
+                                                              ),
+                                                            ),
                                                             child: Column(
                                                               crossAxisAlignment:
                                                                   CrossAxisAlignment
                                                                       .start,
                                                               children: [
-                                                                Text("Peter:",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          12,
-                                                                    )),
-
-                                                                // Text(
-                                                                //     'The definition of a character is a unique symbol, letter or mark used in writing. Character is defined as a trait, quality or high moral code.',
-                                                                //     style: TextStyle(
-                                                                //       color: Colors.white,
-                                                                //       fontSize: 12,
-                                                                //     )),
+                                                                Text(
+                                                                  "Peter:",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        12,
+                                                                  ),
+                                                                ),
                                                                 SizedBox(
                                                                     height: 15),
                                                                 Row(
@@ -567,23 +634,25 @@ class _MangaComment2State extends State<MangaComment2> {
                                                                   children: <
                                                                       Widget>[
                                                                     Text(
-                                                                        "21.12.2021",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontSize:
-                                                                              12,
-                                                                        )),
+                                                                      "21.12.2021",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            12,
+                                                                      ),
+                                                                    ),
                                                                     Text(
-                                                                        "09.23 am",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontSize:
-                                                                              12,
-                                                                        )),
+                                                                      "09.23 am",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            12,
+                                                                      ),
+                                                                    ),
                                                                     Icon(
                                                                       Icons
                                                                           .arrow_upward,
@@ -662,8 +731,7 @@ class _MangaComment2State extends State<MangaComment2> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
+                                                    padding: EdgeInsets.only(
                                                       top: 30,
                                                     ),
                                                     child: Row(
@@ -676,6 +744,8 @@ class _MangaComment2State extends State<MangaComment2> {
                                                           width: screenWidth *
                                                               (3.8 / 5),
                                                           child: TextFormField(
+                                                            controller:
+                                                                _commentController,
                                                             textAlign:
                                                                 TextAlign.left,
                                                             decoration:
@@ -703,7 +773,9 @@ class _MangaComment2State extends State<MangaComment2> {
                                                             icon: Icon(
                                                                 Icons.send),
                                                             color: Colors.white,
-                                                            onPressed: () {}),
+                                                            onPressed: () {
+                                                              addComments();
+                                                            }),
                                                       ],
                                                     )),
                                               ],

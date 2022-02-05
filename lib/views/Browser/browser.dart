@@ -7,7 +7,10 @@ import 'package:mangakiku_app/component/browserdata.dart';
 import 'package:mangakiku_app/component/browserlist.dart';
 import 'dart:convert';
 import 'package:mangakiku_app/component/mangaCard.dart';
+import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
+import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
+import 'package:mangakiku_app/views/Library/library.dart';
 
 class Browser extends StatefulWidget {
   @override
@@ -47,6 +50,9 @@ class _MyHomePageState extends State<Browser> {
   // loader
   bool _isLoading1 = true;
 
+  //bottom navigation purple
+  int bottomPurple = 1;
+
   //get manga details from api
   void _apiGenresDetails() async {
     try {
@@ -80,6 +86,8 @@ class _MyHomePageState extends State<Browser> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
@@ -103,22 +111,100 @@ class _MyHomePageState extends State<Browser> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.all(20),
+        height: screenWidth * .155,
+        decoration: BoxDecoration(
+          color: Colors.grey[900],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0),
+              blurRadius: 30,
+              offset: Offset(0, 10),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(50),
+        ),
+        child: ListView.builder(
+          itemCount: 5,
+          scrollDirection: Axis.horizontal,
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * .034),
+          itemBuilder: (context, index) => InkWell(
+            onTap: () {
+              setState(
+                () {
+                  currentIndex = index;
+                  print(currentIndex);
+                  if (currentIndex == 1) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Browser()),
+                    );
+                  } else if (currentIndex == 2) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Account()),
+                    );
+                  } else if (currentIndex == 3) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Library()),
+                    );
+                  } else if (currentIndex == 4) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => LeaderBoardScreen()),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                    );
+                  }
+                },
+              );
+            },
+            child: Stack(
+              children: [
+                Container(
+                  width: screenWidth * .1700,
+                  alignment: Alignment.center,
+                  child: Icon(
+                    listOfIcons[index],
+                    size: screenWidth * .076,
+                    color: index == bottomPurple
+                        ? kPrimaryPurpleColor
+                        : Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
       backgroundColor: primaryColor,
-      body: Container(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10, right: 20, left: 20),
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 10.0,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
+      body: NotificationListener<OverscrollIndicatorNotification>(
+        onNotification: (OverscrollIndicatorNotification overscroll) {
+          // ignore: deprecated_member_use
+          overscroll.disallowGlow();
+          return false;
+        },
+        child: Container(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10, right: 20, left: 20),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 10.0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
                             width: 140,
                             height: 20,
                             decoration: BoxDecoration(
@@ -154,8 +240,9 @@ class _MyHomePageState extends State<Browser> {
                                   ),
                                 ],
                               ),
-                            )),
-                        Container(
+                            ),
+                          ),
+                          Container(
                             width: 140,
                             height: 20,
                             decoration: BoxDecoration(
@@ -203,24 +290,25 @@ class _MyHomePageState extends State<Browser> {
                                   );
                                 }).toList(),
                               ),
-                            ))
-                      ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 15),
-            _isLoading
-                ? Center(
-                    child: Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
-                    child: CupertinoActivityIndicator(
-                      radius: 20,
-                    ),
-                  ))
-                : Expanded(
-                    child: ListView.builder(
+              SizedBox(height: 15),
+              _isLoading
+                  ? Center(
+                      child: Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: CupertinoActivityIndicator(
+                        radius: 20,
+                      ),
+                    ))
+                  : Expanded(
+                      child: ListView.builder(
                         itemCount: SelectedManga[0].length,
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
@@ -230,15 +318,14 @@ class _MyHomePageState extends State<Browser> {
                                   bottomRight: Radius.circular(10)),
                               color: Colors.black12,
                             ),
-                            height: 140,
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Center(
                                   child: Container(
                                     width: 130,
-                                    height: 140,
-                                    margin: EdgeInsets.only(right: 15),
+                                    height: 150,
+                                    margin: EdgeInsets.only(right: 15, top: 10),
                                     child: CachedNetworkImage(
                                         imageUrl: SelectedManga[0][index]
                                             ['md_covers'][0]['gpurl'],
@@ -259,88 +346,88 @@ class _MyHomePageState extends State<Browser> {
                                 ),
                                 Expanded(
                                   child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          SelectedManga[0][index]['title']
-                                                      .length <=
-                                                  20
-                                              ? SelectedManga[0][index]['title']
-                                                  .toString()
-                                              : SelectedManga[0][index]['title']
-                                                  .toString()
-                                                  .substring(0, 20),
-                                          style: TextStyle(
-                                              color: kPrimaryWhiteColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18),
-                                        ),
-                                        SizedBox(
-                                          height: 6,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Text(
-                                              SelectedManga[0][index]['desc'],
-                                              style: TextStyle(
-                                                  color: kPrimaryWhiteColor,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 12),
-                                            ),
-                                            SizedBox(
-                                              height: 6,
-                                            ),
-                                            Row(
-                                              children: <Widget>[
-                                                Icon(
-                                                  Icons.star,
-                                                  color: Colors.yellow,
-                                                  size: 12,
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Text(
-                                                    SelectedManga[0][index]
-                                                        ['bayesian_rating'],
-                                                    style: TextStyle(
-                                                        color:
-                                                            kPrimaryGreyColor,
-                                                        fontSize: 13,
-                                                        letterSpacing: .3)),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Text(". Action",
-                                                    style: TextStyle(
-                                                        color:
-                                                            kPrimaryGreyColor,
-                                                        fontSize: 13,
-                                                        letterSpacing: .3)),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Text(". ch",
-                                                    style: TextStyle(
-                                                        color:
-                                                            kPrimaryGreyColor,
-                                                        fontSize: 13,
-                                                        letterSpacing: .3)),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ]),
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        SelectedManga[0][index]['title']
+                                                    .length <=
+                                                20
+                                            ? SelectedManga[0][index]['title']
+                                                .toString()
+                                            : SelectedManga[0][index]['title']
+                                                .toString()
+                                                .substring(0, 20),
+                                        style: TextStyle(
+                                            color: kPrimaryWhiteColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18),
+                                      ),
+                                      SizedBox(
+                                        height: 6,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            SelectedManga[0][index]['desc'],
+                                            style: TextStyle(
+                                                color: kPrimaryWhiteColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12),
+                                          ),
+                                          SizedBox(
+                                            height: 6,
+                                          ),
+                                          Row(
+                                            children: <Widget>[
+                                              Icon(
+                                                Icons.star,
+                                                color: Colors.yellow,
+                                                size: 12,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                  SelectedManga[0][index]
+                                                      ['bayesian_rating'],
+                                                  style: TextStyle(
+                                                      color: kPrimaryGreyColor,
+                                                      fontSize: 13,
+                                                      letterSpacing: .3)),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(". Action",
+                                                  style: TextStyle(
+                                                      color: kPrimaryGreyColor,
+                                                      fontSize: 13,
+                                                      letterSpacing: .3)),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(". ch",
+                                                  style: TextStyle(
+                                                      color: kPrimaryGreyColor,
+                                                      fontSize: 13,
+                                                      letterSpacing: .3)),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 )
                               ],
                             ),
                           );
-                        }),
-                  )
-          ],
+                        },
+                      ),
+                    ),
+            ],
+          ),
         ),
       ),
     );
@@ -348,8 +435,12 @@ class _MyHomePageState extends State<Browser> {
 
   //get manga details from api (Advance Search)
   void _apiAdvanceSearch() async {
+    setState(() {
+      _isLoading = true;
+    });
     try {
-      Advancesearch.clear();
+      // Advancesearch.clear();
+
       var bodyRoutes;
       var res = await CallApi()
           .getAdvaceSearch(advanceSearch.toString() + "&page=1&limit=50");
@@ -358,9 +449,15 @@ class _MyHomePageState extends State<Browser> {
       // Add subjects to _SubjectsFromDB List
       Advancesearch.add(bodyRoutes);
       print("------------acjbasicbasicbasc-----------------");
-      print(advanceSearch);
-      print(Advancesearch);
+      // print(advanceSearch);
+      // print(Advancesearch);
       print("---------------vcdsvnkdsvkds--------------");
+      SelectedManga = Advancesearch;
+
+      SelectedManga = Advancesearch;
+      //  print(Advancesearch.length);
+      //   print(advanceSearch);
+      print("Kithu-" + Advancesearch.toString());
     } catch (e) {
       print(e);
     }
@@ -408,169 +505,165 @@ class _MyHomePageState extends State<Browser> {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     showGeneralDialog(
-        context: context,
-        barrierDismissible: false,
-        transitionDuration: Duration(milliseconds: 100),
-        transitionBuilder: (context, animation, secondaryAnimation, child) {
-          return FadeTransition(
-            opacity: animation,
-            child: ScaleTransition(
-              scale: animation,
-              child: child,
-            ),
-          );
-        },
-        pageBuilder: (context, animation, secondaryAnimation) {
-          return StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              return SafeArea(
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  padding: EdgeInsets.all(20),
-                  color: Colors.transparent,
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
-                      child: Container(
-                          width: screenWidth - 10,
-                          height: screenHeight,
-                          color: Colors.grey.shade900,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                GestureDetector(
-                                    child: const Icon(
-                                      Icons.close,
-                                      color: Colors.white,
-                                      size: 30,
-                                    ),
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                    }),
-                                const Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                    child: Text(
-                                      'Genres',
-                                      style: TextStyle(
-                                        color: kPrimaryWhiteColor,
-                                        fontSize: 20,
-                                        decoration: TextDecoration.none,
-                                      ),
-                                    )),
-                                Expanded(
-                                    child: NotificationListener<
-                                            OverscrollIndicatorNotification>(
-                                        onNotification:
-                                            (OverscrollIndicatorNotification
-                                                overscroll) {
-                                          // ignore: deprecated_member_use
-                                          overscroll.disallowGlow();
-                                          return false;
-                                        },
-                                        child: _isLoading1
-                                            ? Center(
-                                                child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(18.0),
-                                                child:
-                                                    CupertinoActivityIndicator(),
-                                              ))
-                                            : GridView.builder(
-                                                gridDelegate:
-                                                    const SliverGridDelegateWithMaxCrossAxisExtent(
-                                                  maxCrossAxisExtent: 200.0,
-                                                  mainAxisSpacing: 2.0,
-                                                  crossAxisSpacing: 2.0,
-                                                  childAspectRatio: 4.0,
-                                                ),
-                                                itemCount: genres.length,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return Card(
-                                                    elevation: 0,
-                                                    color: Colors.grey.shade900,
-                                                    child: Center(
-                                                      child: Row(
-                                                        children: [
-                                                          Checkbox(
-                                                            value: genres[index]
-                                                                ['isChecked'],
-                                                            onChanged:
-                                                                (bool? val) {
-                                                              setState(() {
-                                                                genres[index][
-                                                                        'isChecked'] =
-                                                                    val;
-                                                                if (genres[index]
-                                                                        [
-                                                                        'isChecked'] ==
-                                                                    true) {
-                                                                  advanceSearch
-                                                                      .add(genres[
-                                                                              index]
-                                                                          [
-                                                                          'name']);
-                                                                  print(
-                                                                      advanceSearch);
-                                                                } else if (genres[
-                                                                            index]
-                                                                        [
-                                                                        'isChecked'] ==
-                                                                    false) {
-                                                                  advanceSearch
-                                                                      .remove(genres[
-                                                                              index]
-                                                                          [
-                                                                          'name']);
-                                                                }
-                                                                _apiAdvanceSearch();
-                                                              });
-                                                            },
-                                                            activeColor:
-                                                                kPrimaryPurpleColor,
-                                                            checkColor:
-                                                                kPrimaryWhiteColor,
-                                                          ),
-                                                          Text(
-                                                            genres[index]['name']
-                                                                        .length <=
-                                                                    10
-                                                                ? genres[index]
-                                                                        ['name']
-                                                                    .toString()
-                                                                : genres[index]
-                                                                        ['name']
-                                                                    .toString()
-                                                                    .substring(
-                                                                        0, 4),
-                                                            style:
-                                                                const TextStyle(
-                                                              color:
-                                                                  kPrimaryWhiteColor,
-                                                              decoration:
-                                                                  TextDecoration
-                                                                      .none,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  );
-                                                }))),
-                              ],
+      context: context,
+      barrierDismissible: false,
+      transitionDuration: Duration(milliseconds: 100),
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: ScaleTransition(
+            scale: animation,
+            child: child,
+          ),
+        );
+      },
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return SafeArea(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                padding: EdgeInsets.all(20),
+                color: Colors.transparent,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
+                    child: Container(
+                      width: screenWidth - 10,
+                      height: screenHeight,
+                      color: Colors.grey.shade900,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                                child: const Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                }),
+                            const Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              child: Text(
+                                'Genres',
+                                style: TextStyle(
+                                  color: kPrimaryWhiteColor,
+                                  fontSize: 20,
+                                  decoration: TextDecoration.none,
+                                ),
+                              ),
                             ),
-                          )),
+                            Expanded(
+                              child: NotificationListener<
+                                  OverscrollIndicatorNotification>(
+                                onNotification: (OverscrollIndicatorNotification
+                                    overscroll) {
+                                  // ignore: deprecated_member_use
+                                  overscroll.disallowGlow();
+                                  return false;
+                                },
+                                child: _isLoading1
+                                    ? Center(
+                                        child: Padding(
+                                        padding: const EdgeInsets.all(18.0),
+                                        child: CupertinoActivityIndicator(),
+                                      ))
+                                    : GridView.builder(
+                                        gridDelegate:
+                                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                                          maxCrossAxisExtent: 200.0,
+                                          mainAxisSpacing: 2.0,
+                                          crossAxisSpacing: 2.0,
+                                          childAspectRatio: 4.0,
+                                        ),
+                                        itemCount: genres.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return Card(
+                                            elevation: 0,
+                                            color: Colors.grey.shade900,
+                                            child: Center(
+                                              child: Row(
+                                                children: [
+                                                  Checkbox(
+                                                    value: genres[index]
+                                                        ['isChecked'],
+                                                    onChanged: (bool? val) {
+                                                      setState(
+                                                        () {
+                                                          genres[index][
+                                                                  'isChecked'] =
+                                                              val;
+                                                          if (genres[index][
+                                                                  'isChecked'] ==
+                                                              true) {
+                                                            advanceSearch.add(
+                                                                genres[index]
+                                                                    ['name']);
+                                                            //  print(advanceSearch);
+
+                                                          } else if (genres[
+                                                                      index][
+                                                                  'isChecked'] ==
+                                                              false) {
+                                                            SelectedManga
+                                                                .clear();
+                                                            advanceSearch
+                                                                .remove(genres[
+                                                                        index]
+                                                                    ['name']);
+
+                                                            Advancesearch =
+                                                                advanceSearch;
+                                                          }
+                                                          _apiAdvanceSearch();
+                                                        },
+                                                      );
+                                                    },
+                                                    activeColor:
+                                                        kPrimaryPurpleColor,
+                                                    checkColor:
+                                                        kPrimaryWhiteColor,
+                                                  ),
+                                                  Text(
+                                                    genres[index]['name']
+                                                                .length <=
+                                                            10
+                                                        ? genres[index]['name']
+                                                            .toString()
+                                                        : genres[index]['name']
+                                                            .toString()
+                                                            .substring(0, 4),
+                                                    style: const TextStyle(
+                                                      color: kPrimaryWhiteColor,
+                                                      decoration:
+                                                          TextDecoration.none,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              );
-            },
-          );
-        });
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }

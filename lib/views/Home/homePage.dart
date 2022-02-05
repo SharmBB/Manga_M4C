@@ -53,6 +53,10 @@ class _HomePageState extends State<HomePage> {
 // loader
   bool _isLoading = true;
 
+   //bottom navigation purple
+  int bottomPurple =0;
+
+
   @override
   initState() {
     _apiMangaDetails();
@@ -111,7 +115,16 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body: Padding(
+      body:    NotificationListener<
+                                            OverscrollIndicatorNotification>(
+                                        onNotification:
+                                            (OverscrollIndicatorNotification
+                                                overscroll) {
+                                          // ignore: deprecated_member_use
+                                          overscroll.disallowGlow();
+                                          return false;
+                                        },
+                                        child:Padding(
         padding: EdgeInsets.only(top: 12.0),
         child: _isLoading
             ? Center(
@@ -277,7 +290,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Container(
-                              height: 300.0,
+                              height: 320.0,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: manga[0].length,
@@ -406,7 +419,7 @@ class _HomePageState extends State<HomePage> {
                                                 borderRadius:
                                                     BorderRadius.circular(00.0),
                                                 child: CachedNetworkImage(
-                                                    height: 170,
+                                                    height: 200,
                                                     width: 180,
                                                     imageUrl: manga[0][index]
                                                                 ['md_comics']
@@ -497,7 +510,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Container(
-                        height: 300.0,
+                        height: 320.0,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: Newmanga[0].length,
@@ -620,7 +633,7 @@ class _HomePageState extends State<HomePage> {
                                           borderRadius:
                                               BorderRadius.circular(00.0),
                                           child: CachedNetworkImage(
-                                              height: 170,
+                                              height: 200,
                                               width: 180,
                                               imageUrl: Newmanga[0][index]
                                                       ['md_comics']['md_covers']
@@ -704,7 +717,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Container(
-                        height: 300.0,
+                        height: 320.0,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: ViewManga[0].length,
@@ -822,7 +835,7 @@ class _HomePageState extends State<HomePage> {
                                           borderRadius:
                                               BorderRadius.circular(00.0),
                                           child: CachedNetworkImage(
-                                              height: 170,
+                                              height: 200,
                                               width: 180,
                                               imageUrl: ViewManga[0][index]
                                                   ['md_covers'][0]['gpurl'],
@@ -915,7 +928,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Container(
-                              height: 300.0,
+                              height: 320.0,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: 10,
@@ -1042,7 +1055,7 @@ class _HomePageState extends State<HomePage> {
                                                     ]));
                                               },
                                               child: CachedNetworkImage(
-                                                  height: 170,
+                                                  height: 200,
                                                   width: 180,
                                                   imageUrl: RatingManga[0]
                                                           [index]['md_covers']
@@ -1077,7 +1090,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                 ],
               ),
-      ),
+      )),
       bottomNavigationBar: Container(
         margin: EdgeInsets.all(20),
         height: screenWidth * .155,
@@ -1117,12 +1130,19 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(builder: (context) => Library()),
                     );
-                  } else {
+                  } else if (currentIndex == 4) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LeaderBoardScreen()),
+                    );
+                    }else {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const LeaderBoardScreen()),
+                          builder: (context) => const HomePage()),
+                         
                     );
+                    
                   }
                 },
               );
@@ -1135,7 +1155,7 @@ class _HomePageState extends State<HomePage> {
                   child: Icon(
                     listOfIcons[index],
                     size: screenWidth * .076,
-                    color: index == currentIndex
+                    color: index == bottomPurple
                         ? kPrimaryPurpleColor
                         : Colors.white,
                   ),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
@@ -23,6 +24,8 @@ class _AccountState extends State<Account> {
   String? token;
 
   List User = [];
+  // loader
+  bool _isLoading = true;
 
   @override
   initState() {
@@ -56,217 +59,249 @@ class _AccountState extends State<Account> {
         elevation: 0,
       ),
       backgroundColor: primaryColor,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.only(left: 40.0, top: 37),
-                child: CircleAvatar(
-                  radius: 65,
-                  backgroundImage: AssetImage(
-                    "assets/profile-img.png",
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 38.0, top: 25),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        User[0]['name'],
-                        style: TextStyle(
-                            color: kPrimaryWhiteColor,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                "User name - " + User[0]['name'],
-                                style: TextStyle(
-                                    color: kPrimaryWhiteColor,
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ]),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                "Bio - " + User[0]['bio'],
-                                style: TextStyle(
-                                    color: kPrimaryWhiteColor,
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ]),
-                      )
-                    ]),
-              ),
-            ]),
-            SizedBox(height: 20),
-
-            Padding(
-              padding: const EdgeInsets.only(left: 25.0, right: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                          color: kPrimaryPurpleColor,
-                          borderRadius: BorderRadius.circular(1)),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              "12",
-                              style: TextStyle(
-                                  fontSize: 18, color: Colors.white70),
-                            ),
-                            Text(
-                              "Hours Read",
-                              style: TextStyle(
-                                  fontSize: 12, color: Colors.white70),
-                            ),
-                          ])),
-                  SizedBox(width: 5),
-                  Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                          color: kPrimaryPurpleColor,
-                          borderRadius: BorderRadius.circular(1)),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              "12",
-                              style: TextStyle(
-                                  fontSize: 18, color: Colors.white70),
-                            ),
-                            Text(
-                              "Mangas Read",
-                              style: TextStyle(
-                                  fontSize: 12, color: Colors.white70),
-                            ),
-                          ])),
-                  SizedBox(width: 5),
-                  Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                          color: kPrimaryPurpleColor,
-                          borderRadius: BorderRadius.circular(1)),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              "12",
-                              style: TextStyle(
-                                  fontSize: 18, color: Colors.white70),
-                            ),
-                            Text(
-                              "Reputation",
-                              style: TextStyle(
-                                  fontSize: 12, color: Colors.white70),
-                            ),
-                          ])),
-                  SizedBox(width: 5),
-                  Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                          color: kPrimaryPurpleColor,
-                          borderRadius: BorderRadius.circular(1)),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              "12",
-                              style: TextStyle(
-                                  fontSize: 18, color: Colors.white70),
-                            ),
-                            Text(
-                              "Chapter Read",
-                              style: TextStyle(
-                                  fontSize: 12, color: Colors.white70),
-                            ),
-                          ])),
-                ],
-              ),
-            ),
-
-            //Tab bar
-            DefaultTabController(
-              length: 2, // length of tabs
-              initialIndex: 0,
+      body: _isLoading
+          ? Center(
+              child: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: CupertinoActivityIndicator(),
+            ))
+          : SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Container(
-                    child: TabBar(
-                      labelColor: kPrimaryPurpleColor,
-                      unselectedLabelColor: Colors.white,
-                      tabs: [
-                        Tab(
-                          text: 'My Librarary',
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        const Padding(
+                          padding: EdgeInsets.only(left: 40.0, top: 37),
+                          child: CircleAvatar(
+                            radius: 65,
+                            backgroundImage: AssetImage(
+                              "assets/profile-img.png",
+                            ),
+                          ),
                         ),
-                        Tab(text: 'Favourites'),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 38.0, top: 25),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  User[0]['name'],
+                                  style: TextStyle(
+                                      color: kPrimaryWhiteColor,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 30),
+                                  child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          "User name - " + User[0]['name'],
+                                          style: TextStyle(
+                                              color: kPrimaryWhiteColor,
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ]),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          "Bio - " + User[0]['bio'],
+                                          style: TextStyle(
+                                              color: kPrimaryWhiteColor,
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ]),
+                                )
+                              ]),
+                        ),
+                      ]),
+                  SizedBox(height: 20),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25.0, right: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                                color: kPrimaryPurpleColor,
+                                borderRadius: BorderRadius.circular(1)),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Text(
+                                    "12",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.white70),
+                                  ),
+                                  Text(
+                                    "Hours Read",
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.white70),
+                                  ),
+                                ])),
+                        SizedBox(width: 5),
+                        Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                                color: kPrimaryPurpleColor,
+                                borderRadius: BorderRadius.circular(1)),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Text(
+                                    "12",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.white70),
+                                  ),
+                                  Text(
+                                    "Mangas Read",
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.white70),
+                                  ),
+                                ])),
+                        SizedBox(width: 5),
+                        Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                                color: kPrimaryPurpleColor,
+                                borderRadius: BorderRadius.circular(1)),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Text(
+                                    "12",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.white70),
+                                  ),
+                                  Text(
+                                    "Reputation",
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.white70),
+                                  ),
+                                ])),
+                        SizedBox(width: 5),
+                        Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                                color: kPrimaryPurpleColor,
+                                borderRadius: BorderRadius.circular(1)),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Text(
+                                    "12",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.white70),
+                                  ),
+                                  Text(
+                                    "Chapter Read",
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.white70),
+                                  ),
+                                ])),
                       ],
                     ),
                   ),
-                  Container(
-                    height: 400, //height of TabBarView
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: BorderSide(color: Colors.purple, width: 0.5),
-                      ),
-                    ),
-                    child: TabBarView(
+
+                  //Tab bar
+                  DefaultTabController(
+                    length: 2, // length of tabs
+                    initialIndex: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        MangakikuCard(),
-                        MangakikuCard(),
+                        Container(
+                          child: TabBar(
+                            labelColor: kPrimaryPurpleColor,
+                            unselectedLabelColor: Colors.white,
+                            tabs: [
+                              Tab(
+                                text: 'My Librarary',
+                              ),
+                              Tab(text: 'Favourites'),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 400, //height of TabBarView
+                          decoration: BoxDecoration(
+                            border: Border(
+                              top: BorderSide(color: Colors.purple, width: 0.5),
+                            ),
+                          ),
+                          child: TabBarView(
+                            children: <Widget>[
+                              MangakikuCard(),
+                              MangakikuCard(),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 
+  // void _getUserById() async {
+  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
+  //   print("data from sample screen");
+  //   token = localStorage.getString('token');
+
+  //   var res = await CallApi().getUserById('getUserById');
+
+  //   var body = json.decode(res.body);
+  //   print(body);
+  //   User.add(body);
+  //   print(User);
+
+  //   setState(() {
+  //     // isAuth = true;
+  //   });
+  // }
+
   void _getUserById() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    print("data from sample screen");
-    token = localStorage.getString('token');
-
-    var res = await CallApi().getUserById('getUserById');
-
-    var body = json.decode(res.body);
-    print(body);
-    User.add(body);
-    print(User);
-
     setState(() {
-      // isAuth = true;
+      _isLoading = true;
+    });
+    try {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      print("data from sample screen");
+      token = localStorage.getString('token');
+
+      var res = await CallApi().getUserById('getUserById');
+
+      var body = json.decode(res.body);
+      print(body);
+      User.add(body);
+      print(User);
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      _isLoading = false;
     });
   }
-}
 
   // void _getUserDetails() async {
   //   SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -280,6 +315,7 @@ class _AccountState extends State<Account> {
   //   print(usernameId);
   //   print(name);
   //   print(bio);
-   
+
   // }
 
+}

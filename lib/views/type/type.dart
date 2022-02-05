@@ -530,7 +530,9 @@ class _CartState extends State<DetailsScreen> {
                                                                     hid: chaptersFromDB[index]
                                                                             [
                                                                             'hid']
-                                                                        .toString()),
+                                                                        .toString(), chapterid:
+                                                                          chaptersFromDB[index]["chap"]
+                                                                              .toString(), ),
                                                           ),
                                                         );
                                                       },

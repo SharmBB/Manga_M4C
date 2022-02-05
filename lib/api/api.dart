@@ -29,6 +29,9 @@ class CallApi {
   //advance search
   var advacesearch = 'https://api.comick.fun/search?genres=';
 
+
+ 
+
   //Login api
   authData(data, apiUrl) async {
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
@@ -127,6 +130,24 @@ class CallApi {
 //advance search 
   getAdvaceSearch(apiUrl) async {
     var fullUrl = Uri.parse(advacesearch + apiUrl);
+    return await http.get(
+      fullUrl,
+    );
+  }
+
+//post data
+  postData(data, apiUrl) async {
+    var fullUrl = Uri.parse(_urlAuth + apiUrl);
+    return await http.post(
+      fullUrl,
+      body: jsonEncode(data),
+      headers: _setHeaders(),
+    );
+  }
+
+  //advance search 
+  getComments(apiUrl) async {
+    var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.get(
       fullUrl,
     );

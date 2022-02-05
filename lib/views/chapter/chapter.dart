@@ -554,13 +554,21 @@ class _CartState extends State<Chapter> {
                                                                 Colors
                                                                     .transparent,
                                                             onTap: () {
+                                                              print("jhuvuyvuy" +
+                                                                  chaptersFromDB[
+                                                                          index]
+                                                                      ["chap"]);
                                                               Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
-                                                                  builder: (context) =>
-                                                                      MangaComment2(
-                                                                          hid: chaptersFromDB[index]['hid']
-                                                                              .toString()),
+                                                                  builder: (context) => MangaComment2(
+                                                                      chapterid:
+                                                                          chaptersFromDB[index]["chap"]
+                                                                              .toString(),
+                                                                      hid: chaptersFromDB[index]
+                                                                              [
+                                                                              'hid']
+                                                                          .toString()),
                                                                 ),
                                                               );
                                                             },
@@ -629,6 +637,7 @@ class _CartState extends State<Chapter> {
       chapterUsingName.add(bodyRoutes);
       int id = chapterUsingName[0]['comic']['id'];
       print(id);
+      print(chapterUsingName);
 
       chapterUsingID.clear();
       var bodyRoutesChap;
