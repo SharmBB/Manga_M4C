@@ -22,10 +22,12 @@ class _AccountState extends State<Account> {
   String? usernameDB;
   String? token;
 
+  List User = [];
+
   @override
   initState() {
     _getUserById();
-    
+
     super.initState();
   }
 
@@ -75,7 +77,7 @@ class _AccountState extends State<Account> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        name,
+                        User[0]['name'],
                         style: TextStyle(
                             color: kPrimaryWhiteColor,
                             fontSize: 20.0,
@@ -87,7 +89,7 @@ class _AccountState extends State<Account> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                "User name - " + name,
+                                "User name - " + User[0]['name'],
                                 style: TextStyle(
                                     color: kPrimaryWhiteColor,
                                     fontSize: 12.0,
@@ -101,7 +103,7 @@ class _AccountState extends State<Account> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                "Bio - " + bio,
+                                "Bio - " + User[0]['bio'],
                                 style: TextStyle(
                                     color: kPrimaryWhiteColor,
                                     fontSize: 12.0,
@@ -257,6 +259,8 @@ class _AccountState extends State<Account> {
 
     var body = json.decode(res.body);
     print(body);
+    User.add(body);
+    print(User);
 
     setState(() {
       // isAuth = true;

@@ -19,12 +19,15 @@ class CallApi {
   // Auth Api
   var _urlAuth = 'http://mangakiku-api.moodfor.codes/api/';
 
-  var token;
+  var token="276|Ozi5T5NG1482uwB4m0MeZVDmUC5uMKJHuAWFrcwh";
   //Genres api url
   var genres_baseurl = 'https://api.comick.fun/genre';
   //browser
   var hoturl = 'https://api.comick.fun/search?page=1&limit=50&sort=uploaded';
   var newurl = 'https://api.comick.fun/search?page=1&limit=50&sort=follow';
+
+  //advance search
+  var advacesearch = 'https://api.comick.fun/search?genres=';
 
   //Login api
   authData(data, apiUrl) async {
@@ -117,6 +120,15 @@ class CallApi {
     return await http.get(
       fullUrl,
       headers: _setHeaders(),
+    );
+  }
+  
+
+//advance search 
+  getAdvaceSearch(apiUrl) async {
+    var fullUrl = Uri.parse(advacesearch + apiUrl);
+    return await http.get(
+      fullUrl,
     );
   }
 

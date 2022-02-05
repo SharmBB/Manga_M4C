@@ -7,6 +7,7 @@ import 'package:mangakiku_app/component/browserdata.dart';
 import 'package:mangakiku_app/component/browserlist.dart';
 import 'dart:convert';
 import 'package:mangakiku_app/component/mangaCard.dart';
+import 'package:mangakiku_app/views/Home/homePage.dart';
 
 class Browser extends StatefulWidget {
   @override
@@ -20,16 +21,22 @@ class _MyHomePageState extends State<Browser> {
   List ViewManga = [];
   List RatingManga = [];
 
- List SelectedManga = [];
+  List SelectedManga = [];
 
 // loader
   bool _isLoading = true;
+
+  //list Save
+  List advanceSearch = [];
+
+  List Advancesearch = [];
 
   String dropdownValue = 'Hot';
   @override
   initState() {
     _apiMangaDetails();
     _apiGenresDetails();
+    _apiAdvanceSearch();
 
     SelectedManga = manga;
     super.initState();
@@ -39,8 +46,6 @@ class _MyHomePageState extends State<Browser> {
 
   // loader
   bool _isLoading1 = true;
-
- 
 
   //get manga details from api
   void _apiGenresDetails() async {
@@ -71,7 +76,6 @@ class _MyHomePageState extends State<Browser> {
       print(e);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -115,78 +119,76 @@ class _MyHomePageState extends State<Browser> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          width: 140,
-                          height: 20,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[900],
-                              borderRadius: BorderRadius.circular(1)),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                            child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children:  [
-                              Icon(
-                                Icons.tune_rounded,
-                                color:kPrimaryGreyColor,
-                                size: 16,
+                            width: 140,
+                            height: 20,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[900],
+                                borderRadius: BorderRadius.circular(1)),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Icon(
+                                    Icons.tune_rounded,
+                                    color: kPrimaryGreyColor,
+                                    size: 16,
+                                  ),
+                                  SizedBox(width: 12),
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      padding: const EdgeInsets.all(0),
+                                      primary: Colors.white,
+                                      textStyle: TextStyle(
+                                          fontSize: 12,
+                                          color: kPrimaryGreyColor),
+                                    ),
+                                    onPressed: () {
+                                      _displayDialog(context);
+                                    },
+                                    child: Text("Advance Search",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: kPrimaryGreyColor)),
+                                  ),
+                                ],
                               ),
-                              SizedBox(width: 12),
-                           
-                               TextButton(
-                                style: TextButton.styleFrom(
-                                   padding: const EdgeInsets.all(0),
-                                  primary: Colors.white,
-                                   textStyle: TextStyle(
-                                    fontSize: 12, color: kPrimaryGreyColor),
-                                ),
-                                onPressed: () {
-                                  _displayDialog(context);
-                                },
-                                child:  Text( "Advance Search", style:TextStyle(
-                                    fontSize: 12, color: kPrimaryGreyColor)),
-                              ),
-                            ],
-                          ),
-                        )),
+                            )),
                         Container(
-                          width: 140,
-                          height: 20,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[900],
-                              borderRadius: BorderRadius.circular(1)),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-
-                            child:  DropdownButton<String>(
-                                underline: DropdownButtonHideUnderline(child: Container()),
+                            width: 140,
+                            height: 20,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[900],
+                                borderRadius: BorderRadius.circular(1)),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                              child: DropdownButton<String>(
+                                underline: DropdownButtonHideUnderline(
+                                    child: Container()),
                                 value: dropdownValue,
                                 dropdownColor: kPrimaryPurpleColor,
                                 icon: Icon(Icons.keyboard_arrow_down),
                                 elevation: 16,
                                 style: TextStyle(color: kPrimaryWhiteColor),
-                               
                                 onChanged: (String? newValue) {
                                   setState(() {
                                     dropdownValue = newValue!;
 
-                                    if(dropdownValue == 'New'){
-                                      SelectedManga  = Newmanga ;
-                               
-                                    }else if(dropdownValue == 'Recently Added'){
-                                      SelectedManga  = ViewManga ;
-                                    } else if(dropdownValue == 'Top Mangas'){
-                                           SelectedManga  =  RatingManga ;
-                                    }else if(dropdownValue == 'Hot'){
-                                      SelectedManga  = manga ;
-                                    }else{
-                                       SelectedManga  = manga ;
+                                    if (dropdownValue == 'New') {
+                                      SelectedManga = Newmanga;
+                                    } else if (dropdownValue ==
+                                        'Recently Added') {
+                                      SelectedManga = ViewManga;
+                                    } else if (dropdownValue == 'Top Mangas') {
+                                      SelectedManga = RatingManga;
+                                    } else if (dropdownValue == 'Hot') {
+                                      SelectedManga = manga;
+                                    } else {
+                                      SelectedManga = manga;
                                     }
-                                    
-                                    
-                                    
                                   });
                                 },
-                                
                                 items: <String>[
                                   'Hot',
                                   'New',
@@ -196,14 +198,12 @@ class _MyHomePageState extends State<Browser> {
                                   return DropdownMenuItem<String>(
                                     value: value,
                                     child: Text(value,
-                                    style: TextStyle(color: kPrimaryGreyColor)),
-                                    
+                                        style: TextStyle(
+                                            color: kPrimaryGreyColor)),
                                   );
                                 }).toList(),
                               ),
-                           
-                            
-                        ))
+                            ))
                       ],
                     ),
                   ),
@@ -284,7 +284,7 @@ class _MyHomePageState extends State<Browser> {
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text(
-                                            SelectedManga[0][index]['desc'],
+                                              SelectedManga[0][index]['desc'],
                                               style: TextStyle(
                                                   color: kPrimaryWhiteColor,
                                                   fontWeight: FontWeight.bold,
@@ -346,7 +346,30 @@ class _MyHomePageState extends State<Browser> {
     );
   }
 
- //get manga details from api
+  //get manga details from api (Advance Search)
+  void _apiAdvanceSearch() async {
+    try {
+      Advancesearch.clear();
+      var bodyRoutes;
+      var res = await CallApi()
+          .getAdvaceSearch(advanceSearch.toString() + "&page=1&limit=50");
+      bodyRoutes = json.decode(res.body);
+
+      // Add subjects to _SubjectsFromDB List
+      Advancesearch.add(bodyRoutes);
+      print("------------acjbasicbasicbasc-----------------");
+      print(advanceSearch);
+      print(Advancesearch);
+      print("---------------vcdsvnkdsvkds--------------");
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  //get manga details from api
   void _apiMangaDetails() async {
     try {
       //Hot Manga API
@@ -381,7 +404,7 @@ class _MyHomePageState extends State<Browser> {
     }
   }
 
-   _displayDialog(BuildContext context) {
+  _displayDialog(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     showGeneralDialog(
@@ -426,7 +449,6 @@ class _MyHomePageState extends State<Browser> {
                                     ),
                                     onTap: () {
                                       Navigator.of(context).pop();
-                                      
                                     }),
                                 const Padding(
                                     padding:
@@ -488,10 +510,25 @@ class _MyHomePageState extends State<Browser> {
                                                                         [
                                                                         'isChecked'] ==
                                                                     true) {
-                                                                  print(genres[
-                                                                          index]
-                                                                      ['id']);
+                                                                  advanceSearch
+                                                                      .add(genres[
+                                                                              index]
+                                                                          [
+                                                                          'name']);
+                                                                  print(
+                                                                      advanceSearch);
+                                                                } else if (genres[
+                                                                            index]
+                                                                        [
+                                                                        'isChecked'] ==
+                                                                    false) {
+                                                                  advanceSearch
+                                                                      .remove(genres[
+                                                                              index]
+                                                                          [
+                                                                          'name']);
                                                                 }
+                                                                _apiAdvanceSearch();
                                                               });
                                                             },
                                                             activeColor:
