@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
+import 'package:mangakiku_app/api/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LeaderBoardScreen extends StatefulWidget {
   const LeaderBoardScreen({Key? key}) : super(key: key);
@@ -9,6 +13,21 @@ class LeaderBoardScreen extends StatefulWidget {
 }
 
 class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
+
+  
+  List _getLeaderBoard = [];
+
+  String? token;
+
+  @override
+  void initState() {
+    //initialize  id for chapterimage
+    //LeaderBoard();
+    super.initState();
+  }
+
+  // loader
+  bool _isLoading = true;
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -579,4 +598,5 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
               SizedBox(height: 8),
             ])));
   }
+
 }

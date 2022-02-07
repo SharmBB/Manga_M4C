@@ -145,11 +145,21 @@ class CallApi {
     );
   }
 
-  //advance search 
+  //Get Comments
   getComments(apiUrl) async {
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.get(
       fullUrl,
+       headers: _setHeaders(),
+    );
+  }
+
+   //LeaderBoard
+  getLeaderBoard(apiUrl) async {
+    var fullUrl = Uri.parse(_urlAuth + apiUrl);
+    return await http.get(
+      fullUrl,
+       headers: _setHeaders(),
     );
   }
 

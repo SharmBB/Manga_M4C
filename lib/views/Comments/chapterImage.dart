@@ -28,6 +28,9 @@ class _MangaComment2State extends State<MangaComment2> {
   late String hid;
   late String chapterid;
   TextEditingController _commentController = new TextEditingController();
+  String? token;
+
+  List User = [];
 
   @override
   void initState() {
@@ -39,6 +42,7 @@ class _MangaComment2State extends State<MangaComment2> {
     _apiChapterImages();
     addComments();
     getCommends();
+    _getUserById();
 
     super.initState();
   }
@@ -268,7 +272,31 @@ class _MangaComment2State extends State<MangaComment2> {
       bodyRoutes = json.decode(res.body);
 
       _getComments.add(bodyRoutes);
-      print(bodyRoutes);
+      print(_getComments);
+      print(_getComments[0].last['comments']);
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  void _getUserById() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      print("data from sample screen");
+      token = localStorage.getString('token');
+
+      var res = await CallApi().getUserById('getUserById');
+
+      var body = json.decode(res.body);
+      print(body);
+      User.add(body);
+      print(User);
     } catch (e) {
       print(e);
     }
@@ -345,7 +373,8 @@ class _MangaComment2State extends State<MangaComment2> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "122 Comments",
+                                            _getComments[0].length.toString() +
+                                                " Comments",
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.white,
@@ -424,8 +453,8 @@ class _MangaComment2State extends State<MangaComment2> {
                                                                 CrossAxisAlignment
                                                                     .start,
                                                             children: <Widget>[
-                                                              const Text(
-                                                                "Jake",
+                                                              Text(
+                                                                User[0]['name'],
                                                                 style: TextStyle(
                                                                     color:
                                                                         kPrimaryWhiteColor,
@@ -466,7 +495,7 @@ class _MangaComment2State extends State<MangaComment2> {
                                                                               color: Colors.purple,
                                                                             ),
                                                                             Text(
-                                                                              "Top 100 Readers",
+                                                                                                 User[0]['batchId'].toString(),
                                                                               style: TextStyle(fontSize: 13, color: kPrimaryPurpleColor),
                                                                             ),
                                                                           ],
@@ -616,7 +645,22 @@ class _MangaComment2State extends State<MangaComment2> {
                                                                       .start,
                                                               children: [
                                                                 Text(
-                                                                  "Peter:",
+                                                                  User[0]['name'] +
+                                                                      ":",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        12,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(height:10),
+                                                                Text(
+                                                                  _getComments[
+                                                                              0]
+                                                                          .last[
+                                                                      'comments'],
                                                                   style:
                                                                       TextStyle(
                                                                     color: Colors
@@ -707,21 +751,21 @@ class _MangaComment2State extends State<MangaComment2> {
                                                                         )),
                                                                   ],
                                                                 ),
-                                                                SizedBox(
-                                                                    height: 15),
-                                                                Row(
-                                                                  children: [
-                                                                    Text(
-                                                                        "Total 23 Replies",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontSize:
-                                                                              12,
-                                                                        )),
-                                                                  ],
-                                                                ),
+                                                                // SizedBox(
+                                                                //     height: 15),
+                                                                // Row(
+                                                                //   children: [
+                                                                //     Text(
+                                                                //         "Total 23 Replies",
+                                                                //         style:
+                                                                //             TextStyle(
+                                                                //           color:
+                                                                //               Colors.white,
+                                                                //           fontSize:
+                                                                //               12,
+                                                                //         )),
+                                                                //   ],
+                                                                // ),
                                                               ],
                                                             ),
                                                           ),

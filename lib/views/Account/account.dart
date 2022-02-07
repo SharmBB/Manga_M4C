@@ -36,6 +36,7 @@ class _AccountState extends State<Account> {
 
   @override
   Widget build(BuildContext context) {
+    var userImage = "http://mangakiku-api.moodfor.codes/images";
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -73,12 +74,12 @@ class _AccountState extends State<Account> {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        const Padding(
+                         Padding(
                           padding: EdgeInsets.only(left: 40.0, top: 37),
                           child: CircleAvatar(
                             radius: 65,
-                            backgroundImage: AssetImage(
-                              "assets/profile-img.png",
+                            backgroundImage: NetworkImage(
+                            userImage+User[0]['image'],
                             ),
                           ),
                         ),

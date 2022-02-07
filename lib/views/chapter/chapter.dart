@@ -168,6 +168,7 @@ class _CartState extends State<Chapter> {
                             color: kPrimaryPurpleColor,
                             textColor: Colors.white,
                             onPressed: () {
+                              
                               // Navigator.push(
                               //   context,
                               //   MaterialPageRoute(
@@ -184,12 +185,14 @@ class _CartState extends State<Chapter> {
                             child: FloatingActionButton.small(
                               backgroundColor: Colors.grey[300],
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MangaComments(),
-                                  ),
-                                );
+                                print("fjff");
+                                print(_manga[0]);
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => MangaComments(),
+                                //   ),
+                                // );
                               },
                               child: Icon(
                                 Icons.add,
