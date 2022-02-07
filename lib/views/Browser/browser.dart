@@ -11,6 +11,7 @@ import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
 import 'package:mangakiku_app/views/Library/library.dart';
+import 'package:mangakiku_app/views/chapter/chapter.dart';
 
 class Browser extends StatefulWidget {
   @override
@@ -326,22 +327,29 @@ class _MyHomePageState extends State<Browser> {
                                     width: 130,
                                     height: 150,
                                     margin: EdgeInsets.only(right: 15, top: 10),
-                                    child: CachedNetworkImage(
-                                        imageUrl: SelectedManga[0][index]
-                                            ['md_covers'][0]['gpurl'],
-                                        imageBuilder: (context,
-                                                imageProvider) =>
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                image: DecorationImage(
-                                                    image: imageProvider,
-                                                    fit: BoxFit.fill),
+                                    child: InkWell(
+                                      onTap: () {
+                                        print("shar");
+                                        _navigator(context,
+                                            Chapter([SelectedManga[0][index]]));
+                                      },
+                                      child: CachedNetworkImage(
+                                          imageUrl: SelectedManga[0][index]
+                                              ['md_covers'][0]['gpurl'],
+                                          imageBuilder: (context,
+                                                  imageProvider) =>
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  image: DecorationImage(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.fill),
+                                                ),
                                               ),
-                                            ),
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.error)),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error)),
+                                    ),
                                   ),
                                 ),
                                 Expanded(
@@ -431,6 +439,11 @@ class _MyHomePageState extends State<Browser> {
         ),
       ),
     );
+  }
+
+  void _navigator(BuildContext context, add) async {
+    final result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => add));
   }
 
   //get manga details from api (Advance Search)
