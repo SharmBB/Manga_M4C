@@ -184,7 +184,7 @@ class _MangaComment2State extends State<MangaComment2> {
                 }
               }),
           IconButton(
-              icon: Icon(Icons.thumb_up_off_alt),
+              icon: Icon(Icons.add_circle_outline),
               color: kPrimaryWhiteColor,
               onPressed: () {}),
           IconButton(

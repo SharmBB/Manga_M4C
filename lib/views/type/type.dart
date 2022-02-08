@@ -172,12 +172,16 @@ class _CartState extends State<DetailsScreen> {
                             color: kPrimaryPurpleColor,
                             textColor: Colors.white,
                             onPressed: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => MangaComment2(),
-                              //   ),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MangaComment2(
+                                    hid: chaptersFromDB[0]['hid'].toString(),
+                                    chapterid:
+                                        chaptersFromDB[0]["chap"].toString(),
+                                  ),
+                                ),
+                              );
                               print("dsvdsv");
                             },
                           ),
@@ -412,16 +416,16 @@ class _CartState extends State<DetailsScreen> {
                                         ],
                                       ),
                                       SizedBox(height: 20),
-                                      Container(
-                                        height: 80,
+                                      // Container(
+                                      //   height: 80,
 
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey,
-                                            borderRadius:
-                                                BorderRadius.circular(1)),
+                                      //   decoration: BoxDecoration(
+                                      //       color: Colors.grey,
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(1)),
 
-                                        // ),
-                                      )
+                                      //   // ),
+                                      // )
                                     ],
                                   ),
                                 ),

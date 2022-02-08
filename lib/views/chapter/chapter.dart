@@ -167,7 +167,17 @@ class _CartState extends State<Chapter> {
                             ),
                             color: kPrimaryPurpleColor,
                             textColor: Colors.white,
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MangaComment2(
+                                      chapterid:
+                                          chaptersFromDB[0]["chap"].toString(),
+                                      hid: chaptersFromDB[0]['hid'].toString()),
+                                ),
+                              );
+                            },
                           ),
                           SizedBox(width: 10.0),
                           Container(
@@ -370,7 +380,7 @@ class _CartState extends State<Chapter> {
                                       Row(
                                         children: [
                                           Text(
-                                            "Author",
+                                            "Author:",
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.white),
@@ -385,34 +395,65 @@ class _CartState extends State<Chapter> {
                                         ],
                                       ),
                                       SizedBox(height: 5.0),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "Genres :",
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.white),
-                                          ),
-                                          SizedBox(width: 3.0),
-                                          Text(
-                                            _manga[0]["genres"].toString(),
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: kPrimaryPurpleColor),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 20),
-                                      Container(
-                                        height: 80,
-
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey,
-                                            borderRadius:
-                                                BorderRadius.circular(1)),
+                                      Column(children: [
+                                        // Container(
+                                        //     child: Text("Generes:  "+
+                                        //    _manga[0]["genres"].toString(),
+                                        //   style: TextStyle(
+                                        //       fontSize: 14,
+                                        //       color: Colors.white),
 
                                         // ),
-                                      )
+
+                                        // ),
+                                        Column(
+                                          children: [
+                                            Text(
+                                              "Generes:  " +
+                                                  _manga[0]["genres"]
+                                                      .toString(),
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.white),
+                                            ),
+                                            //     Text("Generes:  "+
+                                            //    _manga[0]["genres"].toString(),
+                                            //   style: TextStyle(
+                                            //       fontSize: 14,
+                                            //       color: Colors.white),
+                                            // ),
+                                          ],
+                                        ),
+                                      ]),
+                                      // SizedBox(height: 5.0),
+                                      // Row(
+                                      //   children: [
+                                      //     Text(
+                                      //       "Genres :",
+                                      //       style: TextStyle(
+                                      //           fontSize: 14,
+                                      //           color: Colors.white),
+                                      //     ),
+                                      //     SizedBox(width: 3.0),
+                                      //     Text(
+                                      //       _manga[0]["genres"].toString(),
+                                      //       style: TextStyle(
+                                      //           fontSize: 14,
+                                      //           color: kPrimaryPurpleColor),
+                                      //     ),
+                                      //   ],
+                                      // ),
+                                      SizedBox(height: 20),
+                                      // Container(
+                                      //   height: 80,
+
+                                      //   decoration: BoxDecoration(
+                                      //       color: Colors.grey,
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(1)),
+
+                                      //   // ),
+                                      // )
                                     ],
                                   ),
                                 ),
