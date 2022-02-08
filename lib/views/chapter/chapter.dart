@@ -167,16 +167,7 @@ class _CartState extends State<Chapter> {
                             ),
                             color: kPrimaryPurpleColor,
                             textColor: Colors.white,
-                            onPressed: () {
-                              
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => MangaComment2(),
-                              //   ),
-                              // );
-                              print("dsvdsv");
-                            },
+                            onPressed: () {},
                           ),
                           SizedBox(width: 10.0),
                           Container(

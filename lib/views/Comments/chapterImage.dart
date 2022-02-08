@@ -54,6 +54,9 @@ class _MangaComment2State extends State<MangaComment2> {
   // loader
   bool _isLoading = true;
 
+  // loader
+  bool _isLoading1 = true;
+
   late int counter = 0;
   late int counterlast = 0;
 
@@ -262,7 +265,7 @@ class _MangaComment2State extends State<MangaComment2> {
   //get comments details from api
   void getCommends() async {
     setState(() {
-      _isLoading = true;
+      _isLoading1 = true;
     });
     try {
       _getComments.clear();
@@ -278,7 +281,7 @@ class _MangaComment2State extends State<MangaComment2> {
       print(e);
     }
     setState(() {
-      _isLoading = false;
+      _isLoading1 = false;
     });
   }
 
@@ -495,7 +498,7 @@ class _MangaComment2State extends State<MangaComment2> {
                                                                               color: Colors.purple,
                                                                             ),
                                                                             Text(
-                                                                                                 User[0]['batchId'].toString(),
+                                                                              User[0]['batchId'].toString(),
                                                                               style: TextStyle(fontSize: 13, color: kPrimaryPurpleColor),
                                                                             ),
                                                                           ],
@@ -506,21 +509,118 @@ class _MangaComment2State extends State<MangaComment2> {
                                                             ]),
                                                       )
                                                     ]),
-                                                SizedBox(height: 10),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          top: 8.0,
+                                                          top: 10.0,
                                                           left: 60,
                                                           right: 5),
-                                                  child: Text(
-                                                    "The definition of a character is a unique symbol, letter or mark used in writing. Character is defined as a trait, quality or high moral code. An example of character is someone who is known for being funny. An example of character is a person who is trustworthy.One way to classify characters is by examining how they change (or don't change) over the course of a story. Grouped in this way by character development, character types include the dynamic character, the round character, the static character, the stock character, and the symbolic character.",
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 14),
-                                                  ),
+                                                  child: SingleChildScrollView(
+                                                      child: Container(
+                                                          height: 300,
+                                                          child: _isLoading1
+                                                              ? Center(
+                                                                  child:
+                                                                      Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      top:
+                                                                          30.0),
+                                                                  child:
+                                                                      CupertinoActivityIndicator(
+                                                                    radius: 15,
+                                                                  ),
+                                                                ))
+                                                              : ListView
+                                                                  .builder(
+                                                                      itemCount:
+                                                                          _getComments[0]
+                                                                              .length,
+                                                                      itemBuilder:
+                                                                          (BuildContext context,
+                                                                              int index) {
+                                                                        return Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(
+                                                                              bottom: 10.0,
+                                                                            ),
+                                                                            child: Column(
+                                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              children: [
+                                                                                Text(
+                                                                                  _getComments[0][index]['comments'],
+                                                                                  style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
+                                                                                ),
+                                                                                Row(
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: <Widget>[
+                                                                                    Text("21.12.2021",
+                                                                                        style: TextStyle(
+                                                                                          color: Colors.white,
+                                                                                          fontSize: 12,
+                                                                                        )),
+
+                                                                                    //  SizedBox(width: 10.0),
+                                                                                    Text("09.23 am",
+                                                                                        style: TextStyle(
+                                                                                          color: Colors.white,
+                                                                                          fontSize: 12,
+                                                                                        )),
+                                                                                    //  SizedBox(width: 10.0),
+                                                                                    Icon(
+                                                                                      Icons.arrow_upward,
+                                                                                      size: 25.0,
+                                                                                      color: Colors.purple[900],
+                                                                                    ),
+//SizedBox(width: 5.0),
+                                                                                    Text(
+                                                                                      "233",
+                                                                                      style: TextStyle(
+                                                                                        color: Colors.white,
+                                                                                        fontSize: 12,
+                                                                                      ),
+                                                                                    ),
+
+                                                                                    Icon(
+                                                                                      Icons.arrow_downward,
+                                                                                      size: 25.0,
+                                                                                      color: Colors.grey,
+                                                                                    ),
+
+                                                                                    Text(
+                                                                                      "43",
+                                                                                      style: TextStyle(
+                                                                                        color: Colors.white,
+                                                                                        fontSize: 12,
+                                                                                      ),
+                                                                                    ),
+
+                                                                                    Icon(
+                                                                                      Icons.comment,
+                                                                                      size: 25.0,
+                                                                                      color: Colors.grey,
+                                                                                    ),
+
+                                                                                    Text(
+                                                                                      "22",
+                                                                                      style: TextStyle(
+                                                                                        color: Colors.white,
+                                                                                        fontSize: 12,
+                                                                                      ),
+                                                                                    ),
+                                                                                    IconButton(
+                                                                                      icon: Icon(Icons.report),
+                                                                                      color: kPrimaryPurpleColor,
+                                                                                      onPressed: () {
+                                                                                        showAlert(context);
+                                                                                      },
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ],
+                                                                            ));
+                                                                      }))),
                                                 ),
                                                 SizedBox(height: 10),
                                                 SizedBox(width: 10),
@@ -655,7 +755,8 @@ class _MangaComment2State extends State<MangaComment2> {
                                                                         12,
                                                                   ),
                                                                 ),
-                                                                SizedBox(height:10),
+                                                                SizedBox(
+                                                                    height: 10),
                                                                 Text(
                                                                   _getComments[
                                                                               0]

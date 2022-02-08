@@ -241,7 +241,7 @@ class _CartState extends State<DetailsScreen> {
                           Tab(
                             text: 'Description',
                           ),
-                          Tab(text: 'Characters'),
+                          Tab(text: 'Chapcter'),
                         ],
                       ),
                     ),
@@ -252,7 +252,7 @@ class _CartState extends State<DetailsScreen> {
                               top: BorderSide(
                                   color: Colors.purple, width: 0.5))),
                       child: TabBarView(children: <Widget>[
-                          _isLoading
+                        _isLoading
                             ? Center(
                                 child: Padding(
                                 padding: const EdgeInsets.only(top: 30.0),
@@ -261,155 +261,171 @@ class _CartState extends State<DetailsScreen> {
                                 ),
                               ))
                             : SingleChildScrollView(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  child: Text(
-                                    chapterUsingName[0]['comic']['desc'],
-                                    style: TextStyle(
-                                        fontSize: 14, color: Colors.white),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        child: Text(
+                                          chapterUsingName[0]['comic']['desc'],
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Organization :",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(width: 3.0),
+                                          Text(
+                                            "Manhwa",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 5.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Published :",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(width: 3.0),
+                                          Text(
+                                            "2018",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 5.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Demographic :",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(width: 3.0),
+                                          Text(
+                                            "Shounen",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 5.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Status :",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(width: 3.0),
+                                          Text(
+                                            "Ongoing",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 15.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "More Info ",
+                                            style: TextStyle(
+                                                fontSize: 22,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 10.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Artists :",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(width: 3.0),
+                                          Text(
+                                            "Akira Toriyama(Redic Studio)",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.blue),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 5.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Authors :",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(width: 3.0),
+                                          Text(
+                                            " Bird Studio/Shueisha",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.blue),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 5.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Geners :",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(width: 3.0),
+                                          Text(
+                                            " television series, Adventure , Fantasy",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.blue),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 20),
+                                      Container(
+                                        height: 80,
+
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey,
+                                            borderRadius:
+                                                BorderRadius.circular(1)),
+
+                                        // ),
+                                      )
+                                    ],
                                   ),
                                 ),
-                                SizedBox(height:10),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Organization :",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                    SizedBox(width: 3.0),
-                                    Text(
-                                      "Manhwa",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5.0),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Published :",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                    SizedBox(width: 3.0),
-                                    Text(
-                                      "2018",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5.0),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Demographic :",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                    SizedBox(width: 3.0),
-                                    Text(
-                                      "Shounen",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5.0),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Status :",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                    SizedBox(width: 3.0),
-                                    Text(
-                                      "Ongoing",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 15.0),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "More Info ",
-                                      style: TextStyle(
-                                          fontSize: 22,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10.0),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Artists :",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                    SizedBox(width: 3.0),
-                                    Text(
-                                      "Akira Toriyama(Redic Studio)",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.blue),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5.0),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Authors :",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                    SizedBox(width: 3.0),
-                                    Text(
-                                      " Bird Studio/Shueisha",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.blue),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5.0),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Geners :",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white),
-                                    ),
-                                    SizedBox(width: 3.0),
-                                    Text(
-                                      " television series, Adventure , Fantasy",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.blue),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 20),
-                                Container(
-                                  height: 80,
-
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.circular(1)),
-
-                                  // ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
+                              ),
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -527,12 +543,15 @@ class _CartState extends State<DetailsScreen> {
                                                           MaterialPageRoute(
                                                             builder: (context) =>
                                                                 MangaComment2(
-                                                                    hid: chaptersFromDB[index]
-                                                                            [
-                                                                            'hid']
-                                                                        .toString(), chapterid:
-                                                                          chaptersFromDB[index]["chap"]
-                                                                              .toString(), ),
+                                                              hid: chaptersFromDB[
+                                                                          index]
+                                                                      ['hid']
+                                                                  .toString(),
+                                                              chapterid: chaptersFromDB[
+                                                                          index]
+                                                                      ["chap"]
+                                                                  .toString(),
+                                                            ),
                                                           ),
                                                         );
                                                       },
