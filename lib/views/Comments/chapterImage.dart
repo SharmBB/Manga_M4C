@@ -32,6 +32,8 @@ class _MangaComment2State extends State<MangaComment2> {
 
   String? token;
 
+  bool imageclick = false;
+
   List User = [];
 
   String? __replyComment;
@@ -104,6 +106,7 @@ class _MangaComment2State extends State<MangaComment2> {
                         height: screenHeight * (18 / 20),
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
+                          reverse: true,
                           itemCount:
                               _chapterImage[0]['chapter']['md_images'].length,
                           itemBuilder: (BuildContext context, int index) {
@@ -130,7 +133,15 @@ class _MangaComment2State extends State<MangaComment2> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(00.0),
                                       child: InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          setState(() {
+                                            if (imageclick == false) {
+                                              imageclick = true;
+                                            } else if (imageclick == true) {
+                                              imageclick = false;
+                                            }
+                                          });
+                                        },
                                         borderRadius:
                                             BorderRadius.circular(00.0),
                                         child: CachedNetworkImage(
@@ -193,46 +204,50 @@ class _MangaComment2State extends State<MangaComment2> {
                         ],
                       ))),
             ]),
-      bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          IconButton(
-              icon: Icon(Icons.arrow_back_ios_new),
-              color: kPrimaryWhiteColor,
-              onPressed: () {
-                if (counter != 0) {
-                  setState(() {
-                    counter = counter - 1;
-                  });
-                }
-              }),
-          IconButton(
-              icon: Icon(Icons.thumb_up_off_alt),
-              color: kPrimaryWhiteColor,
-              onPressed: () {}),
-          IconButton(
-              icon: Icon(Icons.comment_outlined),
-              color: kPrimaryWhiteColor,
-              onPressed: () {
-                _displayDialog(context);
-              }),
-          IconButton(
-              icon: Icon(Icons.favorite),
-              color: kPrimaryWhiteColor,
-              onPressed: () {}),
-          IconButton(
-              icon: Icon(Icons.arrow_forward_ios),
-              color: kPrimaryWhiteColor,
-              onPressed: () {
-                if (counter <
-                    _chapterImage[0]['chapter']['md_images'].length - 1) {
-                  setState(() {
-                    counter = counter + 1;
-                  });
-                }
-              }),
-        ],
-      ),
+      bottomNavigationBar: imageclick == true
+          ? SizedBox()
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                    icon: Icon(Icons.arrow_back_ios_new),
+                    color: kPrimaryWhiteColor,
+                    onPressed: () {
+
+                        if (counter <
+                          _chapterImage[0]['chapter']['md_images'].length - 1) {
+                        setState(() {
+                          counter = counter + 1;
+                        });
+                     
+                      }
+                    }),
+                IconButton(
+                    icon: Icon(Icons.add_circle_outline_rounded),
+                    color: kPrimaryWhiteColor,
+                    onPressed: () {}),
+                IconButton(
+                    icon: Icon(Icons.comment_outlined),
+                    color: kPrimaryWhiteColor,
+                    onPressed: () {
+                      _displayDialog(context);
+                    }),
+                IconButton(
+                    icon: Icon(Icons.favorite),
+                    color: kPrimaryWhiteColor,
+                    onPressed: () {}),
+                IconButton(
+                    icon: Icon(Icons.arrow_forward_ios),
+                    color: kPrimaryWhiteColor,
+                    onPressed: () {
+                      if (counter != 0) {
+                        setState(() {
+                          counter = counter - 1;
+                        });
+                      }
+                    }),
+              ],
+            ),
     );
   }
 
