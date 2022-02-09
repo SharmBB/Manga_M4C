@@ -19,7 +19,7 @@ class CallApi {
   // Auth Api
   var _urlAuth = 'http://mangakiku-api.moodfor.codes/api/';
 
-  var token="276|Ozi5T5NG1482uwB4m0MeZVDmUC5uMKJHuAWFrcwh";
+  var token = "276|Ozi5T5NG1482uwB4m0MeZVDmUC5uMKJHuAWFrcwh";
   //Genres api url
   var genres_baseurl = 'https://api.comick.fun/genre';
   //browser
@@ -28,9 +28,6 @@ class CallApi {
 
   //advance search
   var advacesearch = 'https://api.comick.fun/search?genres=';
-
-
- 
 
   //Login api
   authData(data, apiUrl) async {
@@ -125,9 +122,8 @@ class CallApi {
       headers: _setHeaders(),
     );
   }
-  
 
-//advance search 
+//advance search
   getAdvaceSearch(apiUrl) async {
     var fullUrl = Uri.parse(advacesearch + apiUrl);
     return await http.get(
@@ -150,16 +146,34 @@ class CallApi {
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.get(
       fullUrl,
-       headers: _setHeaders(),
+      headers: _setHeaders(),
     );
   }
 
-   //LeaderBoard
+  //LeaderBoard
   getLeaderBoard(apiUrl) async {
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.get(
       fullUrl,
-       headers: _setHeaders(),
+      headers: _setHeaders(),
+    );
+  }
+
+  //User Library
+  getUserLibrary(apiUrl) async {
+    var fullUrl = Uri.parse(_urlAuth + apiUrl);
+    return await http.get(
+      fullUrl,
+      headers: _setHeaders(),
+    );
+  }
+
+  //User Library
+  getUserFavourite(apiUrl) async {
+    var fullUrl = Uri.parse(_urlAuth + apiUrl);
+    return await http.get(
+      fullUrl,
+      headers: _setHeaders(),
     );
   }
 

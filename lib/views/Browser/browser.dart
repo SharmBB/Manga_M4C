@@ -147,10 +147,10 @@ class _MyHomePageState extends State<Browser> {
                       MaterialPageRoute(builder: (context) => Account()),
                     );
                   } else if (currentIndex == 3) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Library()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => Library()),
+                    // );
                   } else if (currentIndex == 4) {
                     Navigator.push(
                       context,

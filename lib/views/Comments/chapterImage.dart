@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/views/Comments/comments.dart';
@@ -28,9 +29,23 @@ class _MangaComment2State extends State<MangaComment2> {
   late String hid;
   late String chapterid;
   TextEditingController _commentController = new TextEditingController();
+
   String? token;
 
   List User = [];
+
+  String? __replyComment;
+  int? _replyid;
+
+  // List ReplyComments = [];
+
+  List<TextEditingController> _controllers = <TextEditingController>[];
+
+  //reply
+  bool _reply = true;
+
+  //Success
+  String? success;
 
   @override
   void initState() {
@@ -43,6 +58,10 @@ class _MangaComment2State extends State<MangaComment2> {
     addComments();
     getCommends();
     _getUserById();
+    _replyComments();
+    _UpVoteComments();
+    _DownVoteComments();
+    _reportComment();
 
     super.initState();
   }
@@ -78,73 +97,77 @@ class _MangaComment2State extends State<MangaComment2> {
             ))
           : Stack(children: [
               SafeArea(
-                  child: ListView(children: [
-                Column(
-                  children: [
-                    Container(
-                      height: screenHeight * (18 / 20),
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount:
-                            _chapterImage[0]['chapter']['md_images'].length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            margin: EdgeInsets.only(
-                              left: 10,
-                              right: 10,
-                            ),
-                            width: screenWidth,
-                            child: Stack(
-                              alignment: Alignment.topCenter,
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: kPrimaryWhiteColor,
-                                    borderRadius: BorderRadius.circular(0.0),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: primaryColor,
-                                        blurRadius: 6.0,
-                                      ),
-                                    ],
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(00.0),
-                                    child: InkWell(
-                                      onTap: () {},
-                                      borderRadius: BorderRadius.circular(00.0),
-                                      child: CachedNetworkImage(
-                                          height: screenHeight * (18 / 20),
-                                          width: screenWidth,
-                                          imageUrl: image +
-                                              _chapterImage[0]['chapter']
-                                                      ['md_images']
-                                                  [index + counter]['b2key'],
-                                          imageBuilder: (context,
-                                                  imageProvider) =>
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  image: DecorationImage(
-                                                      image: imageProvider,
-                                                      fit: BoxFit.cover),
-                                                ),
-                                              ),
-                                          errorWidget: (context, url, error) =>
-                                              Icon(Icons.error)),
+                child: ListView(children: [
+                  Column(
+                    children: [
+                      Container(
+                        height: screenHeight * (18 / 20),
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount:
+                              _chapterImage[0]['chapter']['md_images'].length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              margin: EdgeInsets.only(
+                                left: 10,
+                                right: 10,
+                              ),
+                              width: screenWidth,
+                              child: Stack(
+                                alignment: Alignment.topCenter,
+                                children: <Widget>[
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: kPrimaryWhiteColor,
+                                      borderRadius: BorderRadius.circular(0.0),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: primaryColor,
+                                          blurRadius: 6.0,
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(00.0),
+                                      child: InkWell(
+                                        onTap: () {},
+                                        borderRadius:
+                                            BorderRadius.circular(00.0),
+                                        child: CachedNetworkImage(
+                                            height: screenHeight * (18 / 20),
+                                            width: screenWidth,
+                                            imageUrl: image +
+                                                _chapterImage[0]['chapter']
+                                                        ['md_images']
+                                                    [index + counter]['b2key'],
+                                            imageBuilder: (context,
+                                                    imageProvider) =>
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    image: DecorationImage(
+                                                        image: imageProvider,
+                                                        fit: BoxFit.cover),
+                                                  ),
+                                                ),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error)),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ])),
+                    ],
+                  ),
+                ]),
+              ),
               SafeArea(
                   child: Container(
                       height: 50,
@@ -184,7 +207,7 @@ class _MangaComment2State extends State<MangaComment2> {
                 }
               }),
           IconButton(
-              icon: Icon(Icons.add_circle_outline),
+              icon: Icon(Icons.thumb_up_off_alt),
               color: kPrimaryWhiteColor,
               onPressed: () {}),
           IconButton(
@@ -213,6 +236,119 @@ class _MangaComment2State extends State<MangaComment2> {
     );
   }
 
+  void _reportComment() async {
+    // setState(() {
+    //   _isLoading = true;
+    // });
+    try {
+      var data = {
+        "commentId": _replyid.toString(),
+      };
+      var res = await CallApi().postData(data, 'reportComment');
+      var body = json.decode(res.body);
+      print(body);
+
+      if (body['token'] != null) {
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        var token = body['token'];
+        localStorage.setString('token', token);
+
+        print(body);
+      } else {}
+    } catch (e) {
+      print(e);
+    }
+    // setState(() {
+    //   _isLoading = false;
+    //   _controllers.clear();
+    // });
+  }
+
+  void _DownVoteComments() async {
+    // setState(() {
+    //   _isLoading = true;
+    // });
+    try {
+      var data = {
+        "id": _replyid.toString(),
+      };
+      var res = await CallApi().postData(data, 'replyDownVote');
+      var body = json.decode(res.body);
+      print(body);
+
+      if (body['token'] != null) {
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        var token = body['token'];
+        localStorage.setString('token', token);
+
+        print(body);
+      } else {}
+    } catch (e) {
+      print(e);
+    }
+    // setState(() {
+    //   _isLoading = false;
+    //   _controllers.clear();
+    // });
+  }
+
+  void _UpVoteComments() async {
+    // setState(() {
+    //   _isLoading = true;
+    // });
+    try {
+      var data = {
+        "id": _replyid.toString(),
+      };
+      var res = await CallApi().postData(data, 'replyUpVote');
+      var body = json.decode(res.body);
+      print(body);
+
+      if (body['token'] != null) {
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        var token = body['token'];
+        localStorage.setString('token', token);
+
+        print(body);
+      } else {}
+    } catch (e) {
+      print(e);
+    }
+    // setState(() {
+    //   _isLoading = false;
+    //   _controllers.clear();
+    // });
+  }
+
+  void _replyComments() async {
+    // setState(() {
+    //   _isLoading = true;
+    // });
+    try {
+      var data = {
+        "commentId": _replyid.toString(),
+        "comments": __replyComment,
+      };
+      var res = await CallApi().postData(data, 'addReplyComment');
+      var body = json.decode(res.body);
+      print(body);
+
+      if (body['token'] != null) {
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        var token = body['token'];
+        localStorage.setString('token', token);
+
+        print(body);
+      } else {}
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      // _isLoading = false;
+      _controllers.clear();
+    });
+  }
+
   void addComments() async {
     setState(() {
       _isLoading = true;
@@ -224,6 +360,9 @@ class _MangaComment2State extends State<MangaComment2> {
       };
       var res = await CallApi().postData(data, 'addComment');
       var body = json.decode(res.body);
+
+      success = body['message'];
+      print(body['message']);
       print(body);
 
       if (body['token'] != null) {
@@ -383,33 +522,33 @@ class _MangaComment2State extends State<MangaComment2> {
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold),
                                           ),
-                                          Container(
-                                            width: 100,
-                                            height: 20,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Text(
-                                                  "Top",
-                                                  style: TextStyle(
-                                                      fontSize: 13,
-                                                      color: Colors.grey),
-                                                ),
-                                                VerticalDivider(
-                                                  thickness: 1,
-                                                  color: Colors.grey,
-                                                ),
-                                                Text(
-                                                  "New",
-                                                  style: TextStyle(
-                                                      fontSize: 13,
-                                                      color:
-                                                          Colors.purple[900]),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                          // Container(
+                                          //   width: 100,
+                                          //   height: 20,
+                                          //   child: Row(
+                                          //     mainAxisAlignment:
+                                          //         MainAxisAlignment.end,
+                                          //     children: [
+                                          //       Text(
+                                          //         "Top",
+                                          //         style: TextStyle(
+                                          //             fontSize: 13,
+                                          //             color: Colors.grey),
+                                          //       ),
+                                          //       VerticalDivider(
+                                          //         thickness: 1,
+                                          //         color: Colors.grey,
+                                          //       ),
+                                          //       Text(
+                                          //         "New",
+                                          //         style: TextStyle(
+                                          //             fontSize: 13,
+                                          //             color:
+                                          //                 Colors.purple[900]),
+                                          //       ),
+                                          //     ],
+                                          //   ),
+                                          // ),
                                         ],
                                       )),
                                   Expanded(
@@ -467,241 +606,335 @@ class _MangaComment2State extends State<MangaComment2> {
                                                                         FontWeight
                                                                             .bold),
                                                               ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top: 5),
-                                                                child: Row(
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .center,
-                                                                    children: <
-                                                                        Widget>[
-                                                                      Container(
-                                                                        width:
-                                                                            150,
-                                                                        height:
-                                                                            30,
-                                                                        decoration: BoxDecoration(
-                                                                            color:
-                                                                                kPrimaryWhiteColor,
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(15)),
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.center,
-                                                                          children: [
-                                                                            Icon(
-                                                                              Icons.batch_prediction,
-                                                                              color: Colors.purple,
-                                                                            ),
-                                                                            Text(
-                                                                              User[0]['batchId'].toString(),
-                                                                              style: TextStyle(fontSize: 13, color: kPrimaryPurpleColor),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      )
-                                                                    ]),
-                                                              ),
+                                                              User[0]['batchId']
+                                                                          .toString() ==
+                                                                      null
+                                                                  ? Padding(
+                                                                      padding: const EdgeInsets
+                                                                              .only(
+                                                                          top:
+                                                                              5),
+                                                                      child: Row(
+                                                                          crossAxisAlignment: CrossAxisAlignment
+                                                                              .center,
+                                                                          children: <
+                                                                              Widget>[
+                                                                            Container(
+                                                                              width: 150,
+                                                                              height: 30,
+                                                                              decoration: BoxDecoration(color: kPrimaryWhiteColor, borderRadius: BorderRadius.circular(15)),
+                                                                              child: Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                                children: [
+                                                                                  Icon(
+                                                                                    Icons.batch_prediction,
+                                                                                    color: Colors.purple,
+                                                                                  ),
+                                                                                  Text(
+                                                                                    User[0]['batchId'].toString(),
+                                                                                    style: TextStyle(fontSize: 13, color: kPrimaryPurpleColor),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            )
+                                                                          ]),
+                                                                    )
+                                                                  : SizedBox(
+                                                                      height:
+                                                                          30,
+                                                                    ),
                                                             ]),
                                                       )
                                                     ]),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          top: 10.0,
+                                                          bottom: 10.0,
                                                           left: 60,
                                                           right: 5),
                                                   child: SingleChildScrollView(
-                                                      child: Container(
-                                                          height: 300,
-                                                          child: _isLoading1
-                                                              ? Center(
-                                                                  child:
-                                                                      Padding(
-                                                                  padding: const EdgeInsets
+                                                    child: Container(
+                                                      height: 300,
+                                                      child: _isLoading1
+                                                          ? Center(
+                                                              child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
                                                                           .only(
                                                                       top:
                                                                           30.0),
-                                                                  child:
-                                                                      CupertinoActivityIndicator(
-                                                                    radius: 15,
-                                                                  ),
-                                                                ))
-                                                              : ListView
-                                                                  .builder(
-                                                                      itemCount:
-                                                                          _getComments[0]
-                                                                              .length,
-                                                                      itemBuilder:
-                                                                          (BuildContext context,
-                                                                              int index) {
-                                                                        return Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.only(
-                                                                              bottom: 10.0,
-                                                                            ),
-                                                                            child: Column(
-                                                                              mainAxisAlignment: MainAxisAlignment.start,
-                                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                                              children: [
-                                                                                Text(
-                                                                                  _getComments[0][index]['comments'],
-                                                                                  style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
-                                                                                ),
-                                                                                Row(
-                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                  children: <Widget>[
-                                                                                    Text("21.12.2021",
-                                                                                        style: TextStyle(
-                                                                                          color: Colors.white,
-                                                                                          fontSize: 12,
-                                                                                        )),
+                                                              child:
+                                                                  CupertinoActivityIndicator(
+                                                                radius: 15,
+                                                              ),
+                                                            ))
+                                                          : ListView.builder(
+                                                              itemCount:
+                                                                  _getComments[
+                                                                          0]
+                                                                      .length,
+                                                              itemBuilder:
+                                                                  (BuildContext
+                                                                          context,
+                                                                      int index) {
+                                                                _replyid =
+                                                                    _getComments[0]
+                                                                            [
+                                                                            index]
+                                                                        ['id'];
+                                                                //list controller
+                                                                _controllers.add(
+                                                                    new TextEditingController());
+                                                                return StatefulBuilder(builder:
+                                                                    (BuildContext
+                                                                            context,
+                                                                        StateSetter
+                                                                            setState) {
+                                                                  return Column(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Text(
+                                                                        _getComments[0][index]
+                                                                            [
+                                                                            'comments'],
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.grey,
+                                                                            fontWeight: FontWeight.bold,
+                                                                            fontSize: 14),
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: <
+                                                                            Widget>[
+                                                                          Text(
+                                                                              "21.12.2021",
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                                fontSize: 12,
+                                                                              )),
 
-                                                                                    //  SizedBox(width: 10.0),
-                                                                                    Text("09.23 am",
-                                                                                        style: TextStyle(
-                                                                                          color: Colors.white,
-                                                                                          fontSize: 12,
-                                                                                        )),
-                                                                                    //  SizedBox(width: 10.0),
-                                                                                    Icon(
-                                                                                      Icons.arrow_upward,
-                                                                                      size: 25.0,
-                                                                                      color: Colors.purple[900],
-                                                                                    ),
-//SizedBox(width: 5.0),
-                                                                                    Text(
-                                                                                      "233",
-                                                                                      style: TextStyle(
-                                                                                        color: Colors.white,
-                                                                                        fontSize: 12,
-                                                                                      ),
-                                                                                    ),
-
-                                                                                    Icon(
-                                                                                      Icons.arrow_downward,
-                                                                                      size: 25.0,
-                                                                                      color: Colors.grey,
-                                                                                    ),
-
-                                                                                    Text(
-                                                                                      "43",
-                                                                                      style: TextStyle(
-                                                                                        color: Colors.white,
-                                                                                        fontSize: 12,
-                                                                                      ),
-                                                                                    ),
-
-                                                                                    Icon(
-                                                                                      Icons.comment,
-                                                                                      size: 25.0,
-                                                                                      color: Colors.grey,
-                                                                                    ),
-
-                                                                                    Text(
-                                                                                      "22",
-                                                                                      style: TextStyle(
-                                                                                        color: Colors.white,
-                                                                                        fontSize: 12,
-                                                                                      ),
-                                                                                    ),
-                                                                                    IconButton(
-                                                                                      icon: Icon(Icons.report),
-                                                                                      color: kPrimaryPurpleColor,
-                                                                                      onPressed: () {
-                                                                                        showAlert(context);
+                                                                          //  SizedBox(width: 10.0),
+                                                                          Text(
+                                                                              "09.23 am",
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                                fontSize: 12,
+                                                                              )),
+                                                                          //  SizedBox(width: 10.0),
+                                                                          Padding(
+                                                                              padding: EdgeInsets.only(left: 5),
+                                                                              child: InkWell(
+                                                                                  onTap: () => {
+                                                                                        _UpVoteComments(),
                                                                                       },
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                              ],
-                                                                            ));
-                                                                      }))),
-                                                ),
-                                                SizedBox(height: 10),
-                                                SizedBox(width: 10),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    top: 8.0,
-                                                    left: 60,
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: <Widget>[
-                                                      Text("21.12.2021",
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 12,
-                                                          )),
-
-                                                      //  SizedBox(width: 10.0),
-                                                      Text("09.23 am",
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 12,
-                                                          )),
-                                                      //  SizedBox(width: 10.0),
-                                                      Icon(
-                                                        Icons.arrow_upward,
-                                                        size: 25.0,
-                                                        color:
-                                                            Colors.purple[900],
-                                                      ),
+                                                                                  child: Container(
+                                                                                    height: 20,
+                                                                                    width: 20,
+                                                                                    child: Image.asset('assets/up-arrow (1).png'),
+                                                                                  ))),
 //SizedBox(width: 5.0),
-                                                      Text(
-                                                        "233",
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 12,
-                                                        ),
-                                                      ),
+                                                                          // Text(
+                                                                          //   "233",
+                                                                          //   style: TextStyle(
+                                                                          //     color: Colors.white,
+                                                                          //     fontSize: 12,
+                                                                          //   ),
+                                                                          // ),
 
-                                                      Icon(
-                                                        Icons.arrow_downward,
-                                                        size: 25.0,
-                                                        color: Colors.grey,
-                                                      ),
+                                                                          Padding(
+                                                                              padding: EdgeInsets.only(left: 5),
+                                                                              child: InkWell(
+                                                                                  onTap: () => {
+                                                                                        _DownVoteComments(),
+                                                                                      },
+                                                                                  child: Container(
+                                                                                    height: 20,
+                                                                                    width: 20,
+                                                                                    child: Image.asset('assets/down-arrow (1).png'),
+                                                                                  ))),
 
-                                                      Text(
-                                                        "43",
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 12,
-                                                        ),
-                                                      ),
+                                                                          // Text(
+                                                                          //   "43",
+                                                                          //   style: TextStyle(
+                                                                          //     color: Colors.white,
+                                                                          //     fontSize: 12,
+                                                                          //   ),
+                                                                          // ),
 
-                                                      Icon(
-                                                        Icons.comment,
-                                                        size: 25.0,
-                                                        color: Colors.grey,
-                                                      ),
+                                                                          IconButton(
+                                                                            icon:
+                                                                                Icon(
+                                                                              Icons.comment,
+                                                                              size: 25.0,
+                                                                              color: Colors.grey,
+                                                                            ),
+                                                                            onPressed:
+                                                                                () {
+                                                                              setState(() {
+                                                                                if (_reply == true) {
+                                                                                  _reply = false;
+                                                                                } else if (_reply == false) {
+                                                                                  _reply = true;
+                                                                                }
+                                                                                print(_replyid);
+                                                                              });
+                                                                            },
+                                                                          ),
 
-                                                      Text(
-                                                        "22",
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 12,
-                                                        ),
-                                                      ),
-                                                      IconButton(
-                                                        icon:
-                                                            Icon(Icons.report),
-                                                        color:
-                                                            kPrimaryPurpleColor,
-                                                        onPressed: () {
-                                                          showAlert(context);
-                                                        },
-                                                      ),
-                                                    ],
+                                                                          // Text(
+                                                                          //   "22",
+                                                                          //   style: TextStyle(
+                                                                          //     color: Colors.white,
+                                                                          //     fontSize: 12,
+                                                                          //   ),
+                                                                          // ),
+                                                                          IconButton(
+                                                                            icon:
+                                                                                Icon(Icons.report),
+                                                                            color:
+                                                                                kPrimaryPurpleColor,
+                                                                            onPressed:
+                                                                                () {
+                                                                              showAlert(context);
+                                                                            },
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      _reply ==
+                                                                              true
+                                                                          ? SizedBox()
+                                                                          : Padding(
+                                                                              padding: EdgeInsets.only(
+                                                                                left: 60,
+                                                                              ),
+                                                                              child: Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                  Container(
+                                                                                    height: 30,
+                                                                                    width: screenWidth * 0.5,
+                                                                                    child: TextFormField(
+                                                                                      controller: _controllers[index],
+                                                                                      textAlign: TextAlign.left,
+                                                                                      decoration: InputDecoration(
+                                                                                        filled: true,
+                                                                                        fillColor: Colors.grey,
+                                                                                        enabledBorder: OutlineInputBorder(
+                                                                                          borderSide: const BorderSide(width: 3, color: Colors.grey),
+                                                                                          borderRadius: BorderRadius.circular(0),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  IconButton(
+                                                                                      icon: Icon(Icons.send),
+                                                                                      color: Colors.white,
+                                                                                      onPressed: () {
+                                                                                        setState(() {
+                                                                                          _reply = true;
+                                                                                          //   _controllers[index].clear();
+                                                                                          // _replyid = _getComments[0][index]['id'];
+                                                                                          // print(_replyid.toString());
+
+                                                                                          __replyComment = _controllers[index].text;
+                                                                                          _replyComments();
+                                                                                          successAlert(context);
+                                                                                        });
+                                                                                      }),
+                                                                                ],
+                                                                              )),
+                                                                    ],
+                                                                  );
+                                                                });
+                                                              }),
+                                                    ),
                                                   ),
                                                 ),
+//                                                 Padding(
+//                                                   padding:
+//                                                       const EdgeInsets.only(
+//                                                     top: 10,
+//                                                     left: 60,
+//                                                   ),
+//                                                   child: Row(
+//                                                     mainAxisAlignment:
+//                                                         MainAxisAlignment
+//                                                             .spaceBetween,
+//                                                     children: <Widget>[
+//                                                       Text("21.12.2021",
+//                                                           style: TextStyle(
+//                                                             color: Colors.white,
+//                                                             fontSize: 12,
+//                                                           )),
+
+//                                                       //  SizedBox(width: 10.0),
+//                                                       Text("09.23 am",
+//                                                           style: TextStyle(
+//                                                             color: Colors.white,
+//                                                             fontSize: 12,
+//                                                           )),
+//                                                       //  SizedBox(width: 10.0),
+//                                                       Icon(
+//                                                         Icons.arrow_upward,
+//                                                         size: 25.0,
+//                                                         color:
+//                                                             Colors.purple[900],
+//                                                       ),
+// //SizedBox(width: 5.0),
+//                                                       Text(
+//                                                         "233",
+//                                                         style: TextStyle(
+//                                                           color: Colors.white,
+//                                                           fontSize: 12,
+//                                                         ),
+//                                                       ),
+
+//                                                       Icon(
+//                                                         Icons.arrow_downward,
+//                                                         size: 25.0,
+//                                                         color: Colors.grey,
+//                                                       ),
+
+//                                                       Text(
+//                                                         "43",
+//                                                         style: TextStyle(
+//                                                           color: Colors.white,
+//                                                           fontSize: 12,
+//                                                         ),
+//                                                       ),
+
+//                                                       Icon(
+//                                                         Icons.comment,
+//                                                         size: 25.0,
+//                                                         color: Colors.grey,
+//                                                       ),
+
+//                                                       Text(
+//                                                         "22",
+//                                                         style: TextStyle(
+//                                                           color: Colors.white,
+//                                                           fontSize: 12,
+//                                                         ),
+//                                                       ),
+//                                                       IconButton(
+//                                                         icon:
+//                                                             Icon(Icons.report),
+//                                                         color:
+//                                                             kPrimaryPurpleColor,
+//                                                         onPressed: () {
+//                                                           showAlert(context);
+//                                                         },
+//                                                       ),
+//                                                     ],
+//                                                   ),
+//                                                 ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.only(
@@ -775,81 +1008,98 @@ class _MangaComment2State extends State<MangaComment2> {
                                                                 Row(
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
-                                                                          .spaceAround,
+                                                                          .spaceBetween,
                                                                   children: <
                                                                       Widget>[
                                                                     Text(
-                                                                      "21.12.2021",
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize:
-                                                                            12,
-                                                                      ),
-                                                                    ),
+                                                                        "21.12.2021",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Colors.white,
+                                                                          fontSize:
+                                                                              12,
+                                                                        )),
+
+                                                                    //  SizedBox(width: 10.0),
                                                                     Text(
-                                                                      "09.23 am",
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize:
-                                                                            12,
+                                                                        "09.23 am",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Colors.white,
+                                                                          fontSize:
+                                                                              12,
+                                                                        )),
+                                                                    //  SizedBox(width: 10.0),
+                                                                    Padding(
+                                                                        padding: EdgeInsets.only(
+                                                                            left:
+                                                                                5),
+                                                                        child:
+                                                                            Container(
+                                                                          height:
+                                                                              20,
+                                                                          width:
+                                                                              20,
+                                                                          child:
+                                                                              Image.asset('assets/up-arrow (1).png'),
+                                                                        )),
+//SizedBox(width: 5.0),
+                                                                    // Text(
+                                                                    //   "233",
+                                                                    //   style: TextStyle(
+                                                                    //     color: Colors.white,
+                                                                    //     fontSize: 12,
+                                                                    //   ),
+                                                                    // ),
+
+                                                                    Padding(
+                                                                        padding: EdgeInsets.only(
+                                                                            left:
+                                                                                5),
+                                                                        child:
+                                                                            Container(
+                                                                          height:
+                                                                              20,
+                                                                          width:
+                                                                              20,
+                                                                          child:
+                                                                              Image.asset('assets/down-arrow (1).png'),
+                                                                        )),
+
+                                                                    // Text(
+                                                                    //   "43",
+                                                                    //   style: TextStyle(
+                                                                    //     color: Colors.white,
+                                                                    //     fontSize: 12,
+                                                                    //   ),
+                                                                    // ),
+
+                                                                    IconButton(
+                                                                      icon:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .comment,
+                                                                        size:
+                                                                            25.0,
+                                                                        color:
+                                                                            kPrimaryWhiteColor,
                                                                       ),
+                                                                      onPressed:
+                                                                          () {
+                                                                        setState(
+                                                                            () {});
+                                                                      },
                                                                     ),
-                                                                    Icon(
-                                                                      Icons
-                                                                          .arrow_upward,
-                                                                      size:
-                                                                          25.0,
-                                                                      color: Colors
-                                                                              .purple[
-                                                                          900],
-                                                                    ),
-                                                                    Text("233",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontSize:
-                                                                              12,
-                                                                        )),
-                                                                    SizedBox(
-                                                                        width:
-                                                                            5.0),
-                                                                    Icon(
-                                                                      Icons
-                                                                          .arrow_downward,
-                                                                      size:
-                                                                          25.0,
-                                                                      color: Colors
-                                                                          .black,
-                                                                    ),
-                                                                    Text("43",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontSize:
-                                                                              12,
-                                                                        )),
-                                                                    Icon(
-                                                                      Icons
-                                                                          .comment,
-                                                                      size:
-                                                                          25.0,
-                                                                      color: Colors
-                                                                          .black,
-                                                                    ),
-                                                                    Text("22",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontSize:
-                                                                              12,
-                                                                        )),
+
+                                                                    // Text(
+                                                                    //   "22",
+                                                                    //   style: TextStyle(
+                                                                    //     color: Colors.white,
+                                                                    //     fontSize: 12,
+                                                                    //   ),
+                                                                    // ),
                                                                   ],
                                                                 ),
                                                                 // SizedBox(
@@ -933,5 +1183,68 @@ class _MangaComment2State extends State<MangaComment2> {
             },
           );
         });
+  }
+
+  //success comments
+  successAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            backgroundColor: Colors.black,
+            title: Center(
+              child: Text(success.toString(),
+                  style: TextStyle(color: Colors.white, fontSize: 18)),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("OK",
+                    style: TextStyle(color: Colors.purple[900], fontSize: 16)),
+                onPressed: () {
+                  //Put your code here which you want to execute on Cancel button click.
+
+                  Navigator.of(context).pop();
+                },
+              ),
+            ]);
+      },
+    );
+  }
+
+  //dailog box
+  showAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            backgroundColor: Colors.black,
+            title: Center(
+              child: Text("Report Comments ?",
+                  style: TextStyle(color: Colors.white, fontSize: 18)),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 68.0),
+                  child: Text("Cancle",
+                      style: TextStyle(color: Colors.grey, fontSize: 16)),
+                ),
+                onPressed: () {
+                  //Put your code here which you want to execute on Yes button click.
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text("Report",
+                    style: TextStyle(color: Colors.purple[900], fontSize: 16)),
+                onPressed: () {
+                  //Put your code here which you want to execute on Cancel button click.
+                  _reportComment();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ]);
+      },
+    );
   }
 }

@@ -235,10 +235,10 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                       MaterialPageRoute(builder: (context) => Account()),
                     );
                   } else if (currentIndex == 3) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Library()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => const Library()),
+                    // );
                   } else if (currentIndex == 4) {
                     Navigator.push(
                       context,

@@ -10,6 +10,8 @@ import 'package:mangakiku_app/views/Comments/comments.dart';
 
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
+import 'package:mangakiku_app/views/Library/library.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Chapter extends StatefulWidget {
   late final List _manga;
@@ -33,11 +35,16 @@ class _CartState extends State<Chapter> {
 // loader
   bool _isLoading = true;
 
+  String? token;
+
   String dropdownValue = 'English';
 
   @override
   void initState() {
     _ChapterDetailsUsingName();
+    addLibrary();
+    // addFavourite();
+    addFavourite();
     super.initState();
   }
 
@@ -188,6 +195,10 @@ class _CartState extends State<Chapter> {
                               onPressed: () {
                                 print("fjff");
                                 print(_manga[0]);
+                                addLibrary();
+                                //   addFavourite();
+                                // _sendDataBack(context);
+                                // _navigator(context, Library([_manga[0]]));
                                 // Navigator.push(
                                 //   context,
                                 //   MaterialPageRoute(
@@ -209,7 +220,9 @@ class _CartState extends State<Chapter> {
                             width: 30,
                             child: FloatingActionButton.small(
                               backgroundColor: Colors.grey[300],
-                              onPressed: () {},
+                              onPressed: () {
+                                addFavourite();
+                              },
                               child: Icon(
                                 Icons.favorite,
                               ),
@@ -395,6 +408,56 @@ class _CartState extends State<Chapter> {
                                         ],
                                       ),
                                       SizedBox(height: 5.0),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Geners:",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(width: 3.0),
+                                          Container(
+                                            width: 300,
+                                            child: Text(
+                                              _manga[0]["genres"].toString(),
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: kPrimaryPurpleColor),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      // Row(
+                                      //   children: [
+                                      //     Text(
+                                      //       "Genres: "+_manga[0]["genres"].toString(),
+                                      //       style: TextStyle(
+                                      //           fontSize: 14, color: Colors.white),
+                                      //     ),
+                                      //   ],
+                                      // ),
+
+                                      //     Row(
+                                      //   children: [
+                                      //     Text(
+                                      //       "Organization :",
+                                      //       style: TextStyle(
+                                      //           fontSize: 14,
+                                      //           color: Colors.white),
+                                      //     ),
+                                      //     SizedBox(width: 3.0),
+                                      //     Text(
+                                      //         _manga[0]["genres"]
+                                      //                 .toString(),
+                                      //       style: TextStyle(
+                                      //           fontSize: 14,
+                                      //           color: Colors.white),
+                                      //     ),
+                                      //   ],
+                                      // ),
                                       Column(children: [
                                         // Container(
                                         //     child: Text("Generes:  "+
@@ -406,24 +469,24 @@ class _CartState extends State<Chapter> {
                                         // ),
 
                                         // ),
-                                        Column(
-                                          children: [
-                                            Text(
-                                              "Generes:  " +
-                                                  _manga[0]["genres"]
-                                                      .toString(),
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.white),
-                                            ),
-                                            //     Text("Generes:  "+
-                                            //    _manga[0]["genres"].toString(),
-                                            //   style: TextStyle(
-                                            //       fontSize: 14,
-                                            //       color: Colors.white),
-                                            // ),
-                                          ],
-                                        ),
+                                        // Column(
+                                        //   children: [
+                                        //     Text(
+                                        //       "Generes:  " +
+                                        //           _manga[0]["genres"]
+                                        //               .toString(),
+                                        //       style: TextStyle(
+                                        //           fontSize: 14,
+                                        //           color: Colors.white),
+                                        //     ),
+                                        //     //     Text("Generes:  "+
+                                        //     //    _manga[0]["genres"].toString(),
+                                        //     //   style: TextStyle(
+                                        //     //       fontSize: 14,
+                                        //     //       color: Colors.white),
+                                        //     // ),
+                                        //   ],
+                                        // ),
                                       ]),
                                       // SizedBox(height: 5.0),
                                       // Row(
@@ -683,17 +746,17 @@ class _CartState extends State<Chapter> {
 
       print("---------chapters-------------");
 
-      print(chaptersFromDB);
+      //   print(chaptersFromDB[0]['id']);
 
       //add language
-      for (var i = 0; i < chaptersFromDB.length; i++) {
-        chapterLanguage.add({
-          chaptersFromDB[i]["lang"].toString(),
-        });
-      }
-      chapterLanguage = Set.of(chapterLanguage).toList();
+      // for (var i = 0; i < chaptersFromDB.length; i++) {
+      //   chapterLanguage.add({
+      //     chaptersFromDB[i]["lang"].toString(),
+      //   });
+      // }
+      //   chapterLanguage = Set.of(chapterLanguage).toList();
       print("------------++++----------");
-      print(chapterLanguage);
+      //R print(chapterLanguage);
       // print(chaptersFromDB[0]['lang']);
 
       setState(() {
@@ -702,5 +765,70 @@ class _CartState extends State<Chapter> {
     } catch (e) {
       print(e);
     }
+  }
+
+  void _navigator(BuildContext context, add) async {
+    final result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => add));
+  }
+
+  void addLibrary() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      var data = {
+        "bookId": chapterUsingName[0]['comic']['id'],
+        "title": _manga[0]['title'].toString(),
+        "image": _manga[0]['md_covers'][0]['gpurl'].toString(),
+        "rating": _manga[0]['rating'].toString(),
+      };
+      var res = await CallApi().postData(data, 'addLibrary');
+      var body = json.decode(res.body);
+      print(body);
+
+      if (body['token'] != null) {
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        var token = body['token'];
+        localStorage.setString('token', token);
+
+        print(body);
+      } else {}
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  void addFavourite() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      var data = {
+        "bookId": chapterUsingName[0]['comic']['id'],
+        "title": _manga[0]['title'].toString(),
+        "image": _manga[0]['md_covers'][0]['gpurl'].toString(),
+        "rating": _manga[0]['rating'].toString(),
+      };
+      var res = await CallApi().postData(data, 'addFavourite');
+      var body = json.decode(res.body);
+      print(body);
+
+      if (body['token'] != null) {
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        var token = body['token'];
+        localStorage.setString('token', token);
+
+        print(body);
+      } else {}
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      _isLoading = false;
+    });
   }
 }
