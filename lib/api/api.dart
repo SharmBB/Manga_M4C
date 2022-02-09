@@ -177,6 +177,15 @@ class CallApi {
     );
   }
 
+  //Get Reply Comments
+  getReplyComments(apiUrl) async {
+    var fullUrl = Uri.parse(_urlAuth + apiUrl);
+    return await http.get(
+      fullUrl,
+      headers: _setHeaders(),
+    );
+  }
+
   _setHeaders() => {
         'Content-type': 'application/json',
         'Accept': 'application/json',

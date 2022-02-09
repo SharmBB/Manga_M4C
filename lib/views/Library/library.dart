@@ -25,10 +25,10 @@ int selectedIndex = 0;
 
 List<IconData> listOfIcons = [
   Icons.home_rounded,
-  Icons.description_outlined,
-  Icons.settings_rounded,
-  Icons.notification_important_outlined,
-  Icons.collections_bookmark_outlined,
+    Icons.description_outlined,
+    Icons.account_box,
+    Icons.library_add_rounded,
+    Icons.leaderboard,
 ];
 
   List _getLibrary = [];

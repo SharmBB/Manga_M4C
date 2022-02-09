@@ -54,6 +54,14 @@ class _MyHomePageState extends State<Browser> {
   //bottom navigation purple
   int bottomPurple = 1;
 
+  List<IconData> listOfIcons = [
+Icons.home_rounded,
+    Icons.description_outlined,
+    Icons.account_box,
+    Icons.library_add_rounded,
+    Icons.leaderboard,
+];
+
   //get manga details from api
   void _apiGenresDetails() async {
     try {
