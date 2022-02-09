@@ -37,8 +37,8 @@ class _CartState extends State<DetailsScreen> {
   @override
   void initState() {
     _ChapterDetailsUsingName();
-    addLibrary();
-    addFavourite();
+    // addLibrary();
+    // addFavourite();
     super.initState();
   }
 
@@ -262,7 +262,7 @@ class _CartState extends State<DetailsScreen> {
                                 Tab(
                                   text: 'Description',
                                 ),
-                                Tab(text: 'Chapcter'),
+                                Tab(text: 'Chapter'),
                               ],
                             ),
                           ),
