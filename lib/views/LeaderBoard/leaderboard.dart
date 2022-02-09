@@ -25,14 +25,6 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
 
   String? token;
 
-  @override
-  void initState() {
-    getLeaderBoard();
-    today = DateTime.now();
-
-    super.initState();
-  }
-
   List User = [];
   List _getLeaderBoardDetails = [];
 
@@ -55,6 +47,13 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
   int bottomPurple = 4;
 
   @override
+  void initState() {
+    getLeaderBoard();
+    today = DateTime.now();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
@@ -73,133 +72,141 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
       ),
       backgroundColor: primaryColor,
       body: NotificationListener<OverscrollIndicatorNotification>(
-          onNotification: (OverscrollIndicatorNotification overscroll) {
-            // ignore: deprecated_member_use
-            overscroll.disallowGlow();
-            return false;
-          },
-          child:_isLoading
+        onNotification: (OverscrollIndicatorNotification overscroll) {
+          // ignore: deprecated_member_use
+          overscroll.disallowGlow();
+          return false;
+        },
+        child: _isLoading
             ? Center(
                 child: Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: CupertinoActivityIndicator(),
               ))
-            :  Container(
-              color: primaryColor,
-              child: ListView(padding: EdgeInsets.only(top: 40), children: <
-                  Widget>[
-                Center(
-                  child: Text(
-                    "${DateFormat("dd MMMM yyyy").format(today)}",
-                    style: TextStyle(fontSize: 14, color: kPrimaryWhiteColor),
-                  ),
-                ),
-                SingleChildScrollView(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.only(top: 25),
-                          height: MediaQuery.of(context).size.height,
-                          width: double.infinity,
-                          child: ListView.builder(
-                              itemCount: _getLeaderBoardDetails.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 12.0,
-                                      left: 15,
-                                      bottom: 5,
-                                      right: 15),
-                                  child: Container(
+            : Container(
+                color: primaryColor,
+                child: ListView(
+                  padding: EdgeInsets.only(top: 40),
+                  children: <Widget>[
+                    Center(
+                      child: Text(
+                        "${DateFormat("dd MMMM yyyy").format(today)}",
+                        style:
+                            TextStyle(fontSize: 14, color: kPrimaryWhiteColor),
+                      ),
+                    ),
+                    SingleChildScrollView(
+                      child: Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        child: Stack(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.only(top: 25),
+                              height: MediaQuery.of(context).size.height,
+                              width: double.infinity,
+                              child: ListView.builder(
+                                itemCount: _getLeaderBoardDetails.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 12.0,
+                                        left: 15,
+                                        bottom: 5,
+                                        right: 15),
+                                    child: Container(
                                       //  color: kPrimaryWhiteColor.withOpacity(0.1),
                                       child: Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: CircleAvatar(
-                                          radius: 25.0,
-                                          backgroundImage: AssetImage(
-                                            "assets/profile-img.png",
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: CircleAvatar(
+                                              radius: 25.0,
+                                              backgroundImage: AssetImage(
+                                                "assets/profile-img.png",
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                          // Expanded(
+                                          //   child: CircleAvatar(
+                                          //     radius: 10.0,
+                                          //     backgroundImage: AssetImage(
+                                          //       "assets/batch.jpg",
+                                          //     ),
+                                          //   ),
+                                          // ),
+                                          Expanded(
+                                            child: Text(
+                                                _getLeaderBoardDetails[index]
+                                                    ['name'],
+                                                style: TextStyle(
+                                                    color: kPrimaryWhiteColor,
+                                                    fontSize: 10),
+                                                textAlign: TextAlign.center),
+                                          ),
+                                          Expanded(
+                                            child: Text(" 12 ",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 14),
+                                                textAlign: TextAlign.end),
+                                          ),
+                                          SizedBox(width: 5.0),
+                                          Expanded(
+                                            child: Text('Manga Read ',
+                                                style: TextStyle(
+                                                    color: kPrimaryWhiteColor,
+                                                    fontSize: 10),
+                                                textAlign: TextAlign.left),
+                                          ),
+                                          Expanded(
+                                            child: Text(" 35 ",
+                                                style: TextStyle(
+                                                    color: kPrimaryWhiteColor,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 14),
+                                                textAlign: TextAlign.end),
+                                          ),
+                                          SizedBox(width: 5.0),
+                                          Expanded(
+                                            child: Text('Chapter Read ',
+                                                style: TextStyle(
+                                                    color: kPrimaryWhiteColor,
+                                                    fontSize: 10),
+                                                textAlign: TextAlign.left),
+                                          ),
+                                          Expanded(
+                                            child: Text(" 53 ",
+                                                style: TextStyle(
+                                                    color: kPrimaryWhiteColor,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 14),
+                                                textAlign: TextAlign.end),
+                                          ),
+                                          SizedBox(width: 5.0),
+                                          Expanded(
+                                            child: Text('Hours Read  ',
+                                                style: TextStyle(
+                                                    color: kPrimaryWhiteColor,
+                                                    fontSize: 10),
+                                                textAlign: TextAlign.left),
+                                          ),
+                                        ],
                                       ),
-                                      // Expanded(
-                                      //   child: CircleAvatar(
-                                      //     radius: 10.0,
-                                      //     backgroundImage: AssetImage(
-                                      //       "assets/batch.jpg",
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      Expanded(
-                                        child: Text(
-                                            _getLeaderBoardDetails[index]
-                                                ['name'],
-                                            style: TextStyle(
-                                                color: kPrimaryWhiteColor,
-                                                fontSize: 10),
-                                            textAlign: TextAlign.center),
-                                      ),
-                                      Expanded(
-                                        child: Text(" 12 ",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14),
-                                            textAlign: TextAlign.end),
-                                      ),
-                                      SizedBox(width: 5.0),
-                                      Expanded(
-                                        child: Text('Manga Read ',
-                                            style: TextStyle(
-                                                color: kPrimaryWhiteColor,
-                                                fontSize: 10),
-                                            textAlign: TextAlign.left),
-                                      ),
-                                      Expanded(
-                                        child: Text(" 35 ",
-                                            style: TextStyle(
-                                                color: kPrimaryWhiteColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14),
-                                            textAlign: TextAlign.end),
-                                      ),
-                                      SizedBox(width: 5.0),
-                                      Expanded(
-                                        child: Text('Chapter Read ',
-                                            style: TextStyle(
-                                                color: kPrimaryWhiteColor,
-                                                fontSize: 10),
-                                            textAlign: TextAlign.left),
-                                      ),
-                                      Expanded(
-                                        child: Text(" 53 ",
-                                            style: TextStyle(
-                                                color: kPrimaryWhiteColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14),
-                                            textAlign: TextAlign.end),
-                                      ),
-                                      SizedBox(width: 5.0),
-                                      Expanded(
-                                        child: Text('Hours Read  ',
-                                            style: TextStyle(
-                                                color: kPrimaryWhiteColor,
-                                                fontSize: 10),
-                                            textAlign: TextAlign.left),
-                                      ),
-                                    ],
-                                  )),
-                                );
-                              }),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ]))),
+              ),
+      ),
+      //bottom navigation bar
       bottomNavigationBar: Container(
         margin: EdgeInsets.all(20),
         height: screenWidth * .155,
@@ -237,7 +244,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                   } else if (currentIndex == 3) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>  Library()),
+                      MaterialPageRoute(builder: (context) => Library()),
                     );
                   } else if (currentIndex == 4) {
                     Navigator.push(

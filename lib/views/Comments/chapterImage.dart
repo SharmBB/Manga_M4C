@@ -870,26 +870,27 @@ class _MangaComment2State extends State<MangaComment2> {
                                                                     onPressed:
                                                                         () {
                                                                       setState(
-                                                                          () {
-                                                                        if (_reply ==
-                                                                            true) {
-                                                                          _replyid =
-                                                                              _getComments[0][index]['id'];
-                                                                          print("ReplyID:" +
-                                                                              _replyid.toString());
+                                                                        () {
+                                                                          if (_reply ==
+                                                                              true) {
+                                                                            _replyid =
+                                                                                _getComments[0][index]['id'];
+                                                                            print("ReplyID:" +
+                                                                                _replyid.toString());
 
-                                                                          if (_replyid ==
-                                                                              _getComments[0][index]['id']) {
-                                                                            getReplyCommends();
+                                                                            if (_replyid ==
+                                                                                _getComments[0][index]['id']) {
+                                                                              getReplyCommends();
+                                                                            }
+                                                                            _reply =
+                                                                                false;
+                                                                          } else if (_reply ==
+                                                                              false) {
+                                                                            _reply =
+                                                                                true;
                                                                           }
-                                                                          _reply =
-                                                                              false;
-                                                                        } else if (_reply ==
-                                                                            false) {
-                                                                          _reply =
-                                                                              true;
-                                                                        }
-                                                                      });
+                                                                        },
+                                                                      );
                                                                     },
                                                                   ),
 
@@ -980,18 +981,20 @@ class _MangaComment2State extends State<MangaComment2> {
                                                                                                       )),
                                                                                                   //  SizedBox(width: 10.0),
                                                                                                   Padding(
-                                                                                                      padding: EdgeInsets.only(left: 5),
-                                                                                                      child: InkWell(
-                                                                                                          onTap: () => {
-                                                                                                                // _replyid = _getComments[0][index]['id'],
+                                                                                                    padding: EdgeInsets.only(left: 5),
+                                                                                                    child: InkWell(
+                                                                                                      onTap: () => {
+                                                                                                        // _replyid = _getComments[0][index]['id'],
 
-                                                                                                                // _UpVoteComments(),
-                                                                                                              },
-                                                                                                          child: Container(
-                                                                                                            height: 20,
-                                                                                                            width: 20,
-                                                                                                            child: Image.asset('assets/up-arrow (1).png'),
-                                                                                                          ))),
+                                                                                                        // _UpVoteComments(),
+                                                                                                      },
+                                                                                                      child: Container(
+                                                                                                        height: 20,
+                                                                                                        width: 20,
+                                                                                                        child: Image.asset('assets/up-arrow (1).png'),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
 //SizedBox(width: 5.0),
                                                                                                   // Text(
                                                                                                   //   "233",
@@ -1029,10 +1032,12 @@ class _MangaComment2State extends State<MangaComment2> {
                                                                                                       color: Colors.grey,
                                                                                                     ),
                                                                                                     onPressed: () {
-                                                                                                      setState(() {
-                                                                                                        // _replyid = _getComments[0][index]['id'];
-                                                                                                        //  print(_replyid);
-                                                                                                      });
+                                                                                                      setState(
+                                                                                                        () {
+                                                                                                          // _replyid = _getComments[0][index]['id'];
+                                                                                                          //  print(_replyid);
+                                                                                                        },
+                                                                                                      );
                                                                                                     },
                                                                                                   ),
 
