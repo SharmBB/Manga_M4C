@@ -36,13 +36,13 @@ class _MangaComment2State extends State<MangaComment2> {
 
   String? __replyComment;
   int? _replyid;
+  int? _replyReplyid;
+  //listview index
+  int? xyz;
 
   // List ReplyComments = [];
 
   List<TextEditingController> _controllers = <TextEditingController>[];
-
-  //reply
-  bool _reply = true;
 
   //Success
   String? success;
@@ -225,13 +225,11 @@ class _MangaComment2State extends State<MangaComment2> {
                     icon: Icon(Icons.arrow_back_ios_new),
                     color: kPrimaryWhiteColor,
                     onPressed: () {
-
-                        if (counter <
+                      if (counter <
                           _chapterImage[0]['chapter']['md_images'].length - 1) {
                         setState(() {
                           counter = counter + 1;
                         });
-                     
                       }
                     }),
                 IconButton(
@@ -262,6 +260,97 @@ class _MangaComment2State extends State<MangaComment2> {
             ),
     );
   }
+
+   void _ReplyDownVoteComments() async {
+    // setState(() {
+    //   _isLoading = true;
+    // });
+    try {
+      print("ReplyReplyIDDownVote:" + _replyReplyid.toString());
+      var data = {
+        "id": _replyReplyid.toString(),
+      };
+      var res = await CallApi().postData(data, 'replyDownVote');
+      var body = json.decode(res.body);
+      print(body);
+
+      if (body['token'] != null) {
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        var token = body['token'];
+        localStorage.setString('token', token);
+
+        print(body);
+      } else {}
+    } catch (e) {
+      print(e);
+    }
+    // setState(() {
+    //   _isLoading = false;
+    //   _controllers.clear();
+    // });
+  }
+
+    void _replyReportComment() async {
+    // setState(() {
+    //   _isLoading = true;
+    // });
+    try {
+
+        print("ReplyReplyIDUpvote:" + _replyReplyid.toString());
+      var data = {
+        "commentId": _replyReplyid.toString(),
+      };
+      var res = await CallApi().postData(data, 'replyReportComment');
+      var body = json.decode(res.body);
+      print(body);
+
+      if (body['token'] != null) {
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        var token = body['token'];
+        localStorage.setString('token', token);
+
+        print(body);
+      } else {}
+    } catch (e) {
+      print(e);
+    }
+    // setState(() {
+    //   _isLoading = false;
+    //   _controllers.clear();
+    // });
+  }
+
+
+    void _replyUpVoteComments() async {
+    // setState(() {
+    //   _isLoading = true;
+    // });
+    try {
+      print("ReplyReplyIDUpvote:" + _replyReplyid.toString());
+      var data = {
+        "id": _replyReplyid.toString(),
+      };
+      var res = await CallApi().postData(data, 'replyUpVote');
+      var body = json.decode(res.body);
+      print(body);
+
+      if (body['token'] != null) {
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        var token = body['token'];
+        localStorage.setString('token', token);
+
+        print(body);
+      } else {}
+    } catch (e) {
+      print(e);
+    }
+    // setState(() {
+    //   _isLoading = false;
+    //   _controllers.clear();
+    // });
+  }
+
+  
 
   void _reportComment() async {
     // setState(() {
@@ -455,6 +544,7 @@ class _MangaComment2State extends State<MangaComment2> {
       print('//////////////');
       print(_getReplyComments[0]['message'].length);
       // print(_getReplyComments[0].last['comments']);
+
     } catch (e) {
       print(e);
     }
@@ -615,696 +705,548 @@ class _MangaComment2State extends State<MangaComment2> {
                                       )),
                                   Expanded(
                                       child: NotificationListener<
-                                              OverscrollIndicatorNotification>(
-                                          onNotification:
-                                              (OverscrollIndicatorNotification
-                                                  overscroll) {
-                                            // ignore: deprecated_member_use
-                                            overscroll.disallowGlow();
-                                            return false;
-                                          },
-                                          child: SingleChildScrollView(
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
+                                          OverscrollIndicatorNotification>(
+                                    onNotification:
+                                        (OverscrollIndicatorNotification
+                                            overscroll) {
+                                      // ignore: deprecated_member_use
+                                      overscroll.disallowGlow();
+                                      return false;
+                                    },
+                                    child: SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              const Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 20),
+                                                child: CircleAvatar(
+                                                  radius: 20,
+                                                  backgroundImage: AssetImage(
+                                                    "assets/profile-img.png",
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 20.0, top: 40),
+                                                child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: <Widget>[
-                                                      const Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 20),
-                                                        child: CircleAvatar(
-                                                          radius: 20,
-                                                          backgroundImage:
-                                                              AssetImage(
-                                                            "assets/profile-img.png",
-                                                          ),
-                                                        ),
+                                                      Text(
+                                                        User[0]['name'],
+                                                        style: TextStyle(
+                                                            color:
+                                                                kPrimaryWhiteColor,
+                                                            fontSize: 16.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
                                                       ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 20.0,
-                                                                top: 40),
-                                                        child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: <Widget>[
-                                                              Text(
-                                                                User[0]['name'],
-                                                                style: TextStyle(
-                                                                    color:
-                                                                        kPrimaryWhiteColor,
-                                                                    fontSize:
-                                                                        16.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                              User[0]['batchId']
-                                                                          .toString() ==
-                                                                      null
-                                                                  ? Padding(
-                                                                      padding: const EdgeInsets
-                                                                              .only(
-                                                                          top:
-                                                                              5),
-                                                                      child: Row(
-                                                                          crossAxisAlignment: CrossAxisAlignment
-                                                                              .center,
-                                                                          children: <
-                                                                              Widget>[
-                                                                            Container(
-                                                                              width: 150,
-                                                                              height: 30,
-                                                                              decoration: BoxDecoration(color: kPrimaryWhiteColor, borderRadius: BorderRadius.circular(15)),
-                                                                              child: Row(
-                                                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                                                children: [
-                                                                                  Icon(
-                                                                                    Icons.batch_prediction,
-                                                                                    color: Colors.purple,
-                                                                                  ),
-                                                                                  Text(
-                                                                                    User[0]['batchId'].toString(),
-                                                                                    style: TextStyle(fontSize: 13, color: kPrimaryPurpleColor),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            )
-                                                                          ]),
-                                                                    )
-                                                                  : SizedBox(
-                                                                      height:
-                                                                          30,
-                                                                    ),
-                                                            ]),
-                                                      )
-                                                    ]),
-                                                    SingleChildScrollView(
-                                               
-                                                  child:  Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 10.0,
-                                                          left: 60,
-                                                          right: 5),
-                                                    child: Container(
-                                                      height: 300,
-                                                      child: _isLoading1
-                                                          ? Center(
-                                                              child: Padding(
+                                                      User[0]['batchId']
+                                                                  .toString() ==
+                                                              null
+                                                          ? Padding(
                                                               padding:
                                                                   const EdgeInsets
                                                                           .only(
-                                                                      top:
-                                                                          30.0),
-                                                              child:
-                                                                  CupertinoActivityIndicator(
-                                                                radius: 15,
-                                                              ),
-                                                            ))
-                                                          : ListView.builder(
-                                                              itemCount:
-                                                                  _getComments[
-                                                                          0]
-                                                                      .length,
-                                                              itemBuilder:
-                                                                  (BuildContext
-                                                                          context,
-                                                                      int index) {
-                                                                return StatefulBuilder(builder:
-                                                                    (BuildContext
-                                                                            context,
-                                                                        StateSetter
-                                                                            setState) {
-                                                                  return Column(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .start,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Text(
-                                                                        _getComments[0][index]
-                                                                            [
-                                                                            'comments'],
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.grey,
-                                                                            fontWeight: FontWeight.bold,
-                                                                            fontSize: 14),
-                                                                      ),
-                                                                      Row(
+                                                                      top: 5),
+                                                              child: Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: <
+                                                                      Widget>[
+                                                                    Container(
+                                                                      width:
+                                                                          150,
+                                                                      height:
+                                                                          30,
+                                                                      decoration: BoxDecoration(
+                                                                          color:
+                                                                              kPrimaryWhiteColor,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(15)),
+                                                                      child:
+                                                                          Row(
                                                                         mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: <
-                                                                            Widget>[
-                                                                          Text(
-                                                                              "21.12.2021",
-                                                                              style: TextStyle(
-                                                                                color: Colors.white,
-                                                                                fontSize: 12,
-                                                                              )),
-
-                                                                          //  SizedBox(width: 10.0),
-                                                                          Text(
-                                                                              "09.23 am",
-                                                                              style: TextStyle(
-                                                                                color: Colors.white,
-                                                                                fontSize: 12,
-                                                                              )),
-                                                                          //  SizedBox(width: 10.0),
-                                                                          Padding(
-                                                                              padding: EdgeInsets.only(left: 5),
-                                                                              child: InkWell(
-                                                                                  onTap: () => {
-                                                                                        _replyid = _getComments[0][index]['id'],
-                                                                                        if (_replyid == _getComments[0][index]['id'])
-                                                                                          {
-                                                                                            _UpVoteComments(),
-                                                                                          }
-                                                                                      },
-                                                                                  child: Container(
-                                                                                    height: 20,
-                                                                                    width: 20,
-                                                                                    child: Image.asset('assets/up-arrow (1).png'),
-                                                                                  ))),
-//SizedBox(width: 5.0),
-                                                                          // Text(
-                                                                          //   "233",
-                                                                          //   style: TextStyle(
-                                                                          //     color: Colors.white,
-                                                                          //     fontSize: 12,
-                                                                          //   ),
-                                                                          // ),
-
-                                                                          Padding(
-                                                                              padding: EdgeInsets.only(left: 5),
-                                                                              child: InkWell(
-                                                                                  onTap: () => {
-                                                                                        _replyid = _getComments[0][index]['id'],
-                                                                                        if (_replyid == _getComments[0][index]['id'])
-                                                                                          {
-                                                                                            _DownVoteComments(),
-                                                                                          }
-                                                                                      },
-                                                                                  child: Container(
-                                                                                    height: 20,
-                                                                                    width: 20,
-                                                                                    child: Image.asset('assets/down-arrow (1).png'),
-                                                                                  ))),
-
-                                                                          // Text(
-                                                                          //   "43",
-                                                                          //   style: TextStyle(
-                                                                          //     color: Colors.white,
-                                                                          //     fontSize: 12,
-                                                                          //   ),
-                                                                          // ),
-
-                                                                          IconButton(
-                                                                            icon:
-                                                                                Icon(
-                                                                              Icons.comment,
-                                                                              size: 25.0,
-                                                                              color: Colors.grey,
-                                                                            ),
-                                                                            onPressed:
-                                                                                () {
-                                                                              setState(() {
-                                                                                if (_reply == true) {
-                                                                                   // //list controller
-                                                                                _controllers.add(new TextEditingController());
-
-                                                                                _replyid = _getComments[0][index]['id'];
-                                                                                print("ReplyID:" + _replyid.toString());
-
-                                                                                if (_replyid == _getComments[0][index]['id']) {
-                                                                                  getReplyCommends();
-                                                                                }
-                                                                                  _reply = false;
-                                                                                } else if (_reply == false) {
-                                                                                  _reply = true;
-                                                                                 
-                                                                                }
-                                                                               
-                                                                              });
-                                                                            },
-                                                                          ),
-
-                                                                          // Text(
-                                                                          //   "22",
-                                                                          //   style: TextStyle(
-                                                                          //     color: Colors.white,
-                                                                          //     fontSize: 12,
-                                                                          //   ),
-                                                                          // ),
-                                                                          IconButton(
-                                                                            icon:
-                                                                                Icon(Icons.report),
+                                                                            MainAxisAlignment.center,
+                                                                        children: [
+                                                                          Icon(
+                                                                            Icons.batch_prediction,
                                                                             color:
-                                                                                kPrimaryPurpleColor,
-                                                                            onPressed:
-                                                                                () {
-                                                                              _replyid = _getComments[0][index]['id'];
-                                                                              if (_replyid == _getComments[0][index]['id']) {
-                                                                                showAlert(context);
-                                                                              }
-                                                                            },
+                                                                                Colors.purple,
+                                                                          ),
+                                                                          Text(
+                                                                            User[0]['batchId'].toString(),
+                                                                            style:
+                                                                                TextStyle(fontSize: 13, color: kPrimaryPurpleColor),
                                                                           ),
                                                                         ],
                                                                       ),
-                                                                      _reply ==
-                                                                              true
-                                                                          ? SizedBox()
-                                                                          : Padding(
-                                                                              padding: const EdgeInsets.only(
-                                                                                top: 10.0,
-                                                                                left: 30,
-                                                                              ),
-                                                                              child: Column(
-                                                                                children: [
-                                                                               Container(
-                                                                                    height: 150,
-                                                                                    child: _isLoading2 == true
-                                                                                        ? Center(
-                                                                                            child: Padding(
-                                                                                            padding: const EdgeInsets.only(
-                                                                                              top: 10.0,
-                                                                                              left: 30,
-                                                                                            ),
-                                                                                            child: CupertinoActivityIndicator(
-                                                                                              radius: 15,
-                                                                                            ),
-                                                                                          ))
-                                                                                        : ListView.builder(
-                                                                                            itemCount: _getReplyComments[0]['message'].length,
-                                                                                            itemBuilder: (BuildContext contextX, int indexX) {
-                                                                                              return StatefulBuilder(builder: (BuildContext contextX, StateSetter setState) {
-                                                                                                // //list controller
-                                                                                                _controllers.add(new TextEditingController());
-                                                                                                return Column(
-                                                                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                                  children: [
-                                                                                                    Text(
-                                                                                                      _getReplyComments[0]['message'][indexX]['comments'],
-                                                                                                      style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
-                                                                                                    ),
-                                                                                                    Row(
-                                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                                      children: <Widget>[
-                                                                                                        Text("21.12.2021",
-                                                                                                            style: TextStyle(
-                                                                                                              color: Colors.white,
-                                                                                                              fontSize: 12,
-                                                                                                            )),
-
-                                                                                                        //  SizedBox(width: 10.0),
-                                                                                                        Text("09.23 am",
-                                                                                                            style: TextStyle(
-                                                                                                              color: Colors.white,
-                                                                                                              fontSize: 12,
-                                                                                                            )),
-                                                                                                        //  SizedBox(width: 10.0),
-                                                                                                        Padding(
-                                                                                                            padding: EdgeInsets.only(left: 5),
-                                                                                                            child: InkWell(
-                                                                                                                onTap: () => {
-                                                                                                                      // _replyid = _getComments[0][index]['id'],
-
-                                                                                                                      // _UpVoteComments(),
-                                                                                                                    },
-                                                                                                                child: Container(
-                                                                                                                  height: 20,
-                                                                                                                  width: 20,
-                                                                                                                  child: Image.asset('assets/up-arrow (1).png'),
-                                                                                                                ))),
-//SizedBox(width: 5.0),
-                                                                                                        // Text(
-                                                                                                        //   "233",
-                                                                                                        //   style: TextStyle(
-                                                                                                        //     color: Colors.white,
-                                                                                                        //     fontSize: 12,
-                                                                                                        //   ),
-                                                                                                        // ),
-
-                                                                                                        Padding(
-                                                                                                            padding: EdgeInsets.only(left: 5),
-                                                                                                            child: InkWell(
-                                                                                                                onTap: () => {
-                                                                                                                      // _replyid = _getComments[0][index]['id'],
-                                                                                                                      // _DownVoteComments(),
-                                                                                                                    },
-                                                                                                                child: Container(
-                                                                                                                  height: 20,
-                                                                                                                  width: 20,
-                                                                                                                  child: Image.asset('assets/down-arrow (1).png'),
-                                                                                                                ))),
-
-                                                                                                        // Text(
-                                                                                                        //   "43",
-                                                                                                        //   style: TextStyle(
-                                                                                                        //     color: Colors.white,
-                                                                                                        //     fontSize: 12,
-                                                                                                        //   ),
-                                                                                                        // ),
-
-                                                                                                        IconButton(
-                                                                                                          icon: Icon(
-                                                                                                            Icons.comment,
-                                                                                                            size: 25.0,
-                                                                                                            color: Colors.grey,
-                                                                                                          ),
-                                                                                                          onPressed: () {
-                                                                                                            setState(() {
-                                                                                                              // _replyid = _getComments[0][index]['id'];
-                                                                                                              //  print(_replyid);
-                                                                                                            });
-                                                                                                          },
-                                                                                                        ),
-
-                                                                                                        // Text(
-                                                                                                        //   "22",
-                                                                                                        //   style: TextStyle(
-                                                                                                        //     color: Colors.white,
-                                                                                                        //     fontSize: 12,
-                                                                                                        //   ),
-                                                                                                        // ),
-                                                                                                        IconButton(
-                                                                                                          icon: Icon(Icons.report),
-                                                                                                          color: kPrimaryPurpleColor,
-                                                                                                          onPressed: () {
-                                                                                                            // _replyid = _getComments[0][index]['id'];
-                                                                                                            //  showAlert(context);
-                                                                                                          },
-                                                                                                        ),
-                                                                                                      ],
-                                                                                                    ),
-                                                                                                  ],
-                                                                                                );
-                                                                                              });
-                                                                                            }),
-                                                                                  ),
-                                                                                  Padding(
-                                                                                      padding: EdgeInsets.only(
-                                                                                        left: 20,
-                                                                                      ),
-                                                                                      child: Row(
-                                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                        children: [
-                                                                                          Container(
-                                                                                            height: 30,
-                                                                                            width: screenWidth * 0.5,
-                                                                                            child: TextFormField(
-                                                                                              controller: _controllers[index],
-                                                                                              textAlign: TextAlign.left,
-                                                                                              decoration: InputDecoration(
-                                                                                                filled: true,
-                                                                                                fillColor: Colors.grey,
-                                                                                                enabledBorder: OutlineInputBorder(
-                                                                                                  borderSide: const BorderSide(width: 3, color: Colors.grey),
-                                                                                                  borderRadius: BorderRadius.circular(0),
-                                                                                                ),
-                                                                                              ),
-                                                                                            ),
-                                                                                          ),
-                                                                                          IconButton(
-                                                                                              icon: Icon(Icons.send),
-                                                                                              color: Colors.white,
-                                                                                              onPressed: () {
-                                                                                                setState(() {
-                                                                                                  _reply = true;
-                                                                                                  //   _controllers[index].clear();
-                                                                                                  // _replyid = _getComments[0][index]['id'];
-                                                                                                  // print(_replyid.toString());
-
-                                                                                                  __replyComment = _controllers[index].text;
-                                                                                                  _replyComments();
-                                                                                                  // successAlert(context);
-                                                                                                });
-                                                                                              }),
-                                                                                        ],
-                                                                                      )),
-                                                                                ],
-                                                                              ))
-                                                                    ],
-                                                                  );
-                                                                });
-                                                              }),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    top: 8.0,
-                                                    left: 60,
-                                                  ),
-                                                  child: Container(
-                                                    height: 150,
-                                                    child: IntrinsicHeight(
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceAround,
-                                                        children: [
-                                                          VerticalDivider(
-                                                            color: Colors.grey,
-                                                            thickness: 2,
-                                                          ),
-                                                          Container(
-                                                            //  width: screenWidth*3/4,
-                                                            alignment: Alignment
-                                                                .topLeft,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color:
-                                                                  Colors.grey,
-                                                              border: Border.all(
-                                                                  color: Colors
-                                                                      .grey,
-                                                                  width: 4.0),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .all(
-                                                                Radius.circular(
-                                                                    8.0),
+                                                                    )
+                                                                  ]),
+                                                            )
+                                                          : SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                    ]),
+                                              )
+                                            ]),
+                                        SingleChildScrollView(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 60, right: 5),
+                                            child: Container(
+                                              height: 450,
+                                              child: _isLoading1
+                                                  ? Center(
+                                                      child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 30.0),
+                                                      child:
+                                                          CupertinoActivityIndicator(
+                                                        radius: 15,
+                                                      ),
+                                                    ))
+                                                  : ListView.builder(
+                                                      itemCount: _getComments[0]
+                                                          .length,
+                                                      itemBuilder:
+                                                          (BuildContext context,
+                                                              int index) {
+                                                        return StatefulBuilder(
+                                                            builder: (BuildContext
+                                                                    context,
+                                                                StateSetter
+                                                                    setState) {
+                                                          // //list controller
+                                                          _controllers.add(
+                                                              new TextEditingController());
+                                                          return Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                _getComments[0]
+                                                                        [index][
+                                                                    'comments'],
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        14),
                                                               ),
-                                                            ),
-                                                            child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Text(
-                                                                  User[0]['name'] +
-                                                                      ":",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        12,
-                                                                  ),
-                                                                ),
-                                                                SizedBox(
-                                                                    height: 10),
-                                                                Text(
-                                                                  _getComments[
-                                                                              0]
-                                                                          .last[
-                                                                      'comments'],
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        12,
-                                                                  ),
-                                                                ),
-                                                                SizedBox(
-                                                                    height: 15),
-                                                                Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: <
-                                                                      Widget>[
-                                                                    Text(
-                                                                        "21.12.2021",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontSize:
-                                                                              12,
-                                                                        )),
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: <
+                                                                    Widget>[
+                                                                  Text(
+                                                                      "21.12.2021",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            12,
+                                                                      )),
 
-                                                                    //  SizedBox(width: 10.0),
-                                                                    Text(
-                                                                        "09.23 am",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontSize:
-                                                                              12,
-                                                                        )),
-                                                                    //  SizedBox(width: 10.0),
-                                                                    Padding(
-                                                                        padding: EdgeInsets.only(
-                                                                            left:
-                                                                                5),
-                                                                        child:
-                                                                            Container(
-                                                                          height:
-                                                                              20,
-                                                                          width:
-                                                                              20,
-                                                                          child:
-                                                                              Image.asset('assets/up-arrow (1).png'),
-                                                                        )),
+                                                                  //  SizedBox(width: 10.0),
+                                                                  Text(
+                                                                      "09.23 am",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            12,
+                                                                      )),
+                                                                  //  SizedBox(width: 10.0),
+                                                                  Padding(
+                                                                      padding: EdgeInsets.only(
+                                                                          left:
+                                                                              5),
+                                                                      child: InkWell(
+                                                                          onTap: () => {
+                                                                                _replyid = _getComments[0][index]['id'],
+                                                                                if (_replyid == _getComments[0][index]['id'])
+                                                                                  {
+                                                                                    _UpVoteComments(),
+                                                                                  }
+                                                                              },
+                                                                          child: Container(
+                                                                            height:
+                                                                                20,
+                                                                            width:
+                                                                                20,
+                                                                            child:
+                                                                                Image.asset('assets/up-arrow (1).png'),
+                                                                          ))),
 //SizedBox(width: 5.0),
-                                                                    // Text(
-                                                                    //   "233",
-                                                                    //   style: TextStyle(
-                                                                    //     color: Colors.white,
-                                                                    //     fontSize: 12,
-                                                                    //   ),
-                                                                    // ),
+                                                                  // Text(
+                                                                  //   "233",
+                                                                  //   style: TextStyle(
+                                                                  //     color: Colors.white,
+                                                                  //     fontSize: 12,
+                                                                  //   ),
+                                                                  // ),
 
-                                                                    Padding(
-                                                                        padding: EdgeInsets.only(
-                                                                            left:
-                                                                                5),
-                                                                        child:
-                                                                            Container(
-                                                                          height:
-                                                                              20,
-                                                                          width:
-                                                                              20,
-                                                                          child:
-                                                                              Image.asset('assets/down-arrow (1).png'),
-                                                                        )),
+                                                                  Padding(
+                                                                      padding: EdgeInsets.only(
+                                                                          left:
+                                                                              5),
+                                                                      child: InkWell(
+                                                                          onTap: () => {
+                                                                                _replyid = _getComments[0][index]['id'],
+                                                                                if (_replyid == _getComments[0][index]['id'])
+                                                                                  {
+                                                                                    _DownVoteComments(),
+                                                                                  }
+                                                                              },
+                                                                          child: Container(
+                                                                            height:
+                                                                                20,
+                                                                            width:
+                                                                                20,
+                                                                            child:
+                                                                                Image.asset('assets/down-arrow (1).png'),
+                                                                          ))),
 
-                                                                    // Text(
-                                                                    //   "43",
-                                                                    //   style: TextStyle(
-                                                                    //     color: Colors.white,
-                                                                    //     fontSize: 12,
-                                                                    //   ),
-                                                                    // ),
+                                                                  // Text(
+                                                                  //   "43",
+                                                                  //   style: TextStyle(
+                                                                  //     color: Colors.white,
+                                                                  //     fontSize: 12,
+                                                                  //   ),
+                                                                  // ),
 
-                                                                    IconButton(
-                                                                      icon:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .comment,
-                                                                        size:
-                                                                            25.0,
-                                                                        color:
-                                                                            kPrimaryWhiteColor,
-                                                                      ),
-                                                                      onPressed:
-                                                                          () {
-                                                                        setState(
-                                                                            () {});
-                                                                      },
+                                                                  IconButton(
+                                                                    icon: Icon(
+                                                                      Icons
+                                                                          .comment,
+                                                                      size:
+                                                                          25.0,
+                                                                      color: Colors
+                                                                          .grey,
                                                                     ),
+                                                                    onPressed:
+                                                                        () {
+                                                                      setState(
+                                                                          () {
+                                                                        xyz =
+                                                                            index;
+                                                                        _replyid =
+                                                                            _getComments[0][index]['id'];
+                                                                        print("ReplyID:" +
+                                                                            _replyid.toString());
 
-                                                                    // Text(
-                                                                    //   "22",
-                                                                    //   style: TextStyle(
-                                                                    //     color: Colors.white,
-                                                                    //     fontSize: 12,
-                                                                    //   ),
-                                                                    // ),
-                                                                  ],
-                                                                ),
-                                                                // SizedBox(
-                                                                //     height: 15),
-                                                                // Row(
-                                                                //   children: [
-                                                                //     Text(
-                                                                //         "Total 23 Replies",
-                                                                //         style:
-                                                                //             TextStyle(
-                                                                //           color:
-                                                                //               Colors.white,
-                                                                //           fontSize:
-                                                                //               12,
-                                                                //         )),
-                                                                //   ],
-                                                                // ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
+                                                                        if (_replyid ==
+                                                                            _getComments[0][index]['id']) {
+                                                                          getReplyCommends();
+                                                                        }
+                                                                      });
+                                                                    },
+                                                                  ),
+
+                                                                  // Text(
+                                                                  //   "22",
+                                                                  //   style: TextStyle(
+                                                                  //     color: Colors.white,
+                                                                  //     fontSize: 12,
+                                                                  //   ),
+                                                                  // ),
+                                                                  IconButton(
+                                                                    icon: Icon(Icons
+                                                                        .report),
+                                                                    color:
+                                                                        kPrimaryPurpleColor,
+                                                                    onPressed:
+                                                                        () {
+                                                                      _replyid =
+                                                                          _getComments[0][index]
+                                                                              [
+                                                                              'id'];
+                                                                      if (_replyid ==
+                                                                          _getComments[0][index]
+                                                                              [
+                                                                              'id']) {
+                                                                        showAlert(
+                                                                            context);
+                                                                      }
+                                                                    },
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              index == xyz
+                                                                  ? Padding(
+                                                                      padding:
+                                                                          const EdgeInsets
+                                                                              .only(
+                                                                        left:
+                                                                            30,
+                                                                      ),
+                                                                      child:
+                                                                          Column(
+                                                                        children: [
+                                                                          Container(
+                                                                            height:
+                                                                                150,
+                                                                            alignment:
+                                                                                Alignment.topLeft,
+                                                                            padding:
+                                                                                const EdgeInsets.only(
+                                                                              left: 10,
+                                                                            ),
+                                                                            decoration: BoxDecoration(
+                                                                                color: Colors.grey,
+                                                                                border: Border.all(color: Colors.grey, width: 4.0),
+                                                                                borderRadius: BorderRadius.all(
+                                                                                  Radius.circular(8.0),
+                                                                                )),
+                                                                            child: _isLoading2 == true
+                                                                                ? Center(
+                                                                                    child: Padding(
+                                                                                    padding: const EdgeInsets.only(
+                                                                                      top: 10.0,
+                                                                                      left: 30,
+                                                                                    ),
+                                                                                    child: CupertinoActivityIndicator(
+                                                                                      radius: 15,
+                                                                                    ),
+                                                                                  ))
+                                                                                : ListView.builder(
+                                                                                    itemCount: _getReplyComments[0]['message'].length,
+                                                                                    itemBuilder: (BuildContext context, int index) {
+                                                                                      return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+                                                                                        return Column(
+                                                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                          children: [
+                                                                                            Text(
+                                                                                              _getReplyComments[0]['message'][index]['comments'],
+                                                                                              style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
+                                                                                            ),
+                                                                                            Row(
+                                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                              children: <Widget>[
+                                                                                                Text("21.12.2021",
+                                                                                                    style: TextStyle(
+                                                                                                      color: Colors.white,
+                                                                                                      fontSize: 12,
+                                                                                                    )),
+
+                                                                                                //  SizedBox(width: 10.0),
+                                                                                                Text("09.23 am",
+                                                                                                    style: TextStyle(
+                                                                                                      color: Colors.white,
+                                                                                                      fontSize: 12,
+                                                                                                    )),
+                                                                                                //  SizedBox(width: 10.0),
+                                                                                                Padding(
+                                                                                                    padding: EdgeInsets.only(left: 5),
+                                                                                                    child: InkWell(
+                                                                                                        onTap: () => {
+                                                                                                              _replyReplyid = _getReplyComments[0]['message'][index]['id'],
+                                                                                                              if (_replyReplyid == _getReplyComments[0]['message'][index]['id'])
+                                                                                                                {
+                                                                                                                 _replyUpVoteComments(),
+                                                                                                                }
+                                                                                                            },
+                                                                                                        child: Container(
+                                                                                                          height: 20,
+                                                                                                          width: 20,
+                                                                                                          child: Image.asset('assets/up-arrow (1).png'),
+                                                                                                        ))),
+//SizedBox(width: 5.0),
+                                                                                                // Text(
+                                                                                                //   "233",
+                                                                                                //   style: TextStyle(
+                                                                                                //     color: Colors.white,
+                                                                                                //     fontSize: 12,
+                                                                                                //   ),
+                                                                                                // ),
+
+                                                                                                Padding(
+                                                                                                    padding: EdgeInsets.only(left: 5),
+                                                                                                    child: InkWell(
+                                                                                                        onTap: () => {
+                                                                                                              _replyReplyid = _getReplyComments[0]['message'][index]['id'],
+                                                                                                              if (_replyReplyid == _getReplyComments[0]['message'][index]['id'])
+                                                                                                                {
+                                                                                                                  _ReplyDownVoteComments(),
+                                                                                                                }
+                                                                                                            },
+                                                                                                        child: Container(
+                                                                                                          height: 20,
+                                                                                                          width: 20,
+                                                                                                          child: Image.asset('assets/down-arrow (1).png'),
+                                                                                                        ))),
+
+                                                                                                // Text(
+                                                                                                //   "43",
+                                                                                                //   style: TextStyle(
+                                                                                                //     color: Colors.white,
+                                                                                                //     fontSize: 12,
+                                                                                                //   ),
+                                                                                                // ),
+
+                                                                                                // IconButton(
+                                                                                                //   icon: Icon(
+                                                                                                //     Icons.comment,
+                                                                                                //     size: 25.0,
+                                                                                                //     color: kPrimaryWhiteColor,
+                                                                                                //   ),
+                                                                                                //   onPressed: () {
+                                                                                                //     setState(() {
+                                                                                                //       _replyReplyid = _getReplyComments[0]['message'][index]['id'];
+                                                                                                //       print("ReplyReplyID:" + _replyReplyid.toString());
+
+                                                                                                //       if (_replyReplyid == _getReplyComments[0]['message'][index]['id']) {
+                                                                                                //         _ge
+                                                                                                //       }
+                                                                                                //     });
+                                                                                                //   },
+                                                                                                // ),
+
+                                                                                                // Text(
+                                                                                                //   "22",
+                                                                                                //   style: TextStyle(
+                                                                                                //     color: Colors.white,
+                                                                                                //     fontSize: 12,
+                                                                                                //   ),
+                                                                                                // ),
+                                                                                                IconButton(
+                                                                                                  icon: Icon(Icons.report),
+                                                                                                  color: kPrimaryPurpleColor,
+                                                                                                  onPressed: () {
+                                                                                                    _replyReplyid = _getReplyComments[0]['message'][index]['id'];
+                                                                                                              if (_replyReplyid == _getReplyComments[0]['message'][index]['id'])
+                                                                                                                {
+                                                                                                                     replyshowAlert(
+                                                                            context);
+                                                                                                                }
+                                                                                                  },
+                                                                                                ),
+                                                                                              ],
+                                                                                            ),
+                                                                                          ],
+                                                                                        );
+                                                                                      });
+                                                                                    }),
+                                                                          ),
+                                                                          Padding(
+                                                                              padding: EdgeInsets.only(
+                                                                                bottom: 10,
+                                                                              ),
+                                                                              child: Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                  Container(
+                                                                                    height: 30,
+                                                                                    width: screenWidth * 0.5,
+                                                                                    child: TextFormField(
+                                                                                      controller: _controllers[index],
+                                                                                      textAlign: TextAlign.left,
+                                                                                      decoration: InputDecoration(
+                                                                                        filled: true,
+                                                                                        fillColor: Colors.grey,
+                                                                                        enabledBorder: OutlineInputBorder(
+                                                                                          borderSide: const BorderSide(width: 3, color: Colors.grey),
+                                                                                          borderRadius: BorderRadius.circular(0),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  IconButton(
+                                                                                      icon: Icon(Icons.send),
+                                                                                      color: Colors.white,
+                                                                                      onPressed: () {
+                                                                                        setState(() {
+                                                                                          //   _controllers[index].clear();
+                                                                                          // _replyid = _getComments[0][index]['id'];
+                                                                                          // print(_replyid.toString());
+
+                                                                                          __replyComment = _controllers[index].text;
+                                                                                          _replyComments();
+                                                                                          // successAlert(context);
+                                                                                        });
+                                                                                      }),
+                                                                                ],
+                                                                              )),
+                                                                        ],
+                                                                      ))
+                                                                  : SizedBox()
+                                                            ],
+                                                          );
+                                                        });
+                                                      }),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                              top: 30,
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Container(
+                                                  height: 40,
+                                                  width:
+                                                      screenWidth * (3.8 / 5),
+                                                  child: TextFormField(
+                                                    controller:
+                                                        _commentController,
+                                                    textAlign: TextAlign.left,
+                                                    decoration: InputDecoration(
+                                                      filled: true,
+                                                      fillColor: Colors.grey,
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide:
+                                                            const BorderSide(
+                                                                width: 3,
+                                                                color: Colors
+                                                                    .grey),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(0),
                                                       ),
                                                     ),
                                                   ),
                                                 ),
-                                                Padding(
-                                                    padding: EdgeInsets.only(
-                                                      top: 30,
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Container(
-                                                          height: 40,
-                                                          width: screenWidth *
-                                                              (3.8 / 5),
-                                                          child: TextFormField(
-                                                            controller:
-                                                                _commentController,
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            decoration:
-                                                                InputDecoration(
-                                                              filled: true,
-                                                              fillColor:
-                                                                  Colors.grey,
-                                                              enabledBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide:
-                                                                    const BorderSide(
-                                                                        width:
-                                                                            3,
-                                                                        color: Colors
-                                                                            .grey),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            0),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        IconButton(
-                                                            icon: Icon(
-                                                                Icons.send),
-                                                            color: Colors.white,
-                                                            onPressed: () {
-                                                              addComments();
-                                                            }),
-                                                      ],
-                                                    )),
+                                                IconButton(
+                                                    icon: Icon(Icons.send),
+                                                    color: Colors.white,
+                                                    onPressed: () {
+                                                      addComments();
+                                                    }),
                                               ],
-                                            ),
-                                          ))),
+                                            )),
+                                      ],
+                                    ),
+                                  ))),
                                 ]),
                           ),
                         ),
@@ -1313,6 +1255,8 @@ class _MangaComment2State extends State<MangaComment2> {
           );
         });
   }
+
+  
 
   //success comments
   successAlert(BuildContext context) {
@@ -1369,6 +1313,44 @@ class _MangaComment2State extends State<MangaComment2> {
                 onPressed: () {
                   //Put your code here which you want to execute on Cancel button click.
                   _reportComment();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ]);
+      },
+    );
+  }
+
+
+   //dailog box
+  replyshowAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            backgroundColor: Colors.black,
+            title: Center(
+              child: Text("Report Comments ?",
+                  style: TextStyle(color: Colors.white, fontSize: 18)),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 68.0),
+                  child: Text("Cancle",
+                      style: TextStyle(color: Colors.grey, fontSize: 16)),
+                ),
+                onPressed: () {
+                  //Put your code here which you want to execute on Yes button click.
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text("Report",
+                    style: TextStyle(color: Colors.purple[900], fontSize: 16)),
+                onPressed: () {
+                  //Put your code here which you want to execute on Cancel button click.
+                  _replyReportComment();
                   Navigator.of(context).pop();
                 },
               ),
