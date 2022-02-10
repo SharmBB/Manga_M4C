@@ -297,7 +297,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 Container(
-                                  height: 320.0,
+                                  height: 360.0,
                                   child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
                                     itemCount: manga[0].length,
@@ -368,7 +368,7 @@ class _HomePageState extends State<HomePage> {
                                                                       .spaceBetween,
                                                               children: [
                                                                 Text(
-                                                                  'ch' +
+                                                                  'ch ' +
                                                                       manga[0][
                                                                               index]
                                                                           [
@@ -383,17 +383,17 @@ class _HomePageState extends State<HomePage> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            SizedBox(width: 55),
-                                                            Text(
-                                                              ".",
-                                                              style: TextStyle(
-                                                                fontSize: 13,
-                                                                color:
-                                                                    kPrimaryWhiteColor,
-                                                              ),
-                                                            ),
+                                                          //  SizedBox(width: 55),
+                                                            // Text(
+                                                            //   ".",
+                                                            //   style: TextStyle(
+                                                            //     fontSize: 13,
+                                                            //     color:
+                                                            //         kPrimaryWhiteColor,
+                                                            //   ),
+                                                            // ),
                                                             SizedBox(width: 25),
-                                                            Text(
+                                                            Text(". "+
                                                               manga[0][index][
                                                                   'distanceTime'],
                                                               style: TextStyle(
@@ -440,7 +440,7 @@ class _HomePageState extends State<HomePage> {
                                                         BorderRadius.circular(
                                                             00.0),
                                                     child: CachedNetworkImage(
-                                                        height: 200,
+                                                        height: 250,
                                                         width: 180,
                                                         imageUrl: manga[0]
                                                                         [index]
@@ -461,7 +461,7 @@ class _HomePageState extends State<HomePage> {
                                                                     image:
                                                                         imageProvider,
                                                                     fit: BoxFit
-                                                                        .fill),
+                                                                        .cover),
                                                               ),
                                                             ),
                                                         errorWidget: (context,
@@ -533,7 +533,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Container(
-                            height: 320.0,
+                            height: 360.0,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: Newmanga[0].length,
@@ -597,7 +597,7 @@ class _HomePageState extends State<HomePage> {
                                                                 .spaceBetween,
                                                         children: [
                                                           Text(
-                                                            'ch' +
+                                                            'ch ' +
                                                                 Newmanga[0]
                                                                         [index]
                                                                     ['chap'],
@@ -609,17 +609,17 @@ class _HomePageState extends State<HomePage> {
                                                           ),
                                                         ],
                                                       ),
-                                                      SizedBox(width: 50),
-                                                      Text(
-                                                        ".",
-                                                        style: TextStyle(
-                                                          fontSize: 13,
-                                                          color:
-                                                              kPrimaryWhiteColor,
-                                                        ),
-                                                      ),
+                                                   
+                                                      // Text(
+                                                      //   ".",
+                                                      //   style: TextStyle(
+                                                      //     fontSize: 13,
+                                                      //     color:
+                                                      //         kPrimaryWhiteColor,
+                                                      //   ),
+                                                      // ),
                                                       SizedBox(width: 25),
-                                                      Text(
+                                                      Text(". "+
                                                         Newmanga[0][index]
                                                             ['distanceTime'],
                                                         style: TextStyle(
@@ -662,7 +662,7 @@ class _HomePageState extends State<HomePage> {
                                               borderRadius:
                                                   BorderRadius.circular(00.0),
                                               child: CachedNetworkImage(
-                                                  height: 200,
+                                                  height: 250,
                                                   width: 180,
                                                   imageUrl: Newmanga[0][index]
                                                           ['md_comics']
@@ -678,7 +678,7 @@ class _HomePageState extends State<HomePage> {
                                                           image: DecorationImage(
                                                               image:
                                                                   imageProvider,
-                                                              fit: BoxFit.fill),
+                                                              fit: BoxFit.cover),
                                                         ),
                                                       ),
                                                   errorWidget:
@@ -748,7 +748,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Container(
-                            height: 320.0,
+                            height: 360.0,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: ViewManga[0].length,
@@ -809,7 +809,7 @@ class _HomePageState extends State<HomePage> {
                                                                 .spaceBetween,
                                                         children: [
                                                           Text(
-                                                            'ch' +
+                                                            'ch ' +
                                                                 ViewManga[0]
                                                                         [index][
                                                                     'last_chapter'],
@@ -821,17 +821,17 @@ class _HomePageState extends State<HomePage> {
                                                           ),
                                                         ],
                                                       ),
-                                                      SizedBox(width: 45),
-                                                      Text(
-                                                        ".",
-                                                        style: TextStyle(
-                                                          fontSize: 13,
-                                                          color:
-                                                              kPrimaryWhiteColor,
-                                                        ),
-                                                      ),
-                                                      SizedBox(width: 25),
-                                                      Text(
+                                                      // SizedBox(width: 45),
+                                                      // Text(
+                                                      //   ".",
+                                                      //   style: TextStyle(
+                                                      //     fontSize: 13,
+                                                      //     color:
+                                                      //         kPrimaryWhiteColor,
+                                                      //   ),
+                                                      // ),
+                                                      // SizedBox(width: 25),
+                                                      Text(". "+
                                                         Newmanga[0][index]
                                                             ['distanceTime'],
                                                         style: TextStyle(
@@ -874,7 +874,7 @@ class _HomePageState extends State<HomePage> {
                                               borderRadius:
                                                   BorderRadius.circular(00.0),
                                               child: CachedNetworkImage(
-                                                  height: 200,
+                                                  height: 250,
                                                   width: 180,
                                                   imageUrl: ViewManga[0][index]
                                                       ['md_covers'][0]['gpurl'],
@@ -889,7 +889,7 @@ class _HomePageState extends State<HomePage> {
                                                           image: DecorationImage(
                                                               image:
                                                                   imageProvider,
-                                                              fit: BoxFit.fill),
+                                                              fit: BoxFit.cover),
                                                         ),
                                                       ),
                                                   errorWidget:
@@ -970,7 +970,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 Container(
-                                  height: 320.0,
+                                  height: 360.0,
                                   child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
                                     itemCount: 10,
@@ -1040,7 +1040,7 @@ class _HomePageState extends State<HomePage> {
                                                                       .spaceBetween,
                                                               children: [
                                                                 Text(
-                                                                  'ch' +
+                                                                  'ch ' +
                                                                       RatingManga[0]
                                                                               [
                                                                               index]
@@ -1056,17 +1056,17 @@ class _HomePageState extends State<HomePage> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            SizedBox(width: 45),
-                                                            Text(
-                                                              ".",
-                                                              style: TextStyle(
-                                                                fontSize: 13,
-                                                                color:
-                                                                    kPrimaryWhiteColor,
-                                                              ),
-                                                            ),
-                                                            SizedBox(width: 25),
-                                                            Text(
+                                                           // SizedBox(width: 45),
+                                                            // Text(
+                                                            //   ".",
+                                                            //   style: TextStyle(
+                                                            //     fontSize: 13,
+                                                            //     color:
+                                                            //         kPrimaryWhiteColor,
+                                                            //   ),
+                                                            // ),
+                                                            // SizedBox(width: 25),
+                                                            Text(". "+
                                                               Newmanga[0][index]
                                                                   [
                                                                   'distanceTime'],
@@ -1108,7 +1108,7 @@ class _HomePageState extends State<HomePage> {
                                                         ]));
                                                   },
                                                   child: CachedNetworkImage(
-                                                      height: 200,
+                                                      height: 250,
                                                       width: 180,
                                                       imageUrl: RatingManga[0]
                                                                   [index]

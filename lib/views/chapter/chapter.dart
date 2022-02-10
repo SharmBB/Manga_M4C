@@ -551,107 +551,114 @@ class _CartState extends State<Chapter> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                          Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 10.0, left: 10),
-                                              child: Container(
-                                                  width: 100,
-                                                  height: 25,
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.grey[900],
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              1)),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(10, 0, 0, 0),
-                                                    child:
-                                                        DropdownButton<String>(
-                                                      underline:
-                                                          DropdownButtonHideUnderline(
-                                                              child:
-                                                                  Container()),
-                                                      value: dropdownValue,
-                                                      dropdownColor:
-                                                          kPrimaryPurpleColor,
-                                                      icon: Icon(Icons
-                                                          .keyboard_arrow_down),
-                                                      elevation: 16,
-                                                      style: TextStyle(
-                                                          color:
-                                                              kPrimaryWhiteColor),
-                                                      onChanged:
-                                                          (String? newValue) {
-                                                        setState(() {
-                                                          dropdownValue =
-                                                              newValue!;
-                                                        });
-                                                      },
-                                                      items: <String>[
-                                                        'English',
-                                                        'French  ',
-                                                      ].map<
-                                                              DropdownMenuItem<
-                                                                  String>>(
-                                                          (String value) {
-                                                        return DropdownMenuItem<
-                                                            String>(
-                                                          value: value,
-                                                          child: Text(value,
-                                                              style: TextStyle(
-                                                                  color:
-                                                                      kPrimaryGreyColor)),
-                                                        );
-                                                      }).toList(),
-                                                    ),
-                                                  ))),
+                                          // Padding(
+                                          //     padding: const EdgeInsets.only(
+                                          //         top: 10.0, left: 10),
+                                          //     child: Container(
+                                          //         width: 100,
+                                          //         height: 25,
+                                          //         decoration: BoxDecoration(
+                                          //             color: Colors.grey[900],
+                                          //             borderRadius:
+                                          //                 BorderRadius.circular(
+                                          //                     1)),
+                                          //         child: Padding(
+                                          //           padding: const EdgeInsets
+                                          //               .fromLTRB(10, 0, 0, 0),
+                                          //           child:
+                                          //               DropdownButton<String>(
+                                          //             underline:
+                                          //                 DropdownButtonHideUnderline(
+                                          //                     child:
+                                          //                         Container()),
+                                          //             value: dropdownValue,
+                                          //             dropdownColor:
+                                          //                 kPrimaryPurpleColor,
+                                          //             icon: Icon(Icons
+                                          //                 .keyboard_arrow_down),
+                                          //             elevation: 16,
+                                          //             style: TextStyle(
+                                          //                 color:
+                                          //                     kPrimaryWhiteColor),
+                                          //             onChanged:
+                                          //                 (String? newValue) {
+                                          //               setState(() {
+                                          //                 dropdownValue =
+                                          //                     newValue!;
+                                          //               });
+                                          //             },
+                                          //             items: <String>[
+                                          //               'English',
+                                          //               'French  ',
+                                          //             ].map<
+                                          //                     DropdownMenuItem<
+                                          //                         String>>(
+                                          //                 (String value) {
+                                          //               return DropdownMenuItem<
+                                          //                   String>(
+                                          //                 value: value,
+                                          //                 child: Text(value,
+                                          //                     style: TextStyle(
+                                          //                         color:
+                                          //                             kPrimaryGreyColor)),
+                                          //               );
+                                          //             }).toList(),
+                                          //           ),
+                                          //         ))),
                                           Padding(
                                             padding: const EdgeInsets.only(
-                                                top: 10, left: 10, right: 15),
+                                                top: 10, left: 60, right: 70),
                                             child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  Container(
-                                                    width: 100,
-                                                    height: 25,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.grey,
-                                                        // gradient: LinearGradient(colors: [secondary, primary]),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(1)),
-                                                    child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                top: 10.0,
-                                                                left: 5),
-                                                        child: TextField(
-                                                          decoration:
-                                                              InputDecoration(
-                                                            hintText:
-                                                                "Select Chapter",
-                                                            hintStyle: TextStyle(
-                                                                fontSize: 12.0,
-                                                                color: Colors
-                                                                    .white),
-                                                            border: InputBorder
-                                                                .none,
-                                                            fillColor: Colors
-                                                                .grey[900],
-                                                          ),
-                                                        )),
-                                                  ),
-                                                  Text('Date',
+                                                  Text('Chapters',
                                                       style: TextStyle(
                                                           fontSize: 18,
                                                           color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold)),
+                                                  // Container(
+                                                  //   width: 100,
+                                                  //   height: 25,
+                                                  //   decoration: BoxDecoration(
+                                                  //       color: Colors.grey,
+                                                  //       // gradient: LinearGradient(colors: [secondary, primary]),
+                                                  //       borderRadius:
+                                                  //           BorderRadius
+                                                  //               .circular(1)),
+                                                  //   child: Padding(
+                                                  //       padding:
+                                                  //           const EdgeInsets
+                                                  //                   .only(
+                                                  //               top: 10.0,
+                                                  //               left: 5),
+                                                  //       child: TextField(
+                                                  //         decoration:
+                                                  //             InputDecoration(
+                                                  //           hintText:
+                                                  //               "Select Chapter",
+                                                  //           hintStyle: TextStyle(
+                                                  //               fontSize: 12.0,
+                                                  //               color: Colors
+                                                  //                   .white),
+                                                  //           border: InputBorder
+                                                  //               .none,
+                                                  //           fillColor: Colors
+                                                  //               .grey[900],
+                                                  //         ),
+                                                  //       )),
+                                                  // ),
+                                                  // Text('Date',
+                                                  //     style: TextStyle(
+                                                  //         fontSize: 18,
+                                                  //         color: Colors.white,
+                                                  //         fontWeight:
+                                                  //             FontWeight.bold)),
+
                                                   Text(
-                                                    'Language',
+                                                    'Date',
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         color: Colors.white,
@@ -676,8 +683,8 @@ class _CartState extends State<Chapter> {
                                                           padding:
                                                               const EdgeInsets
                                                                       .only(
-                                                                  right: 15.0,
-                                                                  left: 10),
+                                                                  right: 60.0,
+                                                                  left: 60),
                                                           child: Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
@@ -723,30 +730,46 @@ class _CartState extends State<Chapter> {
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                Text(
-                                                                  chaptersFromDB[index]
-                                                                              [
-                                                                              "up_count"]
-                                                                          .toString() +
-                                                                      "days",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          13,
-                                                                      color: Colors
-                                                                          .white),
-                                                                ),
-                                                                Text(
-                                                                  chaptersFromDB[
-                                                                              index]
-                                                                          [
-                                                                          "lang"]
-                                                                      .toString(),
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          13,
-                                                                      color: Colors
-                                                                          .white),
-                                                                ),
+                                                                InkWell(
+                                                                  onTap: () {
+                                                                    print("jhuvuyvuy" +
+                                                                        chaptersFromDB[index]
+                                                                            [
+                                                                            "chap"]);
+                                                                    Navigator
+                                                                        .push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                        builder: (context) => MangaComment2(
+                                                                            chapterid:
+                                                                                chaptersFromDB[index]["chap"].toString(),
+                                                                            hid: chaptersFromDB[index]['hid'].toString()),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                  child: Text(
+                                                                    chaptersFromDB[index]["up_count"]
+                                                                            .toString() +
+                                                                        "days",
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            13,
+                                                                        color: Colors
+                                                                            .white),
+                                                                  ),
+                                                                  // Text(
+                                                                  //   chaptersFromDB[
+                                                                  //               index]
+                                                                  //           [
+                                                                  //           "lang"]
+                                                                  //       .toString(),
+                                                                  //   style: TextStyle(
+                                                                  //       fontSize:
+                                                                  //           13,
+                                                                  //       color: Colors
+                                                                  //           .white),
+                                                                  // ),
+                                                                )
                                                               ]),
                                                         )),
                                                   );
