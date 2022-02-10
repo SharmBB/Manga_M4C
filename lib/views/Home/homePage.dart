@@ -262,13 +262,13 @@ class _HomePageState extends State<HomePage> {
                                   child: Padding(
                                     padding:
                                         const EdgeInsets.symmetric(vertical: 8),
-                                    child: Text(
-                                      " More >",
-                                      style: TextStyle(
-                                        color: kPrimaryGreyColor,
-                                        fontSize: 12,
-                                      ),
-                                    ),
+                                    // child: Text(
+                                    //   " More >",
+                                    //   style: TextStyle(
+                                    //     color: kPrimaryGreyColor,
+                                    //     fontSize: 12,
+                                    //   ),
+                                    // ),
                                   ),
                                 ),
                               ],
@@ -508,13 +508,13 @@ class _HomePageState extends State<HomePage> {
                                   child: Padding(
                                     padding:
                                         const EdgeInsets.symmetric(vertical: 8),
-                                    child: Text(
-                                      " More >",
-                                      style: TextStyle(
-                                        color: kPrimaryGreyColor,
-                                        fontSize: 12,
-                                      ),
-                                    ),
+                                    // child: Text(
+                                    //   " More >",
+                                    //   style: TextStyle(
+                                    //     color: kPrimaryGreyColor,
+                                    //     fontSize: 12,
+                                    //   ),
+                                    // ),
                                   ),
                                 ),
                               ],
@@ -724,13 +724,13 @@ class _HomePageState extends State<HomePage> {
                                   child: Padding(
                                     padding:
                                         const EdgeInsets.symmetric(vertical: 8),
-                                    child: Text(
-                                      " More >",
-                                      style: TextStyle(
-                                        color: kPrimaryGreyColor,
-                                        fontSize: 12,
-                                      ),
-                                    ),
+                                    // child: Text(
+                                    //   " More >",
+                                    //   style: TextStyle(
+                                    //     color: kPrimaryGreyColor,
+                                    //     fontSize: 12,
+                                    //   ),
+                                    // ),
                                   ),
                                 ),
                               ],
@@ -935,13 +935,13 @@ class _HomePageState extends State<HomePage> {
                                   child: Padding(
                                     padding:
                                         const EdgeInsets.symmetric(vertical: 8),
-                                    child: Text(
-                                      " More >",
-                                      style: TextStyle(
-                                        color: kPrimaryGreyColor,
-                                        fontSize: 12,
-                                      ),
-                                    ),
+                                    // child: Text(
+                                    //   " More >",
+                                    //   style: TextStyle(
+                                    //     color: kPrimaryGreyColor,
+                                    //     fontSize: 12,
+                                    //   ),
+                                    // ),
                                   ),
                                 ),
                               ],
@@ -1108,7 +1108,7 @@ class _HomePageState extends State<HomePage> {
                                                         ]));
                                                   },
                                                   child: CachedNetworkImage(
-                                                      height: 250,
+                                                      height: 200,
                                                       width: 180,
                                                       imageUrl: RatingManga[0]
                                                                   [index]

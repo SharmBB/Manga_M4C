@@ -147,8 +147,8 @@ List<IconData> listOfIcons = [
                                         ),
                                       ),
                                       Container(
-                                        height:
-                                            screenHeight, //height of TabBarView
+                                        height:400
+                                          , //height of TabBarView
                                         decoration: BoxDecoration(
                                             border: Border(
                                                 top: BorderSide(
@@ -168,7 +168,7 @@ List<IconData> listOfIcons = [
                                                 ),
                                               ),
                                               Container(
-                                                height: 320.0,
+                                                height: 360.0,
                                                 child: ListView.builder(
                                                   scrollDirection:
                                                       Axis.horizontal,
@@ -321,7 +321,7 @@ List<IconData> listOfIcons = [
                                                                           .circular(
                                                                               00.0),
                                                                   child: CachedNetworkImage(
-                                                                      height: 200,
+                                                                      height: 250,
                                                                       width: 180,
                                                                       imageUrl: _getLibrary[index]['image'].toString(),
                                                                       imageBuilder: (context, imageProvider) => Container(
@@ -356,7 +356,7 @@ List<IconData> listOfIcons = [
                                                 ),
                                               ),
                                               Container(
-                                                height: 320.0,
+                                                height: 360.0,
                                                 child: ListView.builder(
                                                   scrollDirection:
                                                       Axis.horizontal,
@@ -510,7 +510,7 @@ List<IconData> listOfIcons = [
                                                                           .circular(
                                                                               00.0),
                                                                   child: CachedNetworkImage(
-                                                                      height: 200,
+                                                                      height: 250,
                                                                       width: 180,
                                                                       imageUrl: _getFavourite[index]['image'].toString(),
                                                                       imageBuilder: (context, imageProvider) => Container(
@@ -670,51 +670,4 @@ List<IconData> listOfIcons = [
   }
 }
 
-class CharacterPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
 
-    return SingleChildScrollView(
-        child: Column(children: [
-      Padding(
-          padding: const EdgeInsets.only(
-            top: 10,
-            right: 5,
-          ),
-          child: Column(children: [
-            Padding(
-                padding: EdgeInsets.only(left: 1),
-                child: Container(
-                    //  width: screenWidth,
-                    height: screenHeight * (0.8 / 20),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[800],
-                      borderRadius: new BorderRadius.circular(2.0),
-                    ),
-                    child: Padding(
-                        padding: EdgeInsets.only(
-                            left: 5, right: 5, top: 5, bottom: 5),
-                        child: TextFormField(
-                            textAlign: TextAlign.left,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Search Title",
-                              hintStyle:
-                                  TextStyle(fontSize: 12.0, color: Colors.grey),
-                            ))))),
-            SizedBox(height: 20.0),
-            LibraryImage(),
-            // SizedBox(height: 20.0),
-            // LibraryImage(),
-            // SizedBox(height: 20.0),
-            // LibraryImage(),
-            // SizedBox(height: 20.0),
-            // LibraryImage(),
-            // SizedBox(height: 20.0),
-            // LibraryImage(),
-          ]))
-    ]));
-  }
-}
