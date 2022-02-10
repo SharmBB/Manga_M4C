@@ -1043,7 +1043,7 @@ class _MangaComment2State extends State<MangaComment2> {
                                                                                           children: [
                                                                                             Text(
                                                                                               _getReplyComments[0]['message'][index]['comments'],
-                                                                                              style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
+                                                                                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
                                                                                             ),
                                                                                             Row(
                                                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
