@@ -50,12 +50,18 @@ class _ReplyCommentsState extends State<ReplyComments> {
 
   //Success
   String? success;
-  String? success1;
+   String? success1;
 
-  @override
-  void initState() {
-    //initialize  id for chapterimage
-    image = widget.image;
+
+   @override
+void initState() {
+  super.initState();
+  
+  doSomeAsyncStuff();
+}
+
+Future<void> doSomeAsyncStuff() async {
+  image =  "https://meo2.comick.pictures/file/comick/" +widget.image;
     print(image);
     hid = widget.hid;
     print(hid);
@@ -65,12 +71,10 @@ class _ReplyCommentsState extends State<ReplyComments> {
     getCommends();
     _getUserById();
     _replyComments();
-    _UpVoteComments();
-    _DownVoteComments();
-    _reportComment();
+  
+}
 
-    super.initState();
-  }
+
 
   @override
   void dispose() {
@@ -88,6 +92,8 @@ class _ReplyCommentsState extends State<ReplyComments> {
   // loader
   bool _isLoading = true;
   bool imageclick = false;
+
+  bool reply = true;
 
   late int counter = 0;
   late int counterlast = 0;
@@ -236,6 +242,8 @@ class _ReplyCommentsState extends State<ReplyComments> {
     // });
   }
 
+  
+
   void _UpVoteComments() async {
     // setState(() {
     //   _isLoading = true;
@@ -277,7 +285,9 @@ class _ReplyCommentsState extends State<ReplyComments> {
       var res = await CallApi().postData(data, 'addReplyComment');
       var body = json.decode(res.body);
       print(body);
-      success1 = body['message'];
+               success1 = body['message'];
+
+      
 
       if (body['token'] != null) {
         SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -285,6 +295,7 @@ class _ReplyCommentsState extends State<ReplyComments> {
         localStorage.setString('token', token);
 
         print(body);
+
       } else {}
     } catch (e) {
       print(e);
@@ -347,39 +358,6 @@ class _ReplyCommentsState extends State<ReplyComments> {
     });
   }
 
-  // //get comments details from api
-  // void getReplyCommends() async {
-  //   setState(() {
-  //     _isLoading2 = true;
-  //   });
-  //   try {
-  //     _getReplyComments.clear();
-
-  //     print("ReplyIDReply:" + _replyid.toString());
-
-  //     var bodyRoutesReply;
-  //     var res = await CallApi().getReplyComments(
-  //         'getReplyCommentByCommentId/' + _replyid.toString());
-  //     bodyRoutesReply = json.decode(res.body);
-
-  //     _getReplyComments.add(bodyRoutesReply);
-  //     print(_getReplyComments[0]);
-  //     print('//////////////');
-  //     print(_getReplyComments[0]['message']);
-
-  //     print(_getReplyComments[0]['message'][1]['comments']);
-
-  //     print('//////////////');
-  //     print(_getReplyComments[0]['message'].length);
-  //     // print(_getReplyComments[0].last['comments']);
-
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  //   setState(() {
-  //     _isLoading2 = false;
-  //   });
-  // }
 
   //get comments details from api
   void getCommends() async {
@@ -449,7 +427,7 @@ class _ReplyCommentsState extends State<ReplyComments> {
 
   @override
   Widget build(BuildContext context) {
-    var image = "https://meo2.comick.pictures/file/comick/";
+  //  var image = "https://meo2.comick.pictures/file/comick/";
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -463,10 +441,19 @@ class _ReplyCommentsState extends State<ReplyComments> {
                 ),
               ))
             : Stack(children: [
+              _isLoading
+            ? Center(
+                child: Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                child: CupertinoActivityIndicator(
+                  radius: 15,
+                ),
+              ))
+            :
                 CachedNetworkImage(
-                    height: screenHeight * (18 / 20),
+                    height: screenHeight ,
                     width: screenWidth,
-                    imageUrl: image + widget.image.toString(),
+                    imageUrl: image,
                     imageBuilder: (context, imageProvider) => Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
@@ -785,6 +772,12 @@ class _ReplyCommentsState extends State<ReplyComments> {
 
                                                                                             if (_replyid == _getComments[0][index]['id']) {
                                                                                               getCommends();
+
+                                                                                              if(reply == true){
+                                                                                                reply = false;
+                                                                                              }else if (reply == false){
+                                                                                                 reply = true;
+                                                                                              }
                                                                                             }
                                                                                           });
                                                                                         },
@@ -809,7 +802,7 @@ class _ReplyCommentsState extends State<ReplyComments> {
                                                                                       ),
                                                                                     ],
                                                                                   ),
-                                                                                  index == xyz
+                                                                                  index == xyz &&  reply == false
                                                                                       ? Padding(
                                                                                           padding: const EdgeInsets.only(
                                                                                             left: 30,
@@ -943,7 +936,7 @@ class _ReplyCommentsState extends State<ReplyComments> {
                                                                                                                     IconButton(
                                                                                                                       icon: Icon(Icons.report),
                                                                                                                       color: kPrimaryPurpleColor,
-                                                                                                                      onPressed: () async {
+                                                                                                                      onPressed: () async{
                                                                                                                         _replyReplyid = _getReplyComments[0]['message'][index]['id'];
                                                                                                                         if (_replyReplyid == _getReplyComments[0]['message'][index]['id']) {
                                                                                                                           replyshowAlert(context);
@@ -992,10 +985,11 @@ class _ReplyCommentsState extends State<ReplyComments> {
                                                                                                               __replyComment = _controllers[index].text;
                                                                                                               _replyComments();
 
-                                                                                                              //_replyReplyid = _getReplyComments[0]['message'][index]['id'];
-                                                                                                              if (_replyReplyid == _getReplyComments[0]['message'][index]['id']) {
-                                                                                                                successReplyAlert(context);
-                                                                                                              }
+                                                                                                                        if (_replyReplyid == _getReplyComments[0]['message'][index]['id']) {
+                                                                                                                            successReplyAlert(context);
+                                                                                                                        }
+
+                                                                                                            
                                                                                                             });
                                                                                                           }),
                                                                                                     ],
