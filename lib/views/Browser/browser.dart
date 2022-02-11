@@ -55,12 +55,12 @@ class _MyHomePageState extends State<Browser> {
   int bottomPurple = 1;
 
   List<IconData> listOfIcons = [
-Icons.home_rounded,
+    Icons.home_rounded,
     Icons.description_outlined,
     Icons.account_box,
     Icons.library_add_rounded,
     Icons.leaderboard,
-];
+  ];
 
   //get manga details from api
   void _apiGenresDetails() async {
@@ -460,25 +460,18 @@ Icons.home_rounded,
       _isLoading = true;
     });
     try {
-      // Advancesearch.clear();
-
+      String str = advanceSearch.join(',');
+      print(str);
       var bodyRoutes;
+
       var res = await CallApi()
-          .getAdvaceSearch(advanceSearch.toString() + "&page=1&limit=50");
+          .getAdvaceSearch(str.toLowerCase() + "&page=1&limit=50");
       bodyRoutes = json.decode(res.body);
+      print(bodyRoutes);
+      SelectedManga.clear();
 
       // Add subjects to _SubjectsFromDB List
-      Advancesearch.add(bodyRoutes);
-      print("------------acjbasicbasicbasc-----------------");
-      // print(advanceSearch);
-      // print(Advancesearch);
-      print("---------------vcdsvnkdsvkds--------------");
-      SelectedManga = Advancesearch;
-
-      SelectedManga = Advancesearch;
-      //  print(Advancesearch.length);
-      //   print(advanceSearch);
-      print("Kithu-" + Advancesearch.toString());
+      SelectedManga.add(bodyRoutes);
     } catch (e) {
       print(e);
     }
