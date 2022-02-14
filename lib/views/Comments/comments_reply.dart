@@ -50,18 +50,17 @@ class _ReplyCommentsState extends State<ReplyComments> {
 
   //Success
   String? success;
-   String? success1;
+  String? success1;
 
+  @override
+  void initState() {
+    super.initState();
 
-   @override
-void initState() {
-  super.initState();
-  
-  doSomeAsyncStuff();
-}
+    doSomeAsyncStuff();
+  }
 
-Future<void> doSomeAsyncStuff() async {
-  image =  "https://meo2.comick.pictures/file/comick/" +widget.image;
+  Future<void> doSomeAsyncStuff() async {
+    image = "https://meo2.comick.pictures/file/comick/" + widget.image;
     print(image);
     hid = widget.hid;
     print(hid);
@@ -70,11 +69,8 @@ Future<void> doSomeAsyncStuff() async {
 
     getCommends();
     _getUserById();
-    _replyComments();
-  
-}
-
-
+  //  _replyComments();
+  }
 
   @override
   void dispose() {
@@ -242,8 +238,6 @@ Future<void> doSomeAsyncStuff() async {
     // });
   }
 
-  
-
   void _UpVoteComments() async {
     // setState(() {
     //   _isLoading = true;
@@ -285,9 +279,7 @@ Future<void> doSomeAsyncStuff() async {
       var res = await CallApi().postData(data, 'addReplyComment');
       var body = json.decode(res.body);
       print(body);
-               success1 = body['message'];
-
-      
+      success1 = body['message'];
 
       if (body['token'] != null) {
         SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -295,7 +287,6 @@ Future<void> doSomeAsyncStuff() async {
         localStorage.setString('token', token);
 
         print(body);
-
       } else {}
     } catch (e) {
       print(e);
@@ -357,7 +348,6 @@ Future<void> doSomeAsyncStuff() async {
       _isLoading = false;
     });
   }
-
 
   //get comments details from api
   void getCommends() async {
@@ -427,7 +417,7 @@ Future<void> doSomeAsyncStuff() async {
 
   @override
   Widget build(BuildContext context) {
-  //  var image = "https://meo2.comick.pictures/file/comick/";
+    var imageurl = "https://meo2.comick.pictures/file/comick/";
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -441,27 +431,27 @@ Future<void> doSomeAsyncStuff() async {
                 ),
               ))
             : Stack(children: [
-              _isLoading
-            ? Center(
-                child: Padding(
-                padding: const EdgeInsets.only(top: 30.0),
-                child: CupertinoActivityIndicator(
-                  radius: 15,
-                ),
-              ))
-            :
-                CachedNetworkImage(
-                    height: screenHeight ,
-                    width: screenWidth,
-                    imageUrl: image,
-                    imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            image: DecorationImage(
-                                image: imageProvider, fit: BoxFit.cover),
-                          ),
+                _isLoading
+                    ? Center(
+                        child: Padding(
+                        padding: const EdgeInsets.only(top: 30.0),
+                        child: CupertinoActivityIndicator(
+                          radius: 15,
                         ),
-                    errorWidget: (context, url, error) => Icon(Icons.error)),
+                      ))
+                    : CachedNetworkImage(
+                        height: screenHeight,
+                        width: screenWidth,
+                        imageUrl: imageurl + widget.image.toString(),
+                        imageBuilder: (context, imageProvider) => Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.cover),
+                              ),
+                            ),
+                        errorWidget: (context, url, error) =>
+                            Icon(Icons.error)),
                 SafeArea(
                     child: Container(
                         width: MediaQuery.of(context).size.width,
@@ -773,10 +763,10 @@ Future<void> doSomeAsyncStuff() async {
                                                                                             if (_replyid == _getComments[0][index]['id']) {
                                                                                               getCommends();
 
-                                                                                              if(reply == true){
+                                                                                              if (reply == true) {
                                                                                                 reply = false;
-                                                                                              }else if (reply == false){
-                                                                                                 reply = true;
+                                                                                              } else if (reply == false) {
+                                                                                                reply = true;
                                                                                               }
                                                                                             }
                                                                                           });
@@ -802,7 +792,7 @@ Future<void> doSomeAsyncStuff() async {
                                                                                       ),
                                                                                     ],
                                                                                   ),
-                                                                                  index == xyz &&  reply == false
+                                                                                  index == xyz && reply == false
                                                                                       ? Padding(
                                                                                           padding: const EdgeInsets.only(
                                                                                             left: 30,
@@ -936,7 +926,7 @@ Future<void> doSomeAsyncStuff() async {
                                                                                                                     IconButton(
                                                                                                                       icon: Icon(Icons.report),
                                                                                                                       color: kPrimaryPurpleColor,
-                                                                                                                      onPressed: () async{
+                                                                                                                      onPressed: () async {
                                                                                                                         _replyReplyid = _getReplyComments[0]['message'][index]['id'];
                                                                                                                         if (_replyReplyid == _getReplyComments[0]['message'][index]['id']) {
                                                                                                                           replyshowAlert(context);
@@ -985,11 +975,9 @@ Future<void> doSomeAsyncStuff() async {
                                                                                                               __replyComment = _controllers[index].text;
                                                                                                               _replyComments();
 
-                                                                                                                        if (_replyReplyid == _getReplyComments[0]['message'][index]['id']) {
-                                                                                                                            successReplyAlert(context);
-                                                                                                                        }
-
-                                                                                                            
+                                                                                                              if (_replyReplyid == _getReplyComments[0]['message'][index]['id']) {
+                                                                                                                successReplyAlert(context);
+                                                                                                              }
                                                                                                             });
                                                                                                           }),
                                                                                                     ],

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/views/ForgotPassword/forgotPassword.dart';
@@ -32,10 +31,11 @@ class _ResetPasswordState extends State<ResetPassword> {
 
     return Scaffold(
         key: _scaffoldKey,
-          backgroundColor: primaryColor,
+        backgroundColor: primaryColor,
         body: Center(
           child: Form(
-            autovalidateMode: AutovalidateMode.always, key: _formKey,
+            autovalidateMode: AutovalidateMode.always,
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -60,15 +60,13 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   _password() {
     return Padding(
-         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
         child: TextFormField(
-          style: const TextStyle(
-              fontSize: 14.0, color: kPrimaryWhiteColor),
+          style: const TextStyle(fontSize: 14.0, color: kPrimaryWhiteColor),
           cursorColor: kPrimaryPurpleColor,
           keyboardType: TextInputType.text,
           obscureText: showPassword,
           validator: (value) {
-            
             RegExp regex = RegExp(
                 r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
             if (value!.isEmpty) {
@@ -86,8 +84,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           decoration: const InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
             hintText: "Password",
-            hintStyle: TextStyle(
-                fontSize: 16.0, color: kPrimaryWhiteColor),
+            hintStyle: TextStyle(fontSize: 16.0, color: kPrimaryWhiteColor),
             fillColor: kPrimaryGreyColor,
             filled: true,
             border: OutlineInputBorder(
@@ -101,10 +98,9 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   _confirmpassword() {
     return Padding(
-         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
         child: TextFormField(
-          style: const TextStyle(
-              fontSize: 14.0,color: kPrimaryWhiteColor),
+          style: const TextStyle(fontSize: 14.0, color: kPrimaryWhiteColor),
           cursorColor: kPrimaryPurpleColor,
           keyboardType: TextInputType.text,
           obscureText: showconfirmPassword,
@@ -128,8 +124,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           decoration: const InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
             hintText: "Confirm Password",
-            hintStyle: TextStyle(
-                fontSize: 16.0, color: kPrimaryWhiteColor),
+            hintStyle: TextStyle(fontSize: 16.0, color: kPrimaryWhiteColor),
             fillColor: kPrimarylightGreyColor,
             filled: true,
             border: OutlineInputBorder(
@@ -151,17 +146,17 @@ class _ResetPasswordState extends State<ResetPassword> {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: kPrimaryPurpleColor, // background
-                 onPrimary: Colors.transparent,
+                onPrimary: Colors.transparent,
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState?.save();
                   // use the email provided here
-                       Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>Signin()),
-                    );
+                  //    Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) =>Signin()),
+                  // );
                 }
               },
               child: const Text(

@@ -25,7 +25,6 @@ class _AccountState extends State<Account> {
   String bio = "";
   String name = "";
   String? usernameDB;
-  String? token;
 
   int? usernameId;
 
@@ -53,8 +52,6 @@ class _AccountState extends State<Account> {
   String dropdownValue = 'English';
 
   List User = [];
-
-  
 
   @override
   initState() {
@@ -265,389 +262,382 @@ class _AccountState extends State<Account> {
                   Padding(
                     padding: const EdgeInsets.only(top: 30.0),
                     child: DefaultTabController(
-                        length: 2, // length of tabs
-                        initialIndex: 0,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: <Widget>[
-                              Container(
-                                height: 30,
-                                child: TabBar(
-                                  indicatorSize: TabBarIndicatorSize.tab,
-                                  indicator: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(0),
-                                          topRight: Radius.circular(0)),
-                                      color: Colors.purple[900]),
-                                  // labelColor: Colors.purple[900],
+                      length: 2, // length of tabs
+                      initialIndex: 0,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          Container(
+                            height: 30,
+                            child: TabBar(
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              indicator: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(0)),
+                                  color: Colors.purple[900]),
+                              // labelColor: Colors.purple[900],
 
-                                  unselectedLabelColor: Colors.grey,
-                                  tabs: [
-                                    Tab(
-                                      text: 'My Library',
-                                    ),
-                                    Tab(text: 'Favourites'),
-                                  ],
+                              unselectedLabelColor: Colors.grey,
+                              tabs: [
+                                Tab(
+                                  text: 'My Library',
                                 ),
-                              ),
-                              Container(
-                                height: 365,
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        top: BorderSide(
-                                            color: Colors.purple, width: 0.5))),
-                                child: TabBarView(children: <Widget>[
-                                  //Library
-                                  Column(
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[],
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 360.0,
-                                        child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: _getLibrary.length,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return Container(
-                                              margin: EdgeInsets.all(10.0),
-                                              width: 180.0,
-                                              child: Stack(
-                                                alignment: Alignment.topCenter,
-                                                children: <Widget>[
-                                                  Positioned(
-                                                    bottom: 15.0,
-                                                    child: Container(
-                                                      height: 120.0,
-                                                      width: 200.0,
-                                                      decoration: BoxDecoration(
-                                                        color: primaryColor,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(0.0),
+                                Tab(text: 'Favourites'),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: 365,
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    top: BorderSide(
+                                        color: Colors.purple, width: 0.5))),
+                            child: TabBarView(children: <Widget>[
+                              //Library
+                              Column(
+                                children: <Widget>[
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 20.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 360.0,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: _getLibrary.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Container(
+                                          margin: EdgeInsets.all(10.0),
+                                          width: 180.0,
+                                          child: Stack(
+                                            alignment: Alignment.topCenter,
+                                            children: <Widget>[
+                                              Positioned(
+                                                bottom: 15.0,
+                                                child: Container(
+                                                  height: 120.0,
+                                                  width: 200.0,
+                                                  decoration: BoxDecoration(
+                                                    color: primaryColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            0.0),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(10.0),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: <Widget>[
+                                                        Text(
+                                                          _getLibrary[index][
+                                                                          'title']
+                                                                      .length <=
+                                                                  20
+                                                              ? _getLibrary[
+                                                                          index]
+                                                                      ['title']
+                                                                  .toString()
+                                                              : _getLibrary[
+                                                                          index]
+                                                                      ['title']
+                                                                  .toString()
+                                                                  .substring(
+                                                                      0, 20),
+                                                          style: TextStyle(
+                                                            color:
+                                                                kPrimaryWhiteColor,
+                                                            fontSize: 16.0,
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: 5.0),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  top: 10.0,
+                                                                  left: 60),
+                                                          child: Row(
+                                                            children: [
+                                                              Row(
+                                                                children: [
+                                                                  Icon(
+                                                                    Icons.star,
+                                                                    size: 15.0,
+                                                                    color: Colors
+                                                                        .yellow,
+                                                                  ),
+                                                                  SizedBox(
+                                                                      width:
+                                                                          10),
+                                                                  Text(
+                                                                    _getLibrary[index]
+                                                                            [
+                                                                            'rating']
+                                                                        .toString(),
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          12,
+                                                                      color:
+                                                                          kPrimaryWhiteColor,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            0.0),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Colors.black26,
+                                                        blurRadius: 6.0,
                                                       ),
-                                                      child: Padding(
-                                                        padding: EdgeInsets.all(
-                                                            10.0),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: <Widget>[
-                                                            Text(
+                                                    ],
+                                                  ),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            00.0),
+                                                    child: InkWell(
+                                                      onTap: () {},
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              00.0),
+                                                      child: CachedNetworkImage(
+                                                          height: 250,
+                                                          width: 180,
+                                                          imageUrl:
                                                               _getLibrary[index]
-                                                                              [
-                                                                              'title']
-                                                                          .length <=
-                                                                      20
-                                                                  ? _getLibrary[
-                                                                              index]
-                                                                          [
-                                                                          'title']
-                                                                      .toString()
-                                                                  : _getLibrary[
-                                                                              index]
-                                                                          [
-                                                                          'title']
-                                                                      .toString()
-                                                                      .substring(
-                                                                          0,
-                                                                          20),
-                                                              style: TextStyle(
-                                                                color:
-                                                                    kPrimaryWhiteColor,
-                                                                fontSize: 16.0,
+                                                                      ['image']
+                                                                  .toString(),
+                                                          imageBuilder: (context,
+                                                                  imageProvider) =>
+                                                              Container(
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5),
+                                                                  image: DecorationImage(
+                                                                      image:
+                                                                          imageProvider,
+                                                                      fit: BoxFit
+                                                                          .fill),
+                                                                ),
                                                               ),
-                                                            ),
-                                                            SizedBox(
-                                                                height: 5.0),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      top: 10.0,
-                                                                      left: 60),
-                                                              child: Row(
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              Icon(
+                                                                  Icons.error)),
+                                                    ),
+                                                  )),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              //favourite
+                              Column(
+                                children: <Widget>[
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 20.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 360.0,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: _getFavourite.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Container(
+                                          margin: EdgeInsets.all(10.0),
+                                          width: 180.0,
+                                          child: Stack(
+                                            alignment: Alignment.topCenter,
+                                            children: <Widget>[
+                                              Positioned(
+                                                bottom: 15.0,
+                                                child: Container(
+                                                  height: 120.0,
+                                                  width: 200.0,
+                                                  decoration: BoxDecoration(
+                                                    color: primaryColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            0.0),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(10.0),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: <Widget>[
+                                                        Text(
+                                                          _getFavourite[index][
+                                                                          'title']
+                                                                      .length <=
+                                                                  20
+                                                              ? _getFavourite[
+                                                                          index]
+                                                                      ['title']
+                                                                  .toString()
+                                                              : _getFavourite[
+                                                                          index]
+                                                                      ['title']
+                                                                  .toString()
+                                                                  .substring(
+                                                                      0, 20),
+                                                          style: TextStyle(
+                                                            color:
+                                                                kPrimaryWhiteColor,
+                                                            fontSize: 16.0,
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: 5.0),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  top: 10.0,
+                                                                  left: 60),
+                                                          child: Row(
+                                                            children: [
+                                                              Row(
                                                                 children: [
-                                                                  Row(
-                                                                    children: [
-                                                                      Icon(
-                                                                        Icons
-                                                                            .star,
-                                                                        size:
-                                                                            15.0,
-                                                                        color: Colors
-                                                                            .yellow,
-                                                                      ),
-                                                                      SizedBox(
-                                                                          width:
-                                                                              10),
-                                                                      Text(
-                                                                        _getLibrary[index]['rating']
-                                                                            .toString(),
-                                                                        style:
-                                                                            TextStyle(
-                                                                          fontSize:
-                                                                              12,
-                                                                          color:
-                                                                              kPrimaryWhiteColor,
-                                                                        ),
-                                                                      ),
-                                                                    ],
+                                                                  Icon(
+                                                                    Icons.star,
+                                                                    size: 15.0,
+                                                                    color: Colors
+                                                                        .yellow,
+                                                                  ),
+                                                                  SizedBox(
+                                                                      width:
+                                                                          10),
+                                                                  Text(
+                                                                    _getFavourite[index]
+                                                                            [
+                                                                            'rating']
+                                                                        .toString(),
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          12,
+                                                                      color:
+                                                                          kPrimaryWhiteColor,
+                                                                    ),
                                                                   ),
                                                                 ],
                                                               ),
-                                                            ),
-                                                          ],
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
+                                                      ],
                                                     ),
                                                   ),
-                                                  Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(0.0),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            color:
-                                                                Colors.black26,
-                                                            blurRadius: 6.0,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(00.0),
-                                                        child: InkWell(
-                                                          onTap: () {},
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      00.0),
-                                                          child:
-                                                              CachedNetworkImage(
-                                                                  height: 250,
-                                                                  width: 180,
-                                                                  imageUrl: _getLibrary[
-                                                                              index]
-                                                                          [
-                                                                          'image']
-                                                                      .toString(),
-                                                                  imageBuilder:
-                                                                      (context,
-                                                                              imageProvider) =>
-                                                                          Container(
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              borderRadius: BorderRadius.circular(5),
-                                                                              image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
-                                                                            ),
-                                                                          ),
-                                                                  errorWidget: (context,
-                                                                          url,
-                                                                          error) =>
-                                                                      Icon(Icons
-                                                                          .error)),
-                                                        ),
-                                                      )),
-                                                ],
+                                                ),
                                               ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  //favourite
-                                  Column(
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[],
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 360.0,
-                                        child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: _getFavourite.length,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return Container(
-                                              margin: EdgeInsets.all(10.0),
-                                              width: 180.0,
-                                              child: Stack(
-                                                alignment: Alignment.topCenter,
-                                                children: <Widget>[
-                                                  Positioned(
-                                                    bottom: 15.0,
-                                                    child: Container(
-                                                      height: 120.0,
-                                                      width: 200.0,
-                                                      decoration: BoxDecoration(
-                                                        color: primaryColor,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(0.0),
+                                              Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            0.0),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Colors.black26,
+                                                        blurRadius: 6.0,
                                                       ),
-                                                      child: Padding(
-                                                        padding: EdgeInsets.all(
-                                                            10.0),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: <Widget>[
-                                                            Text(
-                                                              _getFavourite[index]
-                                                                              [
-                                                                              'title']
-                                                                          .length <=
-                                                                      20
-                                                                  ? _getFavourite[
-                                                                              index]
-                                                                          [
-                                                                          'title']
-                                                                      .toString()
-                                                                  : _getFavourite[
-                                                                              index]
-                                                                          [
-                                                                          'title']
-                                                                      .toString()
-                                                                      .substring(
-                                                                          0,
-                                                                          20),
-                                                              style: TextStyle(
-                                                                color:
-                                                                    kPrimaryWhiteColor,
-                                                                fontSize: 16.0,
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                                height: 5.0),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      top: 10.0,
-                                                                      left: 60),
-                                                              child: Row(
-                                                                children: [
-                                                                  Row(
-                                                                    children: [
-                                                                      Icon(
-                                                                        Icons
-                                                                            .star,
-                                                                        size:
-                                                                            15.0,
-                                                                        color: Colors
-                                                                            .yellow,
-                                                                      ),
-                                                                      SizedBox(
-                                                                          width:
-                                                                              10),
-                                                                      Text(
-                                                                        _getFavourite[index]['rating']
-                                                                            .toString(),
-                                                                        style:
-                                                                            TextStyle(
-                                                                          fontSize:
-                                                                              12,
-                                                                          color:
-                                                                              kPrimaryWhiteColor,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
+                                                    ],
                                                   ),
-                                                  Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(0.0),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            color:
-                                                                Colors.black26,
-                                                            blurRadius: 6.0,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(00.0),
-                                                        child: InkWell(
-                                                          onTap: () {},
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      00.0),
-                                                          child:
-                                                              CachedNetworkImage(
-                                                                  height: 250,
-                                                                  width: 180,
-                                                                  imageUrl: _getFavourite[
-                                                                              index]
-                                                                          [
-                                                                          'image']
-                                                                      .toString(),
-                                                                  imageBuilder:
-                                                                      (context,
-                                                                              imageProvider) =>
-                                                                          Container(
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              borderRadius: BorderRadius.circular(5),
-                                                                              image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
-                                                                            ),
-                                                                          ),
-                                                                  errorWidget: (context,
-                                                                          url,
-                                                                          error) =>
-                                                                      Icon(Icons
-                                                                          .error)),
-                                                        ),
-                                                      )),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            00.0),
+                                                    child: InkWell(
+                                                      onTap: () {},
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              00.0),
+                                                      child: CachedNetworkImage(
+                                                          height: 250,
+                                                          width: 180,
+                                                          imageUrl:
+                                                              _getFavourite[
+                                                                          index]
+                                                                      ['image']
+                                                                  .toString(),
+                                                          imageBuilder: (context,
+                                                                  imageProvider) =>
+                                                              Container(
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5),
+                                                                  image: DecorationImage(
+                                                                      image:
+                                                                          imageProvider,
+                                                                      fit: BoxFit
+                                                                          .fill),
+                                                                ),
+                                                              ),
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              Icon(
+                                                                  Icons.error)),
+                                                    ),
+                                                  )),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   ),
-                                ]),
-                              )
-                            ],),),
+                                ],
+                              ),
+                            ]),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -728,13 +718,13 @@ class _AccountState extends State<Account> {
   }
 
   void _getUserById() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('token');
+    print(token);
     setState(() {
       _isLoading = true;
     });
     try {
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      token = localStorage.getString('token');
-
       //get user details
       var res = await CallApi().getUserById('getUserById');
       var body = json.decode(res.body);
@@ -748,7 +738,7 @@ class _AccountState extends State<Account> {
       bodyRoutes = json.decode(res1.body);
       _getLibrary = bodyRoutes;
 
-      //get UserLibrary details from api
+      //get UserFavourite details from api
       _getFavourite.clear();
       var bodyRoutesFav;
       var res2 = await CallApi().getUserFavourite('getUserFavourite');

@@ -4,13 +4,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
+import 'package:mangakiku_app/views/Comments/comments_reply.dart';
 import 'package:mangakiku_app/views/ForgotPassword/forgotPassword.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/Signup/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Signin extends StatefulWidget {
-  const Signin({Key? key}) : super(key: key);
+  final String hid;
+  final String chapterid;
+  final String image;
+  const Signin({
+    Key? key,
+    required this.hid,
+    required this.chapterid,
+    required this.image,
+  }) : super(key: key);
 
   @override
   _SigninState createState() => _SigninState();
@@ -25,6 +34,10 @@ class _SigninState extends State<Signin> {
 
   String? password;
   String? bodyError;
+
+  late String hid;
+  late String chapterid;
+  late String image;
 
   bool _isLoading = false;
   bool showPassword = true;
@@ -293,7 +306,14 @@ class _SigninState extends State<Signin> {
           print(body['message']);
 
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+            MaterialPageRoute(
+                builder: (BuildContext context) => ReplyComments(
+                  image: widget.image,
+                  chapterid: widget.chapterid,
+                  hid: widget.hid,
+
+
+                )),
           );
         }
       } else {

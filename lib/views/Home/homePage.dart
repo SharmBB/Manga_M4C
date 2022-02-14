@@ -15,6 +15,7 @@ import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Browser/browser.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
 import 'package:mangakiku_app/views/Library/library.dart';
+import 'package:mangakiku_app/views/Setting/setting.dart';
 import 'package:mangakiku_app/views/chapter/chapter.dart';
 import 'package:mangakiku_app/views/type/type.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,11 +31,11 @@ var currentIndex = 0;
 int selectedIndex = 0;
 
 List<IconData> listOfIcons = [
-Icons.home_rounded,
-    Icons.description_outlined,
-    Icons.account_box,
-    Icons.library_add_rounded,
-    Icons.leaderboard,
+  Icons.home_rounded,
+  Icons.settings,
+  Icons.account_box,
+  Icons.library_add_rounded,
+  Icons.leaderboard,
 ];
 
 class _HomePageState extends State<HomePage> {
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage> {
   List ViewManga = [];
   List RatingManga = [];
 
-  String image = "";
+  String token = "";
   String bio = "";
   String name = "";
 
@@ -141,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                         items: [
                           //1st Image of Slider
                           Container(
-                            width: MediaQuery.of(context).size.width*0.7,
+                            width: MediaQuery.of(context).size.width * 0.7,
                             margin: EdgeInsets.symmetric(horizontal: 5.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.0),
@@ -157,7 +158,7 @@ class _HomePageState extends State<HomePage> {
 
                           //2nd Image of Slider
                           Container(
-                            width: MediaQuery.of(context).size.width*0.8,
+                            width: MediaQuery.of(context).size.width * 0.8,
                             margin: EdgeInsets.symmetric(horizontal: 5.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.0),
@@ -173,7 +174,7 @@ class _HomePageState extends State<HomePage> {
 
                           //3rd Image of Slider
                           Container(
-                            width: MediaQuery.of(context).size.width*0.7,
+                            width: MediaQuery.of(context).size.width * 0.7,
                             margin: EdgeInsets.symmetric(horizontal: 5.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.0),
@@ -189,7 +190,7 @@ class _HomePageState extends State<HomePage> {
 
                           //4th Image of Slider
                           Container(
-                          width: MediaQuery.of(context).size.width*0.7,
+                            width: MediaQuery.of(context).size.width * 0.7,
                             margin: EdgeInsets.symmetric(horizontal: 5.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.0),
@@ -204,7 +205,7 @@ class _HomePageState extends State<HomePage> {
 
                           //5th Image of Slider
                           Container(
-                            width: MediaQuery.of(context).size.width*0.7,
+                            width: MediaQuery.of(context).size.width * 0.7,
                             margin: EdgeInsets.symmetric(horizontal: 5.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.0),
@@ -383,7 +384,7 @@ class _HomePageState extends State<HomePage> {
                                                                 ),
                                                               ],
                                                             ),
-                                                          //  SizedBox(width: 55),
+                                                            //  SizedBox(width: 55),
                                                             // Text(
                                                             //   ".",
                                                             //   style: TextStyle(
@@ -393,9 +394,12 @@ class _HomePageState extends State<HomePage> {
                                                             //   ),
                                                             // ),
                                                             SizedBox(width: 25),
-                                                            Text(". "+
-                                                              manga[0][index][
-                                                                  'distanceTime'],
+                                                            Text(
+                                                              ". " +
+                                                                  manga[0][
+                                                                          index]
+                                                                      [
+                                                                      'distanceTime'],
                                                               style: TextStyle(
                                                                 fontSize: 12,
                                                                 color:
@@ -609,7 +613,7 @@ class _HomePageState extends State<HomePage> {
                                                           ),
                                                         ],
                                                       ),
-                                                   
+
                                                       // Text(
                                                       //   ".",
                                                       //   style: TextStyle(
@@ -619,9 +623,10 @@ class _HomePageState extends State<HomePage> {
                                                       //   ),
                                                       // ),
                                                       SizedBox(width: 25),
-                                                      Text(". "+
-                                                        Newmanga[0][index]
-                                                            ['distanceTime'],
+                                                      Text(
+                                                        ". " +
+                                                            Newmanga[0][index][
+                                                                'distanceTime'],
                                                         style: TextStyle(
                                                           fontSize: 12,
                                                           color:
@@ -678,7 +683,8 @@ class _HomePageState extends State<HomePage> {
                                                           image: DecorationImage(
                                                               image:
                                                                   imageProvider,
-                                                              fit: BoxFit.cover),
+                                                              fit:
+                                                                  BoxFit.cover),
                                                         ),
                                                       ),
                                                   errorWidget:
@@ -831,9 +837,10 @@ class _HomePageState extends State<HomePage> {
                                                       //   ),
                                                       // ),
                                                       // SizedBox(width: 25),
-                                                      Text(". "+
-                                                        Newmanga[0][index]
-                                                            ['distanceTime'],
+                                                      Text(
+                                                        ". " +
+                                                            Newmanga[0][index][
+                                                                'distanceTime'],
                                                         style: TextStyle(
                                                           fontSize: 12,
                                                           color:
@@ -889,7 +896,8 @@ class _HomePageState extends State<HomePage> {
                                                           image: DecorationImage(
                                                               image:
                                                                   imageProvider,
-                                                              fit: BoxFit.cover),
+                                                              fit:
+                                                                  BoxFit.cover),
                                                         ),
                                                       ),
                                                   errorWidget:
@@ -1056,7 +1064,7 @@ class _HomePageState extends State<HomePage> {
                                                                 ),
                                                               ],
                                                             ),
-                                                           // SizedBox(width: 45),
+                                                            // SizedBox(width: 45),
                                                             // Text(
                                                             //   ".",
                                                             //   style: TextStyle(
@@ -1066,10 +1074,12 @@ class _HomePageState extends State<HomePage> {
                                                             //   ),
                                                             // ),
                                                             // SizedBox(width: 25),
-                                                            Text(". "+
-                                                              Newmanga[0][index]
-                                                                  [
-                                                                  'distanceTime'],
+                                                            Text(
+                                                              ". " +
+                                                                  Newmanga[0][
+                                                                          index]
+                                                                      [
+                                                                      'distanceTime'],
                                                               style: TextStyle(
                                                                 fontSize: 12,
                                                                 color:
@@ -1108,7 +1118,7 @@ class _HomePageState extends State<HomePage> {
                                                         ]));
                                                   },
                                                   child: CachedNetworkImage(
-                                                      height: 200,
+                                                      height: 250,
                                                       width: 180,
                                                       imageUrl: RatingManga[0]
                                                                   [index]
@@ -1174,7 +1184,7 @@ class _HomePageState extends State<HomePage> {
                   if (currentIndex == 1) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Browser()),
+                      MaterialPageRoute(builder: (context) => Setting()),
                     );
                   } else if (currentIndex == 2) {
                     Navigator.push(
@@ -1225,8 +1235,9 @@ class _HomePageState extends State<HomePage> {
 //store the userImage in local
   void _getUserDetails() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    image = localStorage.getString("image")!;
-    var data = {"pic": image};
+    token = localStorage.getString("token")!;
+    print("homepagetoken" + token);
+    var data = {"pic": token};
   }
 
 //get manga details from api

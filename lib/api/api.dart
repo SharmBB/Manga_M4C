@@ -192,9 +192,9 @@ class CallApi {
         'Authorization': 'Bearer $token'
       };
 
-  _getToken() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var token = localStorage.getString('token');
-    return '?token=$token';
-  }
+  // _getToken() async {
+  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
+  //   var token = localStorage.getString('token');
+  //   return '?token=$token';
+  // }
 }

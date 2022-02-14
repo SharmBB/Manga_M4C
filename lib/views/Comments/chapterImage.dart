@@ -11,6 +11,7 @@ import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/views/Comments/comments.dart';
 import 'package:mangakiku_app/views/Comments/comments_reply.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
+import 'package:mangakiku_app/views/SignIn/signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MangaComment2 extends StatefulWidget {
@@ -234,10 +235,10 @@ class _MangaComment2State extends State<MangaComment2> {
                     icon: Icon(Icons.comment_outlined),
                     color: kPrimaryWhiteColor,
                     onPressed: () {
-                      Navigator.push(
+                         Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ReplyComments(
+                          builder: (context) => Signin(
                             image:  _chapterImage[0]['chapter']
                                                         ['md_images']
                                                     [0]['b2key'].toString(),
@@ -245,6 +246,17 @@ class _MangaComment2State extends State<MangaComment2> {
                               hid: widget.hid.toString()),
                         ),
                       );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => ReplyComments(
+                      //       image:  _chapterImage[0]['chapter']
+                      //                                   ['md_images']
+                      //                               [0]['b2key'].toString(),
+                      //         chapterid: widget.chapterid.toString(),
+                      //         hid: widget.hid.toString()),
+                      //   ),
+                      // );
                       //  _displayDialog(context);
                     }),
                 IconButton(

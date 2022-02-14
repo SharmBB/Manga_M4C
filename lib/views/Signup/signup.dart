@@ -147,12 +147,12 @@ class _SignupState extends State<Signup> {
                           InkWell(
                             highlightColor: Colors.transparent,
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Signin(),
-                                ),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => Signin(),
+                              //   ),
+                              // );
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(vertical: 8),
@@ -494,7 +494,7 @@ class _SignupState extends State<Signup> {
 
     if (body["errorMessage"] == false) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => Signin()),
+        MaterialPageRoute(builder: (BuildContext context) => HomePage()),
       );
     } else {
       setState(() {
