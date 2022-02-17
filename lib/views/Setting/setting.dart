@@ -1,21 +1,11 @@
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:http/http.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
-import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/views/Account/account.dart';
-import 'package:mangakiku_app/views/Comments/comments.dart';
-import 'package:mangakiku_app/views/Comments/comments_reply.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
 import 'package:mangakiku_app/views/Library/library.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:share/share.dart';
 
 class Setting extends StatefulWidget {
   const Setting({
@@ -42,7 +32,6 @@ class _SettingState extends State<Setting> {
   String? token;
 
   bool _isLoading = true;
-
   bool isSwitchOn = false;
 
   @override
@@ -94,7 +83,9 @@ class _SettingState extends State<Setting> {
               children: [
                 InkWell(
                   highlightColor: kPrimaryPurpleColor,
-                  onTap: () => null,
+                  onTap: () {
+                    _showSubcontent();
+                  },
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 20,
@@ -168,7 +159,10 @@ class _SettingState extends State<Setting> {
                 ),
                 InkWell(
                   highlightColor: kPrimaryPurpleColor,
-                  onTap: () => null,
+                  onTap: () {
+                    Share.share(
+                        'Do you Like Manga? Check out this awessome app: https://play.google.com/store/apps/details?id=com.sunster.mangasuki');
+                  },
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 20,
@@ -242,7 +236,9 @@ class _SettingState extends State<Setting> {
                 ),
                 InkWell(
                   highlightColor: kPrimaryPurpleColor,
-                  onTap: () => null,
+                  onTap: () {
+                    _showReadcontent();
+                  },
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 20,
@@ -283,7 +279,9 @@ class _SettingState extends State<Setting> {
                 ),
                 InkWell(
                   highlightColor: kPrimaryPurpleColor,
-                  onTap: () => null,
+                  onTap: () {
+                    _showDarkcontent();
+                  },
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 20,
@@ -324,7 +322,9 @@ class _SettingState extends State<Setting> {
                 ),
                 InkWell(
                   highlightColor: kPrimaryPurpleColor,
-                  onTap: () => null,
+                  onTap: () {
+                    _showLanguagecontent();
+                  },
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 20,
@@ -365,7 +365,9 @@ class _SettingState extends State<Setting> {
                 ),
                 InkWell(
                   highlightColor: kPrimaryPurpleColor,
-                  onTap: () => null,
+                  onTap: () {
+                    _showSourcecontent();
+                  },
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 20,
@@ -556,5 +558,578 @@ class _SettingState extends State<Setting> {
         ),
       ),
     );
+  }
+
+  String _selectedSub = 'Lifetime Membership (LKR 3,050.00)';
+
+  void _showSubcontent() {
+    showDialog(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return AlertDialog(
+                backgroundColor: Colors.grey.shade900,
+                contentPadding: EdgeInsets.only(
+                  left: 5,
+                  top: 10,
+                  right: 30,
+                ),
+                content: Container(
+                  height: 150,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Lifetime Membership (LKR 3,050.00)',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Lifetime Membership (LKR 3,050.00)',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Monthly Subscription (LKR 225.00)',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Monthly Subscription (LKR 225.00)',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Yearly Subscription (LKR 195.00)',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Yearly Subscription (LKR 195.00)',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  FlatButton(
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(
+                        color: kPrimaryPurpleColor,
+                        fontSize: 18,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        });
+  }
+
+  String _selectedRead = 'Left to Right';
+
+  void _showReadcontent() {
+    showDialog(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return AlertDialog(
+                backgroundColor: Colors.grey.shade900,
+                title: Text(
+                  'Reading Mode',
+                  style: TextStyle(
+                    color: kPrimaryWhiteColor,
+                    fontSize: 18,
+                  ),
+                ),
+                contentPadding: EdgeInsets.only(left: 10, top: 10),
+                content: Container(
+                  height: 200,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Left to Right',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Left to Right',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Right to Left',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Right to Left',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Vertical',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Vertical',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Vertical Continuous',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Vertical Continuous',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  FlatButton(
+                    child: Text(
+                      'OK',
+                      style: TextStyle(
+                        color: kPrimaryPurpleColor,
+                        fontSize: 18,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        });
+  }
+
+  String _selectedDark = 'On';
+
+  void _showDarkcontent() {
+    showDialog(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return AlertDialog(
+                backgroundColor: Colors.grey.shade900,
+                title: Text(
+                  'Dark Mode',
+                  style: TextStyle(
+                    color: kPrimaryWhiteColor,
+                    fontSize: 18,
+                  ),
+                ),
+                contentPadding: EdgeInsets.only(left: 10, top: 10),
+                content: Container(
+                  height: 100,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'On',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'On',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Off',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Off',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  FlatButton(
+                    child: Text(
+                      'OK',
+                      style: TextStyle(
+                        color: kPrimaryPurpleColor,
+                        fontSize: 18,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        });
+  }
+
+  String _selectedLanguage = 'english';
+
+  void _showLanguagecontent() {
+    showDialog(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return AlertDialog(
+                backgroundColor: Colors.grey.shade900,
+                title: Text(
+                  'Language',
+                  style: TextStyle(
+                    color: kPrimaryWhiteColor,
+                    fontSize: 18,
+                  ),
+                ),
+                contentPadding: EdgeInsets.only(left: 10, top: 10),
+                content: Container(
+                  height: 250,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'English',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'English',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Italiano',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Italiano',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Francasis',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Francsis',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Deutsch',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Deutsch',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Portugues do Brasil',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Portugues do Brasil',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  FlatButton(
+                    child: Text(
+                      'OK',
+                      style: TextStyle(
+                        color: kPrimaryPurpleColor,
+                        fontSize: 18,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        });
+  }
+
+  String _selectedSource = 'ComickFun';
+
+  void _showSourcecontent() {
+    showDialog(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return AlertDialog(
+                backgroundColor: Colors.grey.shade900,
+                title: Text(
+                  'Source',
+                  style: TextStyle(
+                    color: kPrimaryWhiteColor,
+                    fontSize: 18,
+                  ),
+                ),
+                contentPadding: EdgeInsets.only(left: 10, top: 10),
+                content: Container(
+                  height: 100,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'ComickFun',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'ComickFun',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Mangakakalot',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Mangakakalot',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  FlatButton(
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(
+                        color: kPrimaryPurpleColor,
+                        fontSize: 18,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        });
   }
 }

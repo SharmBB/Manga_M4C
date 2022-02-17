@@ -9,6 +9,7 @@ import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Browser/browser.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/Library/library.dart';
+import 'package:mangakiku_app/views/Setting/setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LeaderBoardScreen extends StatefulWidget {
@@ -37,7 +38,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
 //bottom navigation bar icons
   List<IconData> listOfIcons = [
     Icons.home_rounded,
-    Icons.description_outlined,
+    Icons.settings,
     Icons.account_box,
     Icons.library_add_rounded,
     Icons.leaderboard,
@@ -234,7 +235,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                   if (currentIndex == 1) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Browser()),
+                      MaterialPageRoute(builder: (context) => Setting()),
                     );
                   } else if (currentIndex == 2) {
                     Navigator.push(

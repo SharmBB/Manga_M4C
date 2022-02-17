@@ -33,6 +33,7 @@ dependencies:
   firebase_database: ^9.0.6
 
   flutter_local_notifications: ^9.3.1
+  share: ^2.0.4
 
   
   
@@ -45,6 +46,11 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^1.0.0
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.jpg"
   
 
 # The following section is specific to Flutter.
@@ -57,6 +63,7 @@ flutter:
     
 
      - assets/
+     - assets/icon/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

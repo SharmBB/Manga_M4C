@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
   @override
   initState() {
     _apiMangaDetails();
-    _getUserDetails();
+ //   _getUserDetails();
     super.initState();
   }
 
@@ -1355,13 +1355,7 @@ class _HomePageState extends State<HomePage> {
 //get manga details from api
   void _apiMangaDetails() async {
     try {
-      //Setting API
-      ApiSetting.clear();
-      var resSetting = await CallApi().getApiSetting('getApiSetting');
-      var bodyRoutesSetting = json.decode(resSetting.body);
-      ApiSetting.add(bodyRoutesSetting);
-      ApiSetting[0]['value'] = 0;
-      print(ApiSetting[0]['value']);
+     
 
       //Hot Manga API
       manga.clear();
@@ -1387,6 +1381,14 @@ class _HomePageState extends State<HomePage> {
       var bodyRoutesRating = json.decode(resRating.body);
       RatingManga.add(bodyRoutesRating);
 
+       //Setting API
+      ApiSetting.clear();
+      var resSetting = await CallApi().getApiSetting('getApiSetting');
+      var bodyRoutesSetting = json.decode(resSetting.body);
+      ApiSetting.add(bodyRoutesSetting);
+     //  ApiSetting[0]['value'] = 0;
+      print(ApiSetting[0]['value']);
+
       setState(() {
         _isLoading = false;
       });
@@ -1400,3 +1402,4 @@ void _navigator(BuildContext context, add) async {
   final result = await Navigator.push(
       context, MaterialPageRoute(builder: (context) => add));
 }
+

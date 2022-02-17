@@ -10,6 +10,7 @@ import 'package:mangakiku_app/views/Browser/browser.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
 import 'package:mangakiku_app/views/Library/library.dart';
+import 'package:mangakiku_app/views/Setting/setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Account extends StatefulWidget {
@@ -33,7 +34,7 @@ class _AccountState extends State<Account> {
 //bottom navigation bar icons
   List<IconData> listOfIcons = [
     Icons.home_rounded,
-    Icons.description_outlined,
+    Icons.settings,
     Icons.account_box,
     Icons.library_add_rounded,
     Icons.leaderboard,
@@ -668,7 +669,7 @@ class _AccountState extends State<Account> {
                   if (currentIndex == 1) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Browser()),
+                      MaterialPageRoute(builder: (context) => Setting()),
                     );
                   } else if (currentIndex == 2) {
                     Navigator.push(
