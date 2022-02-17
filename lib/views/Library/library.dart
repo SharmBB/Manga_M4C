@@ -1,11 +1,9 @@
 import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
-import 'package:mangakiku_app/component/libraryImage.dart';
 import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Browser/browser.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
@@ -20,7 +18,6 @@ class Library extends StatefulWidget {
 }
 
 class _LeaderBoardScreenState extends State<Library> {
-  // _LeaderBoardScreenState();
   var currentIndex = 0;
   int selectedIndex = 0;
 
@@ -34,9 +31,6 @@ class _LeaderBoardScreenState extends State<Library> {
 
   List _getLibrary = [];
   List _getFavourite = [];
-  // List chapterUsingID = [];
-  // List chaptersFromDB = [];
-  // List chapterLanguage = [];
 
   int bottomPurple = 3;
 
@@ -89,69 +83,41 @@ class _LeaderBoardScreenState extends State<Library> {
                 radius: 15,
               ),
             ))
-          // : SingleChildScrollView(
-          //     child: Column(children: <Widget>[
-          //     DefaultTabController(
-          //         length: 2, // length of tabs
-          //         initialIndex: 0,
-          //         child: Column(children: <Widget>[
-          //           Container(
-          //             child: TabBar(
-          //               labelColor: Colors.purple[900],
-          //               unselectedLabelColor: Colors.white,
-          //               tabs: [
-          //                 Tab(
-          //                   text: 'Library',
-          //                 ),
-          //                 Tab(text: 'History'),
-
-          //               ],
-          //             ),
-          //           ),
-          //           Container(
-          //             height: screenHeight, //height of TabBarView
-          //             decoration: BoxDecoration(
-          //                 border: Border(
-          //                     top: BorderSide(
-          //                         color: Colors.purple, width: 0.5))),
-          //             child: TabBarView(children: <Widget>[
-          //               Padding(
-          //                 padding: const EdgeInsets.all(8.0),
           : SingleChildScrollView(
-              child: Column(children: <Widget>[
-                DefaultTabController(
-                    length: 2, // length of tabs
+              child: Column(
+                children: <Widget>[
+                  DefaultTabController(
+                    length: 2,
                     initialIndex: 0,
                     child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          Container(
-                            height: 30,
-                            child: TabBar(
-                              indicatorSize: TabBarIndicatorSize.tab,
-                              indicator: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(0),
-                                      topRight: Radius.circular(0)),
-                                  color: Colors.purple[900]),
-                              // labelColor: Colors.purple[900],
-
-                              unselectedLabelColor: Colors.grey,
-                              tabs: [
-                                Tab(
-                                  text: 'My Library',
-                                ),
-                                Tab(text: 'Favourites'),
-                              ],
-                            ),
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Container(
+                          height: 30,
+                          child: TabBar(
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            indicator: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(0),
+                                    topRight: Radius.circular(0)),
+                                color: Colors.purple[900]),
+                            unselectedLabelColor: Colors.grey,
+                            tabs: [
+                              Tab(
+                                text: 'My Library',
+                              ),
+                              Tab(text: 'Favourites'),
+                            ],
                           ),
-                          Container(
-                            height: 400, //height of TabBarView
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    top: BorderSide(
-                                        color: Colors.purple, width: 0.5))),
-                            child: TabBarView(children: <Widget>[
+                        ),
+                        Container(
+                          height: 400,
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  top: BorderSide(
+                                      color: Colors.purple, width: 0.5))),
+                          child: TabBarView(
+                            children: <Widget>[
                               Column(
                                 children: <Widget>[
                                   Padding(
@@ -253,25 +219,6 @@ class _LeaderBoardScreenState extends State<Library> {
                                                                   ),
                                                                 ],
                                                               ),
-                                                              // SizedBox(width: 45),
-                                                              // Text(
-                                                              //   ".",
-                                                              //   style: TextStyle(
-                                                              //     fontSize: 13,
-                                                              //     color:
-                                                              //         kPrimaryWhiteColor,
-                                                              //   ),
-                                                              // ),
-                                                              // SizedBox(width: 25),
-                                                              // Text(
-                                                              //   _manga[0]
-                                                              //       ['title'],
-                                                              //   style: TextStyle(
-                                                              //     fontSize: 12,
-                                                              //     color:
-                                                              //         kPrimaryWhiteColor,
-                                                              //   ),
-                                                              // ),
                                                             ],
                                                           ),
                                                         ),
@@ -281,62 +228,56 @@ class _LeaderBoardScreenState extends State<Library> {
                                                 ),
                                               ),
                                               Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            0.0),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Colors.black26,
-                                                        blurRadius: 6.0,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  child: ClipRRect(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          0.0),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.black26,
+                                                      blurRadius: 6.0,
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          00.0),
+                                                  child: InkWell(
+                                                    onTap: () {},
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             00.0),
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        // print(ViewManga[0][index]);
-                                                        // _navigator(
-                                                        //     context,
-                                                        //     Chapter(
-                                                        //         [ViewManga[0][index]]));
-                                                      },
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              00.0),
-                                                      child: CachedNetworkImage(
-                                                          height: 250,
-                                                          width: 180,
-                                                          imageUrl:
-                                                              _getLibrary[index]
-                                                                      ['image']
-                                                                  .toString(),
-                                                          imageBuilder: (context,
-                                                                  imageProvider) =>
-                                                              Container(
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5),
-                                                                  image: DecorationImage(
-                                                                      image:
-                                                                          imageProvider,
-                                                                      fit: BoxFit
-                                                                          .fill),
-                                                                ),
+                                                    child: CachedNetworkImage(
+                                                        height: 250,
+                                                        width: 180,
+                                                        imageUrl:
+                                                            _getLibrary[index]
+                                                                    ['image']
+                                                                .toString(),
+                                                        imageBuilder: (context,
+                                                                imageProvider) =>
+                                                            Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5),
+                                                                image: DecorationImage(
+                                                                    image:
+                                                                        imageProvider,
+                                                                    fit: BoxFit
+                                                                        .fill),
                                                               ),
-                                                          errorWidget: (context,
-                                                                  url, error) =>
-                                                              Icon(
-                                                                  Icons.error)),
-                                                    ),
-                                                  )),
+                                                            ),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons.error)),
+                                                  ),
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         );
@@ -345,7 +286,6 @@ class _LeaderBoardScreenState extends State<Library> {
                                   ),
                                 ],
                               ),
-                              //   CharacterPage(),
                               Column(
                                 children: <Widget>[
                                   Padding(
@@ -447,25 +387,6 @@ class _LeaderBoardScreenState extends State<Library> {
                                                                   ),
                                                                 ],
                                                               ),
-                                                              // SizedBox(width: 45),
-                                                              // Text(
-                                                              //   ".",
-                                                              //   style: TextStyle(
-                                                              //     fontSize: 13,
-                                                              //     color:
-                                                              //         kPrimaryWhiteColor,
-                                                              //   ),
-                                                              // ),
-                                                              // SizedBox(width: 25),
-                                                              // Text(
-                                                              //   _manga[0]
-                                                              //       ['title'],
-                                                              //   style: TextStyle(
-                                                              //     fontSize: 12,
-                                                              //     color:
-                                                              //         kPrimaryWhiteColor,
-                                                              //   ),
-                                                              // ),
                                                             ],
                                                           ),
                                                         ),
@@ -475,63 +396,56 @@ class _LeaderBoardScreenState extends State<Library> {
                                                 ),
                                               ),
                                               Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            0.0),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Colors.black26,
-                                                        blurRadius: 6.0,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  child: ClipRRect(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          0.0),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.black26,
+                                                      blurRadius: 6.0,
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          00.0),
+                                                  child: InkWell(
+                                                    onTap: () {},
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             00.0),
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        // print(ViewManga[0][index]);
-                                                        // _navigator(
-                                                        //     context,
-                                                        //     Chapter(
-                                                        //         [ViewManga[0][index]]));
-                                                      },
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              00.0),
-                                                      child: CachedNetworkImage(
-                                                          height: 250,
-                                                          width: 180,
-                                                          imageUrl:
-                                                              _getFavourite[
-                                                                          index]
-                                                                      ['image']
-                                                                  .toString(),
-                                                          imageBuilder: (context,
-                                                                  imageProvider) =>
-                                                              Container(
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5),
-                                                                  image: DecorationImage(
-                                                                      image:
-                                                                          imageProvider,
-                                                                      fit: BoxFit
-                                                                          .fill),
-                                                                ),
+                                                    child: CachedNetworkImage(
+                                                        height: 250,
+                                                        width: 180,
+                                                        imageUrl:
+                                                            _getFavourite[index]
+                                                                    ['image']
+                                                                .toString(),
+                                                        imageBuilder: (context,
+                                                                imageProvider) =>
+                                                            Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5),
+                                                                image: DecorationImage(
+                                                                    image:
+                                                                        imageProvider,
+                                                                    fit: BoxFit
+                                                                        .fill),
                                                               ),
-                                                          errorWidget: (context,
-                                                                  url, error) =>
-                                                              Icon(
-                                                                  Icons.error)),
-                                                    ),
-                                                  )),
+                                                            ),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons.error)),
+                                                  ),
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         );
@@ -540,21 +454,14 @@ class _LeaderBoardScreenState extends State<Library> {
                                   ),
                                 ],
                               ),
-                            ]),
-                          )
-                        ])),
-                // ),
-                // Center(
-                //     child: Text(
-                //   "History",
-                //   style: TextStyle(fontSize: 20, color: Colors.white),
-                // )),
-                // Center(
-                //     child: Text(
-                //   "Updates",
-                //   style: TextStyle(fontSize: 20, color: Colors.white),
-                // )),
-              ]),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
       bottomNavigationBar: Container(
         margin: EdgeInsets.all(20),
@@ -637,16 +544,12 @@ class _LeaderBoardScreenState extends State<Library> {
       _isLoading = true;
     });
     try {
+      //library
       _getLibrary.clear();
-
       var bodyRoutes;
-
       var res = await CallApi().getUserLibrary('getUserLibrary');
       bodyRoutes = json.decode(res.body);
-
       _getLibrary = bodyRoutes;
-      // print(_getLibrary);
-      //  print(_getComments[0].last['comments']);
     } catch (e) {
       print(e);
     }
@@ -666,10 +569,8 @@ class _LeaderBoardScreenState extends State<Library> {
       var bodyRoutes;
       var res = await CallApi().getUserFavourite('getUserFavourite');
       bodyRoutes = json.decode(res.body);
-
       _getFavourite = bodyRoutes;
       print(_getFavourite);
-      //  print(_getComments[0].last['comments']);
     } catch (e) {
       print(e);
     }

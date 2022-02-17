@@ -150,6 +150,15 @@ class CallApi {
     );
   }
 
+  //Get Comments
+  getApiSetting(apiUrl) async {
+    var fullUrl = Uri.parse(_urlAuth + apiUrl);
+    return await http.get(
+      fullUrl,
+      headers: _setHeaders(),
+    );
+  }
+
   //LeaderBoard
   getLeaderBoard(apiUrl) async {
     var fullUrl = Uri.parse(_urlAuth + apiUrl);

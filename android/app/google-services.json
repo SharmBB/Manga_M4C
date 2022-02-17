@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "796659639026",
+    "project_id": "mankakiku",
+    "storage_bucket": "mankakiku.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796659639026:android:c0a4407bcd270a9f40a66b",
+        "android_client_info": {
+          "package_name": "com.example.mangakiku_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "796659639026-2por18o40pifqf8rasqf6arpl98rf8fp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mangakiku_app",
+            "certificate_hash": "729cffe8691ad6feef98e9620ab640d76a02b678"
+          }
+        },
+        {
+          "client_id": "796659639026-j3cbars2aonnto0oivrkhm2cp26gohfu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAurmgR2kDlWRFtv_v6szu0xbnWGZgPMbU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "796659639026-j3cbars2aonnto0oivrkhm2cp26gohfu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

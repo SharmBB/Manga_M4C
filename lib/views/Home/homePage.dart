@@ -9,8 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
-import 'package:mangakiku_app/component/accountCard.dart';
-import 'package:mangakiku_app/component/bottomNavigationBar.dart';
+
 import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Browser/browser.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
@@ -44,6 +43,7 @@ class _HomePageState extends State<HomePage> {
   List Newmanga = [];
   List ViewManga = [];
   List RatingManga = [];
+  List ApiSetting = [];
 
   String token = "";
   String bio = "";
@@ -64,6 +64,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
     var image_manga = "https://cdn.statically.io/img/meo.comick.pictures/";
@@ -72,10 +74,10 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
+      appBar:  AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: Padding(
+        leading: ApiSetting[0]['value'] == 1? Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
               onTap: () {
@@ -90,8 +92,9 @@ class _HomePageState extends State<HomePage> {
                   "assets/profile-img.png",
                 ),
               ),
-            )),
+            )):SizedBox(),
         actions: <Widget>[
+          ApiSetting[0]['value'] ==1? 
           IconButton(
             icon: Icon(Icons.description_outlined, color: kPrimaryWhiteColor),
             onPressed: () {
@@ -100,7 +103,9 @@ class _HomePageState extends State<HomePage> {
                 MaterialPageRoute(builder: (context) => Account()),
               );
             },
-          ),
+          ):SizedBox(),
+
+          ApiSetting[0]['value'] ==1? 
           Padding(
             padding: const EdgeInsets.only(top: 10.0, right: 10, bottom: 10),
             child: Container(
@@ -119,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-          )
+          ):SizedBox()
         ],
       ),
       body: NotificationListener<OverscrollIndicatorNotification>(
@@ -233,1002 +238,1109 @@ class _HomePageState extends State<HomePage> {
                           viewportFraction: 0.8,
                         ),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 15, right: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Hot",
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: kPrimaryWhiteColor),
-                            ),
-                            Column(
+                      ApiSetting[0]['value'] == 1
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                InkWell(
-                                  highlightColor: Colors.transparent,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Browser(),
-                                      ),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8),
-                                    // child: Text(
-                                    //   " More >",
-                                    //   style: TextStyle(
-                                    //     color: kPrimaryGreyColor,
-                                    //     fontSize: 12,
-                                    //   ),
-                                    // ),
-                                  ),
+                                SizedBox(
+                                  height: 20,
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      //Seasonals mangas lists
-                      _isLoading
-                          ? Center(
-                              child: Padding(
-                              padding: const EdgeInsets.only(top: 30.0),
-                              child: CupertinoActivityIndicator(
-                                radius: 20,
-                              ),
-                            ))
-                          : Column(
-                              children: <Widget>[
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 20.0),
+                                Container(
+                                  margin: EdgeInsets.only(left: 15, right: 15),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[],
-                                  ),
-                                ),
-                                Container(
-                                  height: 360.0,
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: manga[0].length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Container(
-                                        margin: EdgeInsets.all(10.0),
-                                        width: 180.0,
-                                        child: Stack(
-                                          alignment: Alignment.topCenter,
-                                          children: <Widget>[
-                                            Positioned(
-                                              bottom: 15.0,
-                                              child: Container(
-                                                height: 120.0,
-                                                width: 200.0,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.grey[850],
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          0.0),
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsets.all(10.0),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: <Widget>[
-                                                      Text(
-                                                        manga[0][index]['md_comics']
-                                                                        [
-                                                                        'title']
-                                                                    .length <=
-                                                                20
-                                                            ? manga[0][index][
-                                                                        'md_comics']
-                                                                    ['title']
-                                                                .toString()
-                                                            : manga[0][index][
-                                                                        'md_comics']
-                                                                    ['title']
-                                                                .toString()
-                                                                .substring(
-                                                                    0, 20),
-                                                        style: TextStyle(
-                                                          color:
-                                                              kPrimaryWhiteColor,
-                                                          fontSize: 16.0,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 20.0),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                top: 10.0),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Text(
-                                                                  'ch ' +
-                                                                      manga[0][
-                                                                              index]
-                                                                          [
-                                                                          'chap'],
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color:
-                                                                        kPrimaryWhiteColor,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            //  SizedBox(width: 55),
-                                                            // Text(
-                                                            //   ".",
-                                                            //   style: TextStyle(
-                                                            //     fontSize: 13,
-                                                            //     color:
-                                                            //         kPrimaryWhiteColor,
-                                                            //   ),
-                                                            // ),
-                                                            SizedBox(width: 25),
-                                                            Text(
-                                                              ". " +
-                                                                  manga[0][
-                                                                          index]
-                                                                      [
-                                                                      'distanceTime'],
-                                                              style: TextStyle(
-                                                                fontSize: 12,
-                                                                color:
-                                                                    kPrimaryWhiteColor,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          0.0),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.black26,
-                                                      blurRadius: 6.0,
-                                                    ),
-                                                  ],
-                                                ),
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          00.0),
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      print(manga[0][index]);
-                                                      _navigator(
-                                                          context,
-                                                          DetailsScreen([
-                                                            manga[0][index]
-                                                          ]));
-                                                    },
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            00.0),
-                                                    child: CachedNetworkImage(
-                                                        height: 250,
-                                                        width: 180,
-                                                        imageUrl: manga[0]
-                                                                        [index]
-                                                                    [
-                                                                    'md_comics']
-                                                                ['md_covers'][0]
-                                                            ['gpurl'],
-                                                        imageBuilder: (context,
-                                                                imageProvider) =>
-                                                            Container(
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5),
-                                                                image: DecorationImage(
-                                                                    image:
-                                                                        imageProvider,
-                                                                    fit: BoxFit
-                                                                        .cover),
-                                                              ),
-                                                            ),
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            Icon(Icons.error)),
-                                                  ),
-                                                ))
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 15, right: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "New",
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: kPrimaryWhiteColor),
-                            ),
-                            Column(
-                              children: [
-                                InkWell(
-                                  highlightColor: Colors.transparent,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Browser(),
+                                    children: [
+                                      Text(
+                                        "Hot",
+                                        style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            color: kPrimaryWhiteColor),
                                       ),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8),
-                                    // child: Text(
-                                    //   " More >",
-                                    //   style: TextStyle(
-                                    //     color: kPrimaryGreyColor,
-                                    //     fontSize: 12,
-                                    //   ),
-                                    // ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[],
-                            ),
-                          ),
-                          Container(
-                            height: 360.0,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: Newmanga[0].length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                  margin: EdgeInsets.all(10.0),
-                                  width: 180.0,
-                                  child: Stack(
-                                    alignment: Alignment.topCenter,
-                                    children: <Widget>[
-                                      Positioned(
-                                        bottom: 15.0,
-                                        child: Container(
-                                          height: 120.0,
-                                          width: 200.0,
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey[850],
-                                            borderRadius:
-                                                BorderRadius.circular(0.0),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(10.0),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text(
-                                                  Newmanga[0][index]['md_comics']
-                                                                  ['title']
-                                                              .length <=
-                                                          20
-                                                      ? Newmanga[0][index]
-                                                                  ['md_comics']
-                                                              ['title']
-                                                          .toString()
-                                                      : Newmanga[0][index]
-                                                                  ['md_comics']
-                                                              ['title']
-                                                          .toString()
-                                                          .substring(0, 20),
-                                                  style: TextStyle(
-                                                    color: kPrimaryWhiteColor,
-                                                    fontSize: 16.0,
-                                                  ),
+                                      Column(
+                                        children: [
+                                          InkWell(
+                                            highlightColor: Colors.transparent,
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Browser(),
                                                 ),
-                                                SizedBox(height: 20.0),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 10.0),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            'ch ' +
-                                                                Newmanga[0]
-                                                                        [index]
-                                                                    ['chap'],
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              color:
-                                                                  kPrimaryWhiteColor,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-
-                                                      // Text(
-                                                      //   ".",
-                                                      //   style: TextStyle(
-                                                      //     fontSize: 13,
-                                                      //     color:
-                                                      //         kPrimaryWhiteColor,
-                                                      //   ),
-                                                      // ),
-                                                      SizedBox(width: 25),
-                                                      Text(
-                                                        ". " +
-                                                            Newmanga[0][index][
-                                                                'distanceTime'],
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          color:
-                                                              kPrimaryWhiteColor,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
+                                              );
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 8),
+                                              // child: Text(
+                                              //   " More >",
+                                              //   style: TextStyle(
+                                              //     color: kPrimaryGreyColor,
+                                              //     fontSize: 12,
+                                              //   ),
+                                              // ),
                                             ),
                                           ),
-                                        ),
+                                        ],
                                       ),
-                                      Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(0.0),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.black26,
-                                                blurRadius: 6.0,
-                                              ),
-                                            ],
-                                          ),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(00.0),
-                                            child: InkWell(
-                                              onTap: () {
-                                                print(Newmanga[0][index]);
-                                                _navigator(
-                                                    context,
-                                                    DetailsScreen(
-                                                        [Newmanga[0][index]]));
-                                              },
-                                              borderRadius:
-                                                  BorderRadius.circular(00.0),
-                                              child: CachedNetworkImage(
-                                                  height: 250,
-                                                  width: 180,
-                                                  imageUrl: Newmanga[0][index]
-                                                          ['md_comics']
-                                                      ['md_covers'][0]['gpurl'],
-                                                  imageBuilder: (context,
-                                                          imageProvider) =>
-                                                      Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
-                                                          image: DecorationImage(
-                                                              image:
-                                                                  imageProvider,
-                                                              fit:
-                                                                  BoxFit.cover),
-                                                        ),
-                                                      ),
-                                                  errorWidget:
-                                                      (context, url, error) =>
-                                                          Icon(Icons.error)),
-                                            ),
-                                          ))
                                     ],
                                   ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 15, right: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Recently Added",
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: kPrimaryWhiteColor),
-                            ),
-                            Column(
-                              children: [
-                                InkWell(
-                                  highlightColor: Colors.transparent,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Browser(),
-                                      ),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8),
-                                    // child: Text(
-                                    //   " More >",
-                                    //   style: TextStyle(
-                                    //     color: kPrimaryGreyColor,
-                                    //     fontSize: 12,
-                                    //   ),
-                                    // ),
-                                  ),
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[],
-                            ),
-                          ),
-                          Container(
-                            height: 360.0,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: ViewManga[0].length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                  margin: EdgeInsets.all(10.0),
-                                  width: 180.0,
-                                  child: Stack(
-                                    alignment: Alignment.topCenter,
-                                    children: <Widget>[
-                                      Positioned(
-                                        bottom: 15.0,
-                                        child: Container(
-                                          height: 120.0,
-                                          width: 200.0,
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey[850],
-                                            borderRadius:
-                                                BorderRadius.circular(0.0),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(10.0),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text(
-                                                  ViewManga[0][index]['title']
-                                                              .length <=
-                                                          20
-                                                      ? ViewManga[0][index]
-                                                              ['title']
-                                                          .toString()
-                                                      : ViewManga[0][index]
-                                                              ['title']
-                                                          .toString()
-                                                          .substring(0, 20),
-                                                  style: TextStyle(
-                                                    color: kPrimaryWhiteColor,
-                                                    fontSize: 16.0,
-                                                  ),
-                                                ),
-                                                SizedBox(height: 20.0),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 10.0),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            'ch ' +
-                                                                ViewManga[0]
-                                                                        [index][
-                                                                    'last_chapter'],
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              color:
-                                                                  kPrimaryWhiteColor,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      // SizedBox(width: 45),
-                                                      // Text(
-                                                      //   ".",
-                                                      //   style: TextStyle(
-                                                      //     fontSize: 13,
-                                                      //     color:
-                                                      //         kPrimaryWhiteColor,
-                                                      //   ),
-                                                      // ),
-                                                      // SizedBox(width: 25),
-                                                      Text(
-                                                        ". " +
-                                                            Newmanga[0][index][
-                                                                'distanceTime'],
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          color:
-                                                              kPrimaryWhiteColor,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                //Seasonals mangas lists
+                                _isLoading
+                                    ? Center(
+                                        child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 30.0),
+                                        child: CupertinoActivityIndicator(
+                                          radius: 20,
                                         ),
-                                      ),
-                                      Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(0.0),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.black26,
-                                                blurRadius: 6.0,
-                                              ),
-                                            ],
-                                          ),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(00.0),
-                                            child: InkWell(
-                                              onTap: () {
-                                                print(ViewManga[0][index]);
-                                                _navigator(
-                                                    context,
-                                                    Chapter(
-                                                        [ViewManga[0][index]]));
-                                              },
-                                              borderRadius:
-                                                  BorderRadius.circular(00.0),
-                                              child: CachedNetworkImage(
-                                                  height: 250,
-                                                  width: 180,
-                                                  imageUrl: ViewManga[0][index]
-                                                      ['md_covers'][0]['gpurl'],
-                                                  imageBuilder: (context,
-                                                          imageProvider) =>
-                                                      Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
-                                                          image: DecorationImage(
-                                                              image:
-                                                                  imageProvider,
-                                                              fit:
-                                                                  BoxFit.cover),
-                                                        ),
-                                                      ),
-                                                  errorWidget:
-                                                      (context, url, error) =>
-                                                          Icon(Icons.error)),
+                                      ))
+                                    : Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 20.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: <Widget>[],
                                             ),
-                                          )),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 15, right: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Top MANGAS",
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: kPrimaryWhiteColor),
-                            ),
-                            Column(
-                              children: [
-                                InkWell(
-                                  highlightColor: Colors.transparent,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Browser(),
-                                      ),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8),
-                                    // child: Text(
-                                    //   " More >",
-                                    //   style: TextStyle(
-                                    //     color: kPrimaryGreyColor,
-                                    //     fontSize: 12,
-                                    //   ),
-                                    // ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      // MangakikuCard(),
-                      _isLoading
-                          ? Center(
-                              child: Padding(
-                              padding: const EdgeInsets.only(top: 30.0),
-                              child: CupertinoActivityIndicator(
-                                radius: 20,
-                              ),
-                            ))
-                          : Column(
-                              children: <Widget>[
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 20.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[],
-                                  ),
-                                ),
-                                Container(
-                                  height: 360.0,
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: 10,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Container(
-                                        margin: EdgeInsets.all(10.0),
-                                        width: 180.0,
-                                        child: Stack(
-                                          alignment: Alignment.topCenter,
-                                          children: <Widget>[
-                                            Positioned(
-                                              bottom: 15.0,
-                                              child: Container(
-                                                height: 120.0,
-                                                width: 200.0,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.grey[850],
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          0.0),
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsets.all(10.0),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                          ),
+                                          Container(
+                                            height: 360.0,
+                                            child: ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: manga[0].length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                return Container(
+                                                  margin: EdgeInsets.all(10.0),
+                                                  width: 180.0,
+                                                  child: Stack(
+                                                    alignment:
+                                                        Alignment.topCenter,
                                                     children: <Widget>[
-                                                      Text(
-                                                        RatingManga[0][index][
-                                                                        'title']
-                                                                    .length <=
-                                                                20
-                                                            ? RatingManga[0]
-                                                                        [index]
-                                                                    ['title']
-                                                                .toString()
-                                                            : RatingManga[0]
-                                                                        [index]
-                                                                    ['title']
-                                                                .toString()
-                                                                .substring(
-                                                                    0, 20),
-                                                        style: TextStyle(
-                                                          color:
-                                                              kPrimaryWhiteColor,
-                                                          fontSize: 16.0,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 20.0),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                top: 10.0),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Row(
+                                                      Positioned(
+                                                        bottom: 15.0,
+                                                        child: Container(
+                                                          height: 120.0,
+                                                          width: 200.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors
+                                                                .grey[850],
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        0.0),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    10.0),
+                                                            child: Column(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
+                                                                      .end,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: <
+                                                                  Widget>[
                                                                 Text(
-                                                                  'ch ' +
-                                                                      RatingManga[0]
+                                                                  manga[0][index]['md_comics']['title']
+                                                                              .length <=
+                                                                          20
+                                                                      ? manga[0][index]['md_comics']
                                                                               [
-                                                                              index]
-                                                                          [
-                                                                          'last_chapter'],
+                                                                              'title']
+                                                                          .toString()
+                                                                      : manga[0][index]['md_comics']
+                                                                              [
+                                                                              'title']
+                                                                          .toString()
+                                                                          .substring(
+                                                                              0,
+                                                                              20),
                                                                   style:
                                                                       TextStyle(
-                                                                    fontSize:
-                                                                        12,
                                                                     color:
                                                                         kPrimaryWhiteColor,
+                                                                    fontSize:
+                                                                        16.0,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                    height:
+                                                                        20.0),
+                                                                Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      top:
+                                                                          10.0),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            'ch ' +
+                                                                                manga[0][index]['chap'],
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 12,
+                                                                              color: kPrimaryWhiteColor,
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      //  SizedBox(width: 55),
+                                                                      // Text(
+                                                                      //   ".",
+                                                                      //   style: TextStyle(
+                                                                      //     fontSize: 13,
+                                                                      //     color:
+                                                                      //         kPrimaryWhiteColor,
+                                                                      //   ),
+                                                                      // ),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              25),
+                                                                      Text(
+                                                                        ". " +
+                                                                            manga[0][index]['distanceTime'],
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              12,
+                                                                          color:
+                                                                              kPrimaryWhiteColor,
+                                                                        ),
+                                                                      ),
+                                                                    ],
                                                                   ),
                                                                 ),
                                                               ],
                                                             ),
-                                                            // SizedBox(width: 45),
-                                                            // Text(
-                                                            //   ".",
-                                                            //   style: TextStyle(
-                                                            //     fontSize: 13,
-                                                            //     color:
-                                                            //         kPrimaryWhiteColor,
-                                                            //   ),
-                                                            // ),
-                                                            // SizedBox(width: 25),
-                                                            Text(
-                                                              ". " +
-                                                                  Newmanga[0][
-                                                                          index]
-                                                                      [
-                                                                      'distanceTime'],
-                                                              style: TextStyle(
-                                                                fontSize: 12,
-                                                                color:
-                                                                    kPrimaryWhiteColor,
-                                                              ),
-                                                            ),
-                                                          ],
+                                                          ),
                                                         ),
                                                       ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(0.0),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.black26,
-                                                    blurRadius: 6.0,
-                                                  ),
-                                                ],
-                                              ),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(00.0),
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    _navigator(
-                                                        context,
-                                                        Chapter([
-                                                          RatingManga[0][index]
-                                                        ]));
-                                                  },
-                                                  child: CachedNetworkImage(
-                                                      height: 250,
-                                                      width: 180,
-                                                      imageUrl: RatingManga[0]
-                                                                  [index]
-                                                              ['md_covers'][0]
-                                                          ['gpurl'],
-                                                      imageBuilder: (context,
-                                                              imageProvider) =>
-                                                          Container(
-                                                            decoration:
-                                                                BoxDecoration(
+                                                      Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors.white,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        0.0),
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                color: Colors
+                                                                    .black26,
+                                                                blurRadius: 6.0,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        00.0),
+                                                            child: InkWell(
+                                                              onTap: () {
+                                                                print(manga[0]
+                                                                    [index]);
+                                                                _navigator(
+                                                                    context,
+                                                                    DetailsScreen([
+                                                                      manga[0][
+                                                                          index]
+                                                                    ]));
+                                                              },
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          5),
-                                                              image: DecorationImage(
-                                                                  image:
-                                                                      imageProvider,
-                                                                  fit: BoxFit
-                                                                      .fill),
+                                                                          00.0),
+                                                              child:
+                                                                  CachedNetworkImage(
+                                                                      height:
+                                                                          250,
+                                                                      width:
+                                                                          180,
+                                                                      imageUrl: manga[0][index]['md_comics']['md_covers']
+                                                                              [
+                                                                              0]
+                                                                          [
+                                                                          'gpurl'],
+                                                                      imageBuilder:
+                                                                          (context, imageProvider) =>
+                                                                              Container(
+                                                                                decoration: BoxDecoration(
+                                                                                  borderRadius: BorderRadius.circular(5),
+                                                                                  image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                                                                                ),
+                                                                              ),
+                                                                      errorWidget: (context,
+                                                                              url,
+                                                                              error) =>
+                                                                          Icon(Icons
+                                                                              .error)),
                                                             ),
-                                                          ),
-                                                      errorWidget: (context,
-                                                              url, error) =>
-                                                          Icon(Icons.error)),
+                                                          ))
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(left: 15, right: 15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "New",
+                                        style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            color: kPrimaryWhiteColor),
+                                      ),
+                                      Column(
+                                        children: [
+                                          InkWell(
+                                            highlightColor: Colors.transparent,
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Browser(),
                                                 ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    },
+                                              );
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 8),
+                                              // child: Text(
+                                              //   " More >",
+                                              //   style: TextStyle(
+                                              //     color: kPrimaryGreyColor,
+                                              //     fontSize: 12,
+                                              //   ),
+                                              // ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
+
+                                Column(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[],
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 360.0,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: Newmanga[0].length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return Container(
+                                            margin: EdgeInsets.all(10.0),
+                                            width: 180.0,
+                                            child: Stack(
+                                              alignment: Alignment.topCenter,
+                                              children: <Widget>[
+                                                Positioned(
+                                                  bottom: 15.0,
+                                                  child: Container(
+                                                    height: 120.0,
+                                                    width: 200.0,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.grey[850],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              0.0),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.all(10.0),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: <Widget>[
+                                                          Text(
+                                                            Newmanga[0][index]['md_comics'][
+                                                                            'title']
+                                                                        .length <=
+                                                                    20
+                                                                ? Newmanga[0][index]
+                                                                            ['md_comics'][
+                                                                        'title']
+                                                                    .toString()
+                                                                : Newmanga[0][index]
+                                                                            ['md_comics']
+                                                                        [
+                                                                        'title']
+                                                                    .toString()
+                                                                    .substring(
+                                                                        0, 20),
+                                                            style: TextStyle(
+                                                              color:
+                                                                  kPrimaryWhiteColor,
+                                                              fontSize: 16.0,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                              height: 20.0),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    top: 10.0),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Text(
+                                                                      'ch ' +
+                                                                          Newmanga[0][index]
+                                                                              [
+                                                                              'chap'],
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        color:
+                                                                            kPrimaryWhiteColor,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+
+                                                                // Text(
+                                                                //   ".",
+                                                                //   style: TextStyle(
+                                                                //     fontSize: 13,
+                                                                //     color:
+                                                                //         kPrimaryWhiteColor,
+                                                                //   ),
+                                                                // ),
+                                                                SizedBox(
+                                                                    width: 25),
+                                                                Text(
+                                                                  ". " +
+                                                                      Newmanga[0]
+                                                                              [
+                                                                              index]
+                                                                          [
+                                                                          'distanceTime'],
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color:
+                                                                        kPrimaryWhiteColor,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              0.0),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.black26,
+                                                          blurRadius: 6.0,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              00.0),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          print(Newmanga[0]
+                                                              [index]);
+                                                          _navigator(
+                                                              context,
+                                                              DetailsScreen([
+                                                                Newmanga[0]
+                                                                    [index]
+                                                              ]));
+                                                        },
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(00.0),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                                height: 250,
+                                                                width: 180,
+                                                                imageUrl: Newmanga[0][index]
+                                                                            ['md_comics']
+                                                                        ['md_covers']
+                                                                    [
+                                                                    0]['gpurl'],
+                                                                imageBuilder:
+                                                                    (context,
+                                                                            imageProvider) =>
+                                                                        Container(
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(5),
+                                                                            image:
+                                                                                DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                                                                          ),
+                                                                        ),
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Icon(Icons
+                                                                        .error)),
+                                                      ),
+                                                    ))
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(left: 15, right: 15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Recently Added",
+                                        style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            color: kPrimaryWhiteColor),
+                                      ),
+                                      Column(
+                                        children: [
+                                          InkWell(
+                                            highlightColor: Colors.transparent,
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Browser(),
+                                                ),
+                                              );
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 8),
+                                              // child: Text(
+                                              //   " More >",
+                                              //   style: TextStyle(
+                                              //     color: kPrimaryGreyColor,
+                                              //     fontSize: 12,
+                                              //   ),
+                                              // ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[],
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 360.0,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: ViewManga[0].length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return Container(
+                                            margin: EdgeInsets.all(10.0),
+                                            width: 180.0,
+                                            child: Stack(
+                                              alignment: Alignment.topCenter,
+                                              children: <Widget>[
+                                                Positioned(
+                                                  bottom: 15.0,
+                                                  child: Container(
+                                                    height: 120.0,
+                                                    width: 200.0,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.grey[850],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              0.0),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.all(10.0),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: <Widget>[
+                                                          Text(
+                                                            ViewManga[0][index][
+                                                                            'title']
+                                                                        .length <=
+                                                                    20
+                                                                ? ViewManga[0][
+                                                                            index]
+                                                                        [
+                                                                        'title']
+                                                                    .toString()
+                                                                : ViewManga[0][
+                                                                            index]
+                                                                        [
+                                                                        'title']
+                                                                    .toString()
+                                                                    .substring(
+                                                                        0, 20),
+                                                            style: TextStyle(
+                                                              color:
+                                                                  kPrimaryWhiteColor,
+                                                              fontSize: 16.0,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                              height: 20.0),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    top: 10.0),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Text(
+                                                                      'ch ' +
+                                                                          ViewManga[0][index]
+                                                                              [
+                                                                              'last_chapter'],
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        color:
+                                                                            kPrimaryWhiteColor,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                // SizedBox(width: 45),
+                                                                // Text(
+                                                                //   ".",
+                                                                //   style: TextStyle(
+                                                                //     fontSize: 13,
+                                                                //     color:
+                                                                //         kPrimaryWhiteColor,
+                                                                //   ),
+                                                                // ),
+                                                                // SizedBox(width: 25),
+                                                                Text(
+                                                                  ". " +
+                                                                      Newmanga[0]
+                                                                              [
+                                                                              index]
+                                                                          [
+                                                                          'distanceTime'],
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color:
+                                                                        kPrimaryWhiteColor,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              0.0),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.black26,
+                                                          blurRadius: 6.0,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              00.0),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          print(ViewManga[0]
+                                                              [index]);
+                                                          _navigator(
+                                                              context,
+                                                              Chapter([
+                                                                ViewManga[0]
+                                                                    [index]
+                                                              ]));
+                                                        },
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(00.0),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                                height: 250,
+                                                                width: 180,
+                                                                imageUrl: ViewManga[0]
+                                                                            [index]
+                                                                        [
+                                                                        'md_covers']
+                                                                    [
+                                                                    0]['gpurl'],
+                                                                imageBuilder:
+                                                                    (context,
+                                                                            imageProvider) =>
+                                                                        Container(
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(5),
+                                                                            image:
+                                                                                DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                                                                          ),
+                                                                        ),
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Icon(Icons
+                                                                        .error)),
+                                                      ),
+                                                    )),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(left: 15, right: 15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Top MANGAS",
+                                        style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            color: kPrimaryWhiteColor),
+                                      ),
+                                      Column(
+                                        children: [
+                                          InkWell(
+                                            highlightColor: Colors.transparent,
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Browser(),
+                                                ),
+                                              );
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 8),
+                                              // child: Text(
+                                              //   " More >",
+                                              //   style: TextStyle(
+                                              //     color: kPrimaryGreyColor,
+                                              //     fontSize: 12,
+                                              //   ),
+                                              // ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                // MangakikuCard(),
+                                _isLoading
+                                    ? Center(
+                                        child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 30.0),
+                                        child: CupertinoActivityIndicator(
+                                          radius: 20,
+                                        ),
+                                      ))
+                                    : Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 20.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: <Widget>[],
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 360.0,
+                                            child: ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: 10,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                return Container(
+                                                  margin: EdgeInsets.all(10.0),
+                                                  width: 180.0,
+                                                  child: Stack(
+                                                    alignment:
+                                                        Alignment.topCenter,
+                                                    children: <Widget>[
+                                                      Positioned(
+                                                        bottom: 15.0,
+                                                        child: Container(
+                                                          height: 120.0,
+                                                          width: 200.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors
+                                                                .grey[850],
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        0.0),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    10.0),
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: <
+                                                                  Widget>[
+                                                                Text(
+                                                                  RatingManga[0][index]['title']
+                                                                              .length <=
+                                                                          20
+                                                                      ? RatingManga[0][index]
+                                                                              [
+                                                                              'title']
+                                                                          .toString()
+                                                                      : RatingManga[0][index]
+                                                                              [
+                                                                              'title']
+                                                                          .toString()
+                                                                          .substring(
+                                                                              0,
+                                                                              20),
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color:
+                                                                        kPrimaryWhiteColor,
+                                                                    fontSize:
+                                                                        16.0,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                    height:
+                                                                        20.0),
+                                                                Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      top:
+                                                                          10.0),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            'ch ' +
+                                                                                RatingManga[0][index]['last_chapter'],
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 12,
+                                                                              color: kPrimaryWhiteColor,
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      // SizedBox(width: 45),
+                                                                      // Text(
+                                                                      //   ".",
+                                                                      //   style: TextStyle(
+                                                                      //     fontSize: 13,
+                                                                      //     color:
+                                                                      //         kPrimaryWhiteColor,
+                                                                      //   ),
+                                                                      // ),
+                                                                      // SizedBox(width: 25),
+                                                                      Text(
+                                                                        ". " +
+                                                                            Newmanga[0][index]['distanceTime'],
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              12,
+                                                                          color:
+                                                                              kPrimaryWhiteColor,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      0.0),
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              color: Colors
+                                                                  .black26,
+                                                              blurRadius: 6.0,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      00.0),
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              _navigator(
+                                                                  context,
+                                                                  Chapter([
+                                                                    RatingManga[
+                                                                            0]
+                                                                        [index]
+                                                                  ]));
+                                                            },
+                                                            child:
+                                                                CachedNetworkImage(
+                                                                    height: 250,
+                                                                    width: 180,
+                                                                    imageUrl: RatingManga[0][index]
+                                                                            [
+                                                                            'md_covers'][0]
+                                                                        [
+                                                                        'gpurl'],
+                                                                    imageBuilder:
+                                                                        (context,
+                                                                                imageProvider) =>
+                                                                            Container(
+                                                                              decoration: BoxDecoration(
+                                                                                borderRadius: BorderRadius.circular(5),
+                                                                                image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
+                                                                              ),
+                                                                            ),
+                                                                    errorWidget: (context,
+                                                                            url,
+                                                                            error) =>
+                                                                        Icon(Icons
+                                                                            .error)),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                               ],
-                            ),
+                            )
+                          : SizedBox(),
                     ],
                   ),
           )),
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.all(20),
-        height: screenWidth * .155,
-        decoration: BoxDecoration(
-          color: Colors.grey[900],
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0),
-              blurRadius: 30,
-              offset: Offset(0, 10),
-            ),
-          ],
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: ListView.builder(
-          itemCount: 5,
-          scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * .034),
-          itemBuilder: (context, index) => InkWell(
-            onTap: () {
-              setState(
-                () {
-                  currentIndex = index;
-                  print(currentIndex);
-                  if (currentIndex == 1) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Setting()),
+      bottomNavigationBar: ApiSetting[0]['value'] == 1
+          ? Container(
+              margin: EdgeInsets.all(20),
+              height: screenWidth * .155,
+              decoration: BoxDecoration(
+                color: Colors.grey[900],
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0),
+                    blurRadius: 30,
+                    offset: Offset(0, 10),
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: ListView.builder(
+                itemCount: 5,
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * .034),
+                itemBuilder: (context, index) => InkWell(
+                  onTap: () {
+                    setState(
+                      () {
+                        currentIndex = index;
+                        print(currentIndex);
+                        if (currentIndex == 1) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Setting()),
+                          );
+                        } else if (currentIndex == 2) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Account()),
+                          );
+                        } else if (currentIndex == 3) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Library()),
+                          );
+                        } else if (currentIndex == 4) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LeaderBoardScreen()),
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePage()),
+                          );
+                        }
+                      },
                     );
-                  } else if (currentIndex == 2) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Account()),
-                    );
-                  } else if (currentIndex == 3) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Library()),
-                    );
-                  } else if (currentIndex == 4) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => LeaderBoardScreen()),
-                    );
-                  } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                    );
-                  }
-                },
-              );
-            },
-            child: Stack(
-              children: [
-                Container(
-                  width: screenWidth * .1700,
-                  alignment: Alignment.center,
-                  child: Icon(
-                    listOfIcons[index],
-                    size: screenWidth * .076,
-                    color: index == bottomPurple
-                        ? kPrimaryPurpleColor
-                        : Colors.white,
+                  },
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: screenWidth * .1700,
+                        alignment: Alignment.center,
+                        child: Icon(
+                          listOfIcons[index],
+                          size: screenWidth * .076,
+                          color: index == bottomPurple
+                              ? kPrimaryPurpleColor
+                              : Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-      ),
+              ),
+            )
+          : SizedBox(),
     );
   }
 
@@ -1243,6 +1355,14 @@ class _HomePageState extends State<HomePage> {
 //get manga details from api
   void _apiMangaDetails() async {
     try {
+      //Setting API
+      ApiSetting.clear();
+      var resSetting = await CallApi().getApiSetting('getApiSetting');
+      var bodyRoutesSetting = json.decode(resSetting.body);
+      ApiSetting.add(bodyRoutesSetting);
+      ApiSetting[0]['value'] = 0;
+      print(ApiSetting[0]['value']);
+
       //Hot Manga API
       manga.clear();
       var res = await CallApi().getMangas('');

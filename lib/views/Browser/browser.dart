@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
-import 'package:mangakiku_app/component/browserdata.dart';
-import 'package:mangakiku_app/component/browserlist.dart';
+
+
 import 'dart:convert';
-import 'package:mangakiku_app/component/mangaCard.dart';
+
 import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
