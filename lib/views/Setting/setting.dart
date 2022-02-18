@@ -6,6 +6,7 @@ import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
 import 'package:mangakiku_app/views/Library/library.dart';
 import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Setting extends StatefulWidget {
   const Setting({
@@ -34,6 +35,8 @@ class _SettingState extends State<Setting> {
   bool _isLoading = true;
   bool isSwitchOn = false;
 
+  get https => null;
+
   @override
   void initState() {
     //initialize  id for chapterimage
@@ -45,6 +48,12 @@ class _SettingState extends State<Setting> {
   void dispose() {
     super.dispose();
   }
+
+  void _launchURL() async {
+  if (!await launch("https://discord.gg/XwByXFde9s")) throw 'Could not launch $https://discord.gg/XwByXFde9s';
+}
+
+  
 
   //initialize list for add chapter image from API
 
@@ -161,7 +170,7 @@ class _SettingState extends State<Setting> {
                   highlightColor: kPrimaryPurpleColor,
                   onTap: () {
                     Share.share(
-                        'Do you Like Manga? Check out this awessome app: https://play.google.com/store/apps/details?id=com.sunster.mangasuki');
+                        'Do you Like Manga? Check out this awessome app: https://play.google.com/store/apps/details?id=com.mfc.mangakiku_app');
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -199,7 +208,10 @@ class _SettingState extends State<Setting> {
                 ),
                 InkWell(
                   highlightColor: kPrimaryPurpleColor,
-                  onTap: () => null,
+                  onTap: () {
+                    _launchURL();
+
+                  },
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 20,
@@ -572,6 +584,7 @@ class _SettingState extends State<Setting> {
             builder: (BuildContext context, StateSetter setState) {
               return AlertDialog(
                 backgroundColor: Colors.grey.shade900,
+              
                 contentPadding: EdgeInsets.only(
                   left: 5,
                   top: 10,
