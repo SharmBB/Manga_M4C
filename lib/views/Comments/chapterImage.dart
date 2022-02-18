@@ -5,7 +5,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart';
+import 'package:mangakiku_app/Ads_Helpers/googleMobAds.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/views/Comments/comments.dart';
@@ -54,6 +56,7 @@ class _MangaComment2State extends State<MangaComment2> {
   @override
   void initState() {
     //initialize  id for chapterimage
+     AdHelper.myBanner.load();
     hid = widget.hid;
     print(hid);
     chapterid = widget.chapterid;
@@ -61,6 +64,9 @@ class _MangaComment2State extends State<MangaComment2> {
     _apiChapterImages();
     super.initState();
   }
+
+  
+  final AdWidget adWidget = AdWidget(ad: AdHelper.myBanner);
 
   @override
   void dispose() {
@@ -186,6 +192,13 @@ class _MangaComment2State extends State<MangaComment2> {
                   ),
                 ]),
               ),
+                  SafeArea(child: Center(
+                         child:   Container(
+                           width: screenWidth * 0.8,
+        height:50,
+        color: Colors.green,
+        child: adWidget,
+      ),),),
               SafeArea(
                   child: Container(
                       height: 50,
