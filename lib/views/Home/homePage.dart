@@ -1355,6 +1355,14 @@ class _HomePageState extends State<HomePage> {
 //get manga details from api
   void _apiMangaDetails() async {
     try {
+
+        //Setting API
+      ApiSetting.clear();
+      var resSetting = await CallApi().getApiSetting('getApiSetting');
+      var bodyRoutesSetting = json.decode(resSetting.body);
+      ApiSetting.add(bodyRoutesSetting);
+     //  ApiSetting[0]['value'] = 0;
+      print(ApiSetting[0]['value']);
      
 
       //Hot Manga API
@@ -1381,13 +1389,7 @@ class _HomePageState extends State<HomePage> {
       var bodyRoutesRating = json.decode(resRating.body);
       RatingManga.add(bodyRoutesRating);
 
-       //Setting API
-      ApiSetting.clear();
-      var resSetting = await CallApi().getApiSetting('getApiSetting');
-      var bodyRoutesSetting = json.decode(resSetting.body);
-      ApiSetting.add(bodyRoutesSetting);
-     //  ApiSetting[0]['value'] = 0;
-      print(ApiSetting[0]['value']);
+     
 
       setState(() {
         _isLoading = false;
