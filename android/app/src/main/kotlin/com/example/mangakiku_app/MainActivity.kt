@@ -1,4 +1,4 @@
-package com.example.mangakiku_app
+package com.mfc.mangakiku_app
 
 import io.flutter.embedding.android.FlutterActivity
 
