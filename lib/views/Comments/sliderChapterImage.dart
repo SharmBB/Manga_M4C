@@ -5,21 +5,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart';
-import 'package:mangakiku_app/Ads_Helpers/googleMobAds.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/views/Comments/comments.dart';
 import 'package:mangakiku_app/views/Comments/comments_reply.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
-import 'package:mangakiku_app/views/SignIn/signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MangaComment2 extends StatefulWidget {
+class SlideMangaComment2 extends StatefulWidget {
   final String hid;
   final String chapterid;
-  const MangaComment2({
+  const SlideMangaComment2({
     key,
     required this.hid,
     required this.chapterid,
@@ -29,7 +26,7 @@ class MangaComment2 extends StatefulWidget {
   _MangaComment2State createState() => _MangaComment2State();
 }
 
-class _MangaComment2State extends State<MangaComment2> {
+class _MangaComment2State extends State<SlideMangaComment2> {
   late String hid;
   late String chapterid;
   TextEditingController _commentController = new TextEditingController();
@@ -54,7 +51,6 @@ class _MangaComment2State extends State<MangaComment2> {
   @override
   void initState() {
     //initialize  id for chapterimage
-    AdHelper.myBanner.load();
     hid = widget.hid;
     print(hid);
     chapterid = widget.chapterid;
@@ -62,8 +58,6 @@ class _MangaComment2State extends State<MangaComment2> {
     _apiChapterImages();
     super.initState();
   }
-
-  final AdWidget adWidget = AdWidget(ad: AdHelper.myBanner);
 
   @override
   void dispose() {
@@ -89,7 +83,8 @@ class _MangaComment2State extends State<MangaComment2> {
 
   @override
   Widget build(BuildContext context) {
-    var image = "https://meo2.comick.pictures/file/comick/";
+    var image =
+        "https://uploads.mangadex.org/data/d68557010488f20728b2be1ccfc209d7/";
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
 
@@ -157,7 +152,7 @@ class _MangaComment2State extends State<MangaComment2> {
                                             imageUrl: image +
                                                 _chapterImage[0]['chapter']
                                                         ['md_images']
-                                                    [index + counter]['b2key'],
+                                                    [index + counter]['name'],
                                             imageBuilder: (context,
                                                     imageProvider) =>
                                                 Container(
@@ -185,16 +180,6 @@ class _MangaComment2State extends State<MangaComment2> {
                     ],
                   ),
                 ]),
-              ),
-              SafeArea(
-                child: Center(
-                  child: Container(
-                    width: screenWidth * 0.8,
-                    height: 50,
-                    color: Colors.green,
-                    child: adWidget,
-                  ),
-                ),
               ),
               SafeArea(
                   child: Container(
@@ -248,25 +233,14 @@ class _MangaComment2State extends State<MangaComment2> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Signin(
+                          builder: (context) => ReplyComments(
                               image: _chapterImage[0]['chapter']['md_images'][0]
-                                      ['b2key']
+                                      ['name']
                                   .toString(),
                               chapterid: widget.chapterid.toString(),
                               hid: widget.hid.toString()),
                         ),
                       );
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => ReplyComments(
-                      //       image:  _chapterImage[0]['chapter']
-                      //                                   ['md_images']
-                      //                               [0]['b2key'].toString(),
-                      //         chapterid: widget.chapterid.toString(),
-                      //         hid: widget.hid.toString()),
-                      //   ),
-                      // );
                       //  _displayDialog(context);
                     }),
                 IconButton(
@@ -299,7 +273,7 @@ class _MangaComment2State extends State<MangaComment2> {
       // Add chapterimages to  List
 
       _chapterImage.add(bodyRoutes);
-      print(_chapterImage[0]['chapter']['md_images'][0]['b2key'].length);
+      print(_chapterImage[0]['chapter']['md_images']);
     } catch (e) {
       print(e);
     }
