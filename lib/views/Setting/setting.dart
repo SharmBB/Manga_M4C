@@ -53,6 +53,10 @@ class _SettingState extends State<Setting> {
   if (!await launch("https://discord.gg/XwByXFde9s")) throw 'Could not launch $https://discord.gg/XwByXFde9s';
 }
 
+
+ void _launchRateURL() async {
+  if (!await launch("https://play.google.com/store/apps/details?id=com.mfc.mangakiku_app")) throw 'Could not launch $https://play.google.com/store/apps/details?id=com.mfc.mangakiku_app';
+}
   
 
   //initialize list for add chapter image from API
@@ -131,7 +135,9 @@ class _SettingState extends State<Setting> {
                 ),
                 InkWell(
                   highlightColor: kPrimaryPurpleColor,
-                  onTap: () => null,
+                  onTap: () {
+                       _launchRateURL();
+                  },
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 20,
@@ -375,46 +381,46 @@ class _SettingState extends State<Setting> {
                 SizedBox(
                   height: 20,
                 ),
-                InkWell(
-                  highlightColor: kPrimaryPurpleColor,
-                  onTap: () {
-                    _showSourcecontent();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      bottom: 10,
-                      top: 10,
-                    ),
-                    child: Container(
-                      height: 45,
-                      width: screenWidth,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Source",
-                            style: TextStyle(
-                              color: kPrimaryWhiteColor,
-                              fontSize: 18,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "ComickFun",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                // InkWell(
+                //   highlightColor: kPrimaryPurpleColor,
+                //   onTap: () {
+                //     _showSourcecontent();
+                //   },
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(
+                //       left: 20,
+                //       right: 20,
+                //       bottom: 10,
+                //       top: 10,
+                //     ),
+                //     child: Container(
+                //       height: 45,
+                //       width: screenWidth,
+                //       child: Column(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: [
+                //           Text(
+                //             "Source",
+                //             style: TextStyle(
+                //               color: kPrimaryWhiteColor,
+                //               fontSize: 18,
+                //             ),
+                //           ),
+                //           SizedBox(
+                //             height: 5,
+                //           ),
+                //           Text(
+                //             "ComickFun",
+                //             style: TextStyle(
+                //               color: Colors.grey,
+                //               fontSize: 14,
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   height: 20,
                 ),
@@ -588,7 +594,7 @@ class _SettingState extends State<Setting> {
                 contentPadding: EdgeInsets.only(
                   left: 5,
                   top: 10,
-                  right: 30,
+                  right: 10,
                 ),
                 content: Container(
                   height: 150,

@@ -186,16 +186,16 @@ class _MangaComment2State extends State<MangaComment2> {
                   ),
                 ]),
               ),
-              SafeArea(
-                child: Center(
-                  child: Container(
-                    width: screenWidth * 0.8,
-                    height: 50,
-                    color: Colors.green,
-                    child: adWidget,
-                  ),
-                ),
-              ),
+              // SafeArea(
+              //   child: Center(
+              //     child: Container(
+              //       width: screenWidth * 0.8,
+              //       height: 50,
+              //       color: Colors.green,
+              //       child: adWidget,
+              //     ),
+              //   ),
+              // ),
               SafeArea(
                   child: Container(
                       height: 50,
