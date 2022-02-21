@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:http/http.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
@@ -41,13 +42,22 @@ class _SettingState extends State<Setting> {
   @override
   void initState() {
     //initialize  id for chapterimage
-
+    _getRead();
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  String? selectevalue;
+
+  void _getRead() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    selectevalue = localStorage.getString("selectevalue");
+    print('  selectevalue'+   selectevalue.toString());
+    
   }
 
   void _launchURL() async {
@@ -87,6 +97,7 @@ class _SettingState extends State<Setting> {
           overscroll.disallowGlow();
           return false;
         },
+        
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(
@@ -283,7 +294,7 @@ class _SettingState extends State<Setting> {
                             height: 5,
                           ),
                           Text(
-                            _selectedRead,
+                            selectevalue.toString(),
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 14,
@@ -607,10 +618,10 @@ class _SettingState extends State<Setting> {
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
                             value: 'Lifetime Membership (LKR 3,050.00)',
-                            groupValue: _selectedSub ,
+                            groupValue: _selectedSub,
                             onChanged: (value) {
                               setState(() {
-                                _selectedSub  = value!;
+                                _selectedSub = value!;
                               });
                             },
                           ),
@@ -628,7 +639,7 @@ class _SettingState extends State<Setting> {
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
                             value: 'Monthly Subscription (LKR 225.00)',
-                            groupValue: _selectedSub ,
+                            groupValue: _selectedSub,
                             onChanged: (value) {
                               setState(() {
                                 _selectedSub = value!;
@@ -649,10 +660,10 @@ class _SettingState extends State<Setting> {
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
                             value: 'Yearly Subscription (LKR 195.00)',
-                            groupValue: _selectedSub ,
+                            groupValue: _selectedSub,
                             onChanged: (value) {
                               setState(() {
-                                _selectedSub  = value!;
+                                _selectedSub = value!;
                               });
                             },
                           ),
@@ -688,7 +699,7 @@ class _SettingState extends State<Setting> {
         });
   }
 
-  String _selectedRead = 'Left to Right';
+  String _selectedRead = 'Right to Left';
 
   void _showReadcontent() {
     showDialog(
@@ -996,7 +1007,7 @@ class _SettingState extends State<Setting> {
                             groupValue: _selectedLanguage,
                             onChanged: (value) {
                               setState(() {
-                                _selectedLanguage= value!;
+                                _selectedLanguage = value!;
                               });
                             },
                           ),
