@@ -36,7 +36,7 @@ dependencies:
   share: ^2.0.4
   url_launcher: ^6.0.20
   google_mobile_ads: ^1.1.0
-  flutter_native_admob: ^2.1.0+3
+ 
   native_admob_flutter: ^1.4.0
 
 
@@ -55,7 +55,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon/icon.jpg"
+  image_path: "assets/icon/playstore.png"
   
 
 # The following section is specific to Flutter.
