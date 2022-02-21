@@ -112,7 +112,7 @@ class _MangaComment2State extends State<MangaComment2> {
                       Container(
                         height: screenHeight * (18 / 20),
                         child: ListView.builder(
-                          scrollDirection: Axis.vertical,
+                          scrollDirection: Axis.horizontal,
                           physics: PageScrollPhysics(),
                           reverse: true,
                           itemCount:
