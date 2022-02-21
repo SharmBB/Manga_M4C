@@ -34,7 +34,7 @@ class _MangaComment2State extends State<MangaComment2> {
   late String chapterid;
   TextEditingController _commentController = new TextEditingController();
 
-  String? token;
+  String? selectevalue;
 
   List User = [];
 
@@ -54,12 +54,13 @@ class _MangaComment2State extends State<MangaComment2> {
   @override
   void initState() {
     //initialize  id for chapterimage
-    AdHelper.myBanner.load();
+    // AdHelper.myBanner.load();
     hid = widget.hid;
-    print(hid);
+    // print(hid);
     chapterid = widget.chapterid;
-    print(chapterid);
+    // print(chapterid);
     _apiChapterImages();
+    _getUserDetails();
     super.initState();
   }
 
@@ -141,7 +142,7 @@ class _MangaComment2State extends State<MangaComment2> {
                                       child: InkWell(
                                         onTap: () {
                                           setState(() {
-                                            print("fvfvfv");
+                                            // print("fvfvfv");
                                             if (imageclick == false) {
                                               imageclick = true;
                                             } else if (imageclick == true) {
@@ -288,6 +289,17 @@ class _MangaComment2State extends State<MangaComment2> {
     );
   }
 
+//store the userImage in local
+  void _getUserDetails() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    selectevalue = localStorage.getString("selectevalue")!;
+    print("homepagetoken" + selectevalue!);
+    print("homepagetoken" + selectevalue!);
+    print("homepagetoken" + selectevalue!);
+    print("homepagetoken" + selectevalue!);
+    // var data = {"pic": selectevalue};
+  }
+
 //get chappterImages details from api
   void _apiChapterImages() async {
     try {
@@ -295,11 +307,16 @@ class _MangaComment2State extends State<MangaComment2> {
       var bodyRoutes;
       var res = await CallApi().getChapterImages(widget.hid);
       bodyRoutes = json.decode(res.body);
+      print("homepagetoken" + selectevalue!);
+      print(
+          "homepagetoken------------------------------------------------------" +
+              selectevalue!);
+      print("homepagetoken" + selectevalue!);
 
       // Add chapterimages to  List
 
       _chapterImage.add(bodyRoutes);
-      print(_chapterImage[0]['chapter']['md_images'][0]['b2key'].length);
+      //  print(_chapterImage[0]['chapter']['md_images'][0]['b2key'].length);
     } catch (e) {
       print(e);
     }
