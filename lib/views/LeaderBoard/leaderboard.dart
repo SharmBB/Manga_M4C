@@ -119,14 +119,14 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                       //  color: kPrimaryWhiteColor.withOpacity(0.1),
                                       child: Row(
                                         children: <Widget>[
-                                          Expanded(
-                                            child: CircleAvatar(
-                                              radius: 25.0,
-                                              backgroundImage: AssetImage(
-                                                "assets/profile-img.png",
-                                              ),
-                                            ),
-                                          ),
+                                          // Expanded(
+                                          //   child: CircleAvatar(
+                                          //     radius: 25.0,
+                                          //     backgroundImage: AssetImage(
+                                          //       "assets/profile-img.png",
+                                          //     ),
+                                          //   ),
+                                          // ),
                                           // Expanded(
                                           //   child: CircleAvatar(
                                           //     radius: 10.0,
@@ -145,7 +145,8 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                                 textAlign: TextAlign.center),
                                           ),
                                           Expanded(
-                                            child: Text(" 12 ",
+                                            child: Text(  _getLeaderBoardDetails[index]
+                                                    ['points'].toString(),
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight: FontWeight.bold,
@@ -154,14 +155,15 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                           ),
                                           SizedBox(width: 5.0),
                                           Expanded(
-                                            child: Text('Manga Read ',
+                                            child: Text('Points ',
                                                 style: TextStyle(
                                                     color: kPrimaryWhiteColor,
                                                     fontSize: 10),
                                                 textAlign: TextAlign.left),
                                           ),
                                           Expanded(
-                                            child: Text(" 35 ",
+                                            child: Text(  _getLeaderBoardDetails[index]
+                                                    ['chapters'].toString(),
                                                 style: TextStyle(
                                                     color: kPrimaryWhiteColor,
                                                     fontWeight: FontWeight.bold,
@@ -170,28 +172,28 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                           ),
                                           SizedBox(width: 5.0),
                                           Expanded(
-                                            child: Text('Chapter Read ',
+                                            child: Text('Chapter ',
                                                 style: TextStyle(
                                                     color: kPrimaryWhiteColor,
                                                     fontSize: 10),
                                                 textAlign: TextAlign.left),
                                           ),
-                                          Expanded(
-                                            child: Text(" 53 ",
-                                                style: TextStyle(
-                                                    color: kPrimaryWhiteColor,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 14),
-                                                textAlign: TextAlign.end),
-                                          ),
-                                          SizedBox(width: 5.0),
-                                          Expanded(
-                                            child: Text('Hours Read  ',
-                                                style: TextStyle(
-                                                    color: kPrimaryWhiteColor,
-                                                    fontSize: 10),
-                                                textAlign: TextAlign.left),
-                                          ),
+                                          // Expanded(
+                                          //   child: Text(" 53 ",
+                                          //       style: TextStyle(
+                                          //           color: kPrimaryWhiteColor,
+                                          //           fontWeight: FontWeight.bold,
+                                          //           fontSize: 14),
+                                          //       textAlign: TextAlign.end),
+                                          // ),
+                                          // SizedBox(width: 5.0),
+                                          // Expanded(
+                                          //   child: Text('Hours Read  ',
+                                          //       style: TextStyle(
+                                          //           color: kPrimaryWhiteColor,
+                                          //           fontSize: 10),
+                                          //       textAlign: TextAlign.left),
+                                          // ),
                                         ],
                                       ),
                                     ),
