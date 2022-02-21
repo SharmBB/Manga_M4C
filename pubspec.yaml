@@ -38,6 +38,7 @@ dependencies:
   google_mobile_ads: ^1.1.0
  
   native_admob_flutter: ^1.4.0
+  in_app_purchase: ^2.0.1
 
 
   

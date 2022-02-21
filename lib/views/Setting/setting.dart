@@ -6,6 +6,7 @@ import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
 import 'package:mangakiku_app/views/Library/library.dart';
 import 'package:share/share.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Setting extends StatefulWidget {
@@ -50,10 +51,15 @@ class _SettingState extends State<Setting> {
   }
 
   void _launchURL() async {
-  if (!await launch("https://discord.gg/XwByXFde9s")) throw 'Could not launch $https://discord.gg/XwByXFde9s';
-}
+    if (!await launch("https://discord.gg/XwByXFde9s"))
+      throw 'Could not launch $https://discord.gg/XwByXFde9s';
+  }
 
-  
+  void _launchRateURL() async {
+    if (!await launch(
+        "https://play.google.com/store/apps/details?id=com.mfc.mangakiku_app"))
+      throw 'Could not launch $https://play.google.com/store/apps/details?id=com.mfc.mangakiku_app';
+  }
 
   //initialize list for add chapter image from API
 
@@ -131,7 +137,9 @@ class _SettingState extends State<Setting> {
                 ),
                 InkWell(
                   highlightColor: kPrimaryPurpleColor,
-                  onTap: () => null,
+                  onTap: () {
+                    _launchRateURL();
+                  },
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 20,
@@ -210,7 +218,6 @@ class _SettingState extends State<Setting> {
                   highlightColor: kPrimaryPurpleColor,
                   onTap: () {
                     _launchURL();
-
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -250,6 +257,7 @@ class _SettingState extends State<Setting> {
                   highlightColor: kPrimaryPurpleColor,
                   onTap: () {
                     _showReadcontent();
+                    print(_selectedRead);
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -375,46 +383,46 @@ class _SettingState extends State<Setting> {
                 SizedBox(
                   height: 20,
                 ),
-                InkWell(
-                  highlightColor: kPrimaryPurpleColor,
-                  onTap: () {
-                    _showSourcecontent();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      bottom: 10,
-                      top: 10,
-                    ),
-                    child: Container(
-                      height: 45,
-                      width: screenWidth,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Source",
-                            style: TextStyle(
-                              color: kPrimaryWhiteColor,
-                              fontSize: 18,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "ComickFun",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                // InkWell(
+                //   highlightColor: kPrimaryPurpleColor,
+                //   onTap: () {
+                //     _showSourcecontent();
+                //   },
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(
+                //       left: 20,
+                //       right: 20,
+                //       bottom: 10,
+                //       top: 10,
+                //     ),
+                //     child: Container(
+                //       height: 45,
+                //       width: screenWidth,
+                //       child: Column(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: [
+                //           Text(
+                //             "Source",
+                //             style: TextStyle(
+                //               color: kPrimaryWhiteColor,
+                //               fontSize: 18,
+                //             ),
+                //           ),
+                //           SizedBox(
+                //             height: 5,
+                //           ),
+                //           Text(
+                //             "ComickFun",
+                //             style: TextStyle(
+                //               color: Colors.grey,
+                //               fontSize: 14,
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   height: 20,
                 ),
@@ -584,11 +592,10 @@ class _SettingState extends State<Setting> {
             builder: (BuildContext context, StateSetter setState) {
               return AlertDialog(
                 backgroundColor: Colors.grey.shade900,
-              
                 contentPadding: EdgeInsets.only(
                   left: 5,
                   top: 10,
-                  right: 30,
+                  right: 10,
                 ),
                 content: Container(
                   height: 150,
@@ -802,7 +809,18 @@ class _SettingState extends State<Setting> {
                         fontSize: 18,
                       ),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      // print(_selectedRead);
+                      SharedPreferences localStorage =
+                          await SharedPreferences.getInstance();
+
+                      var selectevalue = _selectedRead;
+                      // print(selectevalue);
+
+                      localStorage.setString('selectevalue', selectevalue);
+                      print(selectevalue);
+
+                      // localStorage.setInt('userId', userId);
                       Navigator.of(context).pop();
                     },
                   ),

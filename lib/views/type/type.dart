@@ -53,7 +53,7 @@ class _CartState extends State<DetailsScreen> {
                 child: Padding(
                 padding: const EdgeInsets.only(top: 30.0),
                 child: CupertinoActivityIndicator(
-                  radius: 20,
+                  radius: 15,
                 ),
               ))
             : SingleChildScrollView(
@@ -532,7 +532,7 @@ class _CartState extends State<DetailsScreen> {
                                             //         ),
                                             //       )),
                                             // ),
-                                                Text('Chapters',
+                                            Text('Chapters',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.white,
@@ -623,7 +623,7 @@ class _CartState extends State<DetailsScreen> {
                                                           //       color: Colors.white),
                                                           // ),
                                                           InkWell(
-                                                             onTap: () {
+                                                            onTap: () {
                                                               Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
@@ -642,28 +642,29 @@ class _CartState extends State<DetailsScreen> {
                                                                 ),
                                                               );
                                                             },
-                                                         child: Text(
-                                                            chaptersFromDB[index]
-                                                                        [
-                                                                        "up_count"]
-                                                                    .toString() +
-                                                                "days",
-                                                            style: TextStyle(
-                                                                fontSize: 13,
-                                                                color: Colors
-                                                                    .white),
-                                                          ),
-                                                          // Text(
-                                                          //   chaptersFromDB[
-                                                          //               index]
-                                                          //           ["lang"]
-                                                          //       .toString(),
-                                                          //   style: TextStyle(
-                                                          //       fontSize: 13,
-                                                          //       color: Colors
-                                                          //           .white),
-                                                          // ),
-                                                     ) ]),
+                                                            child: Text(
+                                                              chaptersFromDB[index]
+                                                                          [
+                                                                          "up_count"]
+                                                                      .toString() +
+                                                                  "days",
+                                                              style: TextStyle(
+                                                                  fontSize: 13,
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                            // Text(
+                                                            //   chaptersFromDB[
+                                                            //               index]
+                                                            //           ["lang"]
+                                                            //       .toString(),
+                                                            //   style: TextStyle(
+                                                            //       fontSize: 13,
+                                                            //       color: Colors
+                                                            //           .white),
+                                                            // ),
+                                                          )
+                                                        ]),
                                                   )),
                                             );
                                           }, //itemBuilder
