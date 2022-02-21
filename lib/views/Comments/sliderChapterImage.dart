@@ -107,15 +107,16 @@ class _MangaComment2State extends State<SlideMangaComment2> {
                         height: screenHeight * (18 / 20),
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
+                          physics: PageScrollPhysics(),
                           reverse: true,
                           itemCount:
                               _chapterImage[0]['chapter']['md_images'].length,
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
-                              margin: EdgeInsets.only(
-                                left: 10,
-                                right: 10,
-                              ),
+                              // margin: EdgeInsets.only(
+                              //   left: 10,
+                              //   right: 10,
+                              // ),
                               width: screenWidth,
                               child: Stack(
                                 alignment: Alignment.topCenter,
