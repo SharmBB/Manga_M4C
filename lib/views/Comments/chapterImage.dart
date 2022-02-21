@@ -51,6 +51,9 @@ class _MangaComment2State extends State<MangaComment2> {
   //Success
   String? success;
 
+  var read;
+  var readReverse;
+
   @override
   void initState() {
     //initialize  id for chapterimage
@@ -112,9 +115,9 @@ class _MangaComment2State extends State<MangaComment2> {
                       Container(
                         height: screenHeight * (18 / 20),
                         child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
+                          scrollDirection: read,
                           physics: PageScrollPhysics(),
-                          reverse: true,
+                          reverse: readReverse,
                           itemCount:
                               _chapterImage[0]['chapter']['md_images'].length,
                           itemBuilder: (BuildContext context, int index) {
@@ -292,6 +295,8 @@ class _MangaComment2State extends State<MangaComment2> {
 
 //store the userImage in local
   void _getUserDetails() async {
+     read = Axis.horizontal;
+        readReverse = true;
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     selectevalue = localStorage.getString("selectevalue")!;
     print("homepagetoken" + selectevalue!);
@@ -299,6 +304,22 @@ class _MangaComment2State extends State<MangaComment2> {
     print("homepagetoken" + selectevalue!);
     print("homepagetoken" + selectevalue!);
     // var data = {"pic": selectevalue};
+      if(selectevalue == 'Left to Right'){
+        read = Axis.horizontal;
+         readReverse = false;
+    }else if(selectevalue == 'Right to Left'){
+        read = Axis.horizontal;
+        readReverse = true;
+    }else if(selectevalue == 'Vertical'){
+      read = Axis.vertical;
+         readReverse = false;
+    }else if(selectevalue == 'Vertical Reverse'){
+      read = Axis.vertical;
+         readReverse = true;
+    }else{
+       read = Axis.horizontal;
+        readReverse = true;
+    }
   }
 
 //get chappterImages details from api

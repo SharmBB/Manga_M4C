@@ -283,7 +283,7 @@ class _SettingState extends State<Setting> {
                             height: 5,
                           ),
                           Text(
-                            "Right to Left",
+                            _selectedRead,
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 14,
@@ -326,7 +326,7 @@ class _SettingState extends State<Setting> {
                             height: 5,
                           ),
                           Text(
-                            "Follow System",
+                            _selectedDark,
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 14,
@@ -369,7 +369,7 @@ class _SettingState extends State<Setting> {
                             height: 5,
                           ),
                           Text(
-                            "English",
+                            _selectedLanguage,
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 14,
@@ -607,10 +607,10 @@ class _SettingState extends State<Setting> {
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
                             value: 'Lifetime Membership (LKR 3,050.00)',
-                            groupValue: _selectedRead,
+                            groupValue: _selectedSub ,
                             onChanged: (value) {
                               setState(() {
-                                _selectedRead = value!;
+                                _selectedSub  = value!;
                               });
                             },
                           ),
@@ -628,10 +628,10 @@ class _SettingState extends State<Setting> {
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
                             value: 'Monthly Subscription (LKR 225.00)',
-                            groupValue: _selectedRead,
+                            groupValue: _selectedSub ,
                             onChanged: (value) {
                               setState(() {
-                                _selectedRead = value!;
+                                _selectedSub = value!;
                               });
                             },
                           ),
@@ -649,10 +649,10 @@ class _SettingState extends State<Setting> {
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
                             value: 'Yearly Subscription (LKR 195.00)',
-                            groupValue: _selectedRead,
+                            groupValue: _selectedSub ,
                             onChanged: (value) {
                               setState(() {
-                                _selectedRead = value!;
+                                _selectedSub  = value!;
                               });
                             },
                           ),
@@ -780,7 +780,7 @@ class _SettingState extends State<Setting> {
                         children: [
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
-                            value: 'Vertical Continuous',
+                            value: 'Vertical Reverse',
                             groupValue: _selectedRead,
                             onChanged: (value) {
                               setState(() {
@@ -789,7 +789,7 @@ class _SettingState extends State<Setting> {
                             },
                           ),
                           Text(
-                            'Vertical Continuous',
+                            'Vertical Reverse',
                             style: TextStyle(
                               color: kPrimaryWhiteColor,
                               fontSize: 14,
@@ -861,10 +861,10 @@ class _SettingState extends State<Setting> {
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
                             value: 'On',
-                            groupValue: _selectedRead,
+                            groupValue: _selectedDark,
                             onChanged: (value) {
                               setState(() {
-                                _selectedRead = value!;
+                                _selectedDark = value!;
                               });
                             },
                           ),
@@ -882,10 +882,10 @@ class _SettingState extends State<Setting> {
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
                             value: 'Off',
-                            groupValue: _selectedRead,
+                            groupValue: _selectedDark,
                             onChanged: (value) {
                               setState(() {
-                                _selectedRead = value!;
+                                _selectedDark = value!;
                               });
                             },
                           ),
@@ -921,7 +921,7 @@ class _SettingState extends State<Setting> {
         });
   }
 
-  String _selectedLanguage = 'english';
+  String _selectedLanguage = 'English';
 
   void _showLanguagecontent() {
     showDialog(
@@ -951,10 +951,10 @@ class _SettingState extends State<Setting> {
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
                             value: 'English',
-                            groupValue: _selectedRead,
+                            groupValue: _selectedLanguage,
                             onChanged: (value) {
                               setState(() {
-                                _selectedRead = value!;
+                                _selectedLanguage = value!;
                               });
                             },
                           ),
@@ -972,10 +972,10 @@ class _SettingState extends State<Setting> {
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
                             value: 'Italiano',
-                            groupValue: _selectedRead,
+                            groupValue: _selectedLanguage,
                             onChanged: (value) {
                               setState(() {
-                                _selectedRead = value!;
+                                _selectedLanguage = value!;
                               });
                             },
                           ),
@@ -993,10 +993,10 @@ class _SettingState extends State<Setting> {
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
                             value: 'Francasis',
-                            groupValue: _selectedRead,
+                            groupValue: _selectedLanguage,
                             onChanged: (value) {
                               setState(() {
-                                _selectedRead = value!;
+                                _selectedLanguage= value!;
                               });
                             },
                           ),
@@ -1014,10 +1014,10 @@ class _SettingState extends State<Setting> {
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
                             value: 'Deutsch',
-                            groupValue: _selectedRead,
+                            groupValue: _selectedLanguage,
                             onChanged: (value) {
                               setState(() {
-                                _selectedRead = value!;
+                                _selectedLanguage = value!;
                               });
                             },
                           ),
@@ -1035,10 +1035,10 @@ class _SettingState extends State<Setting> {
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
                             value: 'Portugues do Brasil',
-                            groupValue: _selectedRead,
+                            groupValue: _selectedLanguage,
                             onChanged: (value) {
                               setState(() {
-                                _selectedRead = value!;
+                                _selectedLanguage = value!;
                               });
                             },
                           ),
@@ -1104,10 +1104,10 @@ class _SettingState extends State<Setting> {
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
                             value: 'ComickFun',
-                            groupValue: _selectedRead,
+                            groupValue: _selectedSource,
                             onChanged: (value) {
                               setState(() {
-                                _selectedRead = value!;
+                                _selectedSource = value!;
                               });
                             },
                           ),
@@ -1125,7 +1125,7 @@ class _SettingState extends State<Setting> {
                           Radio<String>(
                             activeColor: kPrimaryPurpleColor,
                             value: 'Mangakakalot',
-                            groupValue: _selectedRead,
+                            groupValue: _selectedSource,
                             onChanged: (value) {
                               setState(() {
                                 _selectedRead = value!;
