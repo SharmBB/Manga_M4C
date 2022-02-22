@@ -56,7 +56,7 @@ class _SigninState extends State<Signin> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Text(
+               Text(
                 'SIGN IN',
                 style: TextStyle(
                     fontSize: 20,

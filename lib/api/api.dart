@@ -16,6 +16,8 @@ class CallApi {
   var ChapterDetaislByName = 'https://api.comick.fun/comic/';
   var ChapterDetaislByID = 'https://api.comick.fun/comic/';
 
+  var search = "https://api.comick.fun/search?page=1&limit=50&q=";
+
   // Auth Api
   var _urlAuth = 'http://mangakiku-api.moodfor.codes/api/';
 
@@ -101,6 +103,14 @@ class CallApi {
   //browser page
   getBrowserhot(apiUrl) async {
     var fullUrl = Uri.parse(hoturl + apiUrl);
+    return await http.get(
+      fullUrl,
+    );
+  }
+
+  //Search page
+  getSearch(apiUrl) async {
+    var fullUrl = Uri.parse(search + apiUrl);
     return await http.get(
       fullUrl,
     );

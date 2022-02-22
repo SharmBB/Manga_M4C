@@ -11,6 +11,7 @@ import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
 import 'package:mangakiku_app/views/Library/library.dart';
+import 'package:mangakiku_app/views/Setting/setting.dart';
 import 'package:mangakiku_app/views/chapter/chapter.dart';
 
 class Browser extends StatefulWidget {
@@ -52,13 +53,13 @@ class _MyHomePageState extends State<Browser> {
   bool _isLoading1 = true;
 
   //bottom navigation purple
-  int bottomPurple = 1;
+  int bottomPurple = 2;
 
   List<IconData> listOfIcons = [
     Icons.home_rounded,
     Icons.description_outlined,
-    Icons.account_box,
-    Icons.library_add_rounded,
+    Icons.search,
+    Icons.local_library_outlined,
     Icons.leaderboard,
   ];
 
@@ -147,18 +148,18 @@ class _MyHomePageState extends State<Browser> {
                   if (currentIndex == 1) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Browser()),
+                      MaterialPageRoute(builder: (context) => Setting()),
                     );
                   } else if (currentIndex == 2) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Account()),
+                      MaterialPageRoute(builder: (context) => Browser()),
                     );
                   } else if (currentIndex == 3) {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => Library()),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Library()),
+                    );
                   } else if (currentIndex == 4) {
                     Navigator.push(
                       context,

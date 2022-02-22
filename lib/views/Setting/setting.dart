@@ -3,6 +3,7 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:http/http.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/views/Account/account.dart';
+import 'package:mangakiku_app/views/Browser/browser.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
 import 'package:mangakiku_app/views/Library/library.dart';
@@ -26,8 +27,8 @@ class _SettingState extends State<Setting> {
   List<IconData> listOfIcons = [
     Icons.home_rounded,
     Icons.settings,
-    Icons.account_box,
-    Icons.library_add_rounded,
+    Icons.search,
+    Icons.local_library_outlined,
     Icons.leaderboard,
   ];
 
@@ -305,49 +306,49 @@ class _SettingState extends State<Setting> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                InkWell(
-                  highlightColor: kPrimaryPurpleColor,
-                  onTap: () {
-                    _showDarkcontent();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      bottom: 10,
-                      top: 10,
-                    ),
-                    child: Container(
-                      height: 45,
-                      width: screenWidth,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Dark Mode",
-                            style: TextStyle(
-                              color: kPrimaryWhiteColor,
-                              fontSize: 18,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            _selectedDark,
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // InkWell(
+                //   highlightColor: kPrimaryPurpleColor,
+                //   onTap: () {
+                //     _showDarkcontent();
+                //   },
+                  // child: Padding(
+                  //   padding: const EdgeInsets.only(
+                  //     left: 20,
+                  //     right: 20,
+                  //     bottom: 10,
+                  //     top: 10,
+                  //   ),
+                  //   child: Container(
+                  //     height: 45,
+                  //     width: screenWidth,
+                  //     child: Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text(
+                  //           "Dark Mode",
+                  //           style: TextStyle(
+                  //             color: kPrimaryWhiteColor,
+                  //             fontSize: 18,
+                  //           ),
+                  //         ),
+                  //         SizedBox(
+                  //           height: 5,
+                  //         ),
+                  //         Text(
+                  //           _selectedDark,
+                  //           style: TextStyle(
+                  //             color: Colors.grey,
+                  //             fontSize: 14,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                // ),
                 SizedBox(
                   height: 20,
                 ),
@@ -434,46 +435,46 @@ class _SettingState extends State<Setting> {
                 //     ),
                 //   ),
                 // ),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    bottom: 10,
-                    top: 10,
-                  ),
-                  child: Container(
-                    height: 30,
-                    width: screenWidth,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Notification",
-                          style: TextStyle(
-                            color: kPrimaryWhiteColor,
-                            fontSize: 18,
-                          ),
-                        ),
-                        FlutterSwitch(
-                          width: 50.0,
-                          height: 25.0,
-                          activeColor: kPrimaryPurpleColor,
-                          valueFontSize: 12.0,
-                          toggleSize: 18.0,
-                          value: isSwitchOn,
-                          onToggle: (val) {
-                            setState(() {
-                              isSwitchOn = val;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.only(
+                //     left: 20,
+                //     right: 20,
+                //     bottom: 10,
+                //     top: 10,
+                //   ),
+                //   child: Container(
+                //     height: 30,
+                //     width: screenWidth,
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //       children: [
+                //         Text(
+                //           "Notification",
+                //           style: TextStyle(
+                //             color: kPrimaryWhiteColor,
+                //             fontSize: 18,
+                //           ),
+                //         ),
+                //         FlutterSwitch(
+                //           width: 50.0,
+                //           height: 25.0,
+                //           activeColor: kPrimaryPurpleColor,
+                //           valueFontSize: 12.0,
+                //           toggleSize: 18.0,
+                //           value: isSwitchOn,
+                //           onToggle: (val) {
+                //             setState(() {
+                //               isSwitchOn = val;
+                //             });
+                //           },
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   height: 20,
                 ),
@@ -548,7 +549,7 @@ class _SettingState extends State<Setting> {
                   } else if (currentIndex == 2) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Account()),
+                      MaterialPageRoute(builder: (context) => Browser()),
                     );
                   } else if (currentIndex == 3) {
                     Navigator.push(
@@ -953,7 +954,7 @@ class _SettingState extends State<Setting> {
                 ),
                 contentPadding: EdgeInsets.only(left: 10, top: 10),
                 content: Container(
-                  height: 250,
+                  height: 120,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -978,27 +979,27 @@ class _SettingState extends State<Setting> {
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Radio<String>(
-                            activeColor: kPrimaryPurpleColor,
-                            value: 'Italiano',
-                            groupValue: _selectedLanguage,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedLanguage = value!;
-                              });
-                            },
-                          ),
-                          Text(
-                            'Italiano',
-                            style: TextStyle(
-                              color: kPrimaryWhiteColor,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Radio<String>(
+                      //       activeColor: kPrimaryPurpleColor,
+                      //       value: 'Italiano',
+                      //       groupValue: _selectedLanguage,
+                      //       onChanged: (value) {
+                      //         setState(() {
+                      //           _selectedLanguage = value!;
+                      //         });
+                      //       },
+                      //     ),
+                      //     Text(
+                      //       'Italiano',
+                      //       style: TextStyle(
+                      //         color: kPrimaryWhiteColor,
+                      //         fontSize: 14,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       Row(
                         children: [
                           Radio<String>(
@@ -1020,48 +1021,48 @@ class _SettingState extends State<Setting> {
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Radio<String>(
-                            activeColor: kPrimaryPurpleColor,
-                            value: 'Deutsch',
-                            groupValue: _selectedLanguage,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedLanguage = value!;
-                              });
-                            },
-                          ),
-                          Text(
-                            'Deutsch',
-                            style: TextStyle(
-                              color: kPrimaryWhiteColor,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Radio<String>(
-                            activeColor: kPrimaryPurpleColor,
-                            value: 'Portugues do Brasil',
-                            groupValue: _selectedLanguage,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedLanguage = value!;
-                              });
-                            },
-                          ),
-                          Text(
-                            'Portugues do Brasil',
-                            style: TextStyle(
-                              color: kPrimaryWhiteColor,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Radio<String>(
+                      //       activeColor: kPrimaryPurpleColor,
+                      //       value: 'Deutsch',
+                      //       groupValue: _selectedLanguage,
+                      //       onChanged: (value) {
+                      //         setState(() {
+                      //           _selectedLanguage = value!;
+                      //         });
+                      //       },
+                      //     ),
+                      //     Text(
+                      //       'Deutsch',
+                      //       style: TextStyle(
+                      //         color: kPrimaryWhiteColor,
+                      //         fontSize: 14,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     Radio<String>(
+                      //       activeColor: kPrimaryPurpleColor,
+                      //       value: 'Portugues do Brasil',
+                      //       groupValue: _selectedLanguage,
+                      //       onChanged: (value) {
+                      //         setState(() {
+                      //           _selectedLanguage = value!;
+                      //         });
+                      //       },
+                      //     ),
+                      //     Text(
+                      //       'Portugues do Brasil',
+                      //       style: TextStyle(
+                      //         color: kPrimaryWhiteColor,
+                      //         fontSize: 14,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),
@@ -1074,7 +1075,14 @@ class _SettingState extends State<Setting> {
                         fontSize: 18,
                       ),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                        SharedPreferences localStorage =
+                          await SharedPreferences.getInstance();
+
+                      var selectelanguage = _selectedLanguage;
+                      // print(selectevalue);
+                      localStorage.setString('selectelanguage', selectelanguage);
+                      print(selectelanguage);
                       Navigator.of(context).pop();
                     },
                   ),

@@ -39,8 +39,8 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
   List<IconData> listOfIcons = [
     Icons.home_rounded,
     Icons.settings,
-    Icons.account_box,
-    Icons.library_add_rounded,
+    Icons.search,
+    Icons.local_library_outlined,
     Icons.leaderboard,
   ];
 
@@ -242,7 +242,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                   } else if (currentIndex == 2) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Account()),
+                      MaterialPageRoute(builder: (context) => Browser()),
                     );
                   } else if (currentIndex == 3) {
                     Navigator.push(

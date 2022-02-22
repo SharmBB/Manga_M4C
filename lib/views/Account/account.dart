@@ -642,78 +642,78 @@ class _AccountState extends State<Account> {
                 ],
               ),
             ),
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.all(20),
-        height: screenWidth * .155,
-        decoration: BoxDecoration(
-          color: Colors.grey[900],
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0),
-              blurRadius: 30,
-              offset: Offset(0, 10),
-            ),
-          ],
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: ListView.builder(
-          itemCount: 5,
-          scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * .034),
-          itemBuilder: (context, index) => InkWell(
-            onTap: () {
-              setState(
-                () {
-                  currentIndex = index;
-                  print(currentIndex);
-                  if (currentIndex == 1) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Setting()),
-                    );
-                  } else if (currentIndex == 2) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Account()),
-                    );
-                  } else if (currentIndex == 3) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Library()),
-                    );
-                  } else if (currentIndex == 4) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => LeaderBoardScreen()),
-                    );
-                  } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
-                  }
-                },
-              );
-            },
-            child: Stack(
-              children: [
-                Container(
-                  width: screenWidth * .1700,
-                  alignment: Alignment.center,
-                  child: Icon(
-                    listOfIcons[index],
-                    size: screenWidth * .076,
-                    color: index == bottomPurple
-                        ? kPrimaryPurpleColor
-                        : Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+      // bottomNavigationBar: Container(
+      //   margin: EdgeInsets.all(20),
+      //   height: screenWidth * .155,
+      //   decoration: BoxDecoration(
+      //     color: Colors.grey[900],
+      //     boxShadow: [
+      //       BoxShadow(
+      //         color: Colors.black.withOpacity(0),
+      //         blurRadius: 30,
+      //         offset: Offset(0, 10),
+      //       ),
+      //     ],
+      //     borderRadius: BorderRadius.circular(50),
+      //   ),
+      //   child: ListView.builder(
+      //     itemCount: 5,
+      //     scrollDirection: Axis.horizontal,
+      //     padding: EdgeInsets.symmetric(horizontal: screenWidth * .034),
+      //     itemBuilder: (context, index) => InkWell(
+      //       onTap: () {
+      //         setState(
+      //           () {
+      //             currentIndex = index;
+      //             print(currentIndex);
+      //             if (currentIndex == 1) {
+      //               Navigator.push(
+      //                 context,
+      //                 MaterialPageRoute(builder: (context) => Setting()),
+      //               );
+      //             } else if (currentIndex == 2) {
+      //               Navigator.push(
+      //                 context,
+      //                 MaterialPageRoute(builder: (context) => Account()),
+      //               );
+      //             } else if (currentIndex == 3) {
+      //               Navigator.push(
+      //                 context,
+      //                 MaterialPageRoute(builder: (context) => Library()),
+      //               );
+      //             } else if (currentIndex == 4) {
+      //               Navigator.push(
+      //                 context,
+      //                 MaterialPageRoute(
+      //                     builder: (context) => LeaderBoardScreen()),
+      //               );
+      //             } else {
+      //               Navigator.push(
+      //                 context,
+      //                 MaterialPageRoute(builder: (context) => HomePage()),
+      //               );
+      //             }
+      //           },
+      //         );
+      //       },
+      //       child: Stack(
+      //         children: [
+      //           Container(
+      //             width: screenWidth * .1700,
+      //             alignment: Alignment.center,
+      //             child: Icon(
+      //               listOfIcons[index],
+      //               size: screenWidth * .076,
+      //               color: index == bottomPurple
+      //                   ? kPrimaryPurpleColor
+      //                   : Colors.white,
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
     );
   }
 

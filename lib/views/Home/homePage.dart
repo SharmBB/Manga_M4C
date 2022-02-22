@@ -14,6 +14,7 @@ import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Browser/browser.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
 import 'package:mangakiku_app/views/Library/library.dart';
+import 'package:mangakiku_app/views/Search/search.dart';
 import 'package:mangakiku_app/views/Setting/setting.dart';
 import 'package:mangakiku_app/views/chapter/chapter.dart';
 import 'package:mangakiku_app/views/type/sliderType.dart';
@@ -33,8 +34,8 @@ int selectedIndex = 0;
 List<IconData> listOfIcons = [
   Icons.home_rounded,
   Icons.settings,
-  Icons.account_box,
-  Icons.library_add_rounded,
+  Icons.search,
+  Icons.local_library_outlined,
   Icons.leaderboard,
 ];
 
@@ -219,24 +220,32 @@ class _HomePageState extends State<HomePage> {
                         child: CircleAvatar(
                           radius: 35,
                           backgroundImage: NetworkImage(
-                       userImage + User[0]['image'],
+                            userImage + User[0]['image'],
                           ),
                         ),
                       ))
                   : SizedBox(),
+              title: Center(
+                child: CircleAvatar(
+                  radius: 20,
+                  backgroundImage: AssetImage(
+                    "assets/icon/icon.png",
+                  ),
+                ),
+              ), //
               actions: <Widget>[
-                ApiSetting[0]['value'] == 1
-                    ? IconButton(
-                        icon: Icon(Icons.description_outlined,
-                            color: kPrimaryWhiteColor),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Account()),
-                          );
-                        },
-                      )
-                    : SizedBox(),
+                // ApiSetting[0]['value'] == 1
+                //     ? IconButton(
+                //         icon: Icon(Icons.description_outlined,
+                //             color: kPrimaryWhiteColor),
+                //         onPressed: () {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(builder: (context) => Account()),
+                //           );
+                //         },
+                //       )
+                //     : SizedBox(),
                 ApiSetting[0]['value'] == 1
                     ? Padding(
                         padding: const EdgeInsets.only(
@@ -253,7 +262,7 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Browser()),
+                                    builder: (context) => Manga_List()),
                               );
                             },
                           ),
@@ -531,15 +540,15 @@ class _HomePageState extends State<HomePage> {
                                                                         mainAxisAlignment:
                                                                             MainAxisAlignment.spaceBetween,
                                                                         children: [
-                                                                          Text(
-                                                                            'ch ' +
-                                                                                manga[0][index]['chap'],
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 12,
-                                                                              color: kPrimaryWhiteColor,
-                                                                            ),
-                                                                          ),
+                                                                          // Text(
+                                                                          //   ' ' ,
+
+                                                                          //   style:
+                                                                          //       TextStyle(
+                                                                          //     fontSize: 12,
+                                                                          //     color: kPrimaryWhiteColor,
+                                                                          //   ),
+                                                                          // ),
                                                                         ],
                                                                       ),
                                                                       //  SizedBox(width: 55),
@@ -551,12 +560,12 @@ class _HomePageState extends State<HomePage> {
                                                                       //         kPrimaryWhiteColor,
                                                                       //   ),
                                                                       // ),
-                                                                      SizedBox(
-                                                                          width:
-                                                                              25),
+                                                                      // SizedBox(
+                                                                      //     width:
+                                                                      //         25),
                                                                       Text(
-                                                                        ". " +
-                                                                            manga[0][index]['distanceTime'],
+                                                                        'ch ' +
+                                                                            manga[0][index]['chap'],
                                                                         style:
                                                                             TextStyle(
                                                                           fontSize:
@@ -777,19 +786,19 @@ class _HomePageState extends State<HomePage> {
                                                                       MainAxisAlignment
                                                                           .spaceBetween,
                                                                   children: [
-                                                                    Text(
-                                                                      'ch ' +
-                                                                          Newmanga[0][index]
-                                                                              [
-                                                                              'chap'],
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontSize:
-                                                                            12,
-                                                                        color:
-                                                                            kPrimaryWhiteColor,
-                                                                      ),
-                                                                    ),
+                                                                    // Text(
+                                                                    //   'ch ' +
+                                                                    //       Newmanga[0][index]
+                                                                    //           [
+                                                                    //           'chap'],
+                                                                    //   style:
+                                                                    //       TextStyle(
+                                                                    //     fontSize:
+                                                                    //         12,
+                                                                    //     color:
+                                                                    //         kPrimaryWhiteColor,
+                                                                    //   ),
+                                                                    // ),
                                                                   ],
                                                                 ),
 
@@ -801,15 +810,15 @@ class _HomePageState extends State<HomePage> {
                                                                 //         kPrimaryWhiteColor,
                                                                 //   ),
                                                                 // ),
-                                                                SizedBox(
-                                                                    width: 25),
+                                                                // SizedBox(
+                                                                //     width: 25),
                                                                 Text(
-                                                                  ". " +
+                                                                  'ch ' +
                                                                       Newmanga[0]
                                                                               [
                                                                               index]
                                                                           [
-                                                                          'distanceTime'],
+                                                                          'chap'],
                                                                   style:
                                                                       TextStyle(
                                                                     fontSize:
@@ -1026,19 +1035,19 @@ class _HomePageState extends State<HomePage> {
                                                                       MainAxisAlignment
                                                                           .spaceBetween,
                                                                   children: [
-                                                                    Text(
-                                                                      'ch ' +
-                                                                          ViewManga[0][index]
-                                                                              [
-                                                                              'last_chapter'],
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontSize:
-                                                                            12,
-                                                                        color:
-                                                                            kPrimaryWhiteColor,
-                                                                      ),
-                                                                    ),
+                                                                    // Text(
+                                                                    //   'ch ' +
+                                                                    //       ViewManga[0][index]
+                                                                    //           [
+                                                                    //           'last_chapter'],
+                                                                    //   style:
+                                                                    //       TextStyle(
+                                                                    //     fontSize:
+                                                                    //         12,
+                                                                    //     color:
+                                                                    //         kPrimaryWhiteColor,
+                                                                    //   ),
+                                                                    // ),
                                                                   ],
                                                                 ),
                                                                 // SizedBox(width: 45),
@@ -1052,12 +1061,12 @@ class _HomePageState extends State<HomePage> {
                                                                 // ),
                                                                 // SizedBox(width: 25),
                                                                 Text(
-                                                                  ". " +
-                                                                      Newmanga[0]
+                                                                  'ch ' +
+                                                                      ViewManga[0]
                                                                               [
                                                                               index]
                                                                           [
-                                                                          'distanceTime'],
+                                                                          'last_chapter'],
                                                                   style:
                                                                       TextStyle(
                                                                     fontSize:
@@ -1293,15 +1302,15 @@ class _HomePageState extends State<HomePage> {
                                                                         mainAxisAlignment:
                                                                             MainAxisAlignment.spaceBetween,
                                                                         children: [
-                                                                          Text(
-                                                                            'ch ' +
-                                                                                RatingManga[0][index]['last_chapter'],
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 12,
-                                                                              color: kPrimaryWhiteColor,
-                                                                            ),
-                                                                          ),
+                                                                          // Text(
+                                                                          //   'ch ' +
+                                                                          //       RatingManga[0][index]['last_chapter'],
+                                                                          //   style:
+                                                                          //       TextStyle(
+                                                                          //     fontSize: 12,
+                                                                          //     color: kPrimaryWhiteColor,
+                                                                          //   ),
+                                                                          // ),
                                                                         ],
                                                                       ),
                                                                       // SizedBox(width: 45),
@@ -1315,8 +1324,8 @@ class _HomePageState extends State<HomePage> {
                                                                       // ),
                                                                       // SizedBox(width: 25),
                                                                       Text(
-                                                                        ". " +
-                                                                            Newmanga[0][index]['distanceTime'],
+                                                                        'ch ' +
+                                                                                RatingManga[0][index]['last_chapter'],
                                                                         style:
                                                                             TextStyle(
                                                                           fontSize:
@@ -1440,7 +1449,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Account()),
+                                      builder: (context) => Browser()),
                                 );
                               } else if (currentIndex == 3) {
                                 Navigator.push(
