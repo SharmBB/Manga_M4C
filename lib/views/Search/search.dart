@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/views/chapter/chapter.dart';
+import 'package:mangakiku_app/views/type/searchType.dart';
+import 'package:mangakiku_app/views/type/sliderType.dart';
 
 class Manga_List extends StatefulWidget {
   Manga_List({
@@ -136,8 +138,10 @@ class _ViewRoutesState extends State<Manga_List> {
                                     child: InkWell(
                                       onTap: () {
                                         print("shar");
-                                        _navigator(context,
-                                            Chapter([search[0][index]]));
+                                        _navigator(
+                                            context,
+                                            SearchDetailsScreen(
+                                                [search[0][index]]));
                                       },
                                       child: CachedNetworkImage(
                                           imageUrl: search[0][index]
