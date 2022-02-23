@@ -225,7 +225,7 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                       }
                     }),
                 IconButton(
-                    icon: Icon(Icons.add_circle_outline_rounded),
+                    icon: Icon(Icons.book_online),
                     color: kPrimaryWhiteColor,
                     onPressed: () {}),
                 IconButton(

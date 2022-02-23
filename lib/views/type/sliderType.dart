@@ -29,7 +29,6 @@ class _CartState extends State<SlideDetailsScreen> {
   List _manga;
 
   String dropdownValue = 'English';
-    String? selectelanguage = "";
 
   //list for api
   List chapterUsingName = [];
@@ -37,6 +36,10 @@ class _CartState extends State<SlideDetailsScreen> {
   List chaptersFromDB = [];
   List chapterLanguage = [];
   List chapterLanguagefr = [];
+  List chapterLanguageEn = [];
+  List chapterLanguagefrList = [];
+
+  String? selectelanguage;
 
   @override
   void initState() {
@@ -589,10 +592,14 @@ class _CartState extends State<SlideDetailsScreen> {
                                                                       Colors
                                                                           .transparent,
                                                                   onTap: () {
-                                                                    print("jhuvuyvuy" +
-                                                                        chaptersFromDB[index]
+                                                                    // print("jhuvuyvuy" +
+                                                                    //     chapterLanguagefr[index]
+                                                                    //         [
+                                                                    //         "chap"]);
+                                                                              print("ASCSCDSCD" +
+                                                                        chapterLanguagefr[index]
                                                                             [
-                                                                            "chap"]);
+                                                                            "hid"].toString());
                                                                     Navigator
                                                                         .push(
                                                                       context,
@@ -611,9 +618,8 @@ class _CartState extends State<SlideDetailsScreen> {
                                                                         vertical:
                                                                             8),
                                                                     child: Text(
-                                                                      chapterLanguagefr[index]
-                                                                              [
-                                                                              "chap"]
+                                                                      chapterLanguagefrList[
+                                                                              index]
                                                                           .toString(),
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -699,15 +705,15 @@ class _CartState extends State<SlideDetailsScreen> {
                                                                       Colors
                                                                           .transparent,
                                                                   onTap: () {
-                                                                    print("jhuvuyvuy" +
+                                                                         print("ASCSCDSCD" +
                                                                         chapterLanguage[index]
                                                                             [
-                                                                            "chap"]);
+                                                                            "hid"].toString());
                                                                     Navigator
                                                                         .push(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                        builder: (context) => MangaComment2(
+                                                                        builder: (context) => SlideMangaComment2(
                                                                             chapterid:
                                                                                 chapterLanguage[index]["chap"].toString(),
                                                                             hid: chapterLanguage[index]['hid'].toString()),
@@ -716,14 +722,13 @@ class _CartState extends State<SlideDetailsScreen> {
                                                                   },
                                                                   child:
                                                                       Padding(
-                                                                    padding: const EdgeInsets
+                                                                    padding:  EdgeInsets
                                                                             .symmetric(
                                                                         vertical:
                                                                             8),
                                                                     child: Text(
-                                                                      chapterLanguage[index]
-                                                                              [
-                                                                              "chap"]
+                                                                      chapterLanguageEn[
+                                                                              index]
                                                                           .toString(),
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -818,16 +823,24 @@ class _CartState extends State<SlideDetailsScreen> {
 
       print("---------chapters-------------");
 
-      print(chaptersFromDB);
-
       for (var i = 0; i < chaptersFromDB.length; i++) {
-        if (chaptersFromDB[i]["lang"] == "en") {
-          chapterLanguage = chaptersFromDB;
+        if (chaptersFromDB[i]["lang"] == 'en') {
+          // chapterLanguage = chaptersFromDB;
+          chapterLanguage =
+              chaptersFromDB.where((o) => o['lang'] == 'en').toList();
+          chapterLanguageEn =
+              chapterLanguage.map((o) => o["chap"]).toSet().toList();
+          // chapterLanguageEn.add(chapterLanguage.map((o) => o["chap"]).toSet());
+          print(chapterLanguageEn[1]);
         } else if (chaptersFromDB[i]["lang"] == "fr") {
-          chapterLanguagefr = chaptersFromDB;
+          chapterLanguagefr =
+              chaptersFromDB.where((o) => o['lang'] == 'fr').toList();
+          chapterLanguagefrList =
+              chapterLanguagefr.map((o) => o["chap"]).toSet().toList();
+          print(chapterLanguagefrList);
         }
       }
-      //   chapterLanguage = Set.of(chapterLanguage).toList();
+      //   chapterLanguage = Set.of.(chapterLanguage).toList();
       print("------------++++----------");
       print("EN" + chapterLanguage.toString());
       print("FR" + chapterLanguagefr.toString());
@@ -902,3 +915,4 @@ class _CartState extends State<SlideDetailsScreen> {
     });
   }
 }
+

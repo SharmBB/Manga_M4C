@@ -9,6 +9,7 @@ import 'package:mangakiku_app/api/api.dart';
 
 import 'package:mangakiku_app/views/Comments/chapterImage.dart';
 import 'package:mangakiku_app/views/Comments/comments.dart';
+import 'package:mangakiku_app/views/Comments/searchChapterImage.dart';
 
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,8 +35,11 @@ class _CartState extends State<DetailsScreen> {
   List chapterUsingName = [];
   List chapterUsingID = [];
   List chaptersFromDB = [];
+
   List chapterLanguage = [];
   List chapterLanguagefr = [];
+  List chapterLanguageEn = [];
+  List chapterLanguagefrList = [];
 
   @override
   void initState() {
@@ -557,8 +561,8 @@ class _CartState extends State<DetailsScreen> {
                                             // )
                                           ]),
                                     ),
-                                   selectelanguage == "Francasis"?
-                                          Expanded(
+                                selectelanguage == "Francasis"
+                                        ? Expanded(
                                             child: Container(
                                               child: ListView.builder(
                                                 itemCount:
@@ -587,18 +591,22 @@ class _CartState extends State<DetailsScreen> {
                                                                       Colors
                                                                           .transparent,
                                                                   onTap: () {
-                                                                    print("jhuvuyvuy" +
-                                                                        chaptersFromDB[index]
+                                                                    // print("jhuvuyvuy" +
+                                                                    //     chapterLanguagefr[index]
+                                                                    //         [
+                                                                    //         "chap"]);
+                                                                              print("ASCSCDSCD" +
+                                                                        chapterLanguagefr[index]
                                                                             [
-                                                                            "chap"]);
+                                                                            "hid"].toString());
                                                                     Navigator
                                                                         .push(
                                                                       context,
                                                                       MaterialPageRoute(
                                                                         builder: (context) => MangaComment2(
                                                                             chapterid:
-                                                                             chapterLanguagefr[index]["chap"].toString(),
-                                                                            hid:   chapterLanguagefr[index]['hid'].toString()),
+                                                                                chapterLanguagefr[index]["chap"].toString(),
+                                                                            hid: chapterLanguagefr[index]['hid'].toString()),
                                                                       ),
                                                                     );
                                                                   },
@@ -609,9 +617,8 @@ class _CartState extends State<DetailsScreen> {
                                                                         vertical:
                                                                             8),
                                                                     child: Text(
-                                                                      chapterLanguagefr[index]
-                                                                              [
-                                                                              "chap"]
+                                                                      chapterLanguagefrList[
+                                                                              index]
                                                                           .toString(),
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -667,7 +674,8 @@ class _CartState extends State<DetailsScreen> {
                                                 }, //itemBuilder
                                               ),
                                             ),
-                                          ):   Expanded(
+                                          )
+                                        : Expanded(
                                             child: Container(
                                               child: ListView.builder(
                                                 itemCount:
@@ -696,31 +704,30 @@ class _CartState extends State<DetailsScreen> {
                                                                       Colors
                                                                           .transparent,
                                                                   onTap: () {
-                                                                    print("jhuvuyvuy" +
-                                                                       chapterLanguage[index]
+                                                                         print("ASCSCDSCD" +
+                                                                        chapterLanguage[index]
                                                                             [
-                                                                            "chap"]);
+                                                                            "hid"].toString());
                                                                     Navigator
                                                                         .push(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                        builder: (context) => MangaComment2(
+                                                                        builder: (context) => SearchMangaComment2(
                                                                             chapterid:
-                                                                               chapterLanguage[index]["chap"].toString(),
+                                                                                chapterLanguage[index]["chap"].toString(),
                                                                             hid: chapterLanguage[index]['hid'].toString()),
                                                                       ),
                                                                     );
                                                                   },
                                                                   child:
                                                                       Padding(
-                                                                    padding: const EdgeInsets
+                                                                    padding:  EdgeInsets
                                                                             .symmetric(
                                                                         vertical:
                                                                             8),
                                                                     child: Text(
-                                                                      chapterLanguage[index]
-                                                                              [
-                                                                              "chap"]
+                                                                      chapterLanguageEn[
+                                                                              index]
                                                                           .toString(),
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -777,12 +784,14 @@ class _CartState extends State<DetailsScreen> {
                                               ),
                                             ),
                                           ),
-                                        ])
+                                  ])
                             ]),
                           )
                         ]))
               ])));
   }
+
+
   //get language details from  local storage
   void _getLocalLanguage() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -814,23 +823,29 @@ class _CartState extends State<DetailsScreen> {
 
       print("---------chapters-------------");
 
-      print(chaptersFromDB);
-
-
       for (var i = 0; i < chaptersFromDB.length; i++) {
-        if (chaptersFromDB[i]["lang"] == "en") {
-          chapterLanguage = chaptersFromDB;
+        if (chaptersFromDB[i]["lang"] == 'en') {
+          // chapterLanguage = chaptersFromDB;
+          chapterLanguage =
+              chaptersFromDB.where((o) => o['lang'] == 'en').toList();
+          chapterLanguageEn =
+              chapterLanguage.map((o) => o["chap"]).toSet().toList();
+          // chapterLanguageEn.add(chapterLanguage.map((o) => o["chap"]).toSet());
+          print(chapterLanguageEn[1]);
         } else if (chaptersFromDB[i]["lang"] == "fr") {
-          chapterLanguagefr = chaptersFromDB;
+          chapterLanguagefr =
+              chaptersFromDB.where((o) => o['lang'] == 'fr').toList();
+          chapterLanguagefrList =
+              chapterLanguagefr.map((o) => o["chap"]).toSet().toList();
+          print(chapterLanguagefrList);
         }
       }
-      //   chapterLanguage = Set.of(chapterLanguage).toList();
+      //   chapterLanguage = Set.of.(chapterLanguage).toList();
       print("------------++++----------");
       print("EN" + chapterLanguage.toString());
       print("FR" + chapterLanguagefr.toString());
       print("----------------------------------------------------");
       print(chapterLanguage[0]['id']);
-      // print(chaptersFromDB[0]['lang']);
 
       setState(() {
         _isLoading = false;

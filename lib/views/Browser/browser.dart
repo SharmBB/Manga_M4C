@@ -56,7 +56,7 @@ class _MyHomePageState extends State<Browser> {
 
   List<IconData> listOfIcons = [
     Icons.home_rounded,
-    Icons.document_scanner,
+     Icons.article_outlined,
     Icons.local_library_outlined,
     Icons.leaderboard,
     Icons.settings,

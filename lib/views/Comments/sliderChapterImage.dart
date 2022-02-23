@@ -32,6 +32,7 @@ class _MangaComment2State extends State<SlideMangaComment2> {
   TextEditingController _commentController = new TextEditingController();
 
   String? token;
+  String? selectevalue;
 
   List User = [];
 
@@ -48,6 +49,9 @@ class _MangaComment2State extends State<SlideMangaComment2> {
   //Success
   String? success;
 
+  var read;
+  var readReverse;
+
   @override
   void initState() {
     //initialize  id for chapterimage
@@ -56,6 +60,7 @@ class _MangaComment2State extends State<SlideMangaComment2> {
     chapterid = widget.chapterid;
     print(chapterid);
     _apiChapterImages();
+       _getUserDetails();
     super.initState();
   }
 
@@ -224,9 +229,11 @@ class _MangaComment2State extends State<SlideMangaComment2> {
                       }
                     }),
                 IconButton(
-                    icon: Icon(Icons.add_circle_outline_rounded),
+                    icon: Icon(Icons.book_online),
                     color: kPrimaryWhiteColor,
-                    onPressed: () {}),
+                    onPressed: () {
+                      _showReadcontent();
+                    }),
                 IconButton(
                     icon: Icon(Icons.comment_outlined),
                     color: kPrimaryWhiteColor,
@@ -263,23 +270,195 @@ class _MangaComment2State extends State<SlideMangaComment2> {
     );
   }
 
-//get chappterImages details from api
-  void _apiChapterImages() async {
-    try {
-      _chapterImage.clear();
-      var bodyRoutes;
-      var res = await CallApi().getChapterImages(widget.hid);
-      bodyRoutes = json.decode(res.body);
+  String _selectedRead = 'Right to Left';
 
-      // Add chapterimages to  List
+  void _showReadcontent() {
+    showDialog(
+        context: context,
+        barrierDismissible: false, // user must tap button!
 
-      _chapterImage.add(bodyRoutes);
-      print(_chapterImage[0]['chapter']['md_images']);
-    } catch (e) {
-      print(e);
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return AlertDialog(
+                backgroundColor: Colors.grey.shade900,
+                title: Text(
+                  'Reading Mode',
+                  style: TextStyle(
+                    color: kPrimaryWhiteColor,
+                    fontSize: 18,
+                  ),
+                ),
+                contentPadding: EdgeInsets.only(left: 10, top: 10),
+                content: Container(
+                  height: 200,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Left to Right',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Left to Right',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Right to Left',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Right to Left',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Vertical',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Vertical',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Vertical Reverse',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Vertical Reverse',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  FlatButton(
+                    child: Text(
+                      'OK',
+                      style: TextStyle(
+                        color: kPrimaryPurpleColor,
+                        fontSize: 18,
+                      ),
+                    ),
+                    onPressed: () async {
+                      // print(_selectedRead);
+                      SharedPreferences localStorage =
+                          await SharedPreferences.getInstance();
+
+                      var selectevalue = _selectedRead;
+                      // print(selectevalue);
+
+                      localStorage.setString('selectevalue', selectevalue);
+                      print(selectevalue);
+
+                      // localStorage.setInt('userId', userId);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        });
+  }
+  //get chappterImages details from api
+    void _apiChapterImages() async {
+      try {
+        _chapterImage.clear();
+        var bodyRoutes;
+        var res = await CallApi().getChapterImages(widget.hid);
+        bodyRoutes = json.decode(res.body);
+
+        // Add chapterimages to  List
+
+        _chapterImage.add(bodyRoutes);
+        print(_chapterImage[0]['chapter']['md_images']);
+      } catch (e) {
+        print(e);
+      }
+      setState(() {
+        _isLoading = false;
+      });
     }
-    setState(() {
-      _isLoading = false;
-    });
+  
+
+//store the userImage in local
+  void _getUserDetails() async {
+    read = Axis.horizontal;
+    readReverse = true;
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    selectevalue = localStorage.getString("selectevalue")!;
+    print("homepagetoken" + selectevalue!);
+    print("homepagetoken" + selectevalue!);
+    print("homepagetoken" + selectevalue!);
+    print("homepagetoken" + selectevalue!);
+    // var data = {"pic": selectevalue};
+    if (selectevalue == 'Left to Right') {
+      read = Axis.horizontal;
+      readReverse = false;
+    } else if (selectevalue == 'Right to Left') {
+      read = Axis.horizontal;
+      readReverse = true;
+    } else if (selectevalue == 'Vertical') {
+      read = Axis.vertical;
+      readReverse = false;
+    } else if (selectevalue == 'Vertical Reverse') {
+      read = Axis.vertical;
+      readReverse = true;
+    } else {
+      read = Axis.horizontal;
+      readReverse = true;
+    }
   }
 }

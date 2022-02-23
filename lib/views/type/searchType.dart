@@ -35,14 +35,16 @@ class _CartState extends State<SearchDetailsScreen> {
   List chapterUsingName = [];
   List chapterUsingID = [];
   List chaptersFromDB = [];
-   List chapterLanguage = [];
+  List chapterLanguage = [];
   List chapterLanguagefr = [];
+  List chapterLanguageEn = [];
+  List chapterLanguagefrList = [];
   String? selectelanguage = "";
 
   @override
   void initState() {
     _ChapterDetailsUsingName();
-     _getLocalLanguage();
+    _getLocalLanguage();
     // addLibrary();
     // addFavourite();
     super.initState();
@@ -559,7 +561,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                             // )
                                           ]),
                                     ),
-                                  selectelanguage == "Francasis"
+                                    selectelanguage == "Francasis"
                                         ? Expanded(
                                             child: Container(
                                               child: ListView.builder(
@@ -611,9 +613,8 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                         vertical:
                                                                             8),
                                                                     child: Text(
-                                                                      chapterLanguagefr[index]
-                                                                              [
-                                                                              "chap"]
+                                                                      chapterLanguagefrList[index]
+                                                                              
                                                                           .toString(),
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -707,7 +708,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                         .push(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                        builder: (context) => MangaComment2(
+                                                                        builder: (context) => SearchMangaComment2(
                                                                             chapterid:
                                                                                 chapterLanguage[index]["chap"].toString(),
                                                                             hid: chapterLanguage[index]['hid'].toString()),
@@ -721,9 +722,8 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                         vertical:
                                                                             8),
                                                                     child: Text(
-                                                                      chapterLanguage[index]
-                                                                              [
-                                                                              "chap"]
+                                                                      chapterLanguageEn[
+                                                                              index]
                                                                           .toString(),
                                                                       style: TextStyle(
                                                                           fontSize:
@@ -787,7 +787,7 @@ class _CartState extends State<SearchDetailsScreen> {
               ])));
   }
 
-   //get language details from  local storage
+  //get language details from  local storage
   void _getLocalLanguage() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     selectelanguage = localStorage.getString("selectelanguage")!;
@@ -819,11 +819,21 @@ class _CartState extends State<SearchDetailsScreen> {
 
       print(chaptersFromDB);
 
-        for (var i = 0; i < chaptersFromDB.length; i++) {
-        if (chaptersFromDB[i]["lang"] == "en") {
-          chapterLanguage = chaptersFromDB;
+      for (var i = 0; i < chaptersFromDB.length; i++) {
+        if (chaptersFromDB[i]["lang"] == 'en') {
+          // chapterLanguage = chaptersFromDB;
+          chapterLanguage =
+              chaptersFromDB.where((o) => o['lang'] == 'en').toList();
+          chapterLanguageEn =
+              chapterLanguage.map((o) => o["chap"]).toSet().toList();
+          // chapterLanguageEn.add(chapterLanguage.map((o) => o["chap"]).toSet());
+          print(chapterLanguageEn[1]);
         } else if (chaptersFromDB[i]["lang"] == "fr") {
-          chapterLanguagefr = chaptersFromDB;
+          chapterLanguagefr =
+              chaptersFromDB.where((o) => o['lang'] == 'fr').toList();
+          chapterLanguagefrList =
+              chapterLanguagefr.map((o) => o["chap"]).toSet().toList();
+          print(chapterLanguagefrList);
         }
       }
       //   chapterLanguage = Set.of(chapterLanguage).toList();
