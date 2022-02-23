@@ -38,14 +38,14 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
 //bottom navigation bar icons
   List<IconData> listOfIcons = [
     Icons.home_rounded,
-    Icons.settings,
-    Icons.search,
+    Icons.document_scanner,
     Icons.local_library_outlined,
     Icons.leaderboard,
+    Icons.settings,
   ];
 
   //bottom navigation purple
-  int bottomPurple = 4;
+  int bottomPurple = 3;
 
   @override
   void initState() {
@@ -60,6 +60,15 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_rounded, color: kPrimaryWhiteColor),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
         title: Center(
           child: Text(
             "Leader Board",
@@ -145,8 +154,10 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                                 textAlign: TextAlign.center),
                                           ),
                                           Expanded(
-                                            child: Text(  _getLeaderBoardDetails[index]
-                                                    ['points'].toString(),
+                                            child: Text(
+                                                _getLeaderBoardDetails[index]
+                                                        ['points']
+                                                    .toString(),
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight: FontWeight.bold,
@@ -162,8 +173,10 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                                 textAlign: TextAlign.left),
                                           ),
                                           Expanded(
-                                            child: Text(  _getLeaderBoardDetails[index]
-                                                    ['chapters'].toString(),
+                                            child: Text(
+                                                _getLeaderBoardDetails[index]
+                                                        ['chapters']
+                                                    .toString(),
                                                 style: TextStyle(
                                                     color: kPrimaryWhiteColor,
                                                     fontWeight: FontWeight.bold,
@@ -237,23 +250,23 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                   if (currentIndex == 1) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Setting()),
+                      MaterialPageRoute(builder: (context) => Browser()),
                     );
                   } else if (currentIndex == 2) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Browser()),
+                      MaterialPageRoute(builder: (context) => Library()),
                     );
                   } else if (currentIndex == 3) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Library()),
+                      MaterialPageRoute(
+                          builder: (context) => LeaderBoardScreen()),
                     );
                   } else if (currentIndex == 4) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => LeaderBoardScreen()),
+                      MaterialPageRoute(builder: (context) => Setting()),
                     );
                   } else {
                     Navigator.push(

@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:http/http.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
+import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Browser/browser.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
@@ -26,13 +29,13 @@ class _SettingState extends State<Setting> {
 
   List<IconData> listOfIcons = [
     Icons.home_rounded,
-    Icons.settings,
-    Icons.search,
+    Icons.document_scanner,
     Icons.local_library_outlined,
     Icons.leaderboard,
+    Icons.settings,
   ];
 
-  int bottomPurple = 1;
+  int bottomPurple = 4;
   String? token;
 
   bool _isLoading = true;
@@ -57,8 +60,7 @@ class _SettingState extends State<Setting> {
   void _getRead() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     selectevalue = localStorage.getString("selectevalue");
-    print('  selectevalue'+   selectevalue.toString());
-    
+    print('  selectevalue' + selectevalue.toString());
   }
 
   void _launchURL() async {
@@ -82,7 +84,16 @@ class _SettingState extends State<Setting> {
     return Scaffold(
       backgroundColor: primaryColor,
       appBar: AppBar(
-        title: const Text(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_rounded, color: kPrimaryWhiteColor),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
+        title: Text(
           'Management',
           style: TextStyle(
               color: kPrimaryWhiteColor,
@@ -98,7 +109,6 @@ class _SettingState extends State<Setting> {
           overscroll.disallowGlow();
           return false;
         },
-        
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(
@@ -314,40 +324,40 @@ class _SettingState extends State<Setting> {
                 //   onTap: () {
                 //     _showDarkcontent();
                 //   },
-                  // child: Padding(
-                  //   padding: const EdgeInsets.only(
-                  //     left: 20,
-                  //     right: 20,
-                  //     bottom: 10,
-                  //     top: 10,
-                  //   ),
-                  //   child: Container(
-                  //     height: 45,
-                  //     width: screenWidth,
-                  //     child: Column(
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: [
-                  //         Text(
-                  //           "Dark Mode",
-                  //           style: TextStyle(
-                  //             color: kPrimaryWhiteColor,
-                  //             fontSize: 18,
-                  //           ),
-                  //         ),
-                  //         SizedBox(
-                  //           height: 5,
-                  //         ),
-                  //         Text(
-                  //           _selectedDark,
-                  //           style: TextStyle(
-                  //             color: Colors.grey,
-                  //             fontSize: 14,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
+                // child: Padding(
+                //   padding: const EdgeInsets.only(
+                //     left: 20,
+                //     right: 20,
+                //     bottom: 10,
+                //     top: 10,
+                //   ),
+                //   child: Container(
+                //     height: 45,
+                //     width: screenWidth,
+                //     child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         Text(
+                //           "Dark Mode",
+                //           style: TextStyle(
+                //             color: kPrimaryWhiteColor,
+                //             fontSize: 18,
+                //           ),
+                //         ),
+                //         SizedBox(
+                //           height: 5,
+                //         ),
+                //         Text(
+                //           _selectedDark,
+                //           style: TextStyle(
+                //             color: Colors.grey,
+                //             fontSize: 14,
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 // ),
                 SizedBox(
                   height: 20,
@@ -544,23 +554,23 @@ class _SettingState extends State<Setting> {
                   if (currentIndex == 1) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Setting()),
+                      MaterialPageRoute(builder: (context) => Browser()),
                     );
                   } else if (currentIndex == 2) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Browser()),
+                      MaterialPageRoute(builder: (context) => Library()),
                     );
                   } else if (currentIndex == 3) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Library()),
+                      MaterialPageRoute(
+                          builder: (context) => LeaderBoardScreen()),
                     );
                   } else if (currentIndex == 4) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => LeaderBoardScreen()),
+                      MaterialPageRoute(builder: (context) => Setting()),
                     );
                   } else {
                     Navigator.push(
@@ -1076,12 +1086,13 @@ class _SettingState extends State<Setting> {
                       ),
                     ),
                     onPressed: () async {
-                        SharedPreferences localStorage =
+                      SharedPreferences localStorage =
                           await SharedPreferences.getInstance();
 
                       var selectelanguage = _selectedLanguage;
                       // print(selectevalue);
-                      localStorage.setString('selectelanguage', selectelanguage);
+                      localStorage.setString(
+                          'selectelanguage', selectelanguage);
                       print(selectelanguage);
                       Navigator.of(context).pop();
                     },
@@ -1181,5 +1192,32 @@ class _SettingState extends State<Setting> {
             },
           );
         });
+  }
+
+  void addReadingMode() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      var data = {
+        "readingMode": "right to left",
+      };
+      var res = await CallApi().postData(data, 'updateReadingMode');
+      var body = json.decode(res.body);
+      print(body);
+
+      if (body['token'] != null) {
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        var token = body['token'];
+        localStorage.setString('token', token);
+
+        print(body);
+      } else {}
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      _isLoading = false;
+    });
   }
 }

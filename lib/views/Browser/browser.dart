@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
 
-
 import 'dart:convert';
 
 import 'package:mangakiku_app/views/Account/account.dart';
@@ -53,14 +52,14 @@ class _MyHomePageState extends State<Browser> {
   bool _isLoading1 = true;
 
   //bottom navigation purple
-  int bottomPurple = 2;
+  int bottomPurple = 1;
 
   List<IconData> listOfIcons = [
     Icons.home_rounded,
-    Icons.description_outlined,
-    Icons.search,
+    Icons.document_scanner,
     Icons.local_library_outlined,
     Icons.leaderboard,
+    Icons.settings,
   ];
 
   //get manga details from api
@@ -104,8 +103,9 @@ class _MyHomePageState extends State<Browser> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_rounded, color: kPrimaryWhiteColor),
           onPressed: () {
-            Navigator.pop(
+            Navigator.push(
               context,
+              MaterialPageRoute(builder: (context) => HomePage()),
             );
           },
         ),
@@ -148,23 +148,23 @@ class _MyHomePageState extends State<Browser> {
                   if (currentIndex == 1) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Setting()),
+                      MaterialPageRoute(builder: (context) => Browser()),
                     );
                   } else if (currentIndex == 2) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Browser()),
+                      MaterialPageRoute(builder: (context) => Library()),
                     );
                   } else if (currentIndex == 3) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Library()),
+                      MaterialPageRoute(
+                          builder: (context) => LeaderBoardScreen()),
                     );
                   } else if (currentIndex == 4) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => LeaderBoardScreen()),
+                      MaterialPageRoute(builder: (context) => Setting()),
                     );
                   } else {
                     Navigator.push(

@@ -33,10 +33,10 @@ int selectedIndex = 0;
 
 List<IconData> listOfIcons = [
   Icons.home_rounded,
-  Icons.settings,
-  Icons.search,
+  Icons.document_scanner,
   Icons.local_library_outlined,
   Icons.leaderboard,
+  Icons.settings,
 ];
 
 class _HomePageState extends State<HomePage> {
@@ -1443,26 +1443,26 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Setting()),
+                                      builder: (context) => Browser()),
                                 );
                               } else if (currentIndex == 2) {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Browser()),
+                                      builder: (context) => Library()),
                                 );
                               } else if (currentIndex == 3) {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Library()),
+                                      builder: (context) => LeaderBoardScreen()),
                                 );
                               } else if (currentIndex == 4) {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          LeaderBoardScreen()),
+                                          Setting()),
                                 );
                               } else {
                                 Navigator.push(

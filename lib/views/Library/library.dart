@@ -8,6 +8,7 @@ import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Browser/browser.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
+import 'package:mangakiku_app/views/Setting/setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Library extends StatefulWidget {
@@ -23,16 +24,16 @@ class _LeaderBoardScreenState extends State<Library> {
 
   List<IconData> listOfIcons = [
     Icons.home_rounded,
-    Icons.settings,
-    Icons.search,
-    Icons.library_add_rounded,
+    Icons.document_scanner,
+    Icons.local_library_outlined,
     Icons.leaderboard,
+    Icons.settings,
   ];
 
   List _getLibrary = [];
   List _getFavourite = [];
 
-  int bottomPurple = 3;
+  int bottomPurple = 2;
 
 // loader
   bool _isLoading = true;
@@ -57,8 +58,9 @@ class _LeaderBoardScreenState extends State<Library> {
           icon: Icon(Icons.arrow_back_rounded, color: kPrimaryWhiteColor),
           onPressed: () {
             //    _sendDataBack(context);
-            Navigator.pop(
+            Navigator.push(
               context,
+              MaterialPageRoute(builder: (context) => HomePage()),
             );
           },
         ),
@@ -495,18 +497,18 @@ class _LeaderBoardScreenState extends State<Library> {
                   } else if (currentIndex == 2) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Browser()),
+                      MaterialPageRoute(builder: (context) => Library()),
                     );
                   } else if (currentIndex == 3) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Library()),
+                      MaterialPageRoute(
+                          builder: (context) => LeaderBoardScreen()),
                     );
                   } else if (currentIndex == 4) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => LeaderBoardScreen()),
+                      MaterialPageRoute(builder: (context) => Setting()),
                     );
                   } else {
                     Navigator.push(
