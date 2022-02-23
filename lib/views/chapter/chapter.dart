@@ -705,11 +705,10 @@ class _CartState extends State<Chapter> {
                                                                         .push(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                        builder: (context) => MangaComment2(
-                                                                            chapterid:
-                                                                                chaptersFromDB[index]["chap"].toString(),
-                                                                            hid: chaptersFromDB[index]['hid'].toString()),
-                                                                      ),
+                                                                          builder: (context) => MangaComment2(
+                                                                              chapterid: chaptersFromDB[index]["chap"].toString(),
+                                                                              hid: chaptersFromDB[index]['hid'].toString(),
+                                                                            )),
                                                                     );
                                                                   },
                                                                   child:
@@ -719,6 +718,8 @@ class _CartState extends State<Chapter> {
                                                                         vertical:
                                                                             8),
                                                                     child: Text(
+
+                                                                    //work
                                                                       chaptersFromDB[index]
                                                                               [
                                                                               "chap"]
@@ -825,7 +826,7 @@ class _CartState extends State<Chapter> {
       //   chapterLanguage = Set.of(chapterLanguage).toList();
       print("------------++++----------");
       //R print(chapterLanguage);
-      // print(chaptersFromDB[0]['lang']);
+      print(chaptersFromDB);
 
       setState(() {
         _isLoading = false;

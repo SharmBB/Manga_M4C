@@ -314,7 +314,7 @@ class _MyHomePageState extends State<Browser> {
                       child: Padding(
                       padding: const EdgeInsets.only(top: 30.0),
                       child: CupertinoActivityIndicator(
-                        radius: 20,
+                        radius: 15,
                       ),
                     ))
                   : Expanded(

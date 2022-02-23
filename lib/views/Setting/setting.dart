@@ -832,6 +832,7 @@ class _SettingState extends State<Setting> {
                       ),
                     ),
                     onPressed: () async {
+                      addReadingMode();
                       // print(_selectedRead);
                       SharedPreferences localStorage =
                           await SharedPreferences.getInstance();
@@ -1086,6 +1087,7 @@ class _SettingState extends State<Setting> {
                       ),
                     ),
                     onPressed: () async {
+                      
                       SharedPreferences localStorage =
                           await SharedPreferences.getInstance();
 
@@ -1200,7 +1202,7 @@ class _SettingState extends State<Setting> {
     });
     try {
       var data = {
-        "readingMode": "right to left",
+        "readingMode": _selectedRead,
       };
       var res = await CallApi().postData(data, 'updateReadingMode');
       var body = json.decode(res.body);

@@ -245,10 +245,10 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                       );
                       //  _displayDialog(context);
                     }),
-                IconButton(
-                    icon: Icon(Icons.favorite),
-                    color: kPrimaryWhiteColor,
-                    onPressed: () {}),
+                // IconButton(
+                //     icon: Icon(Icons.favorite),
+                //     color: kPrimaryWhiteColor,
+                //     onPressed: () {}),
                 IconButton(
                     icon: Icon(Icons.arrow_forward_ios),
                     color: kPrimaryWhiteColor,

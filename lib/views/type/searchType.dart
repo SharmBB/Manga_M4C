@@ -507,7 +507,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                           top: 10, left: 60, right: 80),
                                       child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.center,
                                           children: [
                                             // Container(
                                             //   width: 100,
@@ -546,13 +546,13 @@ class _CartState extends State<SearchDetailsScreen> {
                                             //         color: Colors.white,
                                             //         fontWeight:
                                             //             FontWeight.bold)),
-                                            Text(
-                                              'Date',
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold),
-                                            )
+                                            // Text(
+                                            //   'Date',
+                                            //   style: TextStyle(
+                                            //       fontSize: 18,
+                                            //       color: Colors.white,
+                                            //       fontWeight: FontWeight.bold),
+                                            // )
                                           ]),
                                     ),
                                     Expanded(
@@ -573,7 +573,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                                     child: Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
-                                                                .spaceBetween,
+                                                                .center,
                                                         children: <Widget>[
                                                           InkWell(
                                                             highlightColor:
@@ -624,48 +624,48 @@ class _CartState extends State<SearchDetailsScreen> {
                                                           //       fontSize: 13,
                                                           //       color: Colors.white),
                                                           // ),
-                                                          InkWell(
-                                                            onTap: () {
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          SearchMangaComment2(
-                                                                    hid: chaptersFromDB[index]
-                                                                            [
-                                                                            'hid']
-                                                                        .toString(),
-                                                                    chapterid: chaptersFromDB[index]
-                                                                            [
-                                                                            "chap"]
-                                                                        .toString(),
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                            child: Text(
-                                                              chaptersFromDB[index]
-                                                                          [
-                                                                          "up_count"]
-                                                                      .toString() +
-                                                                  "days",
-                                                              style: TextStyle(
-                                                                  fontSize: 13,
-                                                                  color: Colors
-                                                                      .white),
-                                                            ),
-                                                            // Text(
-                                                            //   chaptersFromDB[
-                                                            //               index]
-                                                            //           ["lang"]
-                                                            //       .toString(),
-                                                            //   style: TextStyle(
-                                                            //       fontSize: 13,
-                                                            //       color: Colors
-                                                            //           .white),
-                                                            // ),
-                                                          )
+                                                          // InkWell(
+                                                          //   onTap: () {
+                                                          //     Navigator.push(
+                                                          //       context,
+                                                          //       MaterialPageRoute(
+                                                          //         builder:
+                                                          //             (context) =>
+                                                          //                 SearchMangaComment2(
+                                                          //           hid: chaptersFromDB[index]
+                                                          //                   [
+                                                          //                   'hid']
+                                                          //               .toString(),
+                                                          //           chapterid: chaptersFromDB[index]
+                                                          //                   [
+                                                          //                   "chap"]
+                                                          //               .toString(),
+                                                          //         ),
+                                                          //       ),
+                                                          //     );
+                                                          //   },
+                                                          //   child: Text(
+                                                          //     chaptersFromDB[index]
+                                                          //                 [
+                                                          //                 "up_count"]
+                                                          //             .toString() +
+                                                          //         "days",
+                                                          //     style: TextStyle(
+                                                          //         fontSize: 13,
+                                                          //         color: Colors
+                                                          //             .white),
+                                                          //   ),
+                                                          //   // Text(
+                                                          //   //   chaptersFromDB[
+                                                          //   //               index]
+                                                          //   //           ["lang"]
+                                                          //   //       .toString(),
+                                                          //   //   style: TextStyle(
+                                                          //   //       fontSize: 13,
+                                                          //   //       color: Colors
+                                                          //   //           .white),
+                                                          //   // ),
+                                                          // )
                                                         ]),
                                                   )),
                                             );

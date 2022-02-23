@@ -245,7 +245,9 @@ class _MangaComment2State extends State<MangaComment2> {
                 IconButton(
                     icon: Icon(Icons.add_circle_outline_rounded),
                     color: kPrimaryWhiteColor,
-                    onPressed: () {}),
+                    onPressed: () {
+                      _showReadcontent();
+                    }),
                 IconButton(
                     icon: Icon(Icons.comment_outlined),
                     color: kPrimaryWhiteColor,
@@ -341,5 +343,150 @@ class _MangaComment2State extends State<MangaComment2> {
     setState(() {
       _isLoading = false;
     });
+  }
+
+
+   String _selectedRead = 'Right to Left';
+
+  void _showReadcontent() {
+    showDialog(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return AlertDialog(
+                backgroundColor: Colors.grey.shade900,
+                title: Text(
+                  'Reading Mode',
+                  style: TextStyle(
+                    color: kPrimaryWhiteColor,
+                    fontSize: 18,
+                  ),
+                ),
+                contentPadding: EdgeInsets.only(left: 10, top: 10),
+                content: Container(
+                  height: 200,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Left to Right',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Left to Right',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Right to Left',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Right to Left',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Vertical',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Vertical',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<String>(
+                            activeColor: kPrimaryPurpleColor,
+                            value: 'Vertical Reverse',
+                            groupValue: _selectedRead,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRead = value!;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Vertical Reverse',
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  FlatButton(
+                    child: Text(
+                      'OK',
+                      style: TextStyle(
+                        color: kPrimaryPurpleColor,
+                        fontSize: 18,
+                      ),
+                    ),
+                    onPressed: () async {
+                   
+                      // print(_selectedRead);
+                      SharedPreferences localStorage =
+                          await SharedPreferences.getInstance();
+
+                      var selectevalue = _selectedRead;
+                      // print(selectevalue);
+
+                      localStorage.setString('selectevalue', selectevalue);
+                      print(selectevalue);
+
+                      // localStorage.setInt('userId', userId);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        });
   }
 }
