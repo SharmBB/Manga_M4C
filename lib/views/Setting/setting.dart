@@ -47,21 +47,33 @@ class _SettingState extends State<Setting> {
   void initState() {
     //initialize  id for chapterimage
     _getRead();
+    
+    _getLanguage();
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  // }
 
   String? selectevalue;
+  String? selectelanguage;
 
   void _getRead() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
 
     setState(() {
       selectevalue = localStorage.getString("selectevalue");
+    });
+    //print('  selectevalue' + selectevalue.toString());
+  }
+
+  void _getLanguage() async {
+    SharedPreferences localStorage1 = await SharedPreferences.getInstance();
+
+    setState(() {
+      selectelanguage = localStorage1.getString("selectelanguage");
     });
     //print('  selectevalue' + selectevalue.toString());
   }
@@ -990,6 +1002,7 @@ class _SettingState extends State<Setting> {
                             onChanged: (value) {
                               setState(() {
                                 _selectedLanguage = value!;
+                                selectelanguage = value.toString();
                               });
                             },
                           ),
@@ -1032,6 +1045,7 @@ class _SettingState extends State<Setting> {
                             onChanged: (value) {
                               setState(() {
                                 _selectedLanguage = value!;
+                                 selectelanguage = value.toString();
                               });
                             },
                           ),
@@ -1099,16 +1113,37 @@ class _SettingState extends State<Setting> {
                       ),
                     ),
                     onPressed: () async {
+                      setState() {
+                        selectelanguage = _selectedLanguage;
+                      }
+
+                      //  addReadingMode();
+                      // print(_selectedRead);
                       SharedPreferences localStorage =
                           await SharedPreferences.getInstance();
 
-                      var selectelanguage = _selectedLanguage;
+                      var value = _selectedLanguage;
+
                       // print(selectevalue);
-                      localStorage.setString(
-                          'selectelanguage', selectelanguage);
-                      print(selectelanguage);
+
+                      localStorage.setString('selectelanguage', value);
+                      //print(selectevalue);
+
+                      // localStorage.setInt('userId', userId);
                       Navigator.of(context).pop();
                     },
+
+                    // onPressed: () async {
+                    //   SharedPreferences localStorage =
+                    //       await SharedPreferences.getInstance();
+
+                    //   var selectelanguage = _selectedLanguage;
+                    //   // print(selectevalue);
+                    //   localStorage.setString(
+                    //       'selectelanguage', selectelanguage);
+                    //   print(selectelanguage);
+                    //   Navigator.of(context).pop();
+                    // },
                   ),
                 ],
               );

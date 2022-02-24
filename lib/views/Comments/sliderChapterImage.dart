@@ -16,10 +16,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SlideMangaComment2 extends StatefulWidget {
   final String hid;
   final String chapterid;
+  final List chap;
+  final int index;
   const SlideMangaComment2({
     key,
     required this.hid,
     required this.chapterid,
+    required this.chap,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -33,6 +37,7 @@ class _MangaComment2State extends State<SlideMangaComment2> {
 
   String? token;
   String? selectevalue;
+  int chapterCount = 0;
 
   List User = [];
 
@@ -41,6 +46,7 @@ class _MangaComment2State extends State<SlideMangaComment2> {
   int? _replyReplyid;
   //listview index
   int? xyz;
+  int? index;
 
   // List ReplyComments = [];
 
@@ -55,12 +61,13 @@ class _MangaComment2State extends State<SlideMangaComment2> {
   @override
   void initState() {
     //initialize  id for chapterimage
+    index = widget.index;
     hid = widget.hid;
     print(hid);
     chapterid = widget.chapterid;
     print(chapterid);
     _apiChapterImages();
-       _getUserDetails();
+    _getUserDetails();
     super.initState();
   }
 
@@ -221,12 +228,22 @@ class _MangaComment2State extends State<SlideMangaComment2> {
                     icon: Icon(Icons.arrow_back_ios_new),
                     color: kPrimaryWhiteColor,
                     onPressed: () {
-                      if (counter <
-                          _chapterImage[0]['chapter']['md_images'].length - 1) {
-                        setState(() {
-                          counter = counter + 1;
-                        });
-                      }
+                      setState(() {
+                        _isLoading = true;
+                        index = (index! - 1);
+                        hid = widget.chap[index!]["hid"];
+                        chapterid = widget.chap[index!]["id"].toString();
+
+                        _apiChapterImages();
+
+                        //widget.chapterid =
+                      });
+                      // if (counter <
+                      //     _chapterImage[0]['chapter']['md_images'].length - 1) {
+                      //   setState(() {
+                      //     counter = counter + 1;
+                      //   });
+                      // }
                     }),
                 IconButton(
                     icon: Icon(Icons.book_online),
@@ -259,11 +276,16 @@ class _MangaComment2State extends State<SlideMangaComment2> {
                     icon: Icon(Icons.arrow_forward_ios),
                     color: kPrimaryWhiteColor,
                     onPressed: () {
-                      if (counter != 0) {
-                        setState(() {
-                          counter = counter - 1;
-                        });
-                      }
+                      setState(() {
+                        _isLoading = true;
+                        index = (index! + 1);
+                        hid = widget.chap[index!]["hid"];
+                        chapterid = widget.chap[index!]["id"].toString();
+
+                        _apiChapterImages();
+
+                        //widget.chapterid =
+                      });
                     }),
               ],
             ),
@@ -412,26 +434,26 @@ class _MangaComment2State extends State<SlideMangaComment2> {
           );
         });
   }
+
   //get chappterImages details from api
-    void _apiChapterImages() async {
-      try {
-        _chapterImage.clear();
-        var bodyRoutes;
-        var res = await CallApi().getChapterImages(widget.hid);
-        bodyRoutes = json.decode(res.body);
+  void _apiChapterImages() async {
+    try {
+      _chapterImage.clear();
+      var bodyRoutes;
+      var res = await CallApi().getChapterImages(hid);
+      bodyRoutes = json.decode(res.body);
 
-        // Add chapterimages to  List
+      // Add chapterimages to  List
 
-        _chapterImage.add(bodyRoutes);
-        print(_chapterImage[0]['chapter']['md_images']);
-      } catch (e) {
-        print(e);
-      }
-      setState(() {
-        _isLoading = false;
-      });
+      _chapterImage.add(bodyRoutes);
+      print(_chapterImage[0]['chapter']['md_images']);
+    } catch (e) {
+      print(e);
     }
-  
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
 //store the userImage in local
   void _getUserDetails() async {

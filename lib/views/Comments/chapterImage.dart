@@ -18,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MangaComment2 extends StatefulWidget {
   final String hid;
+
   final String chapterid;
   final List chap;
   final int index;
@@ -25,6 +26,7 @@ class MangaComment2 extends StatefulWidget {
     key,
     required this.hid,
     required this.chapterid,
+    
     required this.chap,
     required this.index,
   }) : super(key: key);
@@ -40,6 +42,7 @@ class _MangaComment2State extends State<MangaComment2> {
 
   String? selectevalue;
   int chapterCount = 0;
+  int? indexlast;
 
   List User = [];
   int? index;
@@ -66,6 +69,7 @@ class _MangaComment2State extends State<MangaComment2> {
     // AdHelper.myBanner.load();
     index = widget.index;
     hid = widget.hid;
+    
     // print(hid);
     chapterid = widget.chapterid;
     // print(chapterid);
@@ -243,12 +247,14 @@ class _MangaComment2State extends State<MangaComment2> {
                     color: kPrimaryWhiteColor,
                     onPressed: () {
                       setState(() {
-                        _isLoading = true;
-                        index = (index! - 1);
-                        hid = widget.chap[index!]["hid"];
-                        chapterid = widget.chap[index!]["id"].toString();
+                        if (index != 0) {
+                          _isLoading = true;
+                          index = (index! - 1);
+                          hid = widget.chap[index!]["hid"];
+                          chapterid = widget.chap[index!]["id"].toString();
 
-                        _apiChapterImages();
+                          _apiChapterImages();
+                        }
 
                         //widget.chapterid =
                       });
@@ -302,12 +308,15 @@ class _MangaComment2State extends State<MangaComment2> {
                     color: kPrimaryWhiteColor,
                     onPressed: () {
                       setState(() {
-                        _isLoading = true;
-                        index = (index! + 1);
-                        hid = widget.chap[index!]["hid"];
-                        chapterid = widget.chap[index!]["id"].toString();
+                        // if (index! < indexlast!) {
+                          _isLoading = true;
 
-                        _apiChapterImages();
+                          index = (index! + 1);
+                          hid = widget.chap[index!]["hid"];
+                          chapterid = widget.chap[index!]["id"].toString();
+
+                          _apiChapterImages();
+                      //  }
 
                         //widget.chapterid =
                       });
@@ -349,7 +358,8 @@ class _MangaComment2State extends State<MangaComment2> {
 //get chappterImages details from api
   void _apiChapterImages() async {
     try {
-      print(widget.chap);
+      print("dddddddddd" + widget.chap.toString());
+      print(chapterid);
       _chapterImage.clear();
       var bodyRoutes;
       var res = await CallApi().getChapterImages(hid);

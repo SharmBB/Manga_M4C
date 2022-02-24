@@ -61,7 +61,7 @@ class _CartState extends State<SearchDetailsScreen> {
                 child: Padding(
                 padding: const EdgeInsets.only(top: 30.0),
                 child: CupertinoActivityIndicator(
-                  radius: 20,
+                  radius: 15,
                 ),
               ))
             : SingleChildScrollView(
@@ -192,18 +192,42 @@ class _CartState extends State<SearchDetailsScreen> {
                                   color: kPrimaryPurpleColor,
                                   textColor: Colors.white,
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            SearchMangaComment2(
-                                          hid: chaptersFromDB[0]['hid']
-                                              .toString(),
-                                          chapterid: chaptersFromDB[0]["chap"]
-                                              .toString(),
-                                        ),
-                                      ),
-                                    );
+                                    if (selectelanguage == "Francasis") {
+                                      if (chapterLanguagefr[0] != null) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MangaComment2(
+                                              chapterid: chapterLanguagefr[0]
+                                                      ["chap"]
+                                                  .toString(),
+                                              hid: chapterLanguagefr[0]['hid']
+                                                  .toString(),
+                                              chap: chapterLanguagefr,
+                                              index: 0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      if (chapterLanguage[0] != null) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MangaComment2(
+                                              chapterid: chapterLanguage[0]
+                                                      ["chap"]
+                                                  .toString(),
+                                              hid: chapterLanguage[0]['hid']
+                                                  .toString(),
+                                              chap: chapterLanguage,
+                                              index: 0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    }
+
                                     print("dsvdsv");
                                   },
                                 ),
@@ -599,10 +623,18 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                         .push(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                        builder: (context) => SearchMangaComment2(
-                                                                            chapterid:
-                                                                                chapterLanguagefr[index]["chap"].toString(),
-                                                                            hid: chapterLanguagefr[index]['hid'].toString()),
+                                                                        builder:
+                                                                            (context) =>
+                                                                                SearchMangaComment2(
+                                                                          chapterid:
+                                                                              chapterLanguagefr[index]["chap"].toString(),
+                                                                          hid: chapterLanguagefr[index]['hid']
+                                                                              .toString(),
+                                                                          chap:
+                                                                              chapterLanguagefr,
+                                                                          index:
+                                                                              index,
+                                                                        ),
                                                                       ),
                                                                     );
                                                                   },
@@ -708,10 +740,18 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                         .push(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                        builder: (context) => SearchMangaComment2(
-                                                                            chapterid:
-                                                                                chapterLanguage[index]["chap"].toString(),
-                                                                            hid: chapterLanguage[index]['hid'].toString()),
+                                                                        builder:
+                                                                            (context) =>
+                                                                                SearchMangaComment2(
+                                                                          chapterid:
+                                                                              chapterLanguage[index]["chap"].toString(),
+                                                                          hid: chapterLanguage[index]['hid']
+                                                                              .toString(),
+                                                                          chap:
+                                                                              chapterLanguage,
+                                                                          index:
+                                                                              index,
+                                                                        ),
                                                                       ),
                                                                     );
                                                                   },
@@ -909,203 +949,5 @@ class _CartState extends State<SearchDetailsScreen> {
     setState(() {
       _isLoading = false;
     });
-  }
-}
-
-class CharacterPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    //final TextStyle textStyle = Theme.of(context).textTheme.display1;
-    return SingleChildScrollView(
-        child: Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(top: 10, right: 20, left: 20),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 140,
-                    height: 30,
-                    decoration: BoxDecoration(
-                        color: Colors.grey,
-                        // gradient: LinearGradient(colors: [secondary, primary]),
-                        borderRadius: BorderRadius.circular(1)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Select Language",
-                          style: TextStyle(fontSize: 13, color: Colors.white),
-                        ),
-                        Icon(
-                          Icons.keyboard_arrow_down,
-                          color: Colors.white,
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      DataTable(
-        border: TableBorder(
-          horizontalInside: BorderSide(color: Colors.white),
-        ),
-        columns: [
-          DataColumn(
-            label: Container(
-              width: 120,
-              height: 25,
-              decoration: BoxDecoration(
-                  color: Colors.grey,
-                  // gradient: LinearGradient(colors: [secondary, primary]),
-                  borderRadius: BorderRadius.circular(1)),
-              child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0, left: 5),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        hintText: "Select Chapter",
-                        hintStyle:
-                            TextStyle(fontSize: 12.0, color: Colors.white),
-                        border: InputBorder.none,
-                        fillColor: Colors.grey,
-                        focusColor: Colors.grey),
-                  )),
-            ),
-          ),
-          DataColumn(
-              label: Text(
-            'Date',
-            style: TextStyle(fontSize: 14, color: Colors.white),
-          )),
-          DataColumn(
-              label: Text(
-            'Language',
-            style: TextStyle(fontSize: 14, color: Colors.white),
-          )),
-        ],
-        rows: [
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-          DataRow(cells: [
-            DataCell(Text(
-              'CH 12',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Text(
-              '2 days ',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            )),
-            DataCell(Icon(
-              Icons.flag_rounded,
-              color: Colors.red,
-            )),
-          ]),
-        ],
-      ),
-    ]));
   }
 }

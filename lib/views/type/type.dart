@@ -193,18 +193,41 @@ class _CartState extends State<DetailsScreen> {
                                   color: kPrimaryPurpleColor,
                                   textColor: Colors.white,
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => MangaComment2(
-                                          hid: chaptersFromDB[0]['hid']
-                                              .toString(),
-                                          chapterid: chaptersFromDB[0]["chap"],
-                                          chap: chapterLanguage,
-                                          index: 0,
-                                        ),
-                                      ),
-                                    );
+                                    if (selectelanguage == "Francasis") {
+                                      if (chapterLanguagefr[0] != null) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MangaComment2(
+                                              chapterid: chapterLanguagefr[0]
+                                                      ["chap"]
+                                                  .toString(),
+                                              hid: chapterLanguagefr[0]['hid']
+                                                  .toString(),
+                                              chap: chapterLanguagefr,
+                                              index: 0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      if (chapterLanguage[0] != null) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MangaComment2(
+                                              chapterid: chapterLanguage[0]
+                                                      ["chap"]
+                                                  .toString(),
+                                              hid: chapterLanguage[0]['hid']
+                                                  .toString(),
+                                              chap: chapterLanguage,
+                                              index: 0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    }
                                     print("dsvdsv");
                                   },
                                 ),
@@ -611,9 +634,10 @@ class _CartState extends State<DetailsScreen> {
                                                                           hid: chapterLanguagefr[index]['hid']
                                                                               .toString(),
                                                                           chap:
-                                                                              chapterLanguage,
+                                                                              chapterLanguagefr,
                                                                           index:
                                                                               index,
+                                                                          // indexlast:chapterLanguagefr.length
                                                                         ),
                                                                       ),
                                                                     );
@@ -730,6 +754,7 @@ class _CartState extends State<DetailsScreen> {
                                                                               chapterLanguage,
                                                                           index:
                                                                               index,
+                                                                          //  indexlast:chapterLanguage.length
                                                                         ),
                                                                       ),
                                                                     );

@@ -99,7 +99,7 @@ class _ViewRoutesState extends State<Manga_List> {
                               Radius.circular(10.0),
                             ),
                             borderSide: BorderSide(
-                              color: kPrimaryWhiteColor,
+                              color: kPrimaryPurpleColor,
                               width: 2,
                             ),
                           ),
@@ -156,7 +156,8 @@ class _ViewRoutesState extends State<Manga_List> {
                                             _navigator(
                                                 context,
                                                 SearchDetailsScreen(
-                                                    [search[0][index]]));
+                                                    [search[0][index]]
+                                                    ));
                                           },
                                           child: CachedNetworkImage(
                                               imageUrl: search[0][index]

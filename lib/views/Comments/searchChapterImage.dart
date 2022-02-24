@@ -16,10 +16,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SearchMangaComment2 extends StatefulWidget {
   final String hid;
   final String chapterid;
+  final List chap;
+  final int index;
   const SearchMangaComment2({
     key,
     required this.hid,
     required this.chapterid,
+    required this.chap,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -31,7 +35,10 @@ class _MangaComment2State extends State<SearchMangaComment2> {
   late String chapterid;
   TextEditingController _commentController = new TextEditingController();
 
+   int chapterCount = 0;
+
   String? token;
+  int? index;
 
   List User = [];
 
@@ -55,6 +62,7 @@ class _MangaComment2State extends State<SearchMangaComment2> {
     print(hid);
     chapterid = widget.chapterid;
     print(chapterid);
+     index = widget.index;
     _apiChapterImages();
     super.initState();
   }
@@ -217,12 +225,16 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                     icon: Icon(Icons.arrow_back_ios_new),
                     color: kPrimaryWhiteColor,
                     onPressed: () {
-                      if (counter <
-                          _chapterImage[0]['chapter']['md_images'].length - 1) {
-                        setState(() {
-                          counter = counter + 1;
-                        });
-                      }
+                     setState(() {
+                        _isLoading = true;
+                        index = (index! - 1);
+                        hid = widget.chap[index!]["hid"];
+                        chapterid = widget.chap[index!]["id"].toString();
+
+                        _apiChapterImages();
+
+                        //widget.chapterid =
+                      });
                     }),
                 IconButton(
                     icon: Icon(Icons.book_online),
@@ -253,11 +265,17 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                     icon: Icon(Icons.arrow_forward_ios),
                     color: kPrimaryWhiteColor,
                     onPressed: () {
-                      if (counter != 0) {
-                        setState(() {
-                          counter = counter - 1;
-                        });
+                       setState(() {
+                        _isLoading = true;
+                        index = (index! + 1);
+                        hid = widget.chap[index!]["hid"];
+                        chapterid = widget.chap[index!]["id"].toString();
+
+                        _apiChapterImages();
+
+                        //widget.chapterid =
                       }
+                      );
                     }),
               ],
             ),
@@ -269,7 +287,7 @@ class _MangaComment2State extends State<SearchMangaComment2> {
     try {
       _chapterImage.clear();
       var bodyRoutes;
-      var res = await CallApi().getChapterImages(widget.hid);
+      var res = await CallApi().getChapterImages(hid);
       bodyRoutes = json.decode(res.body);
 
       // Add chapterimages to  List

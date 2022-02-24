@@ -189,19 +189,41 @@ class _CartState extends State<Chapter> {
                                   color: kPrimaryPurpleColor,
                                   textColor: Colors.white,
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => MangaComment2(
-                                          chapterid: chaptersFromDB[0]["chap"]
-                                              .toString(),
-                                          hid: chaptersFromDB[0]['hid']
-                                              .toString(),
-                                          chap: chapterLanguage,
-                                          index: 0,
-                                        ),
-                                      ),
-                                    );
+                                    if (selectelanguage == "Francasis") {
+                                      if (chapterLanguagefr[0] != null) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MangaComment2(
+                                              chapterid: chapterLanguagefr[0]
+                                                      ["chap"]
+                                                  .toString(),
+                                              hid: chapterLanguagefr[0]['hid']
+                                                  .toString(),
+                                              chap: chapterLanguagefr,
+                                              index: 0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      if (chapterLanguage[0] != null) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MangaComment2(
+                                              chapterid: chapterLanguage[0]
+                                                      ["chap"]
+                                                  .toString(),
+                                              hid: chapterLanguage[0]['hid']
+                                                  .toString(),
+                                              chap: chapterLanguage,
+                                              index: 0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    }
                                   },
                                 ),
                                 SizedBox(width: 10.0),
@@ -716,7 +738,7 @@ class _CartState extends State<Chapter> {
                                                                               builder: (context) => MangaComment2(
                                                                                 chapterid: chapterLanguagefr[index]["chap"].toString(),
                                                                                 hid: chapterLanguagefr[index]['hid'].toString(),
-                                                                                chap: chapterLanguage,
+                                                                                chap: chapterLanguagefr,
                                                                                 index: index,
                                                                               ),
                                                                             ),

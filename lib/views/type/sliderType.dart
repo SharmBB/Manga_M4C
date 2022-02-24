@@ -61,7 +61,7 @@ class _CartState extends State<SlideDetailsScreen> {
                 child: Padding(
                 padding: const EdgeInsets.only(top: 30.0),
                 child: CupertinoActivityIndicator(
-                  radius: 20,
+                  radius: 15,
                 ),
               ))
             : SingleChildScrollView(
@@ -193,18 +193,41 @@ class _CartState extends State<SlideDetailsScreen> {
                                   color: kPrimaryPurpleColor,
                                   textColor: Colors.white,
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            SlideMangaComment2(
-                                          hid: chaptersFromDB[0]['hid']
-                                              .toString(),
-                                          chapterid: chaptersFromDB[0]["chap"]
-                                              .toString(),
-                                        ),
-                                      ),
-                                    );
+                                    if (selectelanguage == "Francasis") {
+                                      if (chapterLanguagefr[0] != null) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MangaComment2(
+                                              chapterid: chapterLanguagefr[0]
+                                                      ["chap"]
+                                                  .toString(),
+                                              hid: chapterLanguagefr[0]['hid']
+                                                  .toString(),
+                                              chap: chapterLanguagefr,
+                                              index: 0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      if (chapterLanguage[0] != null) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MangaComment2(
+                                              chapterid: chapterLanguage[0]
+                                                      ["chap"]
+                                                  .toString(),
+                                              hid: chapterLanguage[0]['hid']
+                                                  .toString(),
+                                              chap: chapterLanguage,
+                                              index: 0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    }
                                     print("dsvdsv");
                                   },
                                 ),
@@ -599,16 +622,21 @@ class _CartState extends State<SlideDetailsScreen> {
                                                                     print("ASCSCDSCD" +
                                                                         chapterLanguagefr[index]["hid"]
                                                                             .toString());
-                                                                    Navigator
-                                                                        .push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                        builder: (context) => SlideMangaComment2(
+                                                                    Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                          builder: (context) =>
+                                                                              SlideMangaComment2(
                                                                             chapterid:
                                                                                 chapterLanguagefr[index]["chap"].toString(),
-                                                                            hid: chapterLanguagefr[index]['hid'].toString()),
-                                                                      ),
-                                                                    );
+                                                                            hid:
+                                                                                chapterLanguagefr[index]['hid'].toString(),
+                                                                            chap:
+                                                                                chapterLanguagefr,
+                                                                            index:
+                                                                                index,
+                                                                          ),
+                                                                        ));
                                                                   },
                                                                   child:
                                                                       Padding(
@@ -711,10 +739,18 @@ class _CartState extends State<SlideDetailsScreen> {
                                                                         .push(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                        builder: (context) => SlideMangaComment2(
-                                                                            chapterid:
-                                                                                chapterLanguage[index]["chap"].toString(),
-                                                                            hid: chapterLanguage[index]['hid'].toString()),
+                                                                        builder:
+                                                                            (context) =>
+                                                                                SlideMangaComment2(
+                                                                          chapterid:
+                                                                              chapterLanguage[index]["chap"].toString(),
+                                                                          hid: chapterLanguage[index]['hid']
+                                                                              .toString(),
+                                                                          chap:
+                                                                              chapterLanguage,
+                                                                          index:
+                                                                              index,
+                                                                        ),
                                                                       ),
                                                                     );
                                                                   },
