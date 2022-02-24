@@ -29,7 +29,7 @@ class _SettingState extends State<Setting> {
 
   List<IconData> listOfIcons = [
     Icons.home_rounded,
-     Icons.article_outlined,
+    Icons.article_outlined,
     Icons.local_library_outlined,
     Icons.leaderboard,
     Icons.settings,
@@ -59,8 +59,11 @@ class _SettingState extends State<Setting> {
 
   void _getRead() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    selectevalue = localStorage.getString("selectevalue");
-    print('  selectevalue' + selectevalue.toString());
+
+    setState(() {
+      selectevalue = localStorage.getString("selectevalue");
+    });
+    //print('  selectevalue' + selectevalue.toString());
   }
 
   void _launchURL() async {
@@ -744,6 +747,7 @@ class _SettingState extends State<Setting> {
                             onChanged: (value) {
                               setState(() {
                                 _selectedRead = value!;
+                                selectevalue = value.toString();
                               });
                             },
                           ),
@@ -765,6 +769,7 @@ class _SettingState extends State<Setting> {
                             onChanged: (value) {
                               setState(() {
                                 _selectedRead = value!;
+                                selectevalue = value.toString();
                               });
                             },
                           ),
@@ -786,6 +791,7 @@ class _SettingState extends State<Setting> {
                             onChanged: (value) {
                               setState(() {
                                 _selectedRead = value!;
+                                selectevalue = value.toString();
                               });
                             },
                           ),
@@ -807,6 +813,7 @@ class _SettingState extends State<Setting> {
                             onChanged: (value) {
                               setState(() {
                                 _selectedRead = value!;
+                                selectevalue = value.toString();
                               });
                             },
                           ),
@@ -832,16 +839,21 @@ class _SettingState extends State<Setting> {
                       ),
                     ),
                     onPressed: () async {
+                      setState() {
+                        selectevalue = _selectedRead;
+                      }
+
                       addReadingMode();
                       // print(_selectedRead);
                       SharedPreferences localStorage =
                           await SharedPreferences.getInstance();
 
-                      var selectevalue = _selectedRead;
+                      var value = _selectedRead;
+
                       // print(selectevalue);
 
-                      localStorage.setString('selectevalue', selectevalue);
-                      print(selectevalue);
+                      localStorage.setString('selectevalue', value);
+                      //print(selectevalue);
 
                       // localStorage.setInt('userId', userId);
                       Navigator.of(context).pop();
@@ -1087,7 +1099,6 @@ class _SettingState extends State<Setting> {
                       ),
                     ),
                     onPressed: () async {
-                      
                       SharedPreferences localStorage =
                           await SharedPreferences.getInstance();
 

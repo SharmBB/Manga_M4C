@@ -599,7 +599,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                         .push(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                        builder: (context) => MangaComment2(
+                                                                        builder: (context) => SearchMangaComment2(
                                                                             chapterid:
                                                                                 chapterLanguagefr[index]["chap"].toString(),
                                                                             hid: chapterLanguagefr[index]['hid'].toString()),
@@ -613,8 +613,8 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                         vertical:
                                                                             8),
                                                                     child: Text(
-                                                                      chapterLanguagefrList[index]
-                                                                              
+                                                                      chapterLanguagefrList[
+                                                                              index]
                                                                           .toString(),
                                                                       style: TextStyle(
                                                                           fontSize:

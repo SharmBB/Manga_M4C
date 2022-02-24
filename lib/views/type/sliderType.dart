@@ -596,15 +596,14 @@ class _CartState extends State<SlideDetailsScreen> {
                                                                     //     chapterLanguagefr[index]
                                                                     //         [
                                                                     //         "chap"]);
-                                                                              print("ASCSCDSCD" +
-                                                                        chapterLanguagefr[index]
-                                                                            [
-                                                                            "hid"].toString());
+                                                                    print("ASCSCDSCD" +
+                                                                        chapterLanguagefr[index]["hid"]
+                                                                            .toString());
                                                                     Navigator
                                                                         .push(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                        builder: (context) => MangaComment2(
+                                                                        builder: (context) => SlideMangaComment2(
                                                                             chapterid:
                                                                                 chapterLanguagefr[index]["chap"].toString(),
                                                                             hid: chapterLanguagefr[index]['hid'].toString()),
@@ -705,10 +704,9 @@ class _CartState extends State<SlideDetailsScreen> {
                                                                       Colors
                                                                           .transparent,
                                                                   onTap: () {
-                                                                         print("ASCSCDSCD" +
-                                                                        chapterLanguage[index]
-                                                                            [
-                                                                            "hid"].toString());
+                                                                    print("ASCSCDSCD" +
+                                                                        chapterLanguage[index]["hid"]
+                                                                            .toString());
                                                                     Navigator
                                                                         .push(
                                                                       context,
@@ -722,10 +720,10 @@ class _CartState extends State<SlideDetailsScreen> {
                                                                   },
                                                                   child:
                                                                       Padding(
-                                                                    padding:  EdgeInsets
-                                                                            .symmetric(
-                                                                        vertical:
-                                                                            8),
+                                                                    padding: EdgeInsets
+                                                                        .symmetric(
+                                                                            vertical:
+                                                                                8),
                                                                     child: Text(
                                                                       chapterLanguageEn[
                                                                               index]
@@ -915,4 +913,3 @@ class _CartState extends State<SlideDetailsScreen> {
     });
   }
 }
-

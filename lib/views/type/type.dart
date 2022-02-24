@@ -199,8 +199,9 @@ class _CartState extends State<DetailsScreen> {
                                         builder: (context) => MangaComment2(
                                           hid: chaptersFromDB[0]['hid']
                                               .toString(),
-                                          chapterid: chaptersFromDB[0]["chap"]
-                                              .toString(),
+                                          chapterid: chaptersFromDB[0]["chap"],
+                                          chap: chapterLanguage,
+                                          index: 0,
                                         ),
                                       ),
                                     );
@@ -561,7 +562,7 @@ class _CartState extends State<DetailsScreen> {
                                             // )
                                           ]),
                                     ),
-                                selectelanguage == "Francasis"
+                                    selectelanguage == "Francasis"
                                         ? Expanded(
                                             child: Container(
                                               child: ListView.builder(
@@ -595,18 +596,25 @@ class _CartState extends State<DetailsScreen> {
                                                                     //     chapterLanguagefr[index]
                                                                     //         [
                                                                     //         "chap"]);
-                                                                              print("ASCSCDSCD" +
-                                                                        chapterLanguagefr[index]
-                                                                            [
-                                                                            "hid"].toString());
+                                                                    print("ASCSCDSCD" +
+                                                                        chapterLanguagefr[index]["hid"]
+                                                                            .toString());
                                                                     Navigator
                                                                         .push(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                        builder: (context) => MangaComment2(
-                                                                            chapterid:
-                                                                                chapterLanguagefr[index]["chap"].toString(),
-                                                                            hid: chapterLanguagefr[index]['hid'].toString()),
+                                                                        builder:
+                                                                            (context) =>
+                                                                                MangaComment2(
+                                                                          chapterid:
+                                                                              chapterLanguagefr[index]["chap"].toString(),
+                                                                          hid: chapterLanguagefr[index]['hid']
+                                                                              .toString(),
+                                                                          chap:
+                                                                              chapterLanguage,
+                                                                          index:
+                                                                              index,
+                                                                        ),
                                                                       ),
                                                                     );
                                                                   },
@@ -704,27 +712,34 @@ class _CartState extends State<DetailsScreen> {
                                                                       Colors
                                                                           .transparent,
                                                                   onTap: () {
-                                                                         print("ASCSCDSCD" +
-                                                                        chapterLanguage[index]
-                                                                            [
-                                                                            "hid"].toString());
+                                                                    print("ASCSCDSCD" +
+                                                                        chapterLanguage[index]["hid"]
+                                                                            .toString());
                                                                     Navigator
                                                                         .push(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                        builder: (context) => SearchMangaComment2(
-                                                                            chapterid:
-                                                                                chapterLanguage[index]["chap"].toString(),
-                                                                            hid: chapterLanguage[index]['hid'].toString()),
+                                                                        builder:
+                                                                            (context) =>
+                                                                                MangaComment2(
+                                                                          chapterid:
+                                                                              chapterLanguage[index]["chap"].toString(),
+                                                                          hid: chapterLanguage[index]['hid']
+                                                                              .toString(),
+                                                                          chap:
+                                                                              chapterLanguage,
+                                                                          index:
+                                                                              index,
+                                                                        ),
                                                                       ),
                                                                     );
                                                                   },
                                                                   child:
                                                                       Padding(
-                                                                    padding:  EdgeInsets
-                                                                            .symmetric(
-                                                                        vertical:
-                                                                            8),
+                                                                    padding: EdgeInsets
+                                                                        .symmetric(
+                                                                            vertical:
+                                                                                8),
                                                                     child: Text(
                                                                       chapterLanguageEn[
                                                                               index]
@@ -790,7 +805,6 @@ class _CartState extends State<DetailsScreen> {
                         ]))
               ])));
   }
-
 
   //get language details from  local storage
   void _getLocalLanguage() async {

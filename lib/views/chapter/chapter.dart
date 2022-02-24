@@ -193,10 +193,13 @@ class _CartState extends State<Chapter> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => MangaComment2(
-                                            chapterid: chaptersFromDB[0]["chap"]
-                                                .toString(),
-                                            hid: chaptersFromDB[0]['hid']
-                                                .toString()),
+                                          chapterid: chaptersFromDB[0]["chap"]
+                                              .toString(),
+                                          hid: chaptersFromDB[0]['hid']
+                                              .toString(),
+                                          chap: chapterLanguage,
+                                          index: 0,
+                                        ),
                                       ),
                                     );
                                   },
@@ -710,7 +713,12 @@ class _CartState extends State<Chapter> {
                                                                               .push(
                                                                             context,
                                                                             MaterialPageRoute(
-                                                                              builder: (context) => MangaComment2(chapterid: chapterLanguagefr[index]["chap"].toString(), hid: chapterLanguagefr[index]['hid'].toString()),
+                                                                              builder: (context) => MangaComment2(
+                                                                                chapterid: chapterLanguagefr[index]["chap"].toString(),
+                                                                                hid: chapterLanguagefr[index]['hid'].toString(),
+                                                                                chap: chapterLanguage,
+                                                                                index: index,
+                                                                              ),
                                                                             ),
                                                                           );
                                                                         },
@@ -810,7 +818,12 @@ class _CartState extends State<Chapter> {
                                                                               .push(
                                                                             context,
                                                                             MaterialPageRoute(
-                                                                              builder: (context) => MangaComment2(chapterid: chapterLanguage[index]["chap"].toString(), hid: chapterLanguage[index]['hid'].toString()),
+                                                                              builder: (context) => MangaComment2(
+                                                                                chapterid: chapterLanguage[index]["chap"].toString(),
+                                                                                hid: chapterLanguage[index]['hid'].toString(),
+                                                                                chap: chapterLanguage,
+                                                                                index: index,
+                                                                              ),
                                                                             ),
                                                                           );
                                                                         },

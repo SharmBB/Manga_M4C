@@ -19,10 +19,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MangaComment2 extends StatefulWidget {
   final String hid;
   final String chapterid;
+  final List chap;
+  final int index;
   const MangaComment2({
     key,
     required this.hid,
     required this.chapterid,
+    required this.chap,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -35,8 +39,10 @@ class _MangaComment2State extends State<MangaComment2> {
   TextEditingController _commentController = new TextEditingController();
 
   String? selectevalue;
+  int chapterCount = 0;
 
   List User = [];
+  int? index;
 
   String? __replyComment;
   int? _replyid;
@@ -58,6 +64,7 @@ class _MangaComment2State extends State<MangaComment2> {
   void initState() {
     //initialize  id for chapterimage
     // AdHelper.myBanner.load();
+    index = widget.index;
     hid = widget.hid;
     // print(hid);
     chapterid = widget.chapterid;
@@ -235,12 +242,22 @@ class _MangaComment2State extends State<MangaComment2> {
                     icon: Icon(Icons.arrow_back_ios_new),
                     color: kPrimaryWhiteColor,
                     onPressed: () {
-                      if (counter <
-                          _chapterImage[0]['chapter']['md_images'].length - 1) {
-                        setState(() {
-                          counter = counter + 1;
-                        });
-                      }
+                      setState(() {
+                        _isLoading = true;
+                        index = (index! - 1);
+                        hid = widget.chap[index!]["hid"];
+                        chapterid = widget.chap[index!]["id"].toString();
+
+                        _apiChapterImages();
+
+                        //widget.chapterid =
+                      });
+                      // if (counter <
+                      //     _chapterImage[0]['chapter']['md_images'].length - 1) {
+                      //   setState(() {
+                      //     counter = counter + 1;
+                      //   });
+                      // }
                     }),
                 IconButton(
                     icon: Icon(Icons.book_online),
@@ -284,11 +301,16 @@ class _MangaComment2State extends State<MangaComment2> {
                     icon: Icon(Icons.arrow_forward_ios),
                     color: kPrimaryWhiteColor,
                     onPressed: () {
-                      if (counter != 0) {
-                        setState(() {
-                          counter = counter - 1;
-                        });
-                      }
+                      setState(() {
+                        _isLoading = true;
+                        index = (index! + 1);
+                        hid = widget.chap[index!]["hid"];
+                        chapterid = widget.chap[index!]["id"].toString();
+
+                        _apiChapterImages();
+
+                        //widget.chapterid =
+                      });
                     }),
               ],
             ),
@@ -297,8 +319,8 @@ class _MangaComment2State extends State<MangaComment2> {
 
 //store the userImage in local
   void _getUserDetails() async {
-     read = Axis.horizontal;
-        readReverse = true;
+    read = Axis.horizontal;
+    readReverse = true;
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     selectevalue = localStorage.getString("selectevalue")!;
     print("homepagetoken" + selectevalue!);
@@ -306,31 +328,31 @@ class _MangaComment2State extends State<MangaComment2> {
     print("homepagetoken" + selectevalue!);
     print("homepagetoken" + selectevalue!);
     // var data = {"pic": selectevalue};
-      if(selectevalue == 'Left to Right'){
-        read = Axis.horizontal;
-         readReverse = false;
-    }else if(selectevalue == 'Right to Left'){
-        read = Axis.horizontal;
-        readReverse = true;
-    }else if(selectevalue == 'Vertical'){
+    if (selectevalue == 'Left to Right') {
+      read = Axis.horizontal;
+      readReverse = false;
+    } else if (selectevalue == 'Right to Left') {
+      read = Axis.horizontal;
+      readReverse = true;
+    } else if (selectevalue == 'Vertical') {
       read = Axis.vertical;
-         readReverse = false;
-    }else if(selectevalue == 'Vertical Reverse'){
+      readReverse = false;
+    } else if (selectevalue == 'Vertical Reverse') {
       read = Axis.vertical;
-         readReverse = true;
-    }else{
-       read = Axis.horizontal;
-        readReverse = true;
+      readReverse = true;
+    } else {
+      read = Axis.horizontal;
+      readReverse = true;
     }
   }
 
 //get chappterImages details from api
   void _apiChapterImages() async {
     try {
-      print("hello");
+      print(widget.chap);
       _chapterImage.clear();
       var bodyRoutes;
-      var res = await CallApi().getChapterImages(widget.hid);
+      var res = await CallApi().getChapterImages(hid);
       bodyRoutes = json.decode(res.body);
 
       // Add chapterimages to  List
@@ -345,8 +367,7 @@ class _MangaComment2State extends State<MangaComment2> {
     });
   }
 
-
-   String _selectedRead = 'Right to Left';
+  String _selectedRead = 'Right to Left';
 
   void _showReadcontent() {
     showDialog(
@@ -468,7 +489,6 @@ class _MangaComment2State extends State<MangaComment2> {
                       ),
                     ),
                     onPressed: () async {
-                   
                       // print(_selectedRead);
                       SharedPreferences localStorage =
                           await SharedPreferences.getInstance();
