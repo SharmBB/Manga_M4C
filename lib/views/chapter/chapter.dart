@@ -24,7 +24,7 @@ class Chapter extends StatefulWidget {
 
 class _CartState extends State<Chapter> {
   _CartState(this._manga);
-
+  String? bodyError;
   List _manga;
   //list for api
   List chapterUsingName = [];
@@ -42,6 +42,7 @@ class _CartState extends State<Chapter> {
   String? selectelanguage;
 
   String dropdownValue = 'English';
+  final scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -56,6 +57,7 @@ class _CartState extends State<Chapter> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: scaffoldKey,
         backgroundColor: primaryColor,
         body: _isLoading
             ? Center(
@@ -236,6 +238,7 @@ class _CartState extends State<Chapter> {
                                       print("fjff");
                                       print(_manga[0]);
                                       addLibrary();
+                                      //  replyshowAlert(context);
                                       //   addFavourite();
                                       // _sendDataBack(context);
                                       // _navigator(context, Library([_manga[0]]));
@@ -1000,12 +1003,34 @@ class _CartState extends State<Chapter> {
       var body = json.decode(res.body);
       print(body);
 
-      if (body['token'] != null) {
-        SharedPreferences localStorage = await SharedPreferences.getInstance();
-        var token = body['token'];
-        localStorage.setString('token', token);
+      bodyError = body['message'];
 
-        print(body);
+      if (body['errorMessage'] == false) {
+        replyshowAlert(context);
+
+        if (body['token'] != null) {
+          SharedPreferences localStorage =
+              await SharedPreferences.getInstance();
+          var token = body['token'];
+          localStorage.setString('token', token);
+
+          //
+          //   scaffoldKey.currentState!.showSnackBar(
+          //     SnackBar(
+          //       content: Text(
+          //         "${body['message']}",
+          //         style: TextStyle(color: Colors.white),
+          //       ),
+          //       backgroundColor: Colors.green,
+          //     ),
+          //   );
+          // }
+          // setState(() {
+          //   bodyError = body['message'];
+          //   print(bodyError);
+          // });
+          print(bodyError);
+        }
       } else {}
     } catch (e) {
       print(e);
@@ -1043,5 +1068,67 @@ class _CartState extends State<Chapter> {
     setState(() {
       _isLoading = false;
     });
+  }
+
+  //dailog box
+  replyshowAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            backgroundColor: Colors.black,
+            title: Center(
+              child: Text(bodyError.toString(),
+                  style: TextStyle(color: Colors.white, fontSize: 18)),
+            ),
+            actions: <Widget>[
+              // FlatButton(
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(right: 68.0),
+              //     child: Text("Cancle",
+              //         style: TextStyle(color: Colors.grey, fontSize: 16)),
+              //   ),
+              //   onPressed: () {
+              //     //Put your code here which you want to execute on Yes button click.
+              //     Navigator.of(context).pop();
+              //   },
+              // ),
+              FlatButton(
+                child: Text("OK",
+                    style: TextStyle(color: Colors.purple[900], fontSize: 16)),
+                onPressed: () {
+                  //Put your code here which you want to execute on Cancel button click.
+                  // _replyReportComment();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ]);
+      },
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () {},
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("My title"),
+      content: Text("This is my message."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
