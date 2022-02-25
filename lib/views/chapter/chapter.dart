@@ -25,6 +25,7 @@ class Chapter extends StatefulWidget {
 class _CartState extends State<Chapter> {
   _CartState(this._manga);
   String? bodyError;
+  String? bodyErrorFav;
   List _manga;
   //list for api
   List chapterUsingName = [];
@@ -1055,12 +1056,19 @@ class _CartState extends State<Chapter> {
       var body = json.decode(res.body);
       print(body);
 
-      if (body['token'] != null) {
-        SharedPreferences localStorage = await SharedPreferences.getInstance();
-        var token = body['token'];
-        localStorage.setString('token', token);
+      bodyErrorFav = body['message'];
 
-        print(body);
+      if (body['errorMessage'] == false) {
+        replyshowAlertFavourite(context);
+
+        if (body['token'] != null) {
+          SharedPreferences localStorage =
+              await SharedPreferences.getInstance();
+          var token = body['token'];
+          localStorage.setString('token', token);
+
+          print(body);
+        }
       } else {}
     } catch (e) {
       print(e);
@@ -1078,27 +1086,14 @@ class _CartState extends State<Chapter> {
         return AlertDialog(
             backgroundColor: Colors.black,
             title: Center(
-              child: Text(bodyError.toString(),
+              child: Text(bodyErrorFav.toString(),
                   style: TextStyle(color: Colors.white, fontSize: 18)),
             ),
             actions: <Widget>[
-              // FlatButton(
-              //   child: Padding(
-              //     padding: const EdgeInsets.only(right: 68.0),
-              //     child: Text("Cancle",
-              //         style: TextStyle(color: Colors.grey, fontSize: 16)),
-              //   ),
-              //   onPressed: () {
-              //     //Put your code here which you want to execute on Yes button click.
-              //     Navigator.of(context).pop();
-              //   },
-              // ),
               FlatButton(
                 child: Text("OK",
                     style: TextStyle(color: Colors.purple[900], fontSize: 16)),
                 onPressed: () {
-                  //Put your code here which you want to execute on Cancel button click.
-                  // _replyReportComment();
                   Navigator.of(context).pop();
                 },
               ),
@@ -1106,28 +1101,26 @@ class _CartState extends State<Chapter> {
       },
     );
   }
-
-  showAlertDialog(BuildContext context) {
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text("OK"),
-      onPressed: () {},
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("My title"),
-      content: Text("This is my message."),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
+   //dailog box
+  replyshowAlertFavourite(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return alert;
+        return AlertDialog(
+            backgroundColor: Colors.black,
+            title: Center(
+              child: Text(bodyErrorFav.toString(),
+                  style: TextStyle(color: Colors.white, fontSize: 18)),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("OK",
+                    style: TextStyle(color: Colors.purple[900], fontSize: 16)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ]);
       },
     );
   }

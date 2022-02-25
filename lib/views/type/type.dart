@@ -27,6 +27,8 @@ class _CartState extends State<DetailsScreen> {
   _CartState(this._manga);
 
   List _manga;
+  String? bodyError;
+  String? bodyErrorFav;
 
   String dropdownValue = 'English';
   String? selectelanguage = "";
@@ -908,13 +910,19 @@ class _CartState extends State<DetailsScreen> {
       var res = await CallApi().postData(data, 'addLibrary');
       var body = json.decode(res.body);
       print(body);
+      bodyError = body['message'];
 
-      if (body['token'] != null) {
-        SharedPreferences localStorage = await SharedPreferences.getInstance();
-        var token = body['token'];
-        localStorage.setString('token', token);
+      if (body['errorMessage'] == false) {
+        replyshowAlert(context);
 
-        print(body);
+        if (body['token'] != null) {
+          SharedPreferences localStorage =
+              await SharedPreferences.getInstance();
+          var token = body['token'];
+          localStorage.setString('token', token);
+
+          print(body);
+        }
       } else {}
     } catch (e) {
       print(e);
@@ -938,13 +946,19 @@ class _CartState extends State<DetailsScreen> {
       var res = await CallApi().postData(data, 'addFavourite');
       var body = json.decode(res.body);
       print(body);
+      bodyErrorFav = body['message'];
 
-      if (body['token'] != null) {
-        SharedPreferences localStorage = await SharedPreferences.getInstance();
-        var token = body['token'];
-        localStorage.setString('token', token);
+      if (body['errorMessage'] == false) {
+        replyshowAlertFavourite(context);
 
-        print(body);
+        if (body['token'] != null) {
+          SharedPreferences localStorage =
+              await SharedPreferences.getInstance();
+          var token = body['token'];
+          localStorage.setString('token', token);
+
+          print(body);
+        }
       } else {}
     } catch (e) {
       print(e);
@@ -952,5 +966,53 @@ class _CartState extends State<DetailsScreen> {
     setState(() {
       _isLoading = false;
     });
+  }
+
+  //dailog box
+  replyshowAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            backgroundColor: Colors.black,
+            title: Center(
+              child: Text(bodyErrorFav.toString(),
+                  style: TextStyle(color: Colors.white, fontSize: 18)),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("OK",
+                    style: TextStyle(color: Colors.purple[900], fontSize: 16)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ]);
+      },
+    );
+  }
+
+  //dailog box
+  replyshowAlertFavourite(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            backgroundColor: Colors.black,
+            title: Center(
+              child: Text(bodyErrorFav.toString(),
+                  style: TextStyle(color: Colors.white, fontSize: 18)),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("OK",
+                    style: TextStyle(color: Colors.purple[900], fontSize: 16)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ]);
+      },
+    );
   }
 }
