@@ -976,7 +976,7 @@ class _CartState extends State<DetailsScreen> {
         return AlertDialog(
             backgroundColor: Colors.black,
             title: Center(
-              child: Text(bodyErrorFav.toString(),
+              child: Text(bodyError.toString(),
                   style: TextStyle(color: Colors.white, fontSize: 18)),
             ),
             actions: <Widget>[

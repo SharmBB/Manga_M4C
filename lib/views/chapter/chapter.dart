@@ -700,6 +700,7 @@ class _CartState extends State<Chapter> {
                                                   // )
                                                 ]),
                                           ),
+                                          
                                           selectelanguage == "Francasis"
                                               ? Expanded(
                                                   child: Container(
@@ -1086,7 +1087,7 @@ class _CartState extends State<Chapter> {
         return AlertDialog(
             backgroundColor: Colors.black,
             title: Center(
-              child: Text(bodyErrorFav.toString(),
+              child: Text(bodyError.toString(),
                   style: TextStyle(color: Colors.white, fontSize: 18)),
             ),
             actions: <Widget>[
