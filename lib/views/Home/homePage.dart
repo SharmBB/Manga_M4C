@@ -225,14 +225,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ))
                   : SizedBox(),
-              title: Center(
-                child: CircleAvatar(
-                  radius: 20,
-                  backgroundImage: AssetImage(
-                    "assets/icon/icon.png",
-                  ),
-                ),
-              ), //
+              // title: Center(
+              //   child: CircleAvatar(
+              //     radius: 20,
+              //     backgroundImage: AssetImage(
+              //       "assets/icon/icon.png",
+              //     ),
+              //   ),
+              // ), //
               actions: <Widget>[
                 // ApiSetting[0]['value'] == 1
                 //     ? IconButton(
@@ -530,7 +530,7 @@ class _HomePageState extends State<HomePage> {
                                                                   padding: const EdgeInsets
                                                                           .only(
                                                                       top:
-                                                                          10.0),
+                                                                          10.0, right: 10, left: 10),
                                                                   child: Row(
                                                                     mainAxisAlignment:
                                                                         MainAxisAlignment
@@ -776,7 +776,8 @@ class _HomePageState extends State<HomePage> {
                                                             padding:
                                                                 const EdgeInsets
                                                                         .only(
-                                                                    top: 10.0),
+                                                                    top:
+                                                                          10.0, right: 10, left: 10),
                                                             child: Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
@@ -1025,7 +1026,8 @@ class _HomePageState extends State<HomePage> {
                                                             padding:
                                                                 const EdgeInsets
                                                                         .only(
-                                                                    top: 10.0),
+                                                                    top:
+                                                                          10.0, right: 10, left: 10),
                                                             child: Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
@@ -1292,8 +1294,8 @@ class _HomePageState extends State<HomePage> {
                                                                 Padding(
                                                                   padding: const EdgeInsets
                                                                           .only(
-                                                                      top:
-                                                                          10.0),
+                                                                       top:
+                                                                          10.0, right: 10, left: 10),
                                                                   child: Row(
                                                                     mainAxisAlignment:
                                                                         MainAxisAlignment
