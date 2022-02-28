@@ -189,7 +189,7 @@ class _SignupState extends State<Signup> {
           if (value!.isEmpty) {
             return 'Email Required';
           } else if (!regex.hasMatch(value)) {
-            return 'Email Required !!';
+            return 'Email FormRequired !!';
           }
           return null;
         },

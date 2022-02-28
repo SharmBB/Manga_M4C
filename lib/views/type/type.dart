@@ -30,7 +30,8 @@ class _CartState extends State<DetailsScreen> {
   String? bodyError;
   String? bodyErrorFav;
 
-  String dropdownValue = 'English';
+  String dropdownValue = 'Ascending';
+  bool reverseArray = true;
   String? selectelanguage = "";
 
   //list for api
@@ -58,7 +59,13 @@ class _CartState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: primaryColor,
-        body: _isLoading
+        body: NotificationListener<OverscrollIndicatorNotification>(
+            onNotification: (OverscrollIndicatorNotification overscroll) {
+              // ignore: deprecated_member_use
+              overscroll.disallowGlow();
+              return false;
+            },
+            child:_isLoading
             ? Center(
                 child: Padding(
                 padding: const EdgeInsets.only(top: 30.0),
@@ -483,354 +490,363 @@ class _CartState extends State<DetailsScreen> {
                                         ),
                                       ),
                                     ),
-                              Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    // Padding(
-                                    //     padding: const EdgeInsets.only(
-                                    //         top: 10.0, left: 10),
-                                    //     child: Container(
-                                    //         width: 100,
-                                    //         height: 25,
-                                    //         decoration: BoxDecoration(
-                                    //             color: Colors.grey[900],
-                                    //             borderRadius:
-                                    //                 BorderRadius.circular(1)),
-                                    //         child: Padding(
-                                    //           padding:
-                                    //               const EdgeInsets.fromLTRB(
-                                    //                   10, 0, 0, 0),
-                                    //           child: DropdownButton<String>(
-                                    //             underline:
-                                    //                 DropdownButtonHideUnderline(
-                                    //                     child: Container()),
-                                    //             value: dropdownValue,
-                                    //             dropdownColor:
-                                    //                 kPrimaryPurpleColor,
-                                    //             icon: Icon(
-                                    //                 Icons.keyboard_arrow_down),
-                                    //             elevation: 16,
-                                    //             style: TextStyle(
-                                    //                 color: kPrimaryWhiteColor),
-                                    //             onChanged: (String? newValue) {
-                                    //               setState(() {
-                                    //                 dropdownValue = newValue!;
-                                    //               });
-                                    //             },
-                                    //             items: <String>[
-                                    //               'English',
-                                    //               'French  ',
-                                    //             ].map<DropdownMenuItem<String>>(
-                                    //                 (String value) {
-                                    //               return DropdownMenuItem<
-                                    //                   String>(
-                                    //                 value: value,
-                                    //                 child: Text(value,
-                                    //                     style: TextStyle(
-                                    //                         color:
-                                    //                             kPrimaryGreyColor)),
-                                    //               );
-                                    //             }).toList(),
-                                    //           ),
-                                    //         ))),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 10, left: 60, right: 80),
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            // Container(
-                                            //   width: 100,
-                                            //   height: 22,
-                                            //   decoration: BoxDecoration(
-                                            //       color: Colors.grey,
-                                            //       // gradient: LinearGradient(colors: [secondary, primary]),
-                                            //       borderRadius:
-                                            //           BorderRadius.circular(1)),
-                                            //   child: Padding(
-                                            //       padding:
-                                            //           const EdgeInsets.only(
-                                            //               top: 10.0, left: 5),
-                                            //       child: TextField(
-                                            //         decoration: InputDecoration(
-                                            //           hintText:
-                                            //               "Select Chapter",
-                                            //           hintStyle: TextStyle(
-                                            //               fontSize: 12.0,
-                                            //               color: Colors.white),
-                                            //           border: InputBorder.none,
-                                            //           fillColor:
-                                            //               Colors.grey[900],
-                                            //         ),
-                                            //       )),
-                                            // ),
-                                            Text('Chapters',
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            // Text('Date',
-                                            //     style: TextStyle(
-                                            //         fontSize: 18,
-                                            //         color: Colors.white,
-                                            //         fontWeight:
-                                            //             FontWeight.bold)),
-                                            // Text(
-                                            //   'Date',
-                                            //   style: TextStyle(
-                                            //       fontSize: 18,
-                                            //       color: Colors.white,
-                                            //       fontWeight: FontWeight.bold),
-                                            // )
-                                          ]),
-                                    ),
-                                    selectelanguage == "Francasis"
-                                        ? Expanded(
-                                            child: Container(
-                                              child: ListView.builder(
-                                                itemCount:
-                                                    chapterLanguagefr.length,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return InkWell(
-                                                    child: ListTile(
-                                                        //return new ListTile(
-                                                        onTap: null,
-                                                        subtitle: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  right: 60.0,
-                                                                  left: 60),
-                                                          child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: <
-                                                                  Widget>[
-                                                                InkWell(
-                                                                  highlightColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  onTap: () {
-                                                                    // print("jhuvuyvuy" +
-                                                                    //     chapterLanguagefr[index]
-                                                                    //         [
-                                                                    //         "chap"]);
-                                                                    print("ASCSCDSCD" +
-                                                                        chapterLanguagefr[index]["hid"]
-                                                                            .toString());
-                                                                    Navigator
-                                                                        .push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) =>
-                                                                                MangaComment2(
-                                                                          chapterid:
-                                                                              chapterLanguagefr[index]["chap"].toString(),
-                                                                          hid: chapterLanguagefr[index]['hid']
-                                                                              .toString(),
-                                                                          chap:
-                                                                              chapterLanguagefr,
-                                                                          index:
-                                                                              index,
-                                                                          // indexlast:chapterLanguagefr.length
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: const EdgeInsets
-                                                                            .symmetric(
-                                                                        vertical:
-                                                                            8),
-                                                                    child: Text(
-                                                                      chapterLanguagefrList[
-                                                                              index]
-                                                                          .toString(),
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              13,
-                                                                          color:
-                                                                              Colors.white),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                // InkWell(
-                                                                //   onTap: () {
-                                                                //     print("jhuvuyvuy" +
-                                                                //         chaptersFromDB[index]
-                                                                //             [
-                                                                //             "chap"]);
-                                                                //     Navigator
-                                                                //         .push(
-                                                                //       context,
-                                                                //       MaterialPageRoute(
-                                                                //         builder: (context) => MangaComment2(
-                                                                //             chapterid:
-                                                                //                 chaptersFromDB[index]["chap"].toString(),
-                                                                //             hid: chaptersFromDB[index]['hid'].toString()),
-                                                                //       ),
-                                                                //     );
-                                                                //   },
-                                                                //   child: Text(
-                                                                //     chaptersFromDB[index]["up_count"]
-                                                                //             .toString() +
-                                                                //         "days",
-                                                                //     style: TextStyle(
-                                                                //         fontSize:
-                                                                //             13,
-                                                                //         color: Colors
-                                                                //             .white),
-                                                                //   ),
-                                                                //   // Text(
-                                                                //   //   chaptersFromDB[
-                                                                //   //               index]
-                                                                //   //           [
-                                                                //   //           "lang"]
-                                                                //   //       .toString(),
-                                                                //   //   style: TextStyle(
-                                                                //   //       fontSize:
-                                                                //   //           13,
-                                                                //   //       color: Colors
-                                                                //   //           .white),
-                                                                //   // ),
-                                                                // )
-                                                              ]),
-                                                        )),
-                                                  );
-                                                }, //itemBuilder
-                                              ),
-                                            ),
-                                          )
-                                        : Expanded(
-                                            child: Container(
-                                              child: ListView.builder(
-                                                itemCount:
-                                                    chapterLanguage.length,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return InkWell(
-                                                    child: ListTile(
-                                                        //return new ListTile(
-                                                        onTap: null,
-                                                        subtitle: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  right: 60.0,
-                                                                  left: 60),
-                                                          child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: <
-                                                                  Widget>[
-                                                                InkWell(
-                                                                  highlightColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  onTap: () {
-                                                                    print("ASCSCDSCD" +
-                                                                        chapterLanguage[index]["hid"]
-                                                                            .toString());
-                                                                    Navigator
-                                                                        .push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) =>
-                                                                                MangaComment2(
-                                                                          chapterid:
-                                                                              chapterLanguage[index]["chap"].toString(),
-                                                                          hid: chapterLanguage[index]['hid']
-                                                                              .toString(),
-                                                                          chap:
-                                                                              chapterLanguage,
-                                                                          index:
-                                                                              index,
-                                                                          //  indexlast:chapterLanguage.length
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsets
-                                                                        .symmetric(
-                                                                            vertical:
-                                                                                8),
-                                                                    child: Text(
-                                                                      chapterLanguageEn[
-                                                                              index]
-                                                                          .toString(),
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              13,
-                                                                          color:
-                                                                              Colors.white),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                // InkWell(
-                                                                //   onTap: () {
-                                                                //     print("jhuvuyvuy" +
-                                                                //         chaptersFromDB[index]
-                                                                //             [
-                                                                //             "chap"]);
-                                                                //     Navigator
-                                                                //         .push(
-                                                                //       context,
-                                                                //       MaterialPageRoute(
-                                                                //         builder: (context) => MangaComment2(
-                                                                //             chapterid:
-                                                                //                 chaptersFromDB[index]["chap"].toString(),
-                                                                //             hid: chaptersFromDB[index]['hid'].toString()),
-                                                                //       ),
-                                                                //     );
-                                                                //   },
-                                                                //   child: Text(
-                                                                //     chaptersFromDB[index]["up_count"]
-                                                                //             .toString() +
-                                                                //         "days",
-                                                                //     style: TextStyle(
-                                                                //         fontSize:
-                                                                //             13,
-                                                                //         color: Colors
-                                                                //             .white),
-                                                                //   ),
-                                                                //   // Text(
-                                                                //   //   chaptersFromDB[
-                                                                //   //               index]
-                                                                //   //           [
-                                                                //   //           "lang"]
-                                                                //   //       .toString(),
-                                                                //   //   style: TextStyle(
-                                                                //   //       fontSize:
-                                                                //   //           13,
-                                                                //   //       color: Colors
-                                                                //   //           .white),
-                                                                //   // ),
-                                                                // )
-                                                              ]),
-                                                        )),
-                                                  );
-                                                }, //itemBuilder
-                                              ),
-                                            ),
+                              _isLoading
+                                  ? Center(
+                                      child: Padding(
+                                      padding: const EdgeInsets.only(top: 30.0),
+                                      child: CupertinoActivityIndicator(
+                                        radius: 15,
+                                      ),
+                                    ))
+                                  : Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                          Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10.0, left: 10),
+                                              child: Container(
+                                                  width: 120,
+                                                  height: 25,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.grey[900],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              1)),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(10, 0, 0, 0),
+                                                    child:
+                                                        DropdownButton<String>(
+                                                      underline:
+                                                          DropdownButtonHideUnderline(
+                                                              child:
+                                                                  Container()),
+                                                      value: dropdownValue,
+                                                      dropdownColor:
+                                                          kPrimaryPurpleColor,
+                                                      icon: Icon(Icons
+                                                          .keyboard_arrow_down),
+                                                      elevation: 16,
+                                                      style: TextStyle(
+                                                          color:
+                                                              kPrimaryWhiteColor),
+                                                      onChanged:
+                                                          (String? newValue) {
+                                                        setState(() {
+                                                          dropdownValue =
+                                                              newValue!;
+
+                                                          _arrayReverced();
+                                                        });
+                                                      },
+                                                      items: <String>[
+                                                        'Ascending',
+                                                        'Descending',
+                                                      ].map<
+                                                              DropdownMenuItem<
+                                                                  String>>(
+                                                          (String value) {
+                                                        return DropdownMenuItem<
+                                                            String>(
+                                                          value: value,
+                                                          child: Text(value,
+                                                              style: TextStyle(
+                                                                  color:
+                                                                      kPrimaryGreyColor)),
+                                                        );
+                                                      }).toList(),
+                                                    ),
+                                                  ))),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 10, left: 60, right: 80),
+                                            child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  // Container(
+                                                  //   width: 100,
+                                                  //   height: 22,
+                                                  //   decoration: BoxDecoration(
+                                                  //       color: Colors.grey,
+                                                  //       // gradient: LinearGradient(colors: [secondary, primary]),
+                                                  //       borderRadius:
+                                                  //           BorderRadius.circular(1)),
+                                                  //   child: Padding(
+                                                  //       padding:
+                                                  //           const EdgeInsets.only(
+                                                  //               top: 10.0, left: 5),
+                                                  //       child: TextField(
+                                                  //         decoration: InputDecoration(
+                                                  //           hintText:
+                                                  //               "Select Chapter",
+                                                  //           hintStyle: TextStyle(
+                                                  //               fontSize: 12.0,
+                                                  //               color: Colors.white),
+                                                  //           border: InputBorder.none,
+                                                  //           fillColor:
+                                                  //               Colors.grey[900],
+                                                  //         ),
+                                                  //       )),
+                                                  // ),
+                                                  Text('Chapters',
+                                                      style: TextStyle(
+                                                          fontSize: 18,
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                  // Text('Date',
+                                                  //     style: TextStyle(
+                                                  //         fontSize: 18,
+                                                  //         color: Colors.white,
+                                                  //         fontWeight:
+                                                  //             FontWeight.bold)),
+                                                  // Text(
+                                                  //   'Date',
+                                                  //   style: TextStyle(
+                                                  //       fontSize: 18,
+                                                  //       color: Colors.white,
+                                                  //       fontWeight: FontWeight.bold),
+                                                  // )
+                                                ]),
                                           ),
-                                  ])
+                                          selectelanguage == "Francasis"
+                                              ? Expanded(
+                                                  child: Container(
+                                                    child: ListView.builder(
+                                                      itemCount:
+                                                          chapterLanguagefrList
+                                                              .length,
+                                                      reverse: reverseArray,
+                                                      itemBuilder:
+                                                          (BuildContext context,
+                                                              int index) {
+                                                        return InkWell(
+                                                          child: ListTile(
+                                                              //return new ListTile(
+                                                              onTap: null,
+                                                              subtitle: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        right:
+                                                                            60.0,
+                                                                        left:
+                                                                            60),
+                                                                child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: <
+                                                                        Widget>[
+                                                                      InkWell(
+                                                                        highlightColor:
+                                                                            Colors.transparent,
+                                                                        onTap:
+                                                                            () {
+                                                                          // print("jhuvuyvuy" +
+                                                                          //     chapterLanguagefr[index]
+                                                                          //         [
+                                                                          //         "chap"]);
+                                                                          print("ASCSCDSCD" +
+                                                                              chapterLanguagefr[index]["hid"].toString());
+                                                                          Navigator
+                                                                              .push(
+                                                                            context,
+                                                                            MaterialPageRoute(
+                                                                              builder: (context) => MangaComment2(
+                                                                                chapterid: chapterLanguagefr[index]["chap"].toString(),
+                                                                                hid: chapterLanguagefr[index]['hid'].toString(),
+                                                                                chap: chapterLanguagefr,
+                                                                                index: index,
+                                                                                // indexlast:chapterLanguagefr.length
+                                                                              ),
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.symmetric(vertical: 8),
+                                                                          child:
+                                                                              Text(
+                                                                            chapterLanguagefrList[index].toString(),
+                                                                            style:
+                                                                                TextStyle(fontSize: 13, color: Colors.white),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      // InkWell(
+                                                                      //   onTap: () {
+                                                                      //     print("jhuvuyvuy" +
+                                                                      //         chaptersFromDB[index]
+                                                                      //             [
+                                                                      //             "chap"]);
+                                                                      //     Navigator
+                                                                      //         .push(
+                                                                      //       context,
+                                                                      //       MaterialPageRoute(
+                                                                      //         builder: (context) => MangaComment2(
+                                                                      //             chapterid:
+                                                                      //                 chaptersFromDB[index]["chap"].toString(),
+                                                                      //             hid: chaptersFromDB[index]['hid'].toString()),
+                                                                      //       ),
+                                                                      //     );
+                                                                      //   },
+                                                                      //   child: Text(
+                                                                      //     chaptersFromDB[index]["up_count"]
+                                                                      //             .toString() +
+                                                                      //         "days",
+                                                                      //     style: TextStyle(
+                                                                      //         fontSize:
+                                                                      //             13,
+                                                                      //         color: Colors
+                                                                      //             .white),
+                                                                      //   ),
+                                                                      //   // Text(
+                                                                      //   //   chaptersFromDB[
+                                                                      //   //               index]
+                                                                      //   //           [
+                                                                      //   //           "lang"]
+                                                                      //   //       .toString(),
+                                                                      //   //   style: TextStyle(
+                                                                      //   //       fontSize:
+                                                                      //   //           13,
+                                                                      //   //       color: Colors
+                                                                      //   //           .white),
+                                                                      //   // ),
+                                                                      // )
+                                                                    ]),
+                                                              )),
+                                                        );
+                                                      }, //itemBuilder
+                                                    ),
+                                                  ),
+                                                )
+                                              : Expanded(
+                                                  child: Container(
+                                                    child: ListView.builder(
+                                                      itemCount:
+                                                          chapterLanguageEn
+                                                              .length,
+                                                      reverse: reverseArray,
+                                                      itemBuilder:
+                                                          (BuildContext context,
+                                                              int index) {
+                                                        return InkWell(
+                                                          child: ListTile(
+                                                              //return new ListTile(
+                                                              onTap: null,
+                                                              subtitle: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        right:
+                                                                            60.0,
+                                                                        left:
+                                                                            60),
+                                                                child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: <
+                                                                        Widget>[
+                                                                      InkWell(
+                                                                        highlightColor:
+                                                                            Colors.transparent,
+                                                                        onTap:
+                                                                            () {
+                                                                          print("ASCSCDSCD" +
+                                                                              chapterLanguage[index]["hid"].toString());
+                                                                          Navigator
+                                                                              .push(
+                                                                            context,
+                                                                            MaterialPageRoute(
+                                                                              builder: (context) => MangaComment2(
+                                                                                chapterid: chapterLanguage[index]["chap"].toString(),
+                                                                                hid: chapterLanguage[index]['hid'].toString(),
+                                                                                chap: chapterLanguage,
+                                                                                index: index,
+                                                                                //  indexlast:chapterLanguage.length
+                                                                              ),
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              EdgeInsets.symmetric(vertical: 8),
+                                                                          child:
+                                                                              Text(
+                                                                            chapterLanguageEn[index].toString(),
+                                                                            style:
+                                                                                TextStyle(fontSize: 13, color: Colors.white),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      // InkWell(
+                                                                      //   onTap: () {
+                                                                      //     print("jhuvuyvuy" +
+                                                                      //         chaptersFromDB[index]
+                                                                      //             [
+                                                                      //             "chap"]);
+                                                                      //     Navigator
+                                                                      //         .push(
+                                                                      //       context,
+                                                                      //       MaterialPageRoute(
+                                                                      //         builder: (context) => MangaComment2(
+                                                                      //             chapterid:
+                                                                      //                 chaptersFromDB[index]["chap"].toString(),
+                                                                      //             hid: chaptersFromDB[index]['hid'].toString()),
+                                                                      //       ),
+                                                                      //     );
+                                                                      //   },
+                                                                      //   child: Text(
+                                                                      //     chaptersFromDB[index]["up_count"]
+                                                                      //             .toString() +
+                                                                      //         "days",
+                                                                      //     style: TextStyle(
+                                                                      //         fontSize:
+                                                                      //             13,
+                                                                      //         color: Colors
+                                                                      //             .white),
+                                                                      //   ),
+                                                                      //   // Text(
+                                                                      //   //   chaptersFromDB[
+                                                                      //   //               index]
+                                                                      //   //           [
+                                                                      //   //           "lang"]
+                                                                      //   //       .toString(),
+                                                                      //   //   style: TextStyle(
+                                                                      //   //       fontSize:
+                                                                      //   //           13,
+                                                                      //   //       color: Colors
+                                                                      //   //           .white),
+                                                                      //   // ),
+                                                                      // )
+                                                                    ]),
+                                                              )),
+                                                        );
+                                                      }, //itemBuilder
+                                                    ),
+                                                  ),
+                                                ),
+                                        ])
                             ]),
                           )
                         ]))
-              ])));
+              ]))));
+  }
+
+  void _arrayReverced() async {
+    if (dropdownValue == 'Descending') {
+      reverseArray = false;
+    } else {
+      reverseArray = true;
+    }
   }
 
   //get language details from  local storage

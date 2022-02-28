@@ -31,7 +31,8 @@ class _CartState extends State<SearchDetailsScreen> {
   String? bodyError;
   String? bodyErrorFav;
 
-  String dropdownValue = 'English';
+  String dropdownValue = 'Ascending';
+  bool reverseArray = true;
 
   //list for api
   List chapterUsingName = [];
@@ -58,7 +59,13 @@ class _CartState extends State<SearchDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: primaryColor,
-        body: _isLoading
+        body:NotificationListener<OverscrollIndicatorNotification>(
+            onNotification: (OverscrollIndicatorNotification overscroll) {
+              // ignore: deprecated_member_use
+              overscroll.disallowGlow();
+              return false;
+            },
+            child: _isLoading
             ? Center(
                 child: Padding(
                 padding: const EdgeInsets.only(top: 30.0),
@@ -483,57 +490,81 @@ class _CartState extends State<SearchDetailsScreen> {
                                         ),
                                       ),
                                     ),
-                              Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    // Padding(
-                                    //     padding: const EdgeInsets.only(
-                                    //         top: 10.0, left: 10),
-                                    //     child: Container(
-                                    //         width: 100,
-                                    //         height: 25,
-                                    //         decoration: BoxDecoration(
-                                    //             color: Colors.grey[900],
-                                    //             borderRadius:
-                                    //                 BorderRadius.circular(1)),
-                                    //         child: Padding(
-                                    //           padding:
-                                    //               const EdgeInsets.fromLTRB(
-                                    //                   10, 0, 0, 0),
-                                    //           child: DropdownButton<String>(
-                                    //             underline:
-                                    //                 DropdownButtonHideUnderline(
-                                    //                     child: Container()),
-                                    //             value: dropdownValue,
-                                    //             dropdownColor:
-                                    //                 kPrimaryPurpleColor,
-                                    //             icon: Icon(
-                                    //                 Icons.keyboard_arrow_down),
-                                    //             elevation: 16,
-                                    //             style: TextStyle(
-                                    //                 color: kPrimaryWhiteColor),
-                                    //             onChanged: (String? newValue) {
-                                    //               setState(() {
-                                    //                 dropdownValue = newValue!;
-                                    //               });
-                                    //             },
-                                    //             items: <String>[
-                                    //               'English',
-                                    //               'French  ',
-                                    //             ].map<DropdownMenuItem<String>>(
-                                    //                 (String value) {
-                                    //               return DropdownMenuItem<
-                                    //                   String>(
-                                    //                 value: value,
-                                    //                 child: Text(value,
-                                    //                     style: TextStyle(
-                                    //                         color:
-                                    //                             kPrimaryGreyColor)),
-                                    //               );
-                                    //             }).toList(),
-                                    //           ),
-                                    //         ))),
+                               _isLoading
+                                      ? Center(
+                                          child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 30.0),
+                                          child: CupertinoActivityIndicator(
+                                            radius: 15,
+                                          ),
+                                        ))
+                                      : Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                              Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 10.0, left: 10),
+                                                  child: Container(
+                                                      width: 120,
+                                                      height: 25,
+                                                      decoration: BoxDecoration(
+                                                          color:
+                                                              Colors.grey[900],
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(1)),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .fromLTRB(
+                                                                10, 0, 0, 0),
+                                                        child: DropdownButton<
+                                                            String>(
+                                                          underline:
+                                                              DropdownButtonHideUnderline(
+                                                                  child:
+                                                                      Container()),
+                                                          value: dropdownValue,
+                                                          dropdownColor:
+                                                              kPrimaryPurpleColor,
+                                                          icon: Icon(Icons
+                                                              .keyboard_arrow_down),
+                                                          elevation: 16,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  kPrimaryWhiteColor),
+                                                          onChanged: (String?
+                                                              newValue) {
+                                                            setState(() {
+                                                              dropdownValue =
+                                                                  newValue!;
+
+                                                              _arrayReverced();
+                                                            });
+                                                          },
+                                                          items: <String>[
+                                                            'Ascending',
+                                                            'Descending',
+                                                          ].map<
+                                                              DropdownMenuItem<
+                                                                  String>>((String
+                                                              value) {
+                                                            return DropdownMenuItem<
+                                                                String>(
+                                                              value: value,
+                                                              child: Text(value,
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          kPrimaryGreyColor)),
+                                                            );
+                                                          }).toList(),
+                                                        ),
+                                                      ))),
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           top: 10, left: 60, right: 80),
@@ -592,7 +623,8 @@ class _CartState extends State<SearchDetailsScreen> {
                                             child: Container(
                                               child: ListView.builder(
                                                 itemCount:
-                                                    chapterLanguagefr.length,
+                                                    chapterLanguagefrList.length,
+                                                     reverse: reverseArray,
                                                 itemBuilder:
                                                     (BuildContext context,
                                                         int index) {
@@ -709,7 +741,8 @@ class _CartState extends State<SearchDetailsScreen> {
                                             child: Container(
                                               child: ListView.builder(
                                                 itemCount:
-                                                    chapterLanguage.length,
+                                                    chapterLanguageEn.length,
+                                                     reverse: reverseArray,
                                                 itemBuilder:
                                                     (BuildContext context,
                                                         int index) {
@@ -826,7 +859,15 @@ class _CartState extends State<SearchDetailsScreen> {
                             ]),
                           )
                         ]))
-              ])));
+              ]))));
+  }
+
+   void _arrayReverced() async {
+    if (dropdownValue == 'Descending') {
+      reverseArray = false;
+    } else {
+      reverseArray = true;
+    }
   }
 
   //get language details from  local storage
