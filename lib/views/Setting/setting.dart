@@ -78,9 +78,14 @@ class _SettingState extends State<Setting> {
     //print('  selectevalue' + selectevalue.toString());
   }
 
+  void _launchPrivacyURL() async {
+    if (!await launch("https://pages.flycricket.io/mangakiku-0/privacy.html"))
+      throw 'Could not launch $https://pages.flycricket.io/mangakiku-0/privacy.html';
+  }
+
   void _launchURL() async {
-    if (!await launch("https://discord.gg/XwByXFde9s"))
-      throw 'Could not launch $https://discord.gg/XwByXFde9s';
+    if (!await launch("https://discord.gg/TUraVxhspe"))
+      throw 'Could not launch $https://discord.gg/TUraVxhspe';
   }
 
   void _launchRateURL() async {
@@ -505,7 +510,9 @@ class _SettingState extends State<Setting> {
                 ),
                 InkWell(
                   highlightColor: kPrimaryPurpleColor,
-                  onTap: () => null,
+                  onTap: () {
+                          _launchPrivacyURL();
+                  },
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 20,

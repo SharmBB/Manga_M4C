@@ -562,7 +562,8 @@ class _HomePageState extends State<HomePage> {
                                                                       // ),
                                                                       // SizedBox(
                                                                       //     width:
-                                                                      //         25),
+                                                                      //  
+                                                                      //pa       25),
                                                                       Text(
                                                                         'ch ' +
                                                                             manga[0][index]['chap'],
