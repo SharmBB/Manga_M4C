@@ -41,6 +41,9 @@ class _CartState extends State<SlideDetailsScreen> {
   List chapterLanguagefr = [];
   List chapterLanguageEn = [];
   List chapterLanguagefrList = [];
+  List ReverseEn =[];
+  List Reversefr = [];
+
 
   String? selectelanguage;
 
@@ -622,9 +625,9 @@ class _CartState extends State<SlideDetailsScreen> {
                                         ? Expanded(
                                             child: Container(
                                               child: ListView.builder(
-                                                itemCount: chapterLanguagefrList
+                                                itemCount:   Reversefr
                                                     .length,
-                                                reverse: reverseArray,
+                                               
                                                 itemBuilder:
                                                     (BuildContext context,
                                                         int index) {
@@ -679,9 +682,7 @@ class _CartState extends State<SlideDetailsScreen> {
                                                                         vertical:
                                                                             8),
                                                                     child: Text(
-                                                                      chapterLanguagefrList[
-                                                                              index]
-                                                                          .toString(),
+                                                                           Reversefr[index].toString(),
                                                                       style: TextStyle(
                                                                           fontSize:
                                                                               13,
@@ -741,8 +742,8 @@ class _CartState extends State<SlideDetailsScreen> {
                                             child: Container(
                                               child: ListView.builder(
                                                 itemCount:
-                                                    chapterLanguageEn.length,
-                                                reverse: reverseArray,
+                                                      ReverseEn.length,
+                                               
                                                 itemBuilder:
                                                     (BuildContext context,
                                                         int index) {
@@ -796,9 +797,7 @@ class _CartState extends State<SlideDetailsScreen> {
                                                                             vertical:
                                                                                 8),
                                                                     child: Text(
-                                                                      chapterLanguageEn[
-                                                                              index]
-                                                                          .toString(),
+                                                                            ReverseEn[index].toString(),
                                                                       style: TextStyle(
                                                                           fontSize:
                                                                               13,
@@ -861,13 +860,20 @@ class _CartState extends State<SlideDetailsScreen> {
               ]))));
   }
 
-   void _arrayReverced() async {
-    if (dropdownValue == 'Descending') {
-      reverseArray = false;
+ void _arrayReverced() async {
+    if (dropdownValue == 'Ascending') {
+      ReverseEn = chapterLanguageEn.reversed.toList();
+      Reversefr =  chapterLanguagefrList.reversed.toList();
+      print(ReverseEn);
+      print(Reversefr);
     } else {
-      reverseArray = true;
+       ReverseEn = chapterLanguageEn.toList();
+      Reversefr =  chapterLanguagefrList.toList();
+      print(ReverseEn);
+      print(Reversefr);
     }
   }
+
 
 
   //get language details from  local storage
@@ -924,6 +930,8 @@ class _CartState extends State<SlideDetailsScreen> {
       print("FR" + chapterLanguagefr.toString());
       print("----------------------------------------------------");
       print(chapterLanguage[0]['id']);
+
+      
 
       setState(() {
         _isLoading = false;

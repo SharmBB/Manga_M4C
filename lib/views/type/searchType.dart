@@ -43,6 +43,9 @@ class _CartState extends State<SearchDetailsScreen> {
   List chapterLanguageEn = [];
   List chapterLanguagefrList = [];
   String? selectelanguage = "";
+  List ReverseEn =[];
+  List Reversefr = [];
+
 
   @override
   void initState() {
@@ -623,8 +626,8 @@ class _CartState extends State<SearchDetailsScreen> {
                                             child: Container(
                                               child: ListView.builder(
                                                 itemCount:
-                                                    chapterLanguagefrList.length,
-                                                     reverse: reverseArray,
+                                                      Reversefr.length,
+                                                    
                                                 itemBuilder:
                                                     (BuildContext context,
                                                         int index) {
@@ -679,9 +682,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                         vertical:
                                                                             8),
                                                                     child: Text(
-                                                                      chapterLanguagefrList[
-                                                                              index]
-                                                                          .toString(),
+                                                                            Reversefr[index].toString(),
                                                                       style: TextStyle(
                                                                           fontSize:
                                                                               13,
@@ -741,8 +742,8 @@ class _CartState extends State<SearchDetailsScreen> {
                                             child: Container(
                                               child: ListView.builder(
                                                 itemCount:
-                                                    chapterLanguageEn.length,
-                                                     reverse: reverseArray,
+                                                      ReverseEn.length,
+                                                
                                                 itemBuilder:
                                                     (BuildContext context,
                                                         int index) {
@@ -797,9 +798,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                         vertical:
                                                                             8),
                                                                     child: Text(
-                                                                      chapterLanguageEn[
-                                                                              index]
-                                                                          .toString(),
+                                                                            ReverseEn[index].toString(),
                                                                       style: TextStyle(
                                                                           fontSize:
                                                                               13,
@@ -862,13 +861,20 @@ class _CartState extends State<SearchDetailsScreen> {
               ]))));
   }
 
-   void _arrayReverced() async {
-    if (dropdownValue == 'Descending') {
-      reverseArray = false;
+    void _arrayReverced() async {
+    if (dropdownValue == 'Ascending') {
+      ReverseEn = chapterLanguageEn.reversed.toList();
+      Reversefr =  chapterLanguagefrList.reversed.toList();
+      print(ReverseEn);
+      print(Reversefr);
     } else {
-      reverseArray = true;
+       ReverseEn = chapterLanguageEn.toList();
+      Reversefr =  chapterLanguagefrList.toList();
+      print(ReverseEn);
+      print(Reversefr);
     }
   }
+
 
   //get language details from  local storage
   void _getLocalLanguage() async {
