@@ -42,7 +42,7 @@ class _CartState extends State<Chapter> {
   String? token;
   String? selectelanguage;
 
-  String dropdownValue = 'English';
+  String dropdownValue = 'Ascending';
   final scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -585,60 +585,62 @@ class _CartState extends State<Chapter> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                          // Padding(
-                                          //     padding: const EdgeInsets.only(
-                                          //         top: 10.0, left: 10),
-                                          //     child: Container(
-                                          //         width: 100,
-                                          //         height: 25,
-                                          //         decoration: BoxDecoration(
-                                          //             color: Colors.grey[900],
-                                          //             borderRadius:
-                                          //                 BorderRadius.circular(
-                                          //                     1)),
-                                          //         child: Padding(
-                                          //           padding: const EdgeInsets
-                                          //               .fromLTRB(10, 0, 0, 0),
-                                          //           child:
-                                          //               DropdownButton<String>(
-                                          //             underline:
-                                          //                 DropdownButtonHideUnderline(
-                                          //                     child:
-                                          //                         Container()),
-                                          //             value: dropdownValue,
-                                          //             dropdownColor:
-                                          //                 kPrimaryPurpleColor,
-                                          //             icon: Icon(Icons
-                                          //                 .keyboard_arrow_down),
-                                          //             elevation: 16,
-                                          //             style: TextStyle(
-                                          //                 color:
-                                          //                     kPrimaryWhiteColor),
-                                          //             onChanged:
-                                          //                 (String? newValue) {
-                                          //               setState(() {
-                                          //                 dropdownValue =
-                                          //                     newValue!;
-                                          //               });
-                                          //             },
-                                          //             items: <String>[
-                                          //               'English',
-                                          //               'French  ',
-                                          //             ].map<
-                                          //                     DropdownMenuItem<
-                                          //                         String>>(
-                                          //                 (String value) {
-                                          //               return DropdownMenuItem<
-                                          //                   String>(
-                                          //                 value: value,
-                                          //                 child: Text(value,
-                                          //                     style: TextStyle(
-                                          //                         color:
-                                          //                             kPrimaryGreyColor)),
-                                          //               );
-                                          //             }).toList(),
-                                          //           ),
-                                          //         ))),
+                                          Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10.0, left: 10),
+                                              child: Container(
+                                                  width: 120,
+                                                  height: 25,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.grey[900],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              1)),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(10, 0, 0, 0),
+                                                    child:
+                                                        DropdownButton<String>(
+                                                      underline:
+                                                          DropdownButtonHideUnderline(
+                                                              child:
+                                                                  Container()),
+                                                      value: dropdownValue,
+                                                      dropdownColor:
+                                                          kPrimaryPurpleColor,
+                                                      icon: Icon(Icons
+                                                          .keyboard_arrow_down),
+                                                      elevation: 16,
+                                                      style: TextStyle(
+                                                          color:
+                                                              kPrimaryWhiteColor),
+                                                      onChanged:
+                                                          (String? newValue) {
+                                                        setState(() {
+                                                          dropdownValue =
+                                                              newValue!;
+
+                                                           
+                                                        });
+                                                      },
+                                                      items: <String>[
+                                                        'Ascending',
+                                                        'Descending',
+                                                      ].map<
+                                                              DropdownMenuItem<
+                                                                  String>>(
+                                                          (String value) {
+                                                        return DropdownMenuItem<
+                                                            String>(
+                                                          value: value,
+                                                          child: Text(value,
+                                                              style: TextStyle(
+                                                                  color:
+                                                                      kPrimaryGreyColor)),
+                                                        );
+                                                      }).toList(),
+                                                    ),
+                                                  ))),
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 60, right: 70),
