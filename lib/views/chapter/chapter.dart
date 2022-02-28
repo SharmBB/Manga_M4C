@@ -45,10 +45,14 @@ class _CartState extends State<Chapter> {
   String dropdownValue = 'Ascending';
   final scaffoldKey = new GlobalKey<ScaffoldState>();
 
+
+  bool reverseArray = true;
+
   @override
   void initState() {
     _ChapterDetailsUsingName();
     _getLocalLanguage();
+    _arrayReverced();
     //addLibrary();
     // addFavourite();
     //addFavourite();
@@ -616,11 +620,11 @@ class _CartState extends State<Chapter> {
                                                               kPrimaryWhiteColor),
                                                       onChanged:
                                                           (String? newValue) {
-                                                        setState(() {
+                                                        setState(()  {
                                                           dropdownValue =
                                                               newValue!;
-
-                                                           
+                                                        
+                                                           _arrayReverced();
                                                         });
                                                       },
                                                       items: <String>[
@@ -710,6 +714,7 @@ class _CartState extends State<Chapter> {
                                                       itemCount:
                                                           chapterLanguagefr
                                                               .length,
+                                                                      reverse: reverseArray,
                                                       itemBuilder:
                                                           (BuildContext context,
                                                               int index) {
@@ -815,6 +820,7 @@ class _CartState extends State<Chapter> {
                                                     child: ListView.builder(
                                                       itemCount: chapterLanguage
                                                           .length,
+                                                          reverse: reverseArray,
                                                       itemBuilder:
                                                           (BuildContext context,
                                                               int index) {
@@ -920,6 +926,16 @@ class _CartState extends State<Chapter> {
                           )
                         ]))
               ])));
+  }
+
+  void _arrayReverced()async{
+     if (dropdownValue ==        'Descending'){
+       print(chapterLanguageEn.reversed);
+       print(chapterLanguagefrList.reversed);
+        reverseArray= false;
+     }else{
+         reverseArray= true;
+     }
   }
 
   //get language details from  local storage
