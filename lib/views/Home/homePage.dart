@@ -200,7 +200,9 @@ class _HomePageState extends State<HomePage> {
         ? Center(
             child: Padding(
             padding: const EdgeInsets.all(18.0),
-            child: CupertinoActivityIndicator(),
+            child: CupertinoActivityIndicator(
+              radius: 15,
+            ),
           ))
         : Scaffold(
             backgroundColor: Colors.black,

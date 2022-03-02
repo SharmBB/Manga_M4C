@@ -35,9 +35,8 @@ class _CartState extends State<Chapter> {
   List chapterLanguagefr = [];
   List chapterLanguageEn = [];
   List chapterLanguagefrList = [];
-  List ReverseEn =[];
+  List ReverseEn = [];
   List Reversefr = [];
-  
 
 // loader
   bool _isLoading = true;
@@ -51,7 +50,6 @@ class _CartState extends State<Chapter> {
 
   @override
   void initState() {
-    
     _ChapterDetailsUsingName();
     _getLocalLanguage();
     _arrayReverced();
@@ -735,9 +733,8 @@ class _CartState extends State<Chapter> {
                                                       child: Container(
                                                         child: ListView.builder(
                                                           itemCount:
-                                                              Reversefr
-                                                                  .length,
-                                                      
+                                                              Reversefr.length,
+
                                                           itemBuilder:
                                                               (BuildContext
                                                                       context,
@@ -782,7 +779,7 @@ class _CartState extends State<Chapter> {
                                                                                 Padding(
                                                                               padding: const EdgeInsets.symmetric(vertical: 8),
                                                                               child: Text(
-                                                                                 Reversefr[index].toString(),
+                                                                                Reversefr[index].toString(),
                                                                                 style: TextStyle(fontSize: 13, color: Colors.white),
                                                                               ),
                                                                             ),
@@ -838,9 +835,8 @@ class _CartState extends State<Chapter> {
                                                       child: Container(
                                                         child: ListView.builder(
                                                           itemCount:
-                                                              ReverseEn
-                                                                  .length,
-                                                          
+                                                              ReverseEn.length,
+
                                                           itemBuilder:
                                                               (BuildContext
                                                                       context,
@@ -885,7 +881,7 @@ class _CartState extends State<Chapter> {
                                                                                 Padding(
                                                                               padding: const EdgeInsets.symmetric(vertical: 8),
                                                                               child: Text(
-                                                                                 ReverseEn[index].toString(),
+                                                                                ReverseEn[index].toString(),
                                                                                 style: TextStyle(fontSize: 13, color: Colors.white),
                                                                               ),
                                                                             ),
@@ -947,12 +943,12 @@ class _CartState extends State<Chapter> {
   void _arrayReverced() async {
     if (dropdownValue == 'Ascending') {
       ReverseEn = chapterLanguageEn.reversed.toList();
-      Reversefr =  chapterLanguagefrList.reversed.toList();
+      Reversefr = chapterLanguagefrList.reversed.toList();
       print(ReverseEn);
       print(Reversefr);
     } else {
-       ReverseEn = chapterLanguageEn.toList();
-      Reversefr =  chapterLanguagefrList.toList();
+      ReverseEn = chapterLanguageEn.toList();
+      Reversefr = chapterLanguagefrList.toList();
       print(ReverseEn);
       print(Reversefr);
     }
@@ -1013,6 +1009,9 @@ class _CartState extends State<Chapter> {
       print("----------------------------------------------------");
       print(chapterLanguage[0]['id']);
       // print(chaptersFromDB[0]['lang']);
+
+      ReverseEn = chapterLanguageEn.reversed.toList();
+      Reversefr = chapterLanguagefrList.reversed.toList();
 
       setState(() {
         _isLoading = false;
