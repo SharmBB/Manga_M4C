@@ -27,6 +27,7 @@ class _CartState extends State<Chapter> {
   String? bodyError;
   String? bodyErrorFav;
   List _manga;
+
   //list for api
   List chapterUsingName = [];
   List chapterUsingID = [];
@@ -975,13 +976,30 @@ class _CartState extends State<Chapter> {
       print(chapterUsingName);
 
       chapterUsingID.clear();
+
+      //1 st list for api
       var bodyRoutesChap;
-      var resCHap = await CallApi().getChapterUsingID('$id/chapter');
+      var resCHap = await CallApi().getChapterUsingID('$id/chapter?&page=1');
       bodyRoutesChap = json.decode(resCHap.body);
 
-      chaptersFromDB = bodyRoutesChap['chapters'];
+      //2 nd list for api
+      var bodyRoutesChap1;
+      var resCHap1 = await CallApi().getChapterUsingID('$id/chapter?&page=2');
+      bodyRoutesChap1 = json.decode(resCHap1.body);
 
-      print("---------chapters-------------");
+      //3 st list for api
+      var bodyRoutesChap2;
+      var resCHap2 = await CallApi().getChapterUsingID('$id/chapter?&page=3');
+      bodyRoutesChap2 = json.decode(resCHap2.body);
+
+      // Combining lists
+      chaptersFromDB = new List.from(bodyRoutesChap['chapters'])
+        ..addAll(bodyRoutesChap1['chapters'])
+        ..addAll(bodyRoutesChap2['chapters']);
+
+      print(
+          "---------chapters-------------" + chaptersFromDB.length.toString());
+      print("---------chapters-------------" + chaptersFromDB.toString());
 
       //   print(chaptersFromDB[0]['id']);
 
