@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
+import 'package:mangakiku_app/In_app_purchase.dart';
 import 'package:mangakiku_app/views/Account/account.dart';
 import 'package:mangakiku_app/views/Browser/browser.dart';
 
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(
                 primarySwatch: Colors.blue,
               ),
-              home: HomePage());
+              home:HomePage());
         });
   }
 }

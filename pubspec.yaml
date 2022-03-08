@@ -39,6 +39,8 @@ dependencies:
  
   native_admob_flutter: ^1.4.0
   in_app_purchase: ^2.0.1
+  flutter_inapp_purchase: ^5.1.2
+  
 
 
   

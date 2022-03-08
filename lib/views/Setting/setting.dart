@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:http/http.dart';
+import 'package:mangakiku_app/In_app_purchase.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/views/Account/account.dart';
@@ -141,7 +142,11 @@ class _SettingState extends State<Setting> {
                 InkWell(
                   highlightColor: kPrimaryPurpleColor,
                   onTap: () {
-                    _showSubcontent();
+                      Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DemoPage1()),
+            );
+                 //   _showSubcontent();
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(
