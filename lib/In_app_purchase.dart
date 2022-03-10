@@ -15,9 +15,14 @@ class DemoPage1 extends StatefulWidget {
 class _DemoPageState extends State<DemoPage1> {
   final InAppPurchase _inAppPurchase = InAppPurchase.instance;
   final String _productID = 'lifetime_subscription';
+   final String _productID1 = 'premium_monthly_subscription';
+     final String _productID2 = 'premium_yearly_subscription';
+  
 
   bool _available = true;
   List<ProductDetails> _products = [];
+  List<ProductDetails> _products1 = [];
+   List<ProductDetails> _products2 = [];
   final List<PurchaseDetails> _purchases = [];
   StreamSubscription<List<PurchaseDetails>>? _subscription;
 
@@ -54,9 +59,16 @@ class _DemoPageState extends State<DemoPage1> {
     List<ProductDetails> products = await _getProducts(
       productIds: <String>{_productID},
     );
-
+ List<ProductDetails> products1 = await _getProducts(
+      productIds: <String>{_productID1},
+    );
+    List<ProductDetails> products2 = await _getProducts(
+      productIds: <String>{_productID2},
+    );
     setState(() {
       _products = products;
+      _products1 = products1;
+        _products2 = products2;
     });
   }
 
@@ -133,6 +145,122 @@ class _DemoPageState extends State<DemoPage1> {
     );
   }
 
+   ListTile _buildProduct1({required ProductDetails product}) {
+    return ListTile(
+      leading: Icon(
+        Icons.attach_money,
+        color: kPrimaryWhiteColor,
+      ),
+      title: Text(
+        '${product.title} - ${product.price}',
+        style: TextStyle(
+            color: kPrimaryWhiteColor,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold),
+      ),
+      subtitle: Text(
+        product.description,
+        style: TextStyle(
+            color: kPrimaryWhiteColor,
+            fontSize: 10.0,
+            fontWeight: FontWeight.bold),
+      ),
+      trailing: ElevatedButton(
+        
+        onPressed: () {
+          _subscribe(product: product);
+        },
+           style: ElevatedButton.styleFrom(
+                primary:kPrimaryPurpleColor,
+           //     padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                textStyle: TextStyle(
+                fontSize: 18,
+               )),
+        child: Text(
+          'Subscribe',
+        ),
+      ),
+    );
+  }
+    ListTile _buildProduct2({required ProductDetails product}) {
+    return ListTile(
+      leading: Icon(
+        Icons.attach_money,
+        color: kPrimaryWhiteColor,
+      ),
+      title: Text(
+        '${product.title} - ${product.price}',
+        style: TextStyle(
+            color: kPrimaryWhiteColor,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold),
+      ),
+      subtitle: Text(
+        product.description,
+        style: TextStyle(
+            color: kPrimaryWhiteColor,
+            fontSize: 10.0,
+            fontWeight: FontWeight.bold),
+      ),
+      trailing: ElevatedButton(
+        
+        onPressed: () {
+          _subscribe(product: product);
+        },
+           style: ElevatedButton.styleFrom(
+                primary:kPrimaryPurpleColor,
+           //     padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                textStyle: TextStyle(
+                fontSize: 18,
+               )),
+        child: Text(
+          'Subscribe',
+        ),
+      ),
+    );
+  }
+
+     ListTile _buildProduct11({required ProductDetails product}) {
+    return ListTile(
+      leading: Icon(
+        Icons.attach_money,
+        color: kPrimaryWhiteColor,
+      ),
+      title: Text(
+        '${product.title} - ${product.price}',
+        style: TextStyle(
+            color: kPrimaryWhiteColor,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold),
+      ),
+      subtitle: Text(
+        product.description,
+        style: TextStyle(
+            color: kPrimaryWhiteColor,
+            fontSize: 10.0,
+            fontWeight: FontWeight.bold),
+      ),
+      trailing: ElevatedButton(
+        
+        onPressed: () {
+          _subscribe(product: product);
+        },
+           style: ElevatedButton.styleFrom(
+                primary:kPrimaryPurpleColor,
+           //     padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                textStyle: TextStyle(
+                fontSize: 18,
+               )),
+        child: Text(
+          'Subscribe',
+        ),
+      ),
+    );
+  }
+
+
+  
+
   ListTile _buildPurchase({required PurchaseDetails purchase}) {
     if (purchase.error != null) {
       return ListTile(
@@ -188,7 +316,7 @@ class _DemoPageState extends State<DemoPage1> {
               children: [
                 Expanded(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       // Text(
                       //   'Current Products ${_products.length}',
@@ -209,36 +337,87 @@ class _DemoPageState extends State<DemoPage1> {
                     ],
                   ),
                 ),
-                Text("data"),
-                Expanded(
+                       Expanded(
                   child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       // Text(
-                      //   'Past Purchases: ${_purchases.length}',
+                      //   'Current Products ${_products.length}',
                       //   style: TextStyle(
                       //       color: kPrimaryWhiteColor,
                       //       fontSize: 20.0,
                       //       fontWeight: FontWeight.bold),
                       // ),
-                      Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: _purchases.length,
-                          itemBuilder: (context, index) {
-                            return _buildPurchase(
-                              purchase: _purchases[index],
-                            );
-                          },
-                        ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: _products2.length,
+                        itemBuilder: (context, index) {
+                          return _buildProduct2(
+                            product: _products2[index],
+                          );
+                        },
                       ),
                     ],
                   ),
                 ),
+             
+         
+                   Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Text(
+                      //   'Current Products ${_products.length}',
+                      //   style: TextStyle(
+                      //       color: kPrimaryWhiteColor,
+                      //       fontSize: 20.0,
+                      //       fontWeight: FontWeight.bold),
+                      // ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: _products1.length,
+                        itemBuilder: (context, index) {
+                          return _buildProduct1(
+                            product: _products1[index],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                // Expanded(
+                //   child: Column(
+                //     // mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       // Text(
+                //       //   'Past Purchases: ${_purchases.length}',
+                //       //   style: TextStyle(
+                //       //       color: kPrimaryWhiteColor,
+                //       //       fontSize: 20.0,
+                //       //       fontWeight: FontWeight.bold),
+                //       // ),
+                //       Expanded(
+                //         child: ListView.builder(
+                //           shrinkWrap: true,
+                //           itemCount: _purchases.length,
+                //           itemBuilder: (context, index) {
+                //             return _buildPurchase(
+                //               purchase: _purchases[index],
+                //             );
+                //           },
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                   
               ],
             )
           : Center(
-              child: Text('The Store Is Not Available'),
+              child: Text('The Store Is Not Available',style: TextStyle(
+            color: kPrimaryWhiteColor,
+            fontSize: 10.0,
+            fontWeight: FontWeight.bold),),
             ),
     );
   }
