@@ -945,13 +945,13 @@ class _CartState extends State<Chapter> {
     if (dropdownValue == 'Ascending') {
       ReverseEn = chapterLanguageEn.reversed.toList();
       Reversefr = chapterLanguagefrList.reversed.toList();
-      print('enASC---'+ ReverseEn.toString());
-      print('frASC---'+ Reversefr.toString());
+      print('enASC---' + ReverseEn.toString());
+      print('frASC---' + Reversefr.toString());
     } else {
       ReverseEn = chapterLanguageEn.toList();
       Reversefr = chapterLanguagefrList.toList();
-      print('en---'+ ReverseEn.toString());
-      print('fr---'+ Reversefr.toString());
+      print('en---' + ReverseEn.toString());
+      print('fr---' + Reversefr.toString());
     }
   }
 
@@ -979,7 +979,8 @@ class _CartState extends State<Chapter> {
 
       //1 st list for api
       var bodyRoutesChap;
-      var resCHap = await CallApi().getChapterUsingID('$id/chapter?&limit=1500');
+      var resCHap =
+          await CallApi().getChapterUsingID('$id/chapter?&limit=1600');
       bodyRoutesChap = json.decode(resCHap.body);
 
       // //2 nd list for api
@@ -993,9 +994,9 @@ class _CartState extends State<Chapter> {
       // bodyRoutesChap2 = json.decode(resCHap2.body);
 
       // Combining lists
-      chaptersFromDB =  bodyRoutesChap['chapters'];
-        // ..addAll(bodyRoutesChap1['chapters'])
-        // ..addAll(bodyRoutesChap2['chapters']);
+      chaptersFromDB = bodyRoutesChap['chapters'];
+      // ..addAll(bodyRoutesChap1['chapters'])
+      // ..addAll(bodyRoutesChap2['chapters']);
 
       print(
           "---------chapters-------------" + chaptersFromDB.length.toString());
