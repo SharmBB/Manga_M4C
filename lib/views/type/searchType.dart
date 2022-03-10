@@ -846,13 +846,13 @@ class _CartState extends State<SearchDetailsScreen> {
     if (dropdownValue == 'Ascending') {
       ReverseEn = chapterLanguageEn.reversed.toList();
       Reversefr = chapterLanguagefrList.reversed.toList();
-      print(ReverseEn);
-      print(Reversefr);
+      print('enASC---'+ ReverseEn.toString());
+      print('frASC---'+ Reversefr.toString());
     } else {
       ReverseEn = chapterLanguageEn.toList();
       Reversefr = chapterLanguagefrList.toList();
-      print(ReverseEn);
-      print(Reversefr);
+      print('en---'+ ReverseEn.toString());
+      print('fr---'+ Reversefr.toString());
     }
   }
 
@@ -881,23 +881,23 @@ class _CartState extends State<SearchDetailsScreen> {
       
       //1 st list for api
       var bodyRoutesChap;
-      var resCHap = await CallApi().getChapterUsingID('$id/chapter?&page=1');
+      var resCHap = await CallApi().getChapterUsingID('$id/chapter?&limit=1500');
       bodyRoutesChap = json.decode(resCHap.body);
 
-      //2 nd list for api
-      var bodyRoutesChap1;
-      var resCHap1 = await CallApi().getChapterUsingID('$id/chapter?&page=2');
-      bodyRoutesChap1 = json.decode(resCHap1.body);
+      // //2 nd list for api
+      // var bodyRoutesChap1;
+      // var resCHap1 = await CallApi().getChapterUsingID('$id/chapter?&page=2');
+      // bodyRoutesChap1 = json.decode(resCHap1.body);
 
-      //3 st list for api
-      var bodyRoutesChap2;
-      var resCHap2 = await CallApi().getChapterUsingID('$id/chapter?&page=3');
-      bodyRoutesChap2 = json.decode(resCHap2.body);
+      // //3 st list for api
+      // var bodyRoutesChap2;
+      // var resCHap2 = await CallApi().getChapterUsingID('$id/chapter?&page=3');
+      // bodyRoutesChap2 = json.decode(resCHap2.body);
 
       // Combining lists
-      chaptersFromDB = new List.from(bodyRoutesChap['chapters'])
-        ..addAll(bodyRoutesChap1['chapters'])
-        ..addAll(bodyRoutesChap2['chapters']);
+      chaptersFromDB = bodyRoutesChap['chapters'];
+        // ..addAll(bodyRoutesChap1['chapters'])
+        // ..addAll(bodyRoutesChap2['chapters']);
 
       
 
