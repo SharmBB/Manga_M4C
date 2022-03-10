@@ -980,7 +980,7 @@ class _CartState extends State<Chapter> {
       //1 st list for api
       var bodyRoutesChap;
       var resCHap =
-          await CallApi().getChapterUsingID('$id/chapter?&limit=1600');
+          await CallApi().getChapterUsingID('$id/chapter?&limit=10000');
       bodyRoutesChap = json.decode(resCHap.body);
 
       // //2 nd list for api
