@@ -32,6 +32,9 @@ class _CartState extends State<Chapter> {
   List chapterUsingName = [];
   List chapterUsingID = [];
   List chaptersFromDB = [];
+  List chaptersFromDBFr = [];
+  List enChapter = [];
+  List frChapter = [];
   List chapterLanguage = [];
   List chapterLanguagefr = [];
   List chapterLanguageEn = [];
@@ -45,7 +48,7 @@ class _CartState extends State<Chapter> {
   String? token;
   String? selectelanguage;
 
-  String dropdownValue = 'Ascending';
+  String dropdownValue = 'Descending';
   bool reverseArray = true;
   final scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -210,14 +213,12 @@ class _CartState extends State<Chapter> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     MangaComment2(
-                                                  chapterid:
-                                                      chapterLanguagefr[0]
-                                                              ["chap"]
-                                                          .toString(),
-                                                  hid: chapterLanguagefr[0]
-                                                          ['hid']
+                                                  chapterid: frChapter[0]
+                                                          ["chap"]
                                                       .toString(),
-                                                  chap: chapterLanguagefr,
+                                                  hid: frChapter[0]['hid']
+                                                      .toString(),
+                                                  chap: frChapter,
                                                   index: 0,
                                                 ),
                                               ),
@@ -230,12 +231,12 @@ class _CartState extends State<Chapter> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     MangaComment2(
-                                                  chapterid: chapterLanguage[0]
+                                                  chapterid: enChapter[0]
                                                           ["chap"]
                                                       .toString(),
-                                                  hid: chapterLanguage[0]['hid']
+                                                  hid: enChapter[0]['hid']
                                                       .toString(),
-                                                  chap: chapterLanguage,
+                                                  chap: enChapter,
                                                   index: 0,
                                                 ),
                                               ),
@@ -646,8 +647,8 @@ class _CartState extends State<Chapter> {
                                                             });
                                                           },
                                                           items: <String>[
-                                                            'Ascending',
                                                             'Descending',
+                                                            'Ascending',
                                                           ].map<
                                                               DropdownMenuItem<
                                                                   String>>((String
@@ -768,9 +769,9 @@ class _CartState extends State<Chapter> {
                                                                                 context,
                                                                                 MaterialPageRoute(
                                                                                   builder: (context) => MangaComment2(
-                                                                                    chapterid: chapterLanguagefr[index]["chap"].toString(),
-                                                                                    hid: chapterLanguagefr[index]['hid'].toString(),
-                                                                                    chap: chapterLanguagefr,
+                                                                                    chapterid: frChapter[index]["chap"].toString(),
+                                                                                    hid: frChapter[index]['hid'].toString(),
+                                                                                    chap: frChapter,
                                                                                     index: index,
                                                                                   ),
                                                                                 ),
@@ -836,7 +837,7 @@ class _CartState extends State<Chapter> {
                                                       child: Container(
                                                         child: ListView.builder(
                                                           itemCount:
-                                                              ReverseEn.length,
+                                                              enChapter.length,
 
                                                           itemBuilder:
                                                               (BuildContext
@@ -870,9 +871,9 @@ class _CartState extends State<Chapter> {
                                                                                 context,
                                                                                 MaterialPageRoute(
                                                                                   builder: (context) => MangaComment2(
-                                                                                    chapterid: chapterLanguage[index]["chap"].toString(),
-                                                                                    hid: chapterLanguage[index]['hid'].toString(),
-                                                                                    chap: chapterLanguage,
+                                                                                    chapterid: enChapter[index]["chap"].toString(),
+                                                                                    hid: enChapter[index]['hid'].toString(),
+                                                                                    chap: enChapter,
                                                                                     index: index,
                                                                                   ),
                                                                                 ),
@@ -882,7 +883,7 @@ class _CartState extends State<Chapter> {
                                                                                 Padding(
                                                                               padding: const EdgeInsets.symmetric(vertical: 8),
                                                                               child: Text(
-                                                                                ReverseEn[index].toString(),
+                                                                                enChapter[index]["chap"].toString(),
                                                                                 style: TextStyle(fontSize: 13, color: Colors.white),
                                                                               ),
                                                                             ),
@@ -944,12 +945,18 @@ class _CartState extends State<Chapter> {
   void _arrayReverced() async {
     if (dropdownValue == 'Ascending') {
       ReverseEn = chapterLanguageEn.reversed.toList();
+      frChapter = frChapter.reversed.toList();
+      enChapter = enChapter.reversed.toList();
       Reversefr = chapterLanguagefrList.reversed.toList();
       print('enASC---' + ReverseEn.toString());
       print('frASC---' + Reversefr.toString());
     } else {
       ReverseEn = chapterLanguageEn.toList();
+      chapterLanguage = chapterLanguage.reversed.toList();
+      chapterLanguagefr = chapterLanguagefr.reversed.toList();
       Reversefr = chapterLanguagefrList.toList();
+      frChapter = frChapter.reversed.toList();
+      enChapter = enChapter.reversed.toList();
       print('en---' + ReverseEn.toString());
       print('fr---' + Reversefr.toString());
     }
@@ -979,8 +986,12 @@ class _CartState extends State<Chapter> {
 
       //1 st list for api
       var bodyRoutesChap;
+      var bodyRoutesFr;
       var resCHap =
-          await CallApi().getChapterUsingID('$id/chapter?&limit=10000');
+          await CallApi().getChapterUsingID('$id/chapter?&limit=10000&lang=en');
+      var resCHapFr =
+          await CallApi().getChapterUsingID('$id/chapter?&limit=10000&lang=fr');
+      bodyRoutesFr = json.decode(resCHapFr.body);
       bodyRoutesChap = json.decode(resCHap.body);
 
       // //2 nd list for api
@@ -995,6 +1006,12 @@ class _CartState extends State<Chapter> {
 
       // Combining lists
       chaptersFromDB = bodyRoutesChap['chapters'];
+      chaptersFromDBFr = bodyRoutesFr['chapters'];
+      var seen = Set<String>();
+      enChapter =
+          chaptersFromDB.where((manga) => seen.add(manga["chap"])).toList();
+      frChapter =
+          chaptersFromDBFr.where((manga) => seen.add(manga["chap"])).toList();
       // ..addAll(bodyRoutesChap1['chapters'])
       // ..addAll(bodyRoutesChap2['chapters']);
 
@@ -1002,25 +1019,38 @@ class _CartState extends State<Chapter> {
           "---------chapters-------------" + chaptersFromDB.length.toString());
       print("---------chapters-------------" + chaptersFromDB.toString());
 
+      chapterLanguage = enChapter;
+      chapterLanguageEn =
+          chapterLanguage.map((o) => o["chap"]).toSet().toList();
+      chapterLanguagefr = frChapter;
+      chapterLanguagefrList =
+          chapterLanguagefr.map((o) => o["chap"]).toSet().toList();
+
       //   print(chaptersFromDB[0]['id']);
 
-      for (var i = 0; i < chaptersFromDB.length; i++) {
-        if (chaptersFromDB[i]["lang"] == 'en') {
-          // chapterLanguage = chaptersFromDB;
-          chapterLanguage =
-              chaptersFromDB.where((o) => o['lang'] == 'en').toList();
-          chapterLanguageEn =
-              chapterLanguage.map((o) => o["chap"]).toSet().toList();
-          // chapterLanguageEn.add(chapterLanguage.map((o) => o["chap"]).toSet());
-          print(chapterLanguageEn[1]);
-        } else if (chaptersFromDB[i]["lang"] == "fr") {
-          chapterLanguagefr =
-              chaptersFromDB.where((o) => o['lang'] == 'fr').toList();
-          chapterLanguagefrList =
-              chapterLanguagefr.map((o) => o["chap"]).toSet().toList();
-          print(chapterLanguagefrList);
-        }
-      }
+      // for (var i = 0; i < chaptersFromDB.length; i++) {
+      //   if (chaptersFromDB[i]["lang"] == 'en') {
+      //     // chapterLanguage = chaptersFromDB;
+
+      //     enChapter = chaptersFromDB.where((o) => o['lang'] == 'en').toList();
+      //     chapterLanguage =
+      //         chaptersFromDB.where((o) => o['lang'] == 'en').toList();
+      //     chapterLanguageEn =
+      //         chapterLanguage.map((o) => o["chap"]).toSet().toList();
+      //     // chapterLanguageEn.add(chapterLanguage.map((o) => o["chap"]).toSet());
+      //     print("Lengths" +
+      //         enChapter.length.toString() +
+      //         " " +
+      //         chapterLanguageEn.length.toString());
+      //   } else if (chaptersFromDB[i]["lang"] == "fr") {
+      //     frChapter = chaptersFromDB.where((o) => o['lang'] == 'fr').toList();
+      //     chapterLanguagefr =
+      //         chaptersFromDB.where((o) => o['lang'] == 'fr').toList();
+      //     chapterLanguagefrList =
+      //         chapterLanguagefr.map((o) => o["chap"]).toSet().toList();
+      //     print(chapterLanguagefrList);
+      //   }
+      // }
       //   chapterLanguage = Set.of.(chapterLanguage).toList();
       print("------------++++----------");
       print("EN" + chapterLanguage.toString());

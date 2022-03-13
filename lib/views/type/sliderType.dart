@@ -30,13 +30,16 @@ class _CartState extends State<SlideDetailsScreen> {
   String? bodyError;
   String? bodyErrorFav;
 
-  String dropdownValue = 'Ascending';
+  String dropdownValue = 'Descending';
   bool reverseArray = true;
 
   //list for api
   List chapterUsingName = [];
   List chapterUsingID = [];
   List chaptersFromDB = [];
+  List chaptersFromDBFr = [];
+  List enChapter = [];
+  List frChapter = [];
   List chapterLanguage = [];
   List chapterLanguagefr = [];
   List chapterLanguageEn = [];
@@ -205,38 +208,36 @@ class _CartState extends State<SlideDetailsScreen> {
                                       textColor: Colors.white,
                                       onPressed: () {
                                         if (selectelanguage == "Francasis") {
-                                          if (chapterLanguagefr[0] != null) {
+                                          if (enChapter[0] != null) {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     MangaComment2(
-                                                  chapterid:
-                                                      chapterLanguagefr[0]
-                                                              ["chap"]
-                                                          .toString(),
-                                                  hid: chapterLanguagefr[0]
-                                                          ['hid']
+                                                  chapterid: frChapter[0]
+                                                          ["chap"]
                                                       .toString(),
-                                                  chap: chapterLanguagefr,
+                                                  hid: frChapter[0]['hid']
+                                                      .toString(),
+                                                  chap: frChapter,
                                                   index: 0,
                                                 ),
                                               ),
                                             );
                                           }
                                         } else {
-                                          if (chapterLanguage[0] != null) {
+                                          if (frChapter[0] != null) {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     MangaComment2(
-                                                  chapterid: chapterLanguage[0]
+                                                  chapterid: enChapter[0]
                                                           ["chap"]
                                                       .toString(),
-                                                  hid: chapterLanguage[0]['hid']
+                                                  hid: enChapter[0]['hid']
                                                       .toString(),
-                                                  chap: chapterLanguage,
+                                                  chap: enChapter,
                                                   index: 0,
                                                 ),
                                               ),
@@ -555,8 +556,8 @@ class _CartState extends State<SlideDetailsScreen> {
                                                             });
                                                           },
                                                           items: <String>[
-                                                            'Ascending',
                                                             'Descending',
+                                                            'Ascending',
                                                           ].map<
                                                               DropdownMenuItem<
                                                                   String>>((String
@@ -673,9 +674,9 @@ class _CartState extends State<SlideDetailsScreen> {
                                                                                   context,
                                                                                   MaterialPageRoute(
                                                                                     builder: (context) => SlideMangaComment2(
-                                                                                      chapterid: chapterLanguagefr[index]["chap"].toString(),
-                                                                                      hid: chapterLanguagefr[index]['hid'].toString(),
-                                                                                      chap: chapterLanguagefr,
+                                                                                      chapterid: frChapter[index]["chap"].toString(),
+                                                                                      hid: frChapter[index]['hid'].toString(),
+                                                                                      chap: frChapter,
                                                                                       index: index,
                                                                                     ),
                                                                                   ));
@@ -774,9 +775,9 @@ class _CartState extends State<SlideDetailsScreen> {
                                                                                 context,
                                                                                 MaterialPageRoute(
                                                                                   builder: (context) => SlideMangaComment2(
-                                                                                    chapterid: chapterLanguage[index]["chap"].toString(),
-                                                                                    hid: chapterLanguage[index]['hid'].toString(),
-                                                                                    chap: chapterLanguage,
+                                                                                    chapterid: enChapter[index]["chap"].toString(),
+                                                                                    hid: enChapter[index]['hid'].toString(),
+                                                                                    chap: enChapter,
                                                                                     index: index,
                                                                                   ),
                                                                                 ),
@@ -848,12 +849,18 @@ class _CartState extends State<SlideDetailsScreen> {
   void _arrayReverced() async {
     if (dropdownValue == 'Ascending') {
       ReverseEn = chapterLanguageEn.reversed.toList();
+      frChapter = frChapter.reversed.toList();
+      enChapter = enChapter.reversed.toList();
       Reversefr = chapterLanguagefrList.reversed.toList();
       print('enASC---' + ReverseEn.toString());
       print('frASC---' + Reversefr.toString());
     } else {
       ReverseEn = chapterLanguageEn.toList();
+      chapterLanguage = chapterLanguage.reversed.toList();
+      chapterLanguagefr = chapterLanguagefr.reversed.toList();
       Reversefr = chapterLanguagefrList.toList();
+      frChapter = frChapter.reversed.toList();
+      enChapter = enChapter.reversed.toList();
       print('en---' + ReverseEn.toString());
       print('fr---' + Reversefr.toString());
     }
@@ -885,44 +892,63 @@ class _CartState extends State<SlideDetailsScreen> {
 
       //1 st list for api
       var bodyRoutesChap;
+      var bodyRoutesFr;
       var resCHap =
-          await CallApi().getChapterUsingID('$id/chapter?&limit=10000');
+          await CallApi().getChapterUsingID('$id/chapter?&limit=10000&lang=en');
+      var resCHapFr =
+          await CallApi().getChapterUsingID('$id/chapter?&limit=10000&lang=fr');
+      bodyRoutesFr = json.decode(resCHapFr.body);
       bodyRoutesChap = json.decode(resCHap.body);
 
       // //2 nd list for api
       // var bodyRoutesChap1;
-      // var resCHap1 = await CallApi().getChapterUsingID('$id/chapter?&page=2');
+      // var resCHap1 = await CallApi().getChapterUsingID('$id/chapter?&limit=1500');
       // bodyRoutesChap1 = json.decode(resCHap1.body);
 
       // //3 st list for api
       // var bodyRoutesChap2;
-      // var resCHap2 = await CallApi().getChapterUsingID('$id/chapter?&page=3');
+      // var resCHap2 = await CallApi().getChapterUsingID('$id/chapter?&limit=1500');
       // bodyRoutesChap2 = json.decode(resCHap2.body);
 
       // Combining lists
       chaptersFromDB = bodyRoutesChap['chapters'];
+      chaptersFromDBFr = bodyRoutesFr['chapters'];
+      var seen = Set<String>();
+      enChapter =
+          chaptersFromDB.where((manga) => seen.add(manga["chap"])).toList();
+      frChapter =
+          chaptersFromDBFr.where((manga) => seen.add(manga["chap"])).toList();
       // ..addAll(bodyRoutesChap1['chapters'])
       // ..addAll(bodyRoutesChap2['chapters']);
 
-      print("---------chapters-------------");
+      print(
+          "---------chapters-------------" + chaptersFromDB.length.toString());
+      print("---------chapters-------------" + chaptersFromDB.toString());
 
-      for (var i = 0; i < chaptersFromDB.length; i++) {
-        if (chaptersFromDB[i]["lang"] == 'en') {
-          // chapterLanguage = chaptersFromDB;
-          chapterLanguage =
-              chaptersFromDB.where((o) => o['lang'] == 'en').toList();
-          chapterLanguageEn =
-              chapterLanguage.map((o) => o["chap"]).toSet().toList();
-          // chapterLanguageEn.add(chapterLanguage.map((o) => o["chap"]).toSet());
-          print(chapterLanguageEn[1]);
-        } else if (chaptersFromDB[i]["lang"] == "fr") {
-          chapterLanguagefr =
-              chaptersFromDB.where((o) => o['lang'] == 'fr').toList();
-          chapterLanguagefrList =
-              chapterLanguagefr.map((o) => o["chap"]).toSet().toList();
-          print(chapterLanguagefrList);
-        }
-      }
+      chapterLanguage = enChapter;
+      chapterLanguageEn =
+          chapterLanguage.map((o) => o["chap"]).toSet().toList();
+      chapterLanguagefr = frChapter;
+      chapterLanguagefrList =
+          chapterLanguagefr.map((o) => o["chap"]).toSet().toList();
+
+      // for (var i = 0; i < chaptersFromDB.length; i++) {
+      //   if (chaptersFromDB[i]["lang"] == 'en') {
+      //     // chapterLanguage = chaptersFromDB;
+      //     chapterLanguage =
+      //         chaptersFromDB.where((o) => o['lang'] == 'en').toList();
+      //     chapterLanguageEn =
+      //         chapterLanguage.map((o) => o["chap"]).toSet().toList();
+      //     // chapterLanguageEn.add(chapterLanguage.map((o) => o["chap"]).toSet());
+      //     print(chapterLanguageEn[1]);
+      //   } else if (chaptersFromDB[i]["lang"] == "fr") {
+      //     chapterLanguagefr =
+      //         chaptersFromDB.where((o) => o['lang'] == 'fr').toList();
+      //     chapterLanguagefrList =
+      //         chapterLanguagefr.map((o) => o["chap"]).toSet().toList();
+      //     print(chapterLanguagefrList);
+      //   }
+      // }
       //   chapterLanguage = Set.of.(chapterLanguage).toList();
       print("------------++++----------");
       print("EN" + chapterLanguage.toString());
@@ -930,8 +956,8 @@ class _CartState extends State<SlideDetailsScreen> {
       print("----------------------------------------------------");
       print(chapterLanguage[0]['id']);
 
-      ReverseEn = chapterLanguageEn.reversed.toList();
-      Reversefr = chapterLanguagefrList.reversed.toList();
+      ReverseEn = chapterLanguageEn;
+      Reversefr = chapterLanguagefrList;
 
       setState(() {
         _isLoading = false;
