@@ -232,7 +232,7 @@ class _MangaComment2State extends State<SlideMangaComment2> {
                         _isLoading = true;
                         index = (index! - 1);
                         hid = widget.chap[index!]["hid"];
-                        chapterid = widget.chap[index!]["id"].toString();
+                        chapterid = widget.chap[index!]["chap"].toString();
 
                         _apiChapterImages();
 
@@ -280,7 +280,7 @@ class _MangaComment2State extends State<SlideMangaComment2> {
                         _isLoading = true;
                         index = (index! + 1);
                         hid = widget.chap[index!]["hid"];
-                        chapterid = widget.chap[index!]["id"].toString();
+                        chapterid = widget.chap[index!]["chap"].toString();
 
                         _apiChapterImages();
 

@@ -531,8 +531,9 @@ class _HomePageState extends State<HomePage> {
                                                                 Padding(
                                                                   padding: const EdgeInsets
                                                                           .only(
-                                                                      top:
-                                                                          10.0, right: 10, left: 10),
+                                                                      top: 10.0,
+                                                                      right: 10,
+                                                                      left: 10),
                                                                   child: Row(
                                                                     mainAxisAlignment:
                                                                         MainAxisAlignment
@@ -564,7 +565,7 @@ class _HomePageState extends State<HomePage> {
                                                                       // ),
                                                                       // SizedBox(
                                                                       //     width:
-                                                                      //  
+                                                                      //
                                                                       //pa       25),
                                                                       Text(
                                                                         'ch ' +
@@ -778,8 +779,9 @@ class _HomePageState extends State<HomePage> {
                                                             padding:
                                                                 const EdgeInsets
                                                                         .only(
-                                                                    top:
-                                                                          10.0, right: 10, left: 10),
+                                                                    top: 10.0,
+                                                                    right: 10,
+                                                                    left: 10),
                                                             child: Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
@@ -1028,8 +1030,9 @@ class _HomePageState extends State<HomePage> {
                                                             padding:
                                                                 const EdgeInsets
                                                                         .only(
-                                                                    top:
-                                                                          10.0, right: 10, left: 10),
+                                                                    top: 10.0,
+                                                                    right: 10,
+                                                                    left: 10),
                                                             child: Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
@@ -1296,8 +1299,9 @@ class _HomePageState extends State<HomePage> {
                                                                 Padding(
                                                                   padding: const EdgeInsets
                                                                           .only(
-                                                                       top:
-                                                                          10.0, right: 10, left: 10),
+                                                                      top: 10.0,
+                                                                      right: 10,
+                                                                      left: 10),
                                                                   child: Row(
                                                                     mainAxisAlignment:
                                                                         MainAxisAlignment
@@ -1330,7 +1334,7 @@ class _HomePageState extends State<HomePage> {
                                                                       // SizedBox(width: 25),
                                                                       Text(
                                                                         'ch ' +
-                                                                                RatingManga[0][index]['last_chapter'],
+                                                                            RatingManga[0][index]['last_chapter'],
                                                                         style:
                                                                             TextStyle(
                                                                           fontSize:
@@ -1460,14 +1464,14 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LeaderBoardScreen()),
+                                      builder: (context) =>
+                                          LeaderBoardScreen()),
                                 );
                               } else if (currentIndex == 4) {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          Setting()),
+                                      builder: (context) => Setting()),
                                 );
                               } else {
                                 Navigator.push(
@@ -1517,7 +1521,7 @@ class _HomePageState extends State<HomePage> {
       var resSetting = await CallApi().getApiSetting('getApiSetting');
       var bodyRoutesSetting = json.decode(resSetting.body);
       ApiSetting.add(bodyRoutesSetting);
-      //  ApiSetting[0]['value'] = 0;
+      //ApiSetting[0]['value'] = 0;
       print(ApiSetting[0]['value']);
 
       //get user details

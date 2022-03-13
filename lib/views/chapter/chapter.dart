@@ -1029,8 +1029,8 @@ class _CartState extends State<Chapter> {
       print(chapterLanguage[0]['id']);
       // print(chaptersFromDB[0]['lang']);
 
-      ReverseEn = chapterLanguageEn.reversed.toList();
-      Reversefr = chapterLanguagefrList.reversed.toList();
+      ReverseEn = chapterLanguageEn;
+      Reversefr = chapterLanguagefrList;
 
       setState(() {
         _isLoading = false;

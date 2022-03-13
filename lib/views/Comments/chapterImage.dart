@@ -26,7 +26,6 @@ class MangaComment2 extends StatefulWidget {
     key,
     required this.hid,
     required this.chapterid,
-    
     required this.chap,
     required this.index,
   }) : super(key: key);
@@ -69,7 +68,7 @@ class _MangaComment2State extends State<MangaComment2> {
     // AdHelper.myBanner.load();
     index = widget.index;
     hid = widget.hid;
-    
+
     // print(hid);
     chapterid = widget.chapterid;
     // print(chapterid);
@@ -251,7 +250,7 @@ class _MangaComment2State extends State<MangaComment2> {
                           _isLoading = true;
                           index = (index! - 1);
                           hid = widget.chap[index!]["hid"];
-                          chapterid = widget.chap[index!]["id"].toString();
+                          chapterid = widget.chap[index!]["chap"].toString();
 
                           _apiChapterImages();
                         }
@@ -309,14 +308,14 @@ class _MangaComment2State extends State<MangaComment2> {
                     onPressed: () {
                       setState(() {
                         // if (index! < indexlast!) {
-                          _isLoading = true;
+                        _isLoading = true;
 
-                          index = (index! + 1);
-                          hid = widget.chap[index!]["hid"];
-                          chapterid = widget.chap[index!]["id"].toString();
-
-                          _apiChapterImages();
-                      //  }
+                        index = (index! + 1);
+                        hid = widget.chap[index!]["hid"];
+                        chapterid = widget.chap[index!]["chap"].toString();
+                        //print(widget.chap[index!]);
+                        _apiChapterImages();
+                        //  }
 
                         //widget.chapterid =
                       });

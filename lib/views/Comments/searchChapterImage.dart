@@ -35,7 +35,7 @@ class _MangaComment2State extends State<SearchMangaComment2> {
   late String chapterid;
   TextEditingController _commentController = new TextEditingController();
 
-   int chapterCount = 0;
+  int chapterCount = 0;
 
   String? token;
   int? index;
@@ -62,7 +62,7 @@ class _MangaComment2State extends State<SearchMangaComment2> {
     print(hid);
     chapterid = widget.chapterid;
     print(chapterid);
-     index = widget.index;
+    index = widget.index;
     _apiChapterImages();
     super.initState();
   }
@@ -225,11 +225,11 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                     icon: Icon(Icons.arrow_back_ios_new),
                     color: kPrimaryWhiteColor,
                     onPressed: () {
-                     setState(() {
+                      setState(() {
                         _isLoading = true;
                         index = (index! - 1);
                         hid = widget.chap[index!]["hid"];
-                        chapterid = widget.chap[index!]["id"].toString();
+                        chapterid = widget.chap[index!]["chap"].toString();
 
                         _apiChapterImages();
 
@@ -265,17 +265,16 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                     icon: Icon(Icons.arrow_forward_ios),
                     color: kPrimaryWhiteColor,
                     onPressed: () {
-                       setState(() {
+                      setState(() {
                         _isLoading = true;
                         index = (index! + 1);
                         hid = widget.chap[index!]["hid"];
-                        chapterid = widget.chap[index!]["id"].toString();
+                        chapterid = widget.chap[index!]["chap"].toString();
 
                         _apiChapterImages();
 
                         //widget.chapterid =
-                      }
-                      );
+                      });
                     }),
               ],
             ),
