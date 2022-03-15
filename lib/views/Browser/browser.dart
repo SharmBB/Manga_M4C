@@ -648,7 +648,7 @@ class _MyHomePageState extends State<Browser> {
                                                   Text(
                                                     genres[index]['name']
                                                                 .length <=
-                                                            13
+                                                            20
                                                         ? genres[index]['name']
                                                             .toString()
                                                         : genres[index]['name']
