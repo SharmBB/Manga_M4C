@@ -11,6 +11,7 @@ import 'package:mangakiku_app/views/Browser/browser.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
 import 'package:mangakiku_app/views/Library/library.dart';
+import 'package:mangakiku_app/views/SignIn/signin.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -48,7 +49,7 @@ class _SettingState extends State<Setting> {
   void initState() {
     //initialize  id for chapterimage
     _getRead();
-    
+
     _getLanguage();
     super.initState();
   }
@@ -142,11 +143,11 @@ class _SettingState extends State<Setting> {
                 InkWell(
                   highlightColor: kPrimaryPurpleColor,
                   onTap: () {
-                      Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => DemoPage1()),
-            );
-                 //   _showSubcontent();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DemoPage1()),
+                    );
+                    //   _showSubcontent();
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -516,7 +517,7 @@ class _SettingState extends State<Setting> {
                 InkWell(
                   highlightColor: kPrimaryPurpleColor,
                   onTap: () {
-                          _launchPrivacyURL();
+                    _launchPrivacyURL();
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -539,6 +540,46 @@ class _SettingState extends State<Setting> {
                           ),
                           Text(
                             "Privacy Policy",
+                            style: TextStyle(
+                              color: kPrimaryWhiteColor,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                InkWell(
+                  highlightColor: kPrimaryPurpleColor,
+                  onTap: () async {
+                    _handleLogout(context);
+                    //   _launchPrivacyURL();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      bottom: 10,
+                      top: 10,
+                    ),
+                    child: Container(
+                      height: 30,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.logout_sharp,
+                            size: 24.0,
+                            color: kPrimaryWhiteColor,
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            "Logout",
                             style: TextStyle(
                               color: kPrimaryWhiteColor,
                               fontSize: 18,
@@ -627,6 +668,26 @@ class _SettingState extends State<Setting> {
         ),
       ),
     );
+  }
+
+//LOGOUT
+  void _handleLogout(BuildContext context) async {
+    try {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.remove('token');
+      localStorage.remove('userId');
+
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Signin(
+                    hid: '',
+                    chapterid: '',
+                    image: '',
+                  )));
+    } catch (e) {
+      print(e);
+    }
   }
 
   String _selectedSub = 'Lifetime Membership (LKR 3,050.00)';

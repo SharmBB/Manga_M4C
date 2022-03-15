@@ -56,7 +56,7 @@ class _SigninState extends State<Signin> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-               Text(
+              Text(
                 'SIGN IN',
                 style: TextStyle(
                     fontSize: 20,
@@ -300,6 +300,8 @@ class _SigninState extends State<Signin> {
 
           print("------------------------------------");
           localStorage.setString('token', token);
+          print(token);
+           print(userId);
 
           localStorage.setInt('userId', userId);
 
@@ -307,13 +309,13 @@ class _SigninState extends State<Signin> {
 
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-                builder: (BuildContext context) => ReplyComments(
-                  image: widget.image,
-                  chapterid: widget.chapterid,
-                  hid: widget.hid,
+                builder: (BuildContext context) => HomePage(
+                    //builder: (BuildContext context) => ReplyComments(
+                    // image: widget.image,
+                    // chapterid: widget.chapterid,
+                    // hid: widget.hid,
 
-
-                )),
+                    )),
           );
         }
       } else {
