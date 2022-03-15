@@ -1048,28 +1048,28 @@ class _SettingState extends State<Setting> {
                       //     ),
                       //   ],
                       // ),
-                      Row(
-                        children: [
-                          Radio<String>(
-                            activeColor: kPrimaryPurpleColor,
-                            value: 'Francasis',
-                            groupValue: _selectedLanguage,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedLanguage = value!;
-                                 selectelanguage = value.toString();
-                              });
-                            },
-                          ),
-                          Text(
-                            'Francsis',
-                            style: TextStyle(
-                              color: kPrimaryWhiteColor,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Radio<String>(
+                      //       activeColor: kPrimaryPurpleColor,
+                      //       value: 'Francasis',
+                      //       groupValue: _selectedLanguage,
+                      //       onChanged: (value) {
+                      //         setState(() {
+                      //           _selectedLanguage = value!;
+                      //            selectelanguage = value.toString();
+                      //         });
+                      //       },
+                      //     ),
+                      //     Text(
+                      //       'Francsis',
+                      //       style: TextStyle(
+                      //         color: kPrimaryWhiteColor,
+                      //         fontSize: 14,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       // Row(
                       //   children: [
                       //     Radio<String>(

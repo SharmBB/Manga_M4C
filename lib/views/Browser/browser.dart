@@ -653,7 +653,7 @@ class _MyHomePageState extends State<Browser> {
                                                             .toString()
                                                         : genres[index]['name']
                                                             .toString()
-                                                            .substring(0, 4),
+                                                            .substring(0, 10),
                                                     style: const TextStyle(
                                                       color: kPrimaryWhiteColor,
                                                       decoration:
