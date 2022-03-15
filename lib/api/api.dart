@@ -29,7 +29,7 @@ class CallApi {
   var newurl = 'https://api.comick.fun/search?page=1&limit=50&sort=follow';
 
   //advance search
-  var advacesearch = 'https://api.comick.fun/search?genres=';
+  var advacesearch = 'https://api.comick.fun/search?';
 
   //Login api
   authData(data, apiUrl) async {

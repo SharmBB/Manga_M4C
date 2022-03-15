@@ -461,7 +461,8 @@ class _MyHomePageState extends State<Browser> {
       _isLoading = true;
     });
     try {
-      String str = advanceSearch.join(',');
+      String str = advanceSearch.join('&');
+    
       print(str);
       var bodyRoutes;
 
@@ -617,7 +618,7 @@ class _MyHomePageState extends State<Browser> {
                                                           if (genres[index][
                                                                   'isChecked'] ==
                                                               true) {
-                                                            advanceSearch.add(
+                                                            advanceSearch.add("genres="+
                                                                 genres[index]
                                                                     ['name']);
                                                             //  print(advanceSearch);
@@ -629,7 +630,7 @@ class _MyHomePageState extends State<Browser> {
                                                             SelectedManga
                                                                 .clear();
                                                             advanceSearch
-                                                                .remove(genres[
+                                                                .remove("genres="+genres[
                                                                         index]
                                                                     ['name']);
 
