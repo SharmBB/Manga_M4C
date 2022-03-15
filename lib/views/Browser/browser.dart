@@ -648,7 +648,7 @@ class _MyHomePageState extends State<Browser> {
                                                   Text(
                                                     genres[index]['name']
                                                                 .length <=
-                                                            10
+                                                            13
                                                         ? genres[index]['name']
                                                             .toString()
                                                         : genres[index]['name']
@@ -656,6 +656,7 @@ class _MyHomePageState extends State<Browser> {
                                                             .substring(0, 10),
                                                     style: const TextStyle(
                                                       color: kPrimaryWhiteColor,
+                                                      fontSize: 12,
                                                       decoration:
                                                           TextDecoration.none,
                                                     ),
