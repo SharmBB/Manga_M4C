@@ -8,6 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
+import 'package:mangakiku_app/_helpers/sharedPreference.dart';
 import 'package:mangakiku_app/api/api.dart';
 
 import 'package:mangakiku_app/views/Account/account.dart';
@@ -89,6 +90,8 @@ class _HomePageState extends State<HomePage> {
         }
       ]
     },
+
+    
     {
       "title": "Shin Black Jack ni Yoroshiku",
       "id": 62631,
@@ -169,6 +172,8 @@ class _HomePageState extends State<HomePage> {
       ]
     }
   ];
+
+  
 
   String token = "";
   String bio = "";
@@ -282,6 +287,7 @@ class _HomePageState extends State<HomePage> {
                 child: Padding(
                   padding: EdgeInsets.only(top: 12.0),
                   child: ListView(
+                    
                     children: [
                       CarouselSlider(
                         items: [
@@ -1505,7 +1511,7 @@ class _HomePageState extends State<HomePage> {
           );
   }
 
-//store the userImage in local
+// //store the userImage in local
   void _getUserDetails() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     token = localStorage.getString("token")!;
@@ -1516,6 +1522,10 @@ class _HomePageState extends State<HomePage> {
 //get manga details from api
   void _apiMangaDetails() async {
     try {
+
+      token = await MySharedPreferences.instance.getStringValue("token");
+      print(token);
+
       //Setting API
       ApiSetting.clear();
       var resSetting = await CallApi().getApiSetting('getApiSetting');

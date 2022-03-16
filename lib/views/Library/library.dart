@@ -1107,6 +1107,8 @@ class _LeaderBoardScreenState extends State<Library> {
 
   //get UserLibrary details from api
   void getUserLibrary() async {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+    token = localStorage.getString("token")!;
     setState(() {
       _isLoading = true;
     });

@@ -5,7 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 import 'package:http/http.dart';
 import 'package:mangakiku_app/Ads_Helpers/googleMobAds.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
@@ -42,6 +42,7 @@ class _MangaComment2State extends State<MangaComment2> {
   String? selectevalue;
   int chapterCount = 0;
   int? indexlast;
+  String token = "";
 
   List User = [];
   int? index;
@@ -77,7 +78,7 @@ class _MangaComment2State extends State<MangaComment2> {
     super.initState();
   }
 
-  final AdWidget adWidget = AdWidget(ad: AdHelper.myBanner);
+  // final AdWidget adWidget = AdWidget(ad: AdHelper.myBanner);
 
   @override
   void dispose() {
@@ -274,28 +275,26 @@ class _MangaComment2State extends State<MangaComment2> {
                     icon: Icon(Icons.comment_outlined),
                     color: kPrimaryWhiteColor,
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Signin(
-                              image: _chapterImage[0]['chapter']['md_images'][0]
-                                      ['b2key']
-                                  .toString(),
-                              chapterid: widget.chapterid.toString(),
-                              hid: widget.hid.toString()),
-                        ),
-                      );
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => ReplyComments(
-                      //       image:  _chapterImage[0]['chapter']
-                      //                                   ['md_images']
-                      //                               [0]['b2key'].toString(),
-                      //         chapterid: widget.chapterid.toString(),
-                      //         hid: widget.hid.toString()),
-                      //   ),
-                      // );
+                      if (token != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ReplyComments(
+                                image: _chapterImage[0]['chapter']['md_images']
+                                        [0]['b2key']
+                                    .toString(),
+                                chapterid: widget.chapterid.toString(),
+                                hid: widget.hid.toString()),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Signin(),
+                            ));
+                      }
+
                       //  _displayDialog(context);
                     }),
                 // IconButton(
@@ -374,6 +373,14 @@ class _MangaComment2State extends State<MangaComment2> {
     setState(() {
       _isLoading = false;
     });
+
+    // //store the userImage in local
+    void _getUserDetails() async {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      token = localStorage.getString("token")!;
+      print("homepagetoken" + token);
+      var data = {"pic": token};
+    }
   }
 
   String _selectedRead = 'Right to Left';

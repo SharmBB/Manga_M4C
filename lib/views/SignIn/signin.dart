@@ -11,14 +11,10 @@ import 'package:mangakiku_app/views/Signup/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Signin extends StatefulWidget {
-  final String hid;
-  final String chapterid;
-  final String image;
+
   const Signin({
     Key? key,
-    required this.hid,
-    required this.chapterid,
-    required this.image,
+   
   }) : super(key: key);
 
   @override

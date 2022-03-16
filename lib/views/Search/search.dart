@@ -127,7 +127,7 @@ class _ViewRoutesState extends State<Manga_List> {
                           child: Padding(
                           padding: const EdgeInsets.only(top: 10.0),
                           child: CupertinoActivityIndicator(
-                            radius: 20,
+                            radius: 10,
                           ),
                         ))
                       : Expanded(

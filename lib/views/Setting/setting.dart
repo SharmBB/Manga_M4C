@@ -681,9 +681,7 @@ class _SettingState extends State<Setting> {
           context,
           MaterialPageRoute(
               builder: (context) => Signin(
-                    hid: '',
-                    chapterid: '',
-                    image: '',
+                   
                   )));
     } catch (e) {
       print(e);

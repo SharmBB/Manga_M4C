@@ -21,7 +21,7 @@ class CallApi {
   // Auth Api
   var _urlAuth = 'http://mangakiku-api.moodfor.codes/api/';
 
-  var token = "276|Ozi5T5NG1482uwB4m0MeZVDmUC5uMKJHuAWFrcwh";
+  var token;
   //Genres api url
   var genres_baseurl = 'https://api.comick.fun/genre';
   //browser
@@ -126,6 +126,7 @@ class CallApi {
 
   //get User by ID
   getUserById(apiUrl) async {
+    token = await _getToken();
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.get(
       fullUrl,
@@ -143,6 +144,7 @@ class CallApi {
 
 //post data
   postData(data, apiUrl) async {
+    token = await _getToken();
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.post(
       fullUrl,
@@ -153,6 +155,7 @@ class CallApi {
 
   //Get Comments
   getComments(apiUrl) async {
+    token = await _getToken();
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.get(
       fullUrl,
@@ -162,6 +165,7 @@ class CallApi {
 
   //Get Comments
   getApiSetting(apiUrl) async {
+    token = await _getToken();
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.get(
       fullUrl,
@@ -171,6 +175,7 @@ class CallApi {
 
   //LeaderBoard
   getLeaderBoard(apiUrl) async {
+    token = await _getToken();
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.get(
       fullUrl,
@@ -180,6 +185,7 @@ class CallApi {
 
   //User Library
   getUserLibrary(apiUrl) async {
+      token = await _getToken();
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.get(
       fullUrl,
@@ -189,6 +195,7 @@ class CallApi {
 
   //User Library
   getUserFavourite(apiUrl) async {
+      token = await _getToken();
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.get(
       fullUrl,
@@ -198,6 +205,7 @@ class CallApi {
 
   //Get Reply Comments
   getReplyComments(apiUrl) async {
+      token = await _getToken();
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.get(
       fullUrl,
@@ -215,5 +223,12 @@ class CallApi {
   //   SharedPreferences localStorage = await SharedPreferences.getInstance();
   //   var token = localStorage.getString('token');
   //   return '?token=$token';
+
   // }
+
+  _getToken() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('token');
+    return token;
+  }
 }
