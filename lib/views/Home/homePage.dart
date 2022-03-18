@@ -90,8 +90,6 @@ class _HomePageState extends State<HomePage> {
         }
       ]
     },
-
-    
     {
       "title": "Shin Black Jack ni Yoroshiku",
       "id": 62631,
@@ -172,8 +170,6 @@ class _HomePageState extends State<HomePage> {
       ]
     }
   ];
-
-  
 
   String token = "";
   String bio = "";
@@ -287,7 +283,6 @@ class _HomePageState extends State<HomePage> {
                 child: Padding(
                   padding: EdgeInsets.only(top: 12.0),
                   child: ListView(
-                    
                     children: [
                       CarouselSlider(
                         items: [
@@ -1522,7 +1517,6 @@ class _HomePageState extends State<HomePage> {
 //get manga details from api
   void _apiMangaDetails() async {
     try {
-
       token = await MySharedPreferences.instance.getStringValue("token");
       print(token);
 
@@ -1531,7 +1525,7 @@ class _HomePageState extends State<HomePage> {
       var resSetting = await CallApi().getApiSetting('getApiSetting');
       var bodyRoutesSetting = json.decode(resSetting.body);
       ApiSetting.add(bodyRoutesSetting);
-      //ApiSetting[0]['value'] = 0;
+      ApiSetting[0]['value'] = 0;
       print(ApiSetting[0]['value']);
 
       //get user details
