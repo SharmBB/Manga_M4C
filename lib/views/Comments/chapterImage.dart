@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:mangakiku_app/Ads_Helpers/googleMobAds.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
+import 'package:mangakiku_app/_helpers/sharedPreference.dart';
 import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/views/Comments/comments.dart';
 import 'package:mangakiku_app/views/Comments/comments_reply.dart';
@@ -275,28 +276,31 @@ class _MangaComment2State extends State<MangaComment2> {
                     icon: Icon(Icons.comment_outlined),
                     color: kPrimaryWhiteColor,
                     onPressed: () {
-                      if (token != null) {
+                      if (token =="") {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
+                           MaterialPageRoute(
+                              builder: (context) => Signin(),
+                            
+                      
+                        ));
+                      } else {
+                        Navigator.push(
+                            context,
+                                MaterialPageRoute(
                             builder: (context) => ReplyComments(
                                 image: _chapterImage[0]['chapter']['md_images']
                                         [0]['b2key']
                                     .toString(),
                                 chapterid: widget.chapterid.toString(),
                                 hid: widget.hid.toString()),
-                          ),
-                        );
-                      } else {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Signin(),
-                            ));
+                          ));
+                           
                       }
 
                       //  _displayDialog(context);
-                    }),
+                    }
+                    ),
                 // IconButton(
                 //     icon: Icon(Icons.favorite),
                 //     color: kPrimaryWhiteColor,
@@ -355,6 +359,9 @@ class _MangaComment2State extends State<MangaComment2> {
 
 //get chappterImages details from api
   void _apiChapterImages() async {
+    token = await MySharedPreferences.instance.getStringValue("token");
+      print("asvdavdsv");
+      print("acadveadv" + token);
     try {
       print("dddddddddd" + widget.chap.toString());
       print(chapterid);

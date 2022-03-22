@@ -186,6 +186,7 @@ class _HomePageState extends State<HomePage> {
   @override
   initState() {
     _apiMangaDetails();
+    // _getUserDetails();
     //   _getUserDetails();
     super.initState();
   }
@@ -211,22 +212,40 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.transparent,
               elevation: 0,
               leading: ApiSetting[0]['value'] == 1
-                  ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Account()),
-                          );
-                        },
-                        child: CircleAvatar(
-                          radius: 35,
-                          backgroundImage: NetworkImage(
-                            userImage + User[0]['image'],
-                          ),
-                        ),
-                      ))
+                  ? token == ""
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(builder: (context) => Account()),
+                              // );
+                            },
+                            child: CircleAvatar(
+                              radius: 35,
+                              backgroundImage: AssetImage(
+                                "assets/icon/playstore.png",
+                              ),
+                            ),
+                          ))
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Account()),
+                              );
+                            },
+                            child: CircleAvatar(
+                              radius: 35,
+                              backgroundImage: NetworkImage(
+                                userImage + User[0]['image'],
+                              ),
+                            ),
+                          ))
                   : SizedBox(),
               // title: Center(
               //   child: CircleAvatar(
@@ -1507,18 +1526,19 @@ class _HomePageState extends State<HomePage> {
   }
 
 // //store the userImage in local
-  void _getUserDetails() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    token = localStorage.getString("token")!;
-    print("homepagetoken" + token);
-    var data = {"pic": token};
-  }
+//   void _getUserDetails() async {
+//     SharedPreferences localStorage = await SharedPreferences.getInstance();
+//     token = localStorage.getString("token")!;
+//     print("homepagetoken" + token);
+//     var data = {"pic": token};
+//   }
 
 //get manga details from api
   void _apiMangaDetails() async {
     try {
       token = await MySharedPreferences.instance.getStringValue("token");
-      print(token);
+      print("asvdavdsv");
+      print("acadveadv" + token);
 
       //Setting API
       ApiSetting.clear();
@@ -1528,11 +1548,14 @@ class _HomePageState extends State<HomePage> {
       ApiSetting[0]['value'] = 0;
       print(ApiSetting[0]['value']);
 
+      print(token);
+
       //get user details
       User.clear();
       var resUser = await CallApi().getUserById('getUserById');
       var bodyUser = json.decode(resUser.body);
       print(bodyUser);
+      print(token);
       User.add(bodyUser);
 
       //Hot Manga API
