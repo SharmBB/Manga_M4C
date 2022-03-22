@@ -19,7 +19,7 @@ class CallApi {
   var search = "https://api.comick.fun/search?page=1&limit=50&q=";
 
   // Auth Api
-  var _urlAuth = 'http://mangakiku-api.moodfor.codes/api/';
+  var _urlAuth = 'http://api.mangakiku.com/api/';
 
   var token;
   //Genres api url
@@ -185,7 +185,7 @@ class CallApi {
 
   //User Library
   getUserLibrary(apiUrl) async {
-      token = await _getToken();
+    token = await _getToken();
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.get(
       fullUrl,
@@ -195,7 +195,7 @@ class CallApi {
 
   //User Library
   getUserFavourite(apiUrl) async {
-      token = await _getToken();
+    token = await _getToken();
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.get(
       fullUrl,
@@ -205,7 +205,7 @@ class CallApi {
 
   //Get Reply Comments
   getReplyComments(apiUrl) async {
-      token = await _getToken();
+    token = await _getToken();
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.get(
       fullUrl,
