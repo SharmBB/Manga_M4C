@@ -15,6 +15,8 @@ import 'package:mangakiku_app/views/Comments/comments.dart';
 import 'package:mangakiku_app/views/Comments/comments_reply.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/SignIn/signin.dart';
+import 'package:mangakiku_app/views/Signup/signup.dart';
+import 'package:mangakiku_app/views/Signup/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MangaComment2 extends StatefulWidget {
@@ -144,7 +146,7 @@ class _MangaComment2State extends State<MangaComment2> {
                                 children: <Widget>[
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: kPrimaryWhiteColor,
+                                      color: Colors.transparent,
                                       borderRadius: BorderRadius.circular(0.0),
                                       boxShadow: [
                                         BoxShadow(
@@ -169,8 +171,9 @@ class _MangaComment2State extends State<MangaComment2> {
                                         borderRadius:
                                             BorderRadius.circular(00.0),
                                         child: CachedNetworkImage(
-                                            height: screenHeight * (18 / 20),
-                                            width: screenWidth,
+                                          
+                                            height: screenHeight,
+                                            width: screenWidth * (20 / 20),
                                             imageUrl: image +
                                                 _chapterImage[0]['chapter']
                                                         ['md_images']
@@ -184,7 +187,7 @@ class _MangaComment2State extends State<MangaComment2> {
                                                             5),
                                                     image: DecorationImage(
                                                         image: imageProvider,
-                                                        fit: BoxFit.cover),
+                                                        fit: BoxFit.contain),
                                                   ),
                                                 ),
                                             errorWidget:
@@ -276,31 +279,27 @@ class _MangaComment2State extends State<MangaComment2> {
                     icon: Icon(Icons.comment_outlined),
                     color: kPrimaryWhiteColor,
                     onPressed: () {
-                      if (token =="") {
+                      if (token == "") {
                         Navigator.push(
-                          context,
-                           MaterialPageRoute(
-                              builder: (context) => Signin(),
-                            
-                      
-                        ));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Signup(),
+                            ));
                       } else {
                         Navigator.push(
                             context,
-                                MaterialPageRoute(
-                            builder: (context) => ReplyComments(
-                                image: _chapterImage[0]['chapter']['md_images']
-                                        [0]['b2key']
-                                    .toString(),
-                                chapterid: widget.chapterid.toString(),
-                                hid: widget.hid.toString()),
-                          ));
-                           
+                            MaterialPageRoute(
+                              builder: (context) => ReplyComments(
+                                  image: _chapterImage[0]['chapter']
+                                          ['md_images'][0]['b2key']
+                                      .toString(),
+                                  chapterid: widget.chapterid.toString(),
+                                  hid: widget.hid.toString()),
+                            ));
                       }
 
                       //  _displayDialog(context);
-                    }
-                    ),
+                    }),
                 // IconButton(
                 //     icon: Icon(Icons.favorite),
                 //     color: kPrimaryWhiteColor,
@@ -360,8 +359,8 @@ class _MangaComment2State extends State<MangaComment2> {
 //get chappterImages details from api
   void _apiChapterImages() async {
     token = await MySharedPreferences.instance.getStringValue("token");
-      print("asvdavdsv");
-      print("acadveadv" + token);
+    print("asvdavdsv");
+    print("acadveadv" + token);
     try {
       print("dddddddddd" + widget.chap.toString());
       print(chapterid);
@@ -373,6 +372,9 @@ class _MangaComment2State extends State<MangaComment2> {
       // Add chapterimages to  List
 
       _chapterImage.add(bodyRoutes);
+      print("sacdcd" +
+          _chapterImage[0]['chapter']['md_images'][0]['b2key'].toString());
+
       //  print(_chapterImage[0]['chapter']['md_images'][0]['b2key'].length);
     } catch (e) {
       print(e);

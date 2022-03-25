@@ -12,6 +12,7 @@ import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
 import 'package:mangakiku_app/views/Library/library.dart';
 import 'package:mangakiku_app/views/SignIn/signin.dart';
+import 'package:mangakiku_app/views/Signup/signup.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -38,7 +39,9 @@ class _SettingState extends State<Setting> {
   ];
 
   int bottomPurple = 4;
-  String? token;
+
+  // String? token;
+  String token = "";
 
   bool _isLoading = true;
   bool isSwitchOn = false;
@@ -49,6 +52,7 @@ class _SettingState extends State<Setting> {
   void initState() {
     //initialize  id for chapterimage
     _getRead();
+    _getUserDetails();
 
     _getLanguage();
     super.initState();
@@ -553,43 +557,81 @@ class _SettingState extends State<Setting> {
                 SizedBox(
                   height: 20,
                 ),
-                InkWell(
-                  highlightColor: kPrimaryPurpleColor,
-                  onTap: () async {
-                    _handleLogout(context);
-                    //   _launchPrivacyURL();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      bottom: 10,
-                      top: 10,
-                    ),
-                    child: Container(
-                      height: 30,
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.logout_sharp,
-                            size: 24.0,
-                            color: kPrimaryWhiteColor,
+                token == ""
+                    ? InkWell(
+                        highlightColor: kPrimaryPurpleColor,
+                        onTap: () async {
+                          _handleSinup(context);
+                          //   _launchPrivacyURL();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                            bottom: 10,
+                            top: 10,
                           ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            "Logout",
-                            style: TextStyle(
-                              color: kPrimaryWhiteColor,
-                              fontSize: 18,
+                          child: Container(
+                            height: 30,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.login,
+                                  size: 24.0,
+                                  color: kPrimaryWhiteColor,
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  "Signup",
+                                  style: TextStyle(
+                                    color: kPrimaryWhiteColor,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
+                        ),
+                      )
+                    : InkWell(
+                        highlightColor: kPrimaryPurpleColor,
+                        onTap: () async {
+                          _handleLogout(context);
+                          //   _launchPrivacyURL();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                            bottom: 10,
+                            top: 10,
+                          ),
+                          child: Container(
+                            height: 30,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.logout_sharp,
+                                  size: 24.0,
+                                  color: kPrimaryWhiteColor,
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  "Logout",
+                                  style: TextStyle(
+                                    color: kPrimaryWhiteColor,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
@@ -678,11 +720,17 @@ class _SettingState extends State<Setting> {
       localStorage.remove('userId');
 
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Signin(
-                   
-                  )));
+          context, MaterialPageRoute(builder: (context) => Signup()));
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //LOGOUT
+  void _handleSinup(BuildContext context) async {
+    try {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Signup()));
     } catch (e) {
       print(e);
     }
@@ -1311,6 +1359,14 @@ class _SettingState extends State<Setting> {
             },
           );
         });
+  }
+
+  //store the userImage in local
+  void _getUserDetails() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    token = localStorage.getString("token")!;
+    print("homepagetoken" + token);
+    var data = {"pic": token};
   }
 
   void addReadingMode() async {

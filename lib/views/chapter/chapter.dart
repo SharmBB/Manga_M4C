@@ -11,6 +11,8 @@ import 'package:mangakiku_app/views/Comments/comments.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/LeaderBoard/leaderboard.dart';
 import 'package:mangakiku_app/views/Library/library.dart';
+import 'package:mangakiku_app/views/SignIn/signin.dart';
+import 'package:mangakiku_app/views/Signup/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Chapter extends StatefulWidget {
@@ -45,7 +47,8 @@ class _CartState extends State<Chapter> {
 // loader
   bool _isLoading = true;
 
-  String? token;
+  // String? token;
+  String token = "";
   String? selectelanguage;
 
   String dropdownValue = 'Descending';
@@ -57,6 +60,7 @@ class _CartState extends State<Chapter> {
     _ChapterDetailsUsingName();
     _getLocalLanguage();
     _arrayReverced();
+    _getUserDetails();
     //addLibrary();
     // addFavourite();
     //addFavourite();
@@ -251,20 +255,20 @@ class _CartState extends State<Chapter> {
                                       width: 30,
                                       child: FloatingActionButton.small(
                                         backgroundColor: Colors.grey[300],
-                                        onPressed: () {
-                                          print("fjff");
-                                          print(_manga[0]);
-                                          addLibrary();
-                                          //  replyshowAlert(context);
-                                          //   addFavourite();
-                                          // _sendDataBack(context);
-                                          // _navigator(context, Library([_manga[0]]));
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //     builder: (context) => MangaComments(),
-                                          //   ),
-                                          // );
+                                        onPressed: () async {
+                                          if (token == "") {
+                                            print("ddsv");
+
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Signup(),
+                                                ));
+                                          } else {
+                                            print("ddsvvdsvdfv");
+                                            addLibrary();
+                                          }
                                         },
                                         child: Icon(
                                           Icons.add,
@@ -280,8 +284,20 @@ class _CartState extends State<Chapter> {
                                       width: 30,
                                       child: FloatingActionButton.small(
                                         backgroundColor: Colors.grey[300],
-                                        onPressed: () {
-                                          addFavourite();
+                                        onPressed: () async {
+                                          if (token == "") {
+                                            print("ddsv");
+
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Signup(),
+                                                ));
+                                          } else {
+                                            print("ddsvvdsvdfv");
+                                            addFavourite();
+                                          }
                                         },
                                         child: Icon(
                                           Icons.favorite,
@@ -940,6 +956,14 @@ class _CartState extends State<Chapter> {
                               )
                             ]))
                   ]))));
+  }
+
+  //store the userImage in local
+  void _getUserDetails() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    token = localStorage.getString("token")!;
+    print("homepagetoken" + token);
+    var data = {"pic": token};
   }
 
   void _arrayReverced() async {

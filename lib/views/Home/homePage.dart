@@ -1400,7 +1400,8 @@ class _HomePageState extends State<HomePage> {
                                                                     RatingManga[
                                                                             0]
                                                                         [index]
-                                                                  ]));
+                                                                  ])
+                                                                  );
                                                             },
                                                             child:
                                                                 CachedNetworkImage(

@@ -135,7 +135,7 @@ class _MangaComment2State extends State<SlideMangaComment2> {
                                 children: <Widget>[
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: kPrimaryWhiteColor,
+                                     color: primaryColor,
                                       borderRadius: BorderRadius.circular(0.0),
                                       boxShadow: [
                                         BoxShadow(
@@ -175,7 +175,7 @@ class _MangaComment2State extends State<SlideMangaComment2> {
                                                             5),
                                                     image: DecorationImage(
                                                         image: imageProvider,
-                                                        fit: BoxFit.cover),
+                                                        fit: BoxFit.contain),
                                                   ),
                                                 ),
                                             errorWidget:

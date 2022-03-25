@@ -35,6 +35,7 @@ dependencies:
   url_launcher: ^6.0.20
 
   in_app_purchase: ^2.0.1
+  
 
   
 

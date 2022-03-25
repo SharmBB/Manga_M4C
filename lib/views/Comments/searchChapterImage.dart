@@ -59,7 +59,7 @@ class _MangaComment2State extends State<SearchMangaComment2> {
   void initState() {
     //initialize  id for chapterimage
     hid = widget.hid;
-    print(hid);
+    print("cacassc"+hid);
     chapterid = widget.chapterid;
     print(chapterid);
     index = widget.index;
@@ -125,12 +125,13 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                               //   right: 10,
                               // ),
                               width: screenWidth,
+                              height: screenHeight,
                               child: Stack(
                                 alignment: Alignment.topCenter,
                                 children: <Widget>[
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: kPrimaryWhiteColor,
+                                      color: primaryColor,
                                       borderRadius: BorderRadius.circular(0.0),
                                       boxShadow: [
                                         BoxShadow(
@@ -172,7 +173,7 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                                                             5),
                                                     image: DecorationImage(
                                                         image: imageProvider,
-                                                        fit: BoxFit.cover),
+                                                        fit: BoxFit.contain),
                                                   ),
                                                 ),
                                             errorWidget:
@@ -196,6 +197,7 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                       height: 50,
                       child: AppBar(
                         backgroundColor: Colors.transparent,
+                       // elevation: 0.5,
                         leading: IconButton(
                           icon: Icon(Icons.arrow_back_ios_new_rounded),
                           onPressed: () {
@@ -206,6 +208,12 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                         ),
                         title: new Center(
                             child: new Text("Chapter " + chapterid,
+                             style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14.0,
+                             
+                               
+                                ),
                                 textAlign: TextAlign.center)),
                         actions: <Widget>[
                           IconButton(

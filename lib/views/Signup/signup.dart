@@ -147,12 +147,12 @@ class _SignupState extends State<Signup> {
                           InkWell(
                             highlightColor: Colors.transparent,
                             onTap: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => Signin(),
-                              //   ),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Signin(),
+                                ),
+                              );
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(vertical: 8),
@@ -177,9 +177,9 @@ class _SignupState extends State<Signup> {
 
   _email() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+      padding:  EdgeInsets.fromLTRB(25, 0, 25, 0),
       child: TextFormField(
-        style: const TextStyle(fontSize: 14, color: Colors.white),
+        style:  TextStyle(fontSize: 14, color: kPrimaryWhiteColor),
         cursorColor: kPrimaryPurpleColor,
         keyboardType: TextInputType.emailAddress,
         // obscureText: showPassword,
@@ -198,7 +198,7 @@ class _SignupState extends State<Signup> {
         },
         controller: _emailController,
         textInputAction: TextInputAction.done,
-        decoration: const InputDecoration(
+        decoration:  InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
           hintText: "Email / UserName",
           hintStyle: TextStyle(

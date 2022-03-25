@@ -13,6 +13,7 @@ import 'package:mangakiku_app/views/Comments/searchChapterImage.dart';
 import 'package:mangakiku_app/views/Comments/sliderChapterImage.dart';
 
 import 'package:mangakiku_app/views/Home/homePage.dart';
+import 'package:mangakiku_app/views/Signup/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchDetailsScreen extends StatefulWidget {
@@ -49,10 +50,13 @@ class _CartState extends State<SearchDetailsScreen> {
   List ReverseEn = [];
   List Reversefr = [];
 
+   String token = "";
+
   @override
   void initState() {
     _ChapterDetailsUsingName();
     _getLocalLanguage();
+    _getUserDetails();
     // addLibrary();
     // addFavourite();
     super.initState();
@@ -253,14 +257,20 @@ class _CartState extends State<SearchDetailsScreen> {
                                       width: 30,
                                       child: FloatingActionButton.small(
                                         backgroundColor: Colors.grey[300],
-                                        onPressed: () {
-                                          addLibrary();
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //     builder: (context) => MangaComments(),
-                                          //   ),
-                                          // );
+                                        onPressed: () async {
+                                          if (token == "") {
+                                            print("ddsv");
+
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Signup(),
+                                                ));
+                                          } else {
+                                            print("ddsvvdsvdfv");
+                                            addLibrary();
+                                          }
                                         },
                                         child: Icon(
                                           Icons.add,
@@ -276,8 +286,20 @@ class _CartState extends State<SearchDetailsScreen> {
                                       width: 30,
                                       child: FloatingActionButton.small(
                                         backgroundColor: Colors.grey[300],
-                                        onPressed: () {
-                                          addFavourite();
+                                        onPressed: () async {
+                                          if (token == "") {
+                                            print("ddsv");
+
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Signup(),
+                                                ));
+                                          } else {
+                                            print("ddsvvdsvdfv");
+                                            addFavourite();
+                                          }
                                         },
                                         child: Icon(
                                           Icons.favorite,
@@ -443,7 +465,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                                       "Akira Toriyama(Redic Studio)",
                                                       style: TextStyle(
                                                           fontSize: 14,
-                                                          color: Colors.blue),
+                                                          color: kPrimaryPurpleColor),
                                                     ),
                                                   ],
                                                 ),
@@ -461,7 +483,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                                       " Bird Studio/Shueisha",
                                                       style: TextStyle(
                                                           fontSize: 14,
-                                                          color: Colors.blue),
+                                                          color: kPrimaryPurpleColor),
                                                     ),
                                                   ],
                                                 ),
@@ -479,7 +501,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                                       " television series, Adventure , Fantasy",
                                                       style: TextStyle(
                                                           fontSize: 14,
-                                                          color: Colors.blue),
+                                                          color: kPrimaryPurpleColor),
                                                     ),
                                                   ],
                                                 ),
@@ -841,6 +863,14 @@ class _CartState extends State<SearchDetailsScreen> {
                               )
                             ]))
                   ]))));
+  }
+
+  //store the userImage in local
+  void _getUserDetails() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    token = localStorage.getString("token")!;
+    print("homepagetoken" + token);
+    var data = {"pic": token};
   }
 
   void _arrayReverced() async {
