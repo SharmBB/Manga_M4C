@@ -326,6 +326,7 @@ class _MangaComment2State extends State<MangaComment2> {
             ),
     );
   }
+  
 
 //store the userImage in local
   void _getUserDetails() async {

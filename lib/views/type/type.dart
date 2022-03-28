@@ -674,13 +674,7 @@ class _CartState extends State<DetailsScreen> {
                                                                             60.0,
                                                                         left:
                                                                             60),
-                                                                    child: Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment
-                                                                                .center,
-                                                                        children: <
-                                                                            Widget>[
-                                                                          InkWell(
+                                                                    child:  InkWell(
                                                                             highlightColor:
                                                                                 Colors.transparent,
                                                                             onTap:
@@ -704,6 +698,13 @@ class _CartState extends State<DetailsScreen> {
                                                                               );
                                                                             },
                                                                             child:
+                                                                     Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment
+                                                                                .center,
+                                                                        children: <
+                                                                            Widget>[
+                                                                        
                                                                                 Padding(
                                                                               padding: const EdgeInsets.symmetric(vertical: 8),
                                                                               child: Text(
@@ -711,7 +712,7 @@ class _CartState extends State<DetailsScreen> {
                                                                                 style: TextStyle(fontSize: 13, color: Colors.white),
                                                                               ),
                                                                             ),
-                                                                          ),
+                                                                         
                                                                           // InkWell(
                                                                           //   onTap: () {
                                                                           //     print("jhuvuyvuy" +
@@ -752,7 +753,7 @@ class _CartState extends State<DetailsScreen> {
                                                                           //   //           .white),
                                                                           //   // ),
                                                                           // )
-                                                                        ]),
+                                                                        ])),
                                                                   )),
                                                             );
                                                           }, //itemBuilder
@@ -781,13 +782,7 @@ class _CartState extends State<DetailsScreen> {
                                                                             60.0,
                                                                         left:
                                                                             60),
-                                                                    child: Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment
-                                                                                .center,
-                                                                        children: <
-                                                                            Widget>[
-                                                                          InkWell(
+                                                                    child:InkWell(
                                                                             highlightColor:
                                                                                 Colors.transparent,
                                                                             onTap:
@@ -806,7 +801,13 @@ class _CartState extends State<DetailsScreen> {
                                                                                 ),
                                                                               );
                                                                             },
-                                                                            child:
+                                                                            child: Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment
+                                                                                .center,
+                                                                        children: <
+                                                                            Widget>[
+                                                                          
                                                                                 Padding(
                                                                               padding: EdgeInsets.symmetric(vertical: 8),
                                                                               child: Text(
@@ -814,7 +815,7 @@ class _CartState extends State<DetailsScreen> {
                                                                                 style: TextStyle(fontSize: 13, color: Colors.white),
                                                                               ),
                                                                             ),
-                                                                          ),
+                                                                          
                                                                           // InkWell(
                                                                           //   onTap: () {
                                                                           //     print("jhuvuyvuy" +
@@ -855,7 +856,7 @@ class _CartState extends State<DetailsScreen> {
                                                                           //   //           .white),
                                                                           //   // ),
                                                                           // )
-                                                                        ]),
+                                                                        ])),
                                                                   )),
                                                             );
                                                           }, //itemBuilder

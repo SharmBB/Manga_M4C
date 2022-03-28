@@ -676,13 +676,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                             60.0,
                                                                         left:
                                                                             60),
-                                                                    child: Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment
-                                                                                .center,
-                                                                        children: <
-                                                                            Widget>[
-                                                                          InkWell(
+                                                                    child:InkWell(
                                                                             highlightColor:
                                                                                 Colors.transparent,
                                                                             onTap:
@@ -700,7 +694,13 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                                 ),
                                                                               );
                                                                             },
-                                                                            child:
+                                                                            child: Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment
+                                                                                .center,
+                                                                        children: <
+                                                                            Widget>[
+                                                                          
                                                                                 Padding(
                                                                               padding: const EdgeInsets.symmetric(vertical: 8),
                                                                               child: Text(
@@ -708,7 +708,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                                 style: TextStyle(fontSize: 13, color: Colors.white),
                                                                               ),
                                                                             ),
-                                                                          ),
+                                                                          
                                                                           // InkWell(
                                                                           //   onTap: () {
                                                                           //     print("jhuvuyvuy" +
@@ -749,7 +749,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                           //   //           .white),
                                                                           //   // ),
                                                                           // )
-                                                                        ]),
+                                                                        ])),
                                                                   )),
                                                             );
                                                           }, //itemBuilder
@@ -778,13 +778,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                             60.0,
                                                                         left:
                                                                             60),
-                                                                    child: Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment
-                                                                                .center,
-                                                                        children: <
-                                                                            Widget>[
-                                                                          InkWell(
+                                                                    child: InkWell(
                                                                             highlightColor:
                                                                                 Colors.transparent,
                                                                             onTap:
@@ -802,7 +796,13 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                                 ),
                                                                               );
                                                                             },
-                                                                            child:
+                                                                            child:Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment
+                                                                                .center,
+                                                                        children: <
+                                                                            Widget>[
+                                                                          
                                                                                 Padding(
                                                                               padding: const EdgeInsets.symmetric(vertical: 8),
                                                                               child: Text(
@@ -810,7 +810,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                                 style: TextStyle(fontSize: 13, color: Colors.white),
                                                                               ),
                                                                             ),
-                                                                          ),
+                                                                          
                                                                           // InkWell(
                                                                           //   onTap: () {
                                                                           //     print("jhuvuyvuy" +
@@ -851,7 +851,7 @@ class _CartState extends State<SearchDetailsScreen> {
                                                                           //   //           .white),
                                                                           //   // ),
                                                                           // )
-                                                                        ]),
+                                                                        ])),
                                                                   )),
                                                             );
                                                           }, //itemBuilder

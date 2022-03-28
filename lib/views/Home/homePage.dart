@@ -186,6 +186,11 @@ class _HomePageState extends State<HomePage> {
   @override
   initState() {
     _apiMangaDetails();
+
+    // Use either of them.
+
+    // showAlertDialog(context);
+
     // _getUserDetails();
     //   _getUserDetails();
     super.initState();
@@ -197,6 +202,7 @@ class _HomePageState extends State<HomePage> {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     var userImage = "https://mangakiku-api.moodfor.codes";
+   
 
     return _isLoading
         ? Center(
@@ -1400,8 +1406,7 @@ class _HomePageState extends State<HomePage> {
                                                                     RatingManga[
                                                                             0]
                                                                         [index]
-                                                                  ])
-                                                                  );
+                                                                  ]));
                                                             },
                                                             child:
                                                                 CachedNetworkImage(
@@ -1546,8 +1551,13 @@ class _HomePageState extends State<HomePage> {
       var resSetting = await CallApi().getApiSetting('getApiSetting');
       var bodyRoutesSetting = json.decode(resSetting.body);
       ApiSetting.add(bodyRoutesSetting);
-      //ApiSetting[0]['value'] = 0;
+      // ApiSetting[0]['value'] = 0;
       print(ApiSetting[0]['value']);
+
+       if (ApiSetting[0]['value'] == 0 && token != '') {
+         
+      Future.delayed(Duration.zero, () => showAlert(context));
+    }
 
       print(token);
 
@@ -1592,7 +1602,55 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+void showAlert(BuildContext context) {
+   // set up the button
+
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+     title: Text("Mangakiku"),
+    
+    content: Text("Server Under Maintance !!!"),
+    actions: [
+     
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
 void _navigator(BuildContext context, add) async {
   final result = await Navigator.push(
       context, MaterialPageRoute(builder: (context) => add));
+}
+
+void showAlertDialog(BuildContext context) {
+  // set up the button
+  Widget okButton = TextButton(
+    child: Text("OK"),
+    onPressed: () {},
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("My title"),
+    content: Text("This is my message."),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
