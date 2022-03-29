@@ -1,12 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:mangakiku_app/_helpers/constants.dart';
+import 'package:mangakiku_app/api/api.dart';
+import 'package:mangakiku_app/views/ResetPassword/OTP.dart';
 import 'package:mangakiku_app/views/ResetPassword/resetPassword.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ForgetPassword extends StatefulWidget {
-  const ForgetPassword({Key? key, }) : super(key: key);
-
-  
+  const ForgetPassword({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ForgetPassword> createState() => _ResetPasswordState();
@@ -18,6 +23,11 @@ class _ResetPasswordState extends State<ForgetPassword> {
 
   final TextEditingController _emailController = TextEditingController();
   String? email;
+  String? bodyError;
+  // loader
+  bool _isLoading = true;
+
+  // String? token;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +35,7 @@ class _ResetPasswordState extends State<ForgetPassword> {
 
     return Scaffold(
         key: _scaffoldKey,
-            backgroundColor: primaryColor,
+        backgroundColor: primaryColor,
         body: Center(
           child: Form(
             autovalidateMode: AutovalidateMode.always,
@@ -62,8 +72,7 @@ class _ResetPasswordState extends State<ForgetPassword> {
     return Padding(
         padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
         child: TextFormField(
-          style: const TextStyle(
-              fontSize: 14.0, color: kPrimaryWhiteColor),
+          style: const TextStyle(fontSize: 14.0, color: kPrimaryWhiteColor),
           cursorColor: kPrimaryPurpleColor,
           keyboardType: TextInputType.emailAddress,
           validator: (value) {
@@ -85,8 +94,7 @@ class _ResetPasswordState extends State<ForgetPassword> {
           decoration: const InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
             hintText: "Email",
-            hintStyle: TextStyle(
-                fontSize: 14.0, color: kPrimaryWhiteColor),
+            hintStyle: TextStyle(fontSize: 14.0, color: kPrimaryWhiteColor),
             fillColor: kPrimarylightGreyColor,
             filled: true,
             border: OutlineInputBorder(
@@ -114,11 +122,11 @@ class _ResetPasswordState extends State<ForgetPassword> {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState?.save();
                   // use the email provided here
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ResetPassword(title: '')),
-                    );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>  OTPPage()),
+                  );
                 }
               },
               child: const Text(
@@ -128,5 +136,38 @@ class _ResetPasswordState extends State<ForgetPassword> {
             )),
       ),
     );
+  }
+
+  void _forgot() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      var data = {
+        "email": _emailController.toString(),
+      };
+      var res = await CallApi().postData(data, '');
+      var body = json.decode(res.body);
+      print(body);
+
+      bodyError = body['message'];
+
+      if (body['errorMessage'] == false) {
+        if (body['token'] != null) {
+          SharedPreferences localStorage =
+              await SharedPreferences.getInstance();
+          var token = body['token'];
+          localStorage.setString('token', token);
+
+          print(bodyError);
+        }
+      } else {}
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      _isLoading = false;
+    });
   }
 }

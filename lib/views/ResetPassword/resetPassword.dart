@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/views/ForgotPassword/forgotPassword.dart';
+import 'package:mangakiku_app/views/ResetPassword/OTP.dart';
 import 'package:mangakiku_app/views/SignIn/signin.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -83,9 +84,9 @@ class _ResetPasswordState extends State<ResetPassword> {
           textInputAction: TextInputAction.done,
           decoration: const InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-            hintText: "Password",
+            hintText: "New Password",
             hintStyle: TextStyle(fontSize: 16.0, color: kPrimaryWhiteColor),
-            fillColor: kPrimaryGreyColor,
+            fillColor: kPrimarylightGreyColor,
             filled: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(0.0)),
@@ -152,11 +153,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState?.save();
                   // use the email provided here
-                  //    Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) =>Signin()),
-                  // );
+                     Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>OTPPage()),
+                  );
                 }
               },
               child: const Text(

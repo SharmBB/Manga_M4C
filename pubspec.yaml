@@ -35,6 +35,8 @@ dependencies:
   url_launcher: ^6.0.20
 
   in_app_purchase: ^2.0.1
+  pin_code_fields: ^7.3.0
+  
   
   
 
