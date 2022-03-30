@@ -201,8 +201,7 @@ class _HomePageState extends State<HomePage> {
     var image_manga = "https://cdn.statically.io/img/meo.comick.pictures/";
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-    var userImage = "https://mangakiku-api.moodfor.codes";
-   
+    var userImage = "https://api.mangakiku.com/";
 
     return _isLoading
         ? Center(
@@ -1554,10 +1553,9 @@ class _HomePageState extends State<HomePage> {
       // ApiSetting[0]['value'] = 0;
       print(ApiSetting[0]['value']);
 
-       if (ApiSetting[0]['value'] == 0 && token != '') {
-         
-      Future.delayed(Duration.zero, () => showAlert(context));
-    }
+      if (ApiSetting[0]['value'] == 0 && token != '') {
+        Future.delayed(Duration.zero, () => showAlert(context));
+      }
 
       print(token);
 
@@ -1603,17 +1601,13 @@ class _HomePageState extends State<HomePage> {
 }
 
 void showAlert(BuildContext context) {
-   // set up the button
-
+  // set up the button
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-     title: Text("Mangakiku"),
-    
+    title: Text("Mangakiku"),
     content: Text("Server Under Maintance !!!"),
-    actions: [
-     
-    ],
+    actions: [],
   );
 
   // show the dialog

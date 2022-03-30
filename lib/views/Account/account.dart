@@ -63,7 +63,7 @@ class _AccountState extends State<Account> {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-    var userImage = "https://mangakiku-api.moodfor.codes";
+    var userImage = "https://api.mangakiku.com/";
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
