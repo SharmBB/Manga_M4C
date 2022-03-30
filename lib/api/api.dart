@@ -203,6 +203,15 @@ class CallApi {
     );
   }
 
+  updatePassword(data, apiUrl) async {
+    var fullUrl = Uri.parse(_urlAuth + apiUrl);
+    return await http.put(
+      fullUrl,
+      body: jsonEncode(data),
+      headers: _setHeaders(),
+    );
+  }
+
   //Get Reply Comments
   getReplyComments(apiUrl) async {
     token = await _getToken();

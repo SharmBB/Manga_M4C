@@ -313,7 +313,7 @@ class _SignupState extends State<Signup> {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState?.save();
 
-            submitSubscription(file: _image, filename: _ImageS, token: "token");
+            submitSubscription(file: _image, filename: _ImageS);
           }
         },
         child: Text(
@@ -449,18 +449,19 @@ class _SignupState extends State<Signup> {
   }
 
   Future<int> submitSubscription(
-      {File? file, String? filename, String? token}) async {
+      {File? file, String? filename}) async {
     setState(() {
       _isLoading = true;
     });
 
     ///MultiPart request
     var request = http.MultipartRequest(
+   //   var auth ="http://api.mangakiku.com/api/addUser",
       'POST',
-      Uri.parse("http://mangakiku-api.moodfor.codes/api/addUser"),
+      Uri.parse("http://api.mangakiku.com/api/addUser"),
     );
     Map<String, String> headers = {
-      "Authorization": "Bearer $token",
+    
       "Content-type": "multipart/form-data",
       'Accept': "multipart/form-data",
     };

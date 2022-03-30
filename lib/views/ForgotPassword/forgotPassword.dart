@@ -125,7 +125,7 @@ class _ResetPasswordState extends State<ForgetPassword> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>  OTPPage()),
+                        builder: (context) =>  OTPPage(email:_emailController.text)),
                   );
                 }
               },

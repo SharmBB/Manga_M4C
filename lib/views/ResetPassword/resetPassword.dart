@@ -1,11 +1,20 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
+import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/views/ForgotPassword/forgotPassword.dart';
 import 'package:mangakiku_app/views/ResetPassword/OTP.dart';
 import 'package:mangakiku_app/views/SignIn/signin.dart';
 
 class ResetPassword extends StatefulWidget {
-  const ResetPassword({Key? key, required this.title}) : super(key: key);
+  final String email;
+  const ResetPassword({
+    Key? key,
+    required this.title,
+    required this.email,
+  }) : super(key: key);
 
   final String title;
 
@@ -16,7 +25,8 @@ class ResetPassword extends StatefulWidget {
 class _ResetPasswordState extends State<ResetPassword> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
-
+  bool _isLoading = false;
+  String? bodyError;
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmpasswordController =
       TextEditingController();
@@ -25,6 +35,15 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   bool showPassword = true;
   bool showconfirmPassword = true;
+  late String email;
+
+  @override
+  void initState() {
+    //initialize  id for chapterimage
+    email = widget.email;
+    print(email);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -153,11 +172,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState?.save();
                   // use the email provided here
-                     Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>OTPPage()),
-                  );
+                  _changePassword();
                 }
               },
               child: const Text(
@@ -167,5 +182,34 @@ class _ResetPasswordState extends State<ResetPassword> {
             )),
       ),
     );
+  }
+
+  void _changePassword() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      var data = {
+        "email": widget.email,
+        "newPassword": _passwordController.text,
+      };
+      var res = await CallApi().updatePassword(data, 'otpVerify');
+      var body = json.decode(res.body);
+      print(body);
+
+      bodyError = body['message'];
+
+      if (body['errorMessage'] == false) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (BuildContext context) => Signin()),
+        );
+      } else {}
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      _isLoading = false;
+    });
   }
 }

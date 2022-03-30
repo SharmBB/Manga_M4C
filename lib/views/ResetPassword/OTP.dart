@@ -11,6 +11,12 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OTPPage extends StatefulWidget {
+  final String email;
+  const OTPPage({
+    key,
+    required this.email,
+  }) : super(key: key);
+
   @override
   _ForgetOTPPageState createState() => _ForgetOTPPageState();
 }
@@ -23,7 +29,10 @@ class _ForgetOTPPageState extends State<OTPPage> {
   final FocusNode _pinPutFocusNode = FocusNode();
   TextEditingController textEditingController = TextEditingController();
 
+  final TextEditingController _nameController = TextEditingController();
+
   String? bodyError;
+  late String email;
   // loader
   // bool _isLoading = true;
 
@@ -44,6 +53,8 @@ class _ForgetOTPPageState extends State<OTPPage> {
   String? countryCodeNew;
   @override
   void initState() {
+    email = widget.email;
+    print(email);
     onTapRecognizer = TapGestureRecognizer()
       ..onTap = () {
         Navigator.pop(context);
@@ -112,56 +123,57 @@ class _ForgetOTPPageState extends State<OTPPage> {
                         SizedBox(
                           height: 80,
                         ),
-                        PinCodeTextField(
-                          appContext: context,
-                          pastedTextStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                          length: 6,
-                          obscureText: false,
-                          obscuringCharacter: '*',
-                          animationType: AnimationType.fade,
-                          validator: (v) {
-                            if (v!.length < 5) {
-                              return "OTP required";
-                            } else {
-                              return null;
-                            }
-                          },
-                          pinTheme: PinTheme(
-                            shape: PinCodeFieldShape.box,
-                            borderRadius: BorderRadius.circular(5),
-                            borderWidth: 2.0,
-                            activeColor: kPrimaryPurpleColor,
-                            selectedColor: kPrimaryPurpleColor,
-                            inactiveColor: kPrimaryPurpleColor,
-                            fieldHeight: 60,
-                            fieldWidth: 50,
-                          ),
-                          cursorColor: kPrimaryWhiteColor,
-                          animationDuration: Duration(milliseconds: 300),
-                          textStyle: TextStyle(
-                              fontSize: 20,
-                              height: 1.6,
-                              color: kPrimaryWhiteColor),
-                          errorAnimationController: errorController,
-                          focusNode: _pinPutFocusNode,
-                          controller: textEditingController,
-                          keyboardType: TextInputType.number,
-                          boxShadows: [
-                            BoxShadow(
-                              offset: Offset(0, 1),
-                              color: primaryColor,
-                              blurRadius: 10,
-                            )
-                          ],
-                          onChanged: (value) {
-                            print(value);
-                            setState(() {
-                              currentText = value;
-                            });
-                          },
-                        ),
+                        // PinCodeTextField(
+                        //   appContext: context,
+                        //   pastedTextStyle: TextStyle(
+                        //     fontWeight: FontWeight.bold,
+                        //   ),
+                        //   length: 8,
+                        //   obscureText: false,
+                        //   obscuringCharacter: '*',
+                        //   animationType: AnimationType.fade,
+                        //   validator: (v) {
+                        //     if (v!.length < 5) {
+                        //       return "OTP required";
+                        //     } else {
+                        //       return null;
+                        //     }
+                        //   },
+                        //   pinTheme: PinTheme(
+                        //     shape: PinCodeFieldShape.box,
+                        //     borderRadius: BorderRadius.circular(5),
+                        //     borderWidth: 2.0,
+                        //     activeColor: kPrimaryPurpleColor,
+                        //     selectedColor: kPrimaryPurpleColor,
+                        //     inactiveColor: kPrimaryPurpleColor,
+                        //     fieldHeight: 60,
+                        //     fieldWidth: 50,
+                        //   ),
+                        //   cursorColor: kPrimaryWhiteColor,
+                        //   animationDuration: Duration(milliseconds: 300),
+                        //   textStyle: TextStyle(
+                        //       fontSize: 20,
+                        //       height: 1.6,
+                        //       color: kPrimaryWhiteColor),
+                        //   errorAnimationController: errorController,
+                        //   focusNode: _pinPutFocusNode,
+                        //   controller: textEditingController,
+                        //   keyboardType: TextInputType.number,
+                        //   boxShadows: [
+                        //     BoxShadow(
+                        //       offset: Offset(0, 1),
+                        //       color: primaryColor,
+                        //       blurRadius: 10,
+                        //     )
+                        //   ],
+                        //   onChanged: (value) {
+                        //     print(value);
+                        //     setState(() {
+                        //       currentText = value;
+                        //     });
+                        //   },
+                        // ),
+                        _name(),
                         SizedBox(
                           height: screenHeight * 0.05,
                         ),
@@ -195,14 +207,19 @@ class _ForgetOTPPageState extends State<OTPPage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 FlatButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ResetPassword(
-                                                title: '',
-                                              )),
-                                    );
+                                  onPressed: () async {
+                                    if (formKey.currentState!.validate()) {
+                                      formKey.currentState?.save();
+                                      _forgot();
+                                    }
+
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) => ResetPassword(
+                                    //             title: '',
+                                    //           )),
+                                    // );
                                   },
                                   textColor: Colors.white,
                                   padding: const EdgeInsets.all(0.0),
@@ -253,6 +270,40 @@ class _ForgetOTPPageState extends State<OTPPage> {
     );
   }
 
+  _name() {
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+        child: TextFormField(
+          style: const TextStyle(fontSize: 14, color: kPrimaryWhiteColor),
+          cursorColor: kPrimaryPurpleColor,
+          keyboardType: TextInputType.text,
+          validator: (value) {
+            if (value!.length < 5) {
+              return "OTP required";
+            } else {
+              return null;
+            }
+          },
+          controller: _nameController,
+          textInputAction: TextInputAction.done,
+          decoration: const InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+            hintText: "Name",
+            hintStyle: TextStyle(
+              fontSize: 14.0,
+              color: kPrimaryWhiteColor,
+            ),
+            fillColor: kPrimarylightGreyColor,
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(0.0)),
+              borderSide: BorderSide.none,
+              gapPadding: 0,
+            ),
+          ),
+        ));
+  }
+
   void _forgot() async {
     setState(() {
       _isLoading = true;
@@ -260,23 +311,22 @@ class _ForgetOTPPageState extends State<OTPPage> {
 
     try {
       var data = {
-        "otp": "",
+        "otp": _nameController.text,
       };
-      var res = await CallApi().postData(data, '');
+      var res = await CallApi().postData(data, 'otpVerify');
       var body = json.decode(res.body);
       print(body);
 
       bodyError = body['message'];
 
       if (body['errorMessage'] == false) {
-        if (body['token'] != null) {
-          SharedPreferences localStorage =
-              await SharedPreferences.getInstance();
-          var token = body['token'];
-          localStorage.setString('token', token);
-
-          print(bodyError);
-        }
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+              builder: (BuildContext context) => ResetPassword(
+                email:widget.email,
+                    title: '',
+                  )),
+        );
       } else {}
     } catch (e) {
       print(e);
