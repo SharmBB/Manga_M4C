@@ -183,12 +183,6 @@ class _LeaderBoardScreenState extends State<Library> {
                                                           child: InkWell(
                                                             onTap: () {
                                                               print("shar");
-                                                              // _navigator(30
-                                                              //     context,
-                                                              //     Chapter([
-                                                              //       SelectedManga[
-                                                              //           0][index]
-                                                              //     ]));
                                                             },
                                                             child:
                                                                 CachedNetworkImage(
@@ -299,6 +293,7 @@ class _LeaderBoardScreenState extends State<Library> {
                                                                                 13,
                                                                             letterSpacing:
                                                                                 .3)),
+
                                                                     SizedBox(
                                                                       width: 5,
                                                                     ),
@@ -325,6 +320,22 @@ class _LeaderBoardScreenState extends State<Library> {
                                                                   ],
                                                                 ),
                                                               ],
+                                                            ),
+                                                            ElevatedButton(
+                                                              style: ElevatedButton
+                                                                  .styleFrom(
+                                                                      primary:
+                                                                          Colors
+                                                                              .redAccent),
+                                                              child: Icon(
+                                                                  Icons.delete),
+                                                              onPressed: () {
+                                                                //
+                                                                //go through the loop and match content to delete from list
+                                                                setState(() {
+                                                                  //refresh UI after deleting element from list
+                                                                });
+                                                              },
                                                             ),
                                                           ],
                                                         ),
