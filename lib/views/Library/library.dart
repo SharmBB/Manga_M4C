@@ -264,7 +264,7 @@ class _LeaderBoardScreenState extends State<Library> {
                                                                  ],),
                                                             ),
                                                             SizedBox(
-                                                              height: 6,
+                                                              height: 5,
                                                             ),
                                                             Column(
                                                               crossAxisAlignment:
@@ -766,21 +766,26 @@ class _LeaderBoardScreenState extends State<Library> {
                                                               CrossAxisAlignment
                                                                   .start,
                                                           children: <Widget>[
-                                                            Padding(
+                                                             Padding(
                                                               padding:
                                                                   const EdgeInsets
                                                                           .only(
                                                                       top:
-                                                                          10.0),
-                                                              child: Text(
-                                                                _getFavouriteFiltered[index]['title']
+                                                                          10.0,
+                                                                          right: 20),
+                                                              child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                   
+                                                               Text(
+                                                                _getLibraryFiltered[index]['title']
                                                                             .length <=
                                                                         20
-                                                                    ? _getFavouriteFiltered[index]
+                                                                    ? _getLibraryFiltered[index]
                                                                             [
                                                                             'title']
                                                                         .toString()
-                                                                    : _getFavouriteFiltered[index]
+                                                                    : _getLibraryFiltered[index]
                                                                             [
                                                                             'title']
                                                                         .toString()
@@ -796,9 +801,22 @@ class _LeaderBoardScreenState extends State<Library> {
                                                                     fontSize:
                                                                         18),
                                                               ),
+                                                                       IconButton(
+                                                                icon: Icon(
+                                                                  Icons.delete,color: Colors.red,size: 30),
+                                                              onPressed: () {
+                                                                //
+                                                                //go through the loop and match content to delete from list
+                                                                setState(() {
+                                                                  //refresh UI after deleting element from list
+                                                                });
+                                                              },
+                                                               ),
+                                                             
+                                                                 ],),
                                                             ),
                                                             SizedBox(
-                                                              height: 6,
+                                                              height: 5,
                                                             ),
                                                             Column(
                                                               crossAxisAlignment:
