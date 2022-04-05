@@ -213,13 +213,19 @@ class _LeaderBoardScreenState extends State<Library> {
                                                               CrossAxisAlignment
                                                                   .start,
                                                           children: <Widget>[
+                                                      
                                                             Padding(
                                                               padding:
                                                                   const EdgeInsets
                                                                           .only(
                                                                       top:
-                                                                          10.0),
-                                                              child: Text(
+                                                                          10.0,
+                                                                          right: 20),
+                                                              child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                   
+                                                               Text(
                                                                 _getLibraryFiltered[index]['title']
                                                                             .length <=
                                                                         20
@@ -243,6 +249,19 @@ class _LeaderBoardScreenState extends State<Library> {
                                                                     fontSize:
                                                                         18),
                                                               ),
+                                                                       IconButton(
+                                                                icon: Icon(
+                                                                  Icons.delete,color: Colors.red,size: 30),
+                                                              onPressed: () {
+                                                                //
+                                                                //go through the loop and match content to delete from list
+                                                                setState(() {
+                                                                  //refresh UI after deleting element from list
+                                                                });
+                                                              },
+                                                               ),
+                                                             
+                                                                 ],),
                                                             ),
                                                             SizedBox(
                                                               height: 6,
@@ -321,22 +340,7 @@ class _LeaderBoardScreenState extends State<Library> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            ElevatedButton(
-                                                              style: ElevatedButton
-                                                                  .styleFrom(
-                                                                      primary:
-                                                                          Colors
-                                                                              .redAccent),
-                                                              child: Icon(
-                                                                  Icons.delete),
-                                                              onPressed: () {
-                                                                //
-                                                                //go through the loop and match content to delete from list
-                                                                setState(() {
-                                                                  //refresh UI after deleting element from list
-                                                                });
-                                                              },
-                                                            ),
+                                                       
                                                           ],
                                                         ),
                                                       )
