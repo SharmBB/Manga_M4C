@@ -32,6 +32,8 @@ class _LeaderBoardScreenState extends State<Library> {
 
   List _getLibrary = [];
   List _getFavourite = [];
+  List _getLibraryFiltered = [];
+  List _getFavouriteFiltered = [];
 
   int bottomPurple = 2;
 
@@ -149,7 +151,8 @@ class _LeaderBoardScreenState extends State<Library> {
                                           ))
                                         : Expanded(
                                             child: ListView.builder(
-                                              itemCount: _getLibrary.length,
+                                              itemCount:
+                                                  _getLibraryFiltered.length,
                                               itemBuilder:
                                                   (BuildContext context,
                                                       int index) {
@@ -189,7 +192,7 @@ class _LeaderBoardScreenState extends State<Library> {
                                                             },
                                                             child:
                                                                 CachedNetworkImage(
-                                                                    imageUrl: _getLibrary[index]
+                                                                    imageUrl: _getLibraryFiltered[index]
                                                                             [
                                                                             'image']
                                                                         .toString(),
@@ -223,14 +226,14 @@ class _LeaderBoardScreenState extends State<Library> {
                                                                       top:
                                                                           10.0),
                                                               child: Text(
-                                                                _getLibrary[index]['title']
+                                                                _getLibraryFiltered[index]['title']
                                                                             .length <=
                                                                         20
-                                                                    ? _getLibrary[index]
+                                                                    ? _getLibraryFiltered[index]
                                                                             [
                                                                             'title']
                                                                         .toString()
-                                                                    : _getLibrary[index]
+                                                                    : _getLibraryFiltered[index]
                                                                             [
                                                                             'title']
                                                                         .toString()
@@ -287,7 +290,7 @@ class _LeaderBoardScreenState extends State<Library> {
                                                                       width: 5,
                                                                     ),
                                                                     Text(
-                                                                        _getLibrary[index]['rating']
+                                                                        _getLibraryFiltered[index]['rating']
                                                                             .toString(),
                                                                         style: TextStyle(
                                                                             color:
@@ -680,7 +683,8 @@ class _LeaderBoardScreenState extends State<Library> {
                                           ))
                                         : Expanded(
                                             child: ListView.builder(
-                                              itemCount: _getFavourite.length,
+                                              itemCount:
+                                                  _getFavouriteFiltered.length,
                                               itemBuilder:
                                                   (BuildContext context,
                                                       int index) {
@@ -720,7 +724,7 @@ class _LeaderBoardScreenState extends State<Library> {
                                                             },
                                                             child:
                                                                 CachedNetworkImage(
-                                                                    imageUrl: _getFavourite[index]
+                                                                    imageUrl: _getFavouriteFiltered[index]
                                                                             [
                                                                             'image']
                                                                         .toString(),
@@ -754,14 +758,14 @@ class _LeaderBoardScreenState extends State<Library> {
                                                                       top:
                                                                           10.0),
                                                               child: Text(
-                                                                _getFavourite[index]['title']
+                                                                _getFavouriteFiltered[index]['title']
                                                                             .length <=
                                                                         20
-                                                                    ? _getFavourite[index]
+                                                                    ? _getFavouriteFiltered[index]
                                                                             [
                                                                             'title']
                                                                         .toString()
-                                                                    : _getFavourite[index]
+                                                                    : _getFavouriteFiltered[index]
                                                                             [
                                                                             'title']
                                                                         .toString()
@@ -818,7 +822,7 @@ class _LeaderBoardScreenState extends State<Library> {
                                                                       width: 5,
                                                                     ),
                                                                     Text(
-                                                                        _getFavourite[index]['rating']
+                                                                        _getFavouriteFiltered[index]['rating']
                                                                             .toString(),
                                                                         style: TextStyle(
                                                                             color:
@@ -1107,7 +1111,7 @@ class _LeaderBoardScreenState extends State<Library> {
 
   //get UserLibrary details from api
   void getUserLibrary() async {
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
     token = localStorage.getString("token")!;
     setState(() {
       _isLoading = true;
@@ -1118,7 +1122,24 @@ class _LeaderBoardScreenState extends State<Library> {
       var bodyRoutes;
       var res = await CallApi().getUserLibrary('getUserLibrary');
       bodyRoutes = json.decode(res.body);
+
       _getLibrary = bodyRoutes;
+
+      var seen = Set<String>();
+
+      _getLibraryFiltered =
+          _getLibrary.where((manga) => seen.add(manga["title"])).toList();
+
+      // _getLibraryFiltered=_getLibrary.u
+
+      print(_getLibrary.length);
+
+      //output list: John Cena, Jack Sparrow, Harry Potter
+
+      //_getLibraryFiltered = _getLibrary[0].toSet().toList();
+
+      print("rfff" + _getLibraryFiltered.length.toString());
+      print("length" + _getLibrary.length.toString());
     } catch (e) {
       print(e);
     }
@@ -1139,6 +1160,11 @@ class _LeaderBoardScreenState extends State<Library> {
       var res = await CallApi().getUserFavourite('getUserFavourite');
       bodyRoutes = json.decode(res.body);
       _getFavourite = bodyRoutes;
+      var seen = Set<String>();
+
+      _getFavouriteFiltered =
+          _getFavourite.where((manga) => seen.add(manga["title"])).toList();
+
       print(_getFavourite);
     } catch (e) {
       print(e);
