@@ -152,9 +152,6 @@ class _ResetPasswordState extends State<ForgetPassword> {
       };
       var res = await CallApi().postOTP(data, 'sendOTP');
       var body = json.decode(res.body);
-      print(body);
-
-      bodyError = body['message'];
 
       if (body['match'] == true) {
         Navigator.push(

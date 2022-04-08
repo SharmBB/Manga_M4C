@@ -190,12 +190,16 @@ class _ForgetOTPPageState extends State<OTPPage> {
                         Container(
                           margin: new EdgeInsets.symmetric(horizontal: 50.0),
                           alignment: Alignment.center,
-                          child: Text(
-                            'Resend Code',
-                            style: TextStyle(
-                                color: kPrimaryPurpleColor, fontSize: 16),
-                            textAlign: TextAlign.center,
-                          ),
+                          child: GestureDetector(
+                              onTap: () async {
+                                ResendOTP();
+                              },
+                              child: Text(
+                                'Resend Code',
+                                style: TextStyle(
+                                    color: kPrimaryPurpleColor, fontSize: 16),
+                                textAlign: TextAlign.center,
+                              )),
                         ),
                         SizedBox(
                           height: 40,
@@ -326,11 +330,35 @@ class _ForgetOTPPageState extends State<OTPPage> {
           MaterialPageRoute(
               builder: (BuildContext context) => ResetPassword(
                     email: widget.email,
-                    otp:_nameController.text,
+                    otp: _nameController.text,
                     title: '',
                   )),
         );
       } else {}
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  void ResendOTP() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      var data = {
+        "email": widget.email.toString(),
+      };
+      var res = await CallApi().postOTP(data, 'sendOTP');
+      var body = json.decode(res.body);
+      if (body['match'] == true) {
+        print(body);
+
+        // }
+      }
     } catch (e) {
       print(e);
     }

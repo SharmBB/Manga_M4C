@@ -97,7 +97,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             if (value!.isEmpty) {
               return 'Password required';
             } else if (!regex.hasMatch(value)) {
-              return 'Password Must contains \n - Minimum 1 Upper case \n - Minimum 1 lowercase \n - Minimum 1 Number \n - Minimum 1 Special Character \n - Minimum 8 letters';
+              return 'Password Must contains \n - Minimum 1 Upper case \n - Minimum 1 lowercase \n - Minimum 1 Number \n - Minimum 1 Special Character(! @ # % & *) \n - Minimum 8 letters';
             }
             return null;
           },
@@ -106,7 +106,13 @@ class _ResetPasswordState extends State<ResetPassword> {
           },
           controller: _passwordController,
           textInputAction: TextInputAction.done,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
+            suffixIcon: IconButton(
+              onPressed: () => setState(() => showPassword = !showPassword),
+              icon:
+                  Icon(showPassword ? Icons.visibility_off : Icons.visibility),
+              color: kPrimaryGreyColor,
+            ),
             contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
             hintText: "New Password",
             hintStyle: TextStyle(fontSize: 16.0, color: kPrimaryWhiteColor),
@@ -135,7 +141,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             if (value!.isEmpty) {
               return 'Password required';
             } else if (!regex.hasMatch(value)) {
-              return 'Password Must contains \n - Minimum 1 Upper case \n - Minimum 1 lowercase \n - Minimum 1 Number \n - Minimum 1 Special Character \n - Minimum 8 letters';
+              return 'Password Must contains \n - Minimum 1 Upper case \n - Minimum 1 lowercase \n - Minimum 1 Number \n - Minimum 1 Special Character(! @ #  % & *) \n - Minimum 8 letters';
             } else if (value != _passwordController.text) {
               return 'Not Matched';
             }
@@ -146,7 +152,15 @@ class _ResetPasswordState extends State<ResetPassword> {
           },
           controller: _confirmpasswordController,
           textInputAction: TextInputAction.done,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
+            suffixIcon: IconButton(
+              onPressed: () =>
+                  setState(() => showconfirmPassword = !showconfirmPassword),
+              icon: Icon(showconfirmPassword
+                  ? Icons.visibility_off
+                  : Icons.visibility),
+              color: kPrimaryGreyColor,
+            ),
             contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
             hintText: "Confirm Password",
             hintStyle: TextStyle(fontSize: 16.0, color: kPrimaryWhiteColor),

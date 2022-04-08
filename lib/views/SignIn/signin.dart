@@ -4,17 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/api/api.dart';
-import 'package:mangakiku_app/views/Comments/comments_reply.dart';
 import 'package:mangakiku_app/views/ForgotPassword/forgotPassword.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/Signup/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Signin extends StatefulWidget {
-
   const Signin({
     Key? key,
-   
   }) : super(key: key);
 
   @override
@@ -113,7 +110,7 @@ class _SigninState extends State<Signin> {
                     ),
               SizedBox(height: screenHeight * (1 / 20)),
               Padding(
-                padding: const EdgeInsets.only(left: 80.0, right: 50.0),
+                padding: EdgeInsets.only(left: 80.0, right: 50.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -221,7 +218,12 @@ class _SigninState extends State<Signin> {
         },
         controller: _passwordController,
         textInputAction: TextInputAction.done,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
+          suffixIcon: IconButton(
+            onPressed: () => setState(() => showPassword = !showPassword),
+            icon: Icon(showPassword ? Icons.visibility_off : Icons.visibility),
+            color: kPrimaryGreyColor,
+          ),
           contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
           hintText: "Password",
           hintStyle: TextStyle(
@@ -297,7 +299,7 @@ class _SigninState extends State<Signin> {
           print("------------------------------------");
           localStorage.setString('token', token);
           print(token);
-           print(userId);
+          print(userId);
 
           localStorage.setInt('userId', userId);
 

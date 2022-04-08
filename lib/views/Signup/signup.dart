@@ -177,9 +177,9 @@ class _SignupState extends State<Signup> {
 
   _email() {
     return Padding(
-      padding:  EdgeInsets.fromLTRB(25, 0, 25, 0),
+      padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
       child: TextFormField(
-        style:  TextStyle(fontSize: 14, color: kPrimaryWhiteColor),
+        style: TextStyle(fontSize: 14, color: kPrimaryWhiteColor),
         cursorColor: kPrimaryPurpleColor,
         keyboardType: TextInputType.emailAddress,
         // obscureText: showPassword,
@@ -198,7 +198,7 @@ class _SignupState extends State<Signup> {
         },
         controller: _emailController,
         textInputAction: TextInputAction.done,
-        decoration:  InputDecoration(
+        decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
           hintText: "Email / UserName",
           hintStyle: TextStyle(
@@ -231,7 +231,7 @@ class _SignupState extends State<Signup> {
           if (value!.isEmpty) {
             return 'Password required';
           } else if (!regex.hasMatch(value)) {
-            return 'Password Must contains \n - Minimum 1 Upper case \n - Minimum 1 lowercase \n - Minimum 1 Number \n - Minimum 1 Special Character \n - Minimum 8 letters';
+            return 'Password Must contains \n - Minimum 1 Upper case \n - Minimum 1 lowercase \n - Minimum 1 Number \n - Minimum 1 Special Character(! @ #  % & *) \n - Minimum 8 letters';
           }
           return null;
         },
@@ -240,7 +240,12 @@ class _SignupState extends State<Signup> {
         },
         controller: _passwordController,
         textInputAction: TextInputAction.done,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
+          suffixIcon: IconButton(
+            onPressed: () => setState(() => showPassword = !showPassword),
+            icon: Icon(showPassword ? Icons.visibility_off : Icons.visibility),
+            color: kPrimaryGreyColor,
+          ),
           contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
           hintText: "Password",
           hintStyle: TextStyle(
@@ -284,10 +289,17 @@ class _SignupState extends State<Signup> {
         },
         controller: _confirmpasswordController,
         textInputAction: TextInputAction.done,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
+          suffixIcon: IconButton(
+            onPressed: () =>
+                setState(() => showconfirmPassword = !showconfirmPassword),
+            icon: Icon(
+                showconfirmPassword ? Icons.visibility_off : Icons.visibility),
+            color: kPrimaryGreyColor,
+          ),
           contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
           hintText: "Re-Enter Password",
-          hintStyle: TextStyle(fontSize: 14.0, color: kPrimaryGreyColor),
+          hintStyle: TextStyle(fontSize: 14.0, color: kPrimaryWhiteColor),
           fillColor: kPrimarylightGreyColor,
           filled: true,
           border: OutlineInputBorder(
@@ -448,20 +460,18 @@ class _SignupState extends State<Signup> {
         ));
   }
 
-  Future<int> submitSubscription(
-      {File? file, String? filename}) async {
+  Future<int> submitSubscription({File? file, String? filename}) async {
     setState(() {
       _isLoading = true;
     });
 
     ///MultiPart request
     var request = http.MultipartRequest(
-   //   var auth ="http://api.mangakiku.com/api/addUser",
+      //   var auth ="http://api.mangakiku.com/api/addUser",
       'POST',
       Uri.parse("http://api.mangakiku.com/api/addUser"),
     );
     Map<String, String> headers = {
-    
       "Content-type": "multipart/form-data",
       'Accept': "multipart/form-data",
     };
