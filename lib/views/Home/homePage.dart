@@ -1550,7 +1550,7 @@ class _HomePageState extends State<HomePage> {
       var resSetting = await CallApi().getApiSetting('getApiSetting');
       var bodyRoutesSetting = json.decode(resSetting.body);
       ApiSetting.add(bodyRoutesSetting);
-      // ApiSetting[0]['value'] = 0;
+       ApiSetting[0]['value'] = 1;
       print(ApiSetting[0]['value']);
 
       if (ApiSetting[0]['value'] == 0 && token != '') {

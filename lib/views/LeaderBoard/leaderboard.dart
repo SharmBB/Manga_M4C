@@ -37,7 +37,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
 
 //bottom navigation bar icons
   List<IconData> listOfIcons = [
-   Icons.home_rounded,
+    Icons.home_rounded,
     Icons.article_outlined,
     Icons.local_library_outlined,
     Icons.leaderboard,
@@ -172,25 +172,25 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                                     fontSize: 10),
                                                 textAlign: TextAlign.left),
                                           ),
-                                          Expanded(
-                                            child: Text(
-                                                _getLeaderBoardDetails[index]
-                                                        ['chapters']
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    color: kPrimaryWhiteColor,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 14),
-                                                textAlign: TextAlign.end),
-                                          ),
-                                          SizedBox(width: 5.0),
-                                          Expanded(
-                                            child: Text('Chapter ',
-                                                style: TextStyle(
-                                                    color: kPrimaryWhiteColor,
-                                                    fontSize: 10),
-                                                textAlign: TextAlign.left),
-                                          ),
+                                          // Expanded(
+                                          //   child: Text(
+                                          //       _getLeaderBoardDetails[index]
+                                          //               ['chapters']
+                                          //           .toString(),
+                                          //       style: TextStyle(
+                                          //           color: kPrimaryWhiteColor,
+                                          //           fontWeight: FontWeight.bold,
+                                          //           fontSize: 14),
+                                          //       textAlign: TextAlign.end),
+                                          // ),
+                                          // SizedBox(width: 5.0),
+                                          // Expanded(
+                                          //   child: Text('Chapter ',
+                                          //       style: TextStyle(
+                                          //           color: kPrimaryWhiteColor,
+                                          //           fontSize: 10),
+                                          //       textAlign: TextAlign.left),
+                                          // ),
                                           // Expanded(
                                           //   child: Text(" 53 ",
                                           //       style: TextStyle(

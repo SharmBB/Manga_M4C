@@ -121,12 +121,15 @@ class _ResetPasswordState extends State<ForgetPassword> {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState?.save();
+
+                  _forgot();
                   // use the email provided here
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>  OTPPage(email:_emailController.text)),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) =>
+                  //           OTPPage(email: _emailController.text)),
+                  // );
                 }
               },
               child: const Text(
@@ -145,23 +148,24 @@ class _ResetPasswordState extends State<ForgetPassword> {
 
     try {
       var data = {
-        "email": _emailController.toString(),
+        "email": _emailController.text,
       };
-      var res = await CallApi().postData(data, '');
+      var res = await CallApi().postOTP(data, 'sendOTP');
       var body = json.decode(res.body);
       print(body);
 
       bodyError = body['message'];
 
-      if (body['errorMessage'] == false) {
-        if (body['token'] != null) {
-          SharedPreferences localStorage =
-              await SharedPreferences.getInstance();
-          var token = body['token'];
-          localStorage.setString('token', token);
+      if (body['match'] == true) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => OTPPage(email: _emailController.text)),
+        );
 
-          print(bodyError);
-        }
+        print(body);
+
+        // }
       } else {}
     } catch (e) {
       print(e);

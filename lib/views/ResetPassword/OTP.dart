@@ -288,7 +288,7 @@ class _ForgetOTPPageState extends State<OTPPage> {
           textInputAction: TextInputAction.done,
           decoration: const InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-            hintText: "Name",
+            hintText: "OTP",
             hintStyle: TextStyle(
               fontSize: 14.0,
               color: kPrimaryWhiteColor,
@@ -311,19 +311,22 @@ class _ForgetOTPPageState extends State<OTPPage> {
 
     try {
       var data = {
+        "email": widget.email.toString(),
         "otp": _nameController.text,
       };
-      var res = await CallApi().postData(data, 'otpVerify');
+      var res = await CallApi().checkOTP(data, 'checkOTP');
       var body = json.decode(res.body);
       print(body);
 
       bodyError = body['message'];
 
-      if (body['errorMessage'] == false) {
+      if (body['user']['match'] == true) {
+        print(body);
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
               builder: (BuildContext context) => ResetPassword(
-                email:widget.email,
+                    email: widget.email,
+                    otp:_nameController.text,
                     title: '',
                   )),
         );

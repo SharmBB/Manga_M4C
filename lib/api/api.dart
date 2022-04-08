@@ -31,6 +31,31 @@ class CallApi {
   //advance search
   var advacesearch = 'https://api.comick.fun/search?';
 
+  var otpMail = 'https://nodeapi.mangakiku.com/enduser/';
+
+  //post otp
+  postOTP(data, apiUrl) async {
+    // token = await _getToken();
+    var fullUrl = Uri.parse(otpMail + apiUrl);
+    return await http.post(
+      fullUrl,
+      body: jsonEncode(data),
+      headers: _setHeaders(),
+    );
+  }
+
+
+    //post otp
+  checkOTP(data, apiUrl) async {
+    // token = await _getToken();
+    var fullUrl = Uri.parse(otpMail + apiUrl);
+    return await http.post(
+      fullUrl,
+      body: jsonEncode(data),
+      headers: _setHeaders(),
+    );
+  }
+
   //Login api
   authData(data, apiUrl) async {
     var fullUrl = Uri.parse(_urlAuth + apiUrl);

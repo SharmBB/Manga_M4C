@@ -10,10 +10,12 @@ import 'package:mangakiku_app/views/SignIn/signin.dart';
 
 class ResetPassword extends StatefulWidget {
   final String email;
+  final String otp;
   const ResetPassword({
     Key? key,
     required this.title,
     required this.email,
+    required this.otp,
   }) : super(key: key);
 
   final String title;
@@ -36,12 +38,15 @@ class _ResetPasswordState extends State<ResetPassword> {
   bool showPassword = true;
   bool showconfirmPassword = true;
   late String email;
+  late String otp;
 
   @override
   void initState() {
     //initialize  id for chapterimage
     email = widget.email;
     print(email);
+    otp = widget.otp;
+    print(otp);
     super.initState();
   }
 
@@ -191,10 +196,11 @@ class _ResetPasswordState extends State<ResetPassword> {
 
     try {
       var data = {
-        "email": widget.email,
+        "email": widget.email.toString(),
         "newPassword": _passwordController.text,
       };
-      var res = await CallApi().updatePassword(data, 'otpVerify');
+      var res =
+          await CallApi().updatePassword(data, 'forgetPasswordOTPValidate');
       var body = json.decode(res.body);
       print(body);
 
