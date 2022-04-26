@@ -55,7 +55,7 @@ android {
         
         applicationId "com.mfc.mangakiku_app"
         minSdkVersion 21
-        targetSdkVersion flutter.targetSdkVersion
+        targetSdkVersion 30
         versionCode 8
         versionName "1.0.7"
         multiDexEnabled true
