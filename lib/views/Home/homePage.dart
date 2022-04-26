@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/_helpers/sharedPreference.dart';
-import 'package:mangakiku_app/admob/adsmain.dart';
 import 'package:mangakiku_app/admob/showads.dart';
 import 'package:mangakiku_app/api/api.dart';
 
