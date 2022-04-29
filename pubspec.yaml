@@ -37,7 +37,8 @@ dependencies:
   in_app_purchase: ^2.0.1
   pin_code_fields: ^7.3.0
   
-  
+    # COMPLETE: Add google_mobile_ads as a dependency
+  google_mobile_ads: ^0.13.0
   
 
   

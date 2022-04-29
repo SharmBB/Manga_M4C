@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mangakiku_app/_helpers/constants.dart';
 import 'package:mangakiku_app/_helpers/sharedPreference.dart';
+import 'package:mangakiku_app/admob/showads.dart';
 import 'package:mangakiku_app/api/api.dart';
 
 import 'package:mangakiku_app/views/Account/account.dart';
@@ -226,6 +227,10 @@ class _HomePageState extends State<HomePage> {
                               //   context,
                               //   MaterialPageRoute(builder: (context) => Account()),
                               // );
+                                 Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => Showads()),
+                                  );
                             },
                             child: CircleAvatar(
                               radius: 35,

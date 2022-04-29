@@ -55,9 +55,9 @@ android {
         
         applicationId "com.mfc.mangakiku_app"
         minSdkVersion 21
-        targetSdkVersion flutter.targetSdkVersion
-        versionCode 9
-        versionName "1.0.8"
+        targetSdkVersion 30
+        versionCode 8
+        versionName "1.0.7"
         multiDexEnabled true
     }
     signingConfigs {
