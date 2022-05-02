@@ -33,6 +33,7 @@ class _ForgetOTPPageState extends State<OTPPage> {
 
   String? bodyError;
   late String email;
+  String? bodySucesss;
   // loader
   // bool _isLoading = true;
 
@@ -174,6 +175,22 @@ class _ForgetOTPPageState extends State<OTPPage> {
                         //   },
                         // ),
                         _name(),
+                        !_isLoading
+                            ? bodyError != null
+                                ? Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(25, 0, 25, 0),
+                                    child: Container(
+                                      padding: EdgeInsets.only(top: 10),
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        bodyError.toString(),
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                    ))
+                                : SizedBox()
+                            : SizedBox(),
                         SizedBox(
                           height: screenHeight * 0.05,
                         ),
@@ -193,6 +210,7 @@ class _ForgetOTPPageState extends State<OTPPage> {
                           child: GestureDetector(
                               onTap: () async {
                                 ResendOTP();
+                                showAlertDialog(context);
                               },
                               child: Text(
                                 'Resend Code',
@@ -322,7 +340,8 @@ class _ForgetOTPPageState extends State<OTPPage> {
       var body = json.decode(res.body);
       print(body);
 
-      bodyError = body['message'];
+      bodyError = body['user']['message'];
+      print(bodyError);
 
       if (body['user']['match'] == true) {
         print(body);
@@ -352,12 +371,17 @@ class _ForgetOTPPageState extends State<OTPPage> {
       var data = {
         "email": widget.email.toString(),
       };
+
       var res = await CallApi().postOTP(data, 'sendOTP');
       var body = json.decode(res.body);
+
+      // bodyError = body['user']['message'];
       if (body['match'] == true) {
-        print(body);
+        bodySucesss = body['message'];
 
         // }
+      } else {
+        bodySucesss = "OTP sent Fail !!!";
       }
     } catch (e) {
       print(e);
@@ -365,5 +389,45 @@ class _ForgetOTPPageState extends State<OTPPage> {
     setState(() {
       _isLoading = false;
     });
+  }
+
+//resend otp sucess alert
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text(
+        "OK",
+        style: TextStyle(
+          color: kPrimaryPurpleColor,
+          fontSize: 16,
+        ),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      // title: Text("My title"),
+      content: Text(
+        bodySucesss.toString(),
+        style: TextStyle(
+          color: primaryColor,
+          fontSize: 16,
+        ),
+      ),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

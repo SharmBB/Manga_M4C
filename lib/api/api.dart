@@ -160,23 +160,23 @@ class CallApi {
   }
 
 //library deletes
-  deleteLibrary(data, apiUrl) async {
+  deleteLibrary( apiUrl) async {
     token = await _getToken();
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.delete(
       fullUrl,
-      body: jsonEncode(data),
+     
       headers: _setHeaders(),
     );
   }
 
   //favourite deletes
-  deleteFavourite(data, apiUrl) async {
+  deleteFavourite( apiUrl) async {
     token = await _getToken();
     var fullUrl = Uri.parse(_urlAuth + apiUrl);
     return await http.delete(
       fullUrl,
-      body: jsonEncode(data),
+   
       headers: _setHeaders(),
     );
   }

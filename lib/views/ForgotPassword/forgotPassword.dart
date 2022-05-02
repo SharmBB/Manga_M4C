@@ -51,8 +51,8 @@ class _ResetPasswordState extends State<ForgetPassword> {
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: screenHeight * (0.7 / 20)),
-                const Text(
-                  'We will Send a link to recover password',
+                 Text(
+                  'We will Send a OTP number to recover password',
                   style: TextStyle(
                     fontSize: 12,
                     color: kPrimaryPurpleColor,

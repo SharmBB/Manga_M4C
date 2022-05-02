@@ -230,13 +230,13 @@ class _LeaderBoardScreenState extends State<Library> {
                                                                 children: [
                                                                   Text(
                                                                     _getLibraryFiltered[index]['title'].length <=
-                                                                            20
+                                                                            15
                                                                         ? _getLibraryFiltered[index]['title']
                                                                             .toString()
                                                                         : _getLibraryFiltered[index]['title']
                                                                             .toString()
                                                                             .substring(0,
-                                                                                20),
+                                                                                15),
                                                                     style: TextStyle(
                                                                         color:
                                                                             kPrimaryWhiteColor,
@@ -430,13 +430,13 @@ class _LeaderBoardScreenState extends State<Library> {
                                                                 children: [
                                                                   Text(
                                                                     _getFavouriteFiltered[index]['title'].length <=
-                                                                            20
+                                                                            15
                                                                         ? _getFavouriteFiltered[index]['title']
                                                                             .toString()
                                                                         : _getFavouriteFiltered[index]['title']
                                                                             .toString()
                                                                             .substring(0,
-                                                                                20),
+                                                                                15),
                                                                     style: TextStyle(
                                                                         color:
                                                                             kPrimaryWhiteColor,
@@ -678,8 +678,8 @@ class _LeaderBoardScreenState extends State<Library> {
       var ID = {"id": id};
       var bodyRoutes;
       var res = await CallApi().deleteLibrary(
-        ID,
-        'deleteLibrary',
+       
+        'deleteLibrary/$id',
       );
       bodyRoutes = json.decode(res.body);
       print(bodyRoutes);
@@ -707,8 +707,8 @@ class _LeaderBoardScreenState extends State<Library> {
       var ID = {"id": id};
       var bodyRoutes;
       var res = await CallApi().deleteFavourite(
-        ID,
-        'deleteFavourite',
+        
+        'deleteFavourite/$id',
       );
       bodyRoutes = json.decode(res.body);
       print(bodyRoutes);
