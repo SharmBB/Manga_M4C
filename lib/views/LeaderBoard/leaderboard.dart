@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -58,6 +59,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
+    var userImage = "https://api.mangakiku.com/";
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -128,22 +130,51 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                       //  color: kPrimaryWhiteColor.withOpacity(0.1),
                                       child: Row(
                                         children: <Widget>[
-                                          // Expanded(
-                                          //   child: CircleAvatar(
-                                          //     radius: 25.0,
-                                          //     backgroundImage: AssetImage(
-                                          //       "assets/profile-img.png",
-                                          //     ),
-                                          //   ),
-                                          // ),
-                                          // Expanded(
-                                          //   child: CircleAvatar(
-                                          //     radius: 10.0,
-                                          //     backgroundImage: AssetImage(
-                                          //       "assets/batch.jpg",
-                                          //     ),
-                                          //   ),
-                                          // ),
+                                          Expanded(
+                                            child: CircleAvatar(
+                                              radius: 25.0,
+                                              backgroundImage: CachedNetworkImageProvider(
+                                                userImage +
+                                                    _getLeaderBoardDetails[
+                                                        index]['image'],
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 10.0),
+                                          _getLeaderBoardDetails[index]['id'] ==
+                                                  1
+                                              ? Expanded(
+                                                  child: CircleAvatar(
+                                                    radius: 18.0,
+                                                    backgroundImage: AssetImage(
+                                                      "assets/rank.png",
+                                                    ),
+                                                  ),
+                                                )
+                                              : SizedBox(),
+                                              _getLeaderBoardDetails[index]['id'] ==
+                                                  2
+                                              ? Expanded(
+                                                  child: CircleAvatar(
+                                                    radius: 20.0,
+                                                    backgroundImage: AssetImage(
+                                                      "assets/rank2.png",
+                                                    ),
+                                                  ),
+                                                )
+                                              : SizedBox(),
+                                              _getLeaderBoardDetails[index]['id'] ==
+                                                  3
+                                              ? Expanded(
+                                                  child: 
+                                                  CircleAvatar(
+                                                    radius: 20.0,
+                                                    backgroundImage: AssetImage(
+                                                      "assets/rank3.png",
+                                                    ),
+                                                  ),
+                                                )
+                                              : SizedBox(),
                                           Expanded(
                                             child: Text(
                                                 _getLeaderBoardDetails[index]
@@ -191,22 +222,22 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                           //           fontSize: 10),
                                           //       textAlign: TextAlign.left),
                                           // ),
-                                          // Expanded(
-                                          //   child: Text(" 53 ",
-                                          //       style: TextStyle(
-                                          //           color: kPrimaryWhiteColor,
-                                          //           fontWeight: FontWeight.bold,
-                                          //           fontSize: 14),
-                                          //       textAlign: TextAlign.end),
-                                          // ),
-                                          // SizedBox(width: 5.0),
-                                          // Expanded(
-                                          //   child: Text('Hours Read  ',
-                                          //       style: TextStyle(
-                                          //           color: kPrimaryWhiteColor,
-                                          //           fontSize: 10),
-                                          //       textAlign: TextAlign.left),
-                                          // ),
+                                          Expanded(
+                                            child: Text(" 53 ",
+                                                style: TextStyle(
+                                                    color: kPrimaryWhiteColor,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 14),
+                                                textAlign: TextAlign.end),
+                                          ),
+                                          SizedBox(width: 5.0),
+                                          Expanded(
+                                            child: Text('Mangas Read  ',
+                                                style: TextStyle(
+                                                    color: kPrimaryWhiteColor,
+                                                    fontSize: 10),
+                                                textAlign: TextAlign.left),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -311,7 +342,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
       bodyRoutes = json.decode(res.body);
 
       _getLeaderBoardDetails = bodyRoutes;
-      print(_getLeaderBoardDetails.length);
+      print(_getLeaderBoardDetails);
     } catch (e) {
       print(e);
     }

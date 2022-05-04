@@ -464,7 +464,8 @@ class _CartState extends State<SlideDetailsScreen> {
                                                       "Akira Toriyama(Redic Studio)",
                                                       style: TextStyle(
                                                           fontSize: 14,
-                                                          color: kPrimaryPurpleColor),
+                                                          color:
+                                                              kPrimaryPurpleColor),
                                                     ),
                                                   ],
                                                 ),
@@ -482,7 +483,8 @@ class _CartState extends State<SlideDetailsScreen> {
                                                       " Bird Studio/Shueisha",
                                                       style: TextStyle(
                                                           fontSize: 14,
-                                                          color: kPrimaryPurpleColor),
+                                                          color:
+                                                              kPrimaryPurpleColor),
                                                     ),
                                                   ],
                                                 ),
@@ -500,7 +502,8 @@ class _CartState extends State<SlideDetailsScreen> {
                                                       " television series, Adventure , Fantasy",
                                                       style: TextStyle(
                                                           fontSize: 14,
-                                                          color:kPrimaryPurpleColor),
+                                                          color:
+                                                              kPrimaryPurpleColor),
                                                     ),
                                                   ],
                                                 ),
@@ -676,41 +679,36 @@ class _CartState extends State<SlideDetailsScreen> {
                                                                         left:
                                                                             60),
                                                                     child: InkWell(
-                                                                            highlightColor:
-                                                                                Colors.transparent,
-                                                                            onTap:
-                                                                                () {
-                                                                              // print("jhuvuyvuy" +
-                                                                              //     chapterLanguagefr[index]
-                                                                              //         [
-                                                                              //         "chap"]);
-                                                                              print("ASCSCDSCD" + chapterLanguagefr[index]["hid"].toString());
-                                                                              Navigator.push(
-                                                                                  context,
-                                                                                  MaterialPageRoute(
-                                                                                    builder: (context) => SlideMangaComment2(
-                                                                                      chapterid: frChapter[index]["chap"].toString(),
-                                                                                      hid: frChapter[index]['hid'].toString(),
-                                                                                      chap: frChapter,
-                                                                                      index: index,
-                                                                                    ),
-                                                                                  ));
-                                                                            },
-                                                                            child:Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment
-                                                                                .center,
-                                                                        children: <
-                                                                            Widget>[
-                                                                          
-                                                                                Padding(
-                                                                              padding: const EdgeInsets.symmetric(vertical: 8),
-                                                                              child: Text(
-                                                                                Reversefr[index].toString(),
-                                                                                style: TextStyle(fontSize: 13, color: Colors.white),
-                                                                              ),
+                                                                        highlightColor: Colors.transparent,
+                                                                        onTap: () {
+                                                                          // print("jhuvuyvuy" +
+                                                                          //     chapterLanguagefr[index]
+                                                                          //         [
+                                                                          //         "chap"]);
+                                                                          print("ASCSCDSCD" +
+                                                                              chapterLanguagefr[index]["hid"].toString());
+                                                                          Navigator.push(
+                                                                              context,
+                                                                              MaterialPageRoute(
+                                                                                builder: (context) => SlideMangaComment2(
+                                                                                  chapterid: frChapter[index]["chap"].toString(),
+                                                                                  hid: frChapter[index]['hid'].toString(),
+                                                                                  chap: frChapter,
+                                                                                  index: index,
+                                                                                ),
+                                                                              ));
+                                                                        },
+                                                                        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+                                                                          Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.symmetric(vertical: 8),
+                                                                            child:
+                                                                                Text(
+                                                                              Reversefr[index].toString(),
+                                                                              style: TextStyle(fontSize: 13, color: Colors.white),
                                                                             ),
-                                                                          
+                                                                          ),
+
                                                                           // InkWell(
                                                                           //   onTap: () {
                                                                           //     print("jhuvuyvuy" +
@@ -781,41 +779,41 @@ class _CartState extends State<SlideDetailsScreen> {
                                                                         left:
                                                                             60),
                                                                     child: InkWell(
-                                                                            highlightColor:
-                                                                                Colors.transparent,
-                                                                            onTap:
-                                                                                () {
-                                                                              // print("jhuvuyvuy" +
-                                                                              //     chapterLanguagefr[index]
-                                                                              //         [
-                                                                              //         "chap"]);
-                                                                              print("ASCSCDSCD" + chapterLanguagefr[index]["hid"].toString());
-                                                                              Navigator.push(
-                                                                                  context,
-                                                                                  MaterialPageRoute(
-                                                                                    builder: (context) => SlideMangaComment2(
-                                                                                      chapterid: frChapter[index]["chap"].toString(),
-                                                                                      hid: frChapter[index]['hid'].toString(),
-                                                                                      chap: frChapter,
-                                                                                      index: index,
-                                                                                    ),
-                                                                                  ));
-                                                                            },
-                                                                            child:Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment
-                                                                                .center,
-                                                                        children: <
-                                                                            Widget>[
-                                                                         
-                                                                                Padding(
-                                                                              padding: EdgeInsets.symmetric(vertical: 8),
-                                                                              child: Text(
-                                                                                ReverseEn[index].toString(),
-                                                                                style: TextStyle(fontSize: 13, color: Colors.white),
-                                                                              ),
+                                                                        highlightColor: Colors.transparent,
+                                                                        onTap: () {
+                                                                          print(
+                                                                              "scdscvsd");
+                                                                                 Navigator.push(
+                                                                              context,
+                                                                              MaterialPageRoute(
+                                                                                builder: (context) => SlideMangaComment2(
+                                                                                  chapterid: enChapter[index]["chap"].toString(),
+                                                                                  hid: enChapter[index]['hid'].toString(),
+                                                                                  chap: enChapter,
+                                                                                  index: index,
+                                                                                ),
+                                                                              ));
+                                                                        },
+                                                                        // onTap:
+                                                                        //     () {
+                                                                        //   // print("jhuvuyvuy" +
+                                                                        //   //     chapterLanguagefr[index]
+                                                                        //   //         [
+                                                                        //   //         "chap"]);
+                                                                        //   print("ASCSCDSCD" + chapterLanguagefr[index]["hid"].toString());
+                                                                       
+                                                                        // },
+                                                                        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+                                                                          Padding(
+                                                                            padding:
+                                                                                EdgeInsets.symmetric(vertical: 8),
+                                                                            child:
+                                                                                Text(
+                                                                              ReverseEn[index].toString(),
+                                                                              style: TextStyle(fontSize: 13, color: Colors.white),
                                                                             ),
-                                                                          
+                                                                          ),
+
                                                                           // InkWell(
                                                                           //   onTap: () {
                                                                           //     print("jhuvuyvuy" +

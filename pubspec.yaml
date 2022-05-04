@@ -39,6 +39,8 @@ dependencies:
   
     # COMPLETE: Add google_mobile_ads as a dependency
   google_mobile_ads: ^0.13.0
+  photo_view: ^0.13.0
+  pinch_zoom_image_last: ^0.4.1
   
 
   

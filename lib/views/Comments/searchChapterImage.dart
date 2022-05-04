@@ -11,6 +11,7 @@ import 'package:mangakiku_app/api/api.dart';
 import 'package:mangakiku_app/views/Comments/comments.dart';
 import 'package:mangakiku_app/views/Comments/comments_reply.dart';
 import 'package:mangakiku_app/views/Home/homePage.dart';
+import 'package:pinch_zoom_image_last/pinch_zoom_image_last.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchMangaComment2 extends StatefulWidget {
@@ -91,7 +92,7 @@ class _MangaComment2State extends State<SearchMangaComment2> {
 
   @override
   Widget build(BuildContext context) {
-    var image = "https://meo2.comick.pictures/file/comick/";
+    var image = "https://meo.comick.pictures/";
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
 
@@ -155,7 +156,8 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                                         },
                                         borderRadius:
                                             BorderRadius.circular(00.0),
-                                        child: CachedNetworkImage(
+                                        child:PinchZoomImage(image:
+                                         CachedNetworkImage(
                                             height: screenHeight * (18 / 20),
                                             width: screenWidth,
                                             imageUrl: image +
@@ -182,7 +184,7 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                                       ),
                                     ),
                                   )
-                                ],
+                                   ) ],
                               ),
                             );
                           },

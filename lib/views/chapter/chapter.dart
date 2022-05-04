@@ -69,6 +69,8 @@ class _CartState extends State<Chapter> {
 
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         key: scaffoldKey,
         backgroundColor: primaryColor,
@@ -502,7 +504,7 @@ class _CartState extends State<Chapter> {
                                                     ),
                                                     SizedBox(width: 3.0),
                                                     Container(
-                                                      width: 300,
+                                                      width: screenWidth,
                                                       child: Text(
                                                         _manga[0]["genres"]
                                                             .toString(),
@@ -1088,6 +1090,8 @@ class _CartState extends State<Chapter> {
 
       ReverseEn = chapterLanguageEn;
       Reversefr = chapterLanguagefrList;
+
+      
 
       setState(() {
         _isLoading = false;

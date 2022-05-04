@@ -17,6 +17,7 @@ import 'package:mangakiku_app/views/Home/homePage.dart';
 import 'package:mangakiku_app/views/SignIn/signin.dart';
 import 'package:mangakiku_app/views/Signup/signup.dart';
 import 'package:mangakiku_app/views/Signup/signup.dart';
+import 'package:pinch_zoom_image_last/pinch_zoom_image_last.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MangaComment2 extends StatefulWidget {
@@ -107,7 +108,7 @@ class _MangaComment2State extends State<MangaComment2> {
 
   @override
   Widget build(BuildContext context) {
-    var image = "https://meo2.comick.pictures/file/comick/";
+    var image = "https://meo.comick.pictures/";
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
 
@@ -126,6 +127,7 @@ class _MangaComment2State extends State<MangaComment2> {
                 child: ListView(children: [
                   Column(
                     children: [
+                      
                       Container(
                         height: screenHeight * (18 / 20),
                         child: ListView.builder(
@@ -160,7 +162,7 @@ class _MangaComment2State extends State<MangaComment2> {
                                       child: InkWell(
                                         onTap: () {
                                           setState(() {
-                                            // print("fvfvfv");
+                                             print("fvfvfv");
                                             if (imageclick == false) {
                                               imageclick = true;
                                             } else if (imageclick == true) {
@@ -170,8 +172,9 @@ class _MangaComment2State extends State<MangaComment2> {
                                         },
                                         borderRadius:
                                             BorderRadius.circular(00.0),
-                                        child: CachedNetworkImage(
-                                          
+                                        child:PinchZoomImage(image: 
+                                        
+                                        CachedNetworkImage(
                                             height: screenHeight,
                                             width: screenWidth * (20 / 20),
                                             imageUrl: image +
@@ -196,7 +199,7 @@ class _MangaComment2State extends State<MangaComment2> {
                                       ),
                                     ),
                                   )
-                                ],
+                                    )  ],
                               ),
                             );
                           },
@@ -326,7 +329,6 @@ class _MangaComment2State extends State<MangaComment2> {
             ),
     );
   }
-  
 
 //store the userImage in local
   void _getUserDetails() async {
@@ -373,8 +375,9 @@ class _MangaComment2State extends State<MangaComment2> {
       // Add chapterimages to  List
 
       _chapterImage.add(bodyRoutes);
-      print("sacdcd" +
+      print("-----------" +
           _chapterImage[0]['chapter']['md_images'][0]['b2key'].toString());
+      print(_chapterImage);
 
       //  print(_chapterImage[0]['chapter']['md_images'][0]['b2key'].length);
     } catch (e) {
