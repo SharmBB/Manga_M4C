@@ -40,6 +40,8 @@ class _SignupState extends State<Signup> {
   bool showconfirmPassword = true;
   bool image = false;
 
+   
+
   File? _image;
   late Future<String> fileurl;
   var _ImageS;
@@ -98,13 +100,13 @@ class _SignupState extends State<Signup> {
                 // SizedBox(height: screenHeight * (0.25 / 20)),
                 // _profile(),
                 // SizedBox(height: screenHeight * (0.25 / 20)),
-                // _bio(),
-                // SizedBox(height: screenHeight * (0.25 / 20)),
+                _name(),
+                SizedBox(height: screenHeight * (0.25 / 20)),
                 _email(),
                 SizedBox(height: screenHeight * (0.25 / 20)),
                 _password(),
-                SizedBox(height: screenHeight * (0.25 / 20)),
-                _confirmpassword(),
+                // SizedBox(height: screenHeight * (0.25 / 20)),
+                // _confirmpassword(),
                 !_isLoading
                     ? bodyError != null
                         ? Padding(
@@ -200,7 +202,7 @@ class _SignupState extends State<Signup> {
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-          hintText: "Email / UserName",
+          hintText: "Email",
           hintStyle: TextStyle(
             fontSize: 14.0,
             color: kPrimaryWhiteColor,
@@ -325,7 +327,9 @@ class _SignupState extends State<Signup> {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState?.save();
 
-            submitSubscription(file: _image, filename: _ImageS);
+            addUser();
+
+            // submitSubscription(file: _image, filename: _ImageS);
           }
         },
         child: Text(
@@ -460,59 +464,110 @@ class _SignupState extends State<Signup> {
         ));
   }
 
-  Future<int> submitSubscription({File? file, String? filename}) async {
+  void addUser() async {
     setState(() {
       _isLoading = true;
     });
+    try {
+      var data = {
+        "name": _nameController.text,
+        "email": _emailController.text,
+        "password": _passwordController.text,
+      };
+      var res = await CallApi().postData(data, 'addUser');
+      var body = json.decode(res.body);
+      print(body);
 
-    ///MultiPart request
-    var request = http.MultipartRequest(
-      //   var auth ="http://api.mangakiku.com/api/addUser",
-      'POST',
-      Uri.parse("http://api.mangakiku.com/api/addUser"),
-    );
-    Map<String, String> headers = {
-      "Content-type": "multipart/form-data",
-      'Accept': "multipart/form-data",
-    };
-    request.files.add(
-      http.MultipartFile(
-        'image',
-        file!.readAsBytes().asStream(),
-        file.lengthSync(),
-        filename: filename,
-        contentType: MediaType('image', 'jpeg'),
-      ),
-    );
-    request.headers.addAll(headers);
-    request.fields.addAll({
-      "name": _nameController.text,
-      "bio": _bioController.text,
-      "email": _emailController.text,
-      "password": _passwordController.text,
-    });
-    // print("request: " + request.toString());
-    var res = await request.send();
-    // print("This is response:" + res.toString());
+    // bodyErrorFav = body['message'];
 
-    final respStr = await res.stream.bytesToString();
-    // print(respStr);
+      if (body['errorMessage'] == false) {
+        // replyshowAlertFavourite(context);
 
-    final body = json.decode(respStr);
-    print(body['message']);
+        if (body != null) {
 
-    bodyError = body['message'];
+           Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+                builder: (BuildContext context) => HomePage(
+                    //builder: (BuildContext context) => ReplyComments(
+                    // image: widget.image,
+                    // chapterid: widget.chapterid,
+                    // hid: widget.hid,
 
-    if (body["errorMessage"] == false) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => HomePage()),
-      );
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
+                    )),
+          );
+          // SharedPreferences localStorage =
+          //     await SharedPreferences.getInstance();
+          // var token = body['token'];
+          // localStorage.setString('token', token);
+
+          print(body);
+        }
+      } else {
+        setState(() {
+               bodyError = body['message'];
+        });
+      }
+    } catch (e) {
+      print(e);
     }
-
-    return res.statusCode;
+    setState(() {
+      _isLoading = false;
+    });
   }
+
+  // Future<int> submitSubscription({File? file, String? filename}) async {
+  //   setState(() {
+  //     _isLoading = true;
+  //   });
+
+  //   ///MultiPart request
+  //   var request = http.MultipartRequest(
+  //     //   var auth ="http://api.mangakiku.com/api/addUser",
+  //     'POST',
+  //     Uri.parse("http://api.mangakiku.com/api/addUser"),
+  //   );
+  //   Map<String, String> headers = {
+  //     "Content-type": "multipart/form-data",
+  //     'Accept': "multipart/form-data",
+  //   };
+  //   request.files.add(
+  //     http.MultipartFile(
+  //       'image',
+  //       file!.readAsBytes().asStream(),
+  //       file.lengthSync(),
+  //       filename: filename,
+  //       contentType: MediaType('image', 'jpeg'),
+  //     ),
+  //   );
+  //   request.headers.addAll(headers);
+  //   request.fields.addAll({
+  //     "name": _nameController.text,
+  //     "bio": _bioController.text,
+  //     "email": _emailController.text,
+  //     "password": _passwordController.text,
+  //   });
+  //   // print("request: " + request.toString());
+  //   var res = await request.send();
+  //   // print("This is response:" + res.toString());
+
+  //   final respStr = await res.stream.bytesToString();
+  //   // print(respStr);
+
+  //   final body = json.decode(respStr);
+  //   print(body['message']);
+
+  //   bodyError = body['message'];
+
+  //   if (body["errorMessage"] == false) {
+  //     Navigator.of(context).pushReplacement(
+  //       MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+  //     );
+  //   } else {
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //   }
+
+  //   return res.statusCode;
+  // }
 }

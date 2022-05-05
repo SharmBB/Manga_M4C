@@ -312,107 +312,111 @@ class _DemoPageState extends State<DemoPage1> {
         elevation: 0,
       ),
       body: _available
-          ? Column(
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // Text(
-                      //   'Current Products ${_products.length}',
-                      //   style: TextStyle(
-                      //       color: kPrimaryWhiteColor,
-                      //       fontSize: 20.0,
-                      //       fontWeight: FontWeight.bold),
-                      // ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: _products.length,
-                        itemBuilder: (context, index) {
-                          return _buildProduct(
-                            product: _products[index],
-                          );
-                        },
-                      ),
-                    ],
+          ?Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(child:
+             Column(
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // Text(
+                        //   'Current Products ${_products.length}',
+                        //   style: TextStyle(
+                        //       color: kPrimaryWhiteColor,
+                        //       fontSize: 20.0,
+                        //       fontWeight: FontWeight.bold),
+                        // ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _products.length,
+                          itemBuilder: (context, index) {
+                            return _buildProduct(
+                              product: _products[index],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                       Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      // Text(
-                      //   'Current Products ${_products.length}',
-                      //   style: TextStyle(
-                      //       color: kPrimaryWhiteColor,
-                      //       fontSize: 20.0,
-                      //       fontWeight: FontWeight.bold),
-                      // ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: _products2.length,
-                        itemBuilder: (context, index) {
-                          return _buildProduct2(
-                            product: _products2[index],
-                          );
-                        },
-                      ),
-                    ],
+                         Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        // Text(
+                        //   'Current Products ${_products.length}',
+                        //   style: TextStyle(
+                        //       color: kPrimaryWhiteColor,
+                        //       fontSize: 20.0,
+                        //       fontWeight: FontWeight.bold),
+                        // ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _products2.length,
+                          itemBuilder: (context, index) {
+                            return _buildProduct2(
+                              product: _products2[index],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-             
+               
          
-                   Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Text(
-                      //   'Current Products ${_products.length}',
-                      //   style: TextStyle(
-                      //       color: kPrimaryWhiteColor,
-                      //       fontSize: 20.0,
-                      //       fontWeight: FontWeight.bold),
-                      // ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: _products1.length,
-                        itemBuilder: (context, index) {
-                          return _buildProduct1(
-                            product: _products1[index],
-                          );
-                        },
-                      ),
-                    ],
+                     Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Text(
+                        //   'Current Products ${_products.length}',
+                        //   style: TextStyle(
+                        //       color: kPrimaryWhiteColor,
+                        //       fontSize: 20.0,
+                        //       fontWeight: FontWeight.bold),
+                        // ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _products1.length,
+                          itemBuilder: (context, index) {
+                            return _buildProduct1(
+                              product: _products1[index],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                // Expanded(
-                //   child: Column(
-                //     // mainAxisAlignment: MainAxisAlignment.center,
-                //     children: [
-                //       // Text(
-                //       //   'Past Purchases: ${_purchases.length}',
-                //       //   style: TextStyle(
-                //       //       color: kPrimaryWhiteColor,
-                //       //       fontSize: 20.0,
-                //       //       fontWeight: FontWeight.bold),
-                //       // ),
-                //       Expanded(
-                //         child: ListView.builder(
-                //           shrinkWrap: true,
-                //           itemCount: _purchases.length,
-                //           itemBuilder: (context, index) {
-                //             return _buildPurchase(
-                //               purchase: _purchases[index],
-                //             );
-                //           },
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                   
-              ],
-            )
+                  // Expanded(
+                  //   child: Column(
+                  //     // mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: [
+                  //       // Text(
+                  //       //   'Past Purchases: ${_purchases.length}',
+                  //       //   style: TextStyle(
+                  //       //       color: kPrimaryWhiteColor,
+                  //       //       fontSize: 20.0,
+                  //       //       fontWeight: FontWeight.bold),
+                  //       // ),
+                  //       Expanded(
+                  //         child: ListView.builder(
+                  //           shrinkWrap: true,
+                  //           itemCount: _purchases.length,
+                  //           itemBuilder: (context, index) {
+                  //             return _buildPurchase(
+                  //               purchase: _purchases[index],
+                  //             );
+                  //           },
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                     
+                ],
+              )),
+          )
           : Center(
               child: Text('The Store Is Not Available',style: TextStyle(
             color: kPrimaryWhiteColor,
