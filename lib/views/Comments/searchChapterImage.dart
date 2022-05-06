@@ -156,8 +156,15 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                                         },
                                         borderRadius:
                                             BorderRadius.circular(00.0),
-                                        child:PinchZoomImage(image:
-                                         CachedNetworkImage(
+                                       child: InteractiveViewer(
+                                            panEnabled:
+                                                false, // Set it to false
+                                            boundaryMargin: EdgeInsets.all(100),
+                                            minScale: 0.5,
+                                            maxScale: 2,
+                                            // hideStatusBarWhileZooming: true,
+
+                                            child: CachedNetworkImage(
                                             height: screenHeight * (18 / 20),
                                             width: screenWidth,
                                             imageUrl: image +
