@@ -127,7 +127,6 @@ class _MangaComment2State extends State<MangaComment2> {
                 child: ListView(children: [
                   Column(
                     children: [
-                      
                       Container(
                         height: screenHeight * (18 / 20),
                         child: ListView.builder(
@@ -147,59 +146,70 @@ class _MangaComment2State extends State<MangaComment2> {
                                 alignment: Alignment.topCenter,
                                 children: <Widget>[
                                   Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.transparent,
-                                      borderRadius: BorderRadius.circular(0.0),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: primaryColor,
-                                          blurRadius: 6.0,
-                                        ),
-                                      ],
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(00.0),
-                                      child: InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                             print("fvfvfv");
-                                            if (imageclick == false) {
-                                              imageclick = true;
-                                            } else if (imageclick == true) {
-                                              imageclick = false;
-                                            }
-                                          });
-                                        },
+                                      decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius:
+                                            BorderRadius.circular(0.0),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: primaryColor,
+                                            blurRadius: 6.0,
+                                          ),
+                                        ],
+                                      ),
+                                      child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(00.0),
-                                        child:PinchZoomImage(image: 
-                                        
-                                        CachedNetworkImage(
-                                            height: screenHeight,
-                                            width: screenWidth * (20 / 20),
-                                            imageUrl: image +
-                                                _chapterImage[0]['chapter']
-                                                        ['md_images']
-                                                    [index + counter]['b2key'],
-                                            imageBuilder: (context,
-                                                    imageProvider) =>
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    image: DecorationImage(
-                                                        image: imageProvider,
-                                                        fit: BoxFit.contain),
-                                                  ),
-                                                ),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Icon(Icons.error)),
-                                      ),
-                                    ),
-                                  )
-                                    )  ],
+                                        child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              print("fvfvfv");
+                                              if (imageclick == false) {
+                                                imageclick = true;
+                                              } else if (imageclick == true) {
+                                                imageclick = false;
+                                              }
+                                            });
+                                          },
+                                          borderRadius:
+                                              BorderRadius.circular(00.0),
+                                          child: InteractiveViewer(
+                                            panEnabled:
+                                                false, // Set it to false
+                                            boundaryMargin: EdgeInsets.all(100),
+                                            minScale: 0.5,
+                                            maxScale: 2,
+                                            // hideStatusBarWhileZooming: true,
+
+                                            child: CachedNetworkImage(
+                                                height: screenHeight,
+                                                width: screenWidth * (20 / 20),
+                                                imageUrl: image +
+                                                    _chapterImage[0]['chapter']
+                                                                ['md_images']
+                                                            [index + counter]
+                                                        ['b2key'],
+                                                imageBuilder: (context,
+                                                        imageProvider) =>
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                        image: DecorationImage(
+                                                            image:
+                                                                imageProvider,
+                                                            fit:
+                                                                BoxFit.contain),
+                                                      ),
+                                                    ),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Icon(Icons.error)),
+                                          ),
+                                        ),
+                                      ))
+                                ],
                               ),
                             );
                           },
