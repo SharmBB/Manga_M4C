@@ -49,6 +49,11 @@ class _MangaComment2State extends State<SearchMangaComment2> {
   //listview index
   int? xyz;
 
+  double _scale = 0.5;
+  double _previousScale = 1.0;
+
+  final transController = TransformationController();
+
   // List ReplyComments = [];
 
   List<TextEditingController> _controllers = <TextEditingController>[];
@@ -60,7 +65,7 @@ class _MangaComment2State extends State<SearchMangaComment2> {
   void initState() {
     //initialize  id for chapterimage
     hid = widget.hid;
-    print("cacassc"+hid);
+    print("cacassc" + hid);
     chapterid = widget.chapterid;
     print(chapterid);
     index = widget.index;
@@ -131,67 +136,106 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                                 alignment: Alignment.topCenter,
                                 children: <Widget>[
                                   Container(
-                                    decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      borderRadius: BorderRadius.circular(0.0),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: primaryColor,
-                                          blurRadius: 6.0,
-                                        ),
-                                      ],
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(00.0),
-                                      child: InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            print("fvfvfv");
-                                            if (imageclick == false) {
-                                              imageclick = true;
-                                            } else if (imageclick == true) {
-                                              imageclick = false;
-                                            }
-                                          });
-                                        },
+                                      decoration: BoxDecoration(
+                                        color: primaryColor,
+                                        borderRadius:
+                                            BorderRadius.circular(0.0),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: primaryColor,
+                                            blurRadius: 6.0,
+                                          ),
+                                        ],
+                                      ),
+                                      child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(00.0),
-                                       child: InteractiveViewer(
+                                        child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              print("fvfvfv");
+                                              if (imageclick == false) {
+                                                imageclick = true;
+                                              } else if (imageclick == true) {
+                                                imageclick = false;
+                                              }
+                                            });
+                                          },
+                                          borderRadius:
+                                              BorderRadius.circular(00.0),
+                                          child: InteractiveViewer(
+                                            transformationController:
+                                                transController,
+
+                                            // On: (ScaleStartDetails details) {
+                                            //   print(details);
+                                            //   _previousScale = 1.0;
+                                            //   setState(() {});
+                                            // },
+                                            // onScaleUpdate:
+                                            //     (ScaleUpdateDetails details) {
+                                            //   print(details);
+                                            //   _scale = _previousScale *
+                                            //       details.scale;
+                                            //   setState(() {});
+                                            // },
+                                            onInteractionUpdate:
+                                                (ScaleUpdateDetails details) {
+                                              // get the scale from the ScaleUpdateDetails callback
+                                              print(details);
+                                              _scale = _previousScale *
+                                                  details.scale;
+                                              setState(
+                                                  () {}); // print the scale here
+                                            },
                                             panEnabled:
                                                 false, // Set it to false
                                             boundaryMargin: EdgeInsets.all(100),
                                             minScale: 0.5,
+
                                             maxScale: 2,
+                                            scaleEnabled: true,
                                             // hideStatusBarWhileZooming: true,
+                                            // constrained: false,
+
+                                            onInteractionStart: (details) {
+                                              print(details);
+                                              _previousScale = 1.0;
+                                              setState(() {});
+                                            },
 
                                             child: CachedNetworkImage(
-                                            height: screenHeight * (18 / 20),
-                                            width: screenWidth,
-                                            imageUrl: image +
-                                                _chapterImage[0]['chapter']
-                                                                ['md_images']
-                                                            [index + counter]
-                                                        ['b2key']
-                                                    .toString(),
-                                            imageBuilder: (context,
-                                                    imageProvider) =>
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    image: DecorationImage(
-                                                        image: imageProvider,
-                                                        fit: BoxFit.contain),
-                                                  ),
-                                                ),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Icon(Icons.error)),
-                                      ),
-                                    ),
-                                  )
-                                   ) ],
+                                                height: screenHeight *
+                                                    (18 / 20),
+                                                width: screenWidth,
+                                                imageUrl: image +
+                                                    _chapterImage[0]['chapter'][
+                                                                    'md_images']
+                                                                [
+                                                                index + counter]
+                                                            ['b2key']
+                                                        .toString(),
+                                                imageBuilder: (context,
+                                                        imageProvider) =>
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                        image: DecorationImage(
+                                                            image:
+                                                                imageProvider,
+                                                            fit:
+                                                                BoxFit.contain),
+                                                      ),
+                                                    ),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Icon(Icons.error)),
+                                          ),
+                                        ),
+                                      ))
+                                ],
                               ),
                             );
                           },
@@ -206,7 +250,7 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                       height: 50,
                       child: AppBar(
                         backgroundColor: Colors.transparent,
-                       // elevation: 0.5,
+                        // elevation: 0.5,
                         leading: IconButton(
                           icon: Icon(Icons.arrow_back_ios_new_rounded),
                           onPressed: () {
@@ -217,11 +261,9 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                         ),
                         title: new Center(
                             child: new Text("Chapter " + chapterid,
-                             style: TextStyle(
+                                style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 14.0,
-                             
-                               
                                 ),
                                 textAlign: TextAlign.center)),
                         actions: <Widget>[
