@@ -61,6 +61,13 @@ class _MangaComment2State extends State<MangaComment2> {
 
   List<TextEditingController> _controllers = <TextEditingController>[];
 
+  TransformationController controllerT = TransformationController();
+  var initialControllerValue;
+
+  final transController = TransformationController();
+
+   double _scale = 0.5;
+  double _previousScale = 1.0;
   //Success
   String? success;
 
@@ -174,12 +181,45 @@ class _MangaComment2State extends State<MangaComment2> {
                                           borderRadius:
                                               BorderRadius.circular(00.0),
                                           child: InteractiveViewer(
+                                            transformationController:
+                                                transController,
+
+                                            // On: (ScaleStartDetails details) {
+                                            //   print(details);
+                                            //   _previousScale = 1.0;
+                                            //   setState(() {});
+                                            // },
+                                            // onScaleUpdate:
+                                            //     (ScaleUpdateDetails details) {
+                                            //   print(details);
+                                            //   _scale = _previousScale *
+                                            //       details.scale;
+                                            //   setState(() {});
+                                            // },
+                                            onInteractionUpdate:
+                                                (ScaleUpdateDetails details) {
+                                              // get the scale from the ScaleUpdateDetails callback
+                                              print(details);
+                                              _scale = _previousScale *
+                                                  details.scale;
+                                              setState(
+                                                  () {}); // print the scale here
+                                            },
                                             panEnabled:
                                                 false, // Set it to false
                                             boundaryMargin: EdgeInsets.all(100),
                                             minScale: 0.5,
+
                                             maxScale: 2,
+                                            scaleEnabled: true,
                                             // hideStatusBarWhileZooming: true,
+                                            // constrained: false,
+
+                                            onInteractionStart: (details) {
+                                              print(details);
+                                              _previousScale = 1.0;
+                                              setState(() {});
+                                            },
 
                                             child: CachedNetworkImage(
                                                 height: screenHeight,
