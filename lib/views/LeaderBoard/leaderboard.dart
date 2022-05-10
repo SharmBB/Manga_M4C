@@ -109,7 +109,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                     ),
                     SingleChildScrollView(
                       child: Container(
-                        height: MediaQuery.of(context).size.height,
+                        height: MediaQuery.of(context).size.height*0.7,
                         width: MediaQuery.of(context).size.width,
                         child: Stack(
                           children: <Widget>[
@@ -131,14 +131,25 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                       child: Row(
                                         children: <Widget>[
                                           Expanded(
-                                            child: CircleAvatar(
-                                              radius: 25.0,
-                                              backgroundImage: CachedNetworkImageProvider(
-                                                userImage +
-                                                    _getLeaderBoardDetails[
-                                                        index]['image'],
-                                              ),
-                                            ),
+                                            child: _getLeaderBoardDetails[index]
+                                                        ['image'] ==
+                                                    null
+                                                ? CircleAvatar(
+                                                    radius: 25.0,
+                                                    backgroundImage:
+                                                        AssetImage("assets/icon/playstore.png"
+                                                      ,
+                                                    ),
+                                                  )
+                                                : CircleAvatar(
+                                                    radius: 25.0,
+                                                    backgroundImage:
+                                                        CachedNetworkImageProvider(
+                                                      userImage +
+                                                          _getLeaderBoardDetails[
+                                                              index]['image'],
+                                                    ),
+                                                  ),
                                           ),
                                           SizedBox(width: 10.0),
                                           _getLeaderBoardDetails[index]['id'] ==
@@ -152,7 +163,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                                   ),
                                                 )
                                               : SizedBox(),
-                                              _getLeaderBoardDetails[index]['id'] ==
+                                          _getLeaderBoardDetails[index]['id'] ==
                                                   2
                                               ? Expanded(
                                                   child: CircleAvatar(
@@ -163,11 +174,10 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
                                                   ),
                                                 )
                                               : SizedBox(),
-                                              _getLeaderBoardDetails[index]['id'] ==
+                                          _getLeaderBoardDetails[index]['id'] ==
                                                   3
                                               ? Expanded(
-                                                  child: 
-                                                  CircleAvatar(
+                                                  child: CircleAvatar(
                                                     radius: 20.0,
                                                     backgroundImage: AssetImage(
                                                       "assets/rank3.png",
