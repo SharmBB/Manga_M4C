@@ -131,7 +131,7 @@ class _MangaComment2State extends State<SearchMangaComment2> {
                               //   right: 10,
                               // ),
                               width: screenWidth,
-                              height: screenHeight,
+                           height: screenHeight * (18 / 20),
                               child: Stack(
                                 alignment: Alignment.topCenter,
                                 children: <Widget>[
